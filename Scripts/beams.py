@@ -20,6 +20,9 @@ class BeamSystem:
         self.node_names.append(name)
 
     def add_beam(self, start_node, end_node, cross_section, cross_section_parameters, material, name=None):
+        start_node_coords = [0, 0, 0]
+        end_node_coords = [0, 0, 0]
+
         if type(start_node) is int:
             start_node_coords = self.nodes[start_node]
             end_node_coords = self.nodes[end_node]
