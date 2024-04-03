@@ -1,5 +1,6 @@
 import numpy as np
-import cross_section_properties as csp
+from Scripts.cross_section_properties import cross_section_circle
+from Scripts.cross_section_properties import cross_section_annulus
 
 
 class BeamSystem:
@@ -19,8 +20,15 @@ class BeamSystem:
         self.node_names.append(name)
 
     def add_beam(self, start_node, end_node, cross_section, cross_section_parameters, material, name=None):
-        start_node_coords = self.nodes[start_node]
-        end_node_coords = self.nodes[end_node]
+        if type(start_node) is int:
+            start_node_coords = self.nodes[start_node]
+            end_node_coords = self.nodes[end_node]
+        elif type(start_node) is str:
+            # Finds node with the same name as the inputted string
+            start_node_coords = self.nodes[self.node_names.index(start_node)]
+            end_node_coords = self.nodes[self.node_names.index(end_node)]
+        else:
+            print("start or end nodes must be string or integer")
 
         if name is None:
             name = "Beam_" + str(len(self.beams))
@@ -55,8 +63,8 @@ class Beam:
 
     def cross_section_properties_init(self):
         if self.cross_section.lower() == "circle":
-            return csp.cross_section_circle(self.cross_section_parameters)
+            return cross_section_circle(self.cross_section_parameters)
         elif self.cross_section.lower() == "annulus":
-            return csp.cross_section_annulus(self.cross_section_parameters)
+            return cross_section_annulus(self.cross_section_parameters)
         else:
             print('incorrect cross section in beam ' + self.name)

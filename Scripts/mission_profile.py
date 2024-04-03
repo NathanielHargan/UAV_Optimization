@@ -1,4 +1,6 @@
 import numpy as np
+
+
 class mission_profile:
     def __init__(self, name, initial_payload):
         # Name of the segment
