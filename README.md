@@ -1,1 +1,1 @@
-Attempting to use GitHub. Ill put something real here later maybe. 
+Attempting to use GitHub. I'll put something real here later, maybe. 

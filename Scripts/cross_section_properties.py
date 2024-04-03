@@ -1,5 +1,6 @@
 import math
 
+
 # returns diction annulus beam cross section properties
 def cross_section_annulus(cross_section_parameters):
     r_outer = cross_section_parameters[0]
@@ -17,15 +18,15 @@ def cross_section_annulus(cross_section_parameters):
         'radius of gyration x': (1/2) * math.sqrt(r_outer ** 2 + r_inner ** 2),
         'radius of gyration y': (1/2) * math.sqrt(r_outer ** 2 + r_inner ** 2),
         'radius of gyration z': (math.sqrt(2)/2) * math.sqrt(r_outer ** 2 + r_inner ** 2),
-        'plastic section modulus': (4/3) * (r_outer ** 3 - r_inner ** 3)
-        'elastic section modulus': (math.pi/4) * (r_outer ** 4 - r_inner **4) / r_outer
+        'plastic section modulus': (4/3) * (r_outer ** 3 - r_inner ** 3),
+        'elastic section modulus': (math.pi/4) * (r_outer ** 4 - r_inner **4) / r_outer,
         'torsional constant': (math.pi/2) * (r_outer ** 4 - r_inner ** 4)
     }
+
 
 def cross_section_circle(cross_section_parameters):
     r = cross_section_parameters[0]
 
-    # https://structx.com/Shape_Formulas_014.html
     return {
         'area': math.pi * (r ** 2),
         'perimeter': math.pi * 2 * r,
