@@ -6,13 +6,13 @@ from Scripts.beams import BeamType
 
 class Drone:
     def __init__(self, name):
-        self.name = name # Name of the drone
+        self.name = name  # Name of the drone
         self.beam_system = BeamSystem(self.name + "_system")
 
     def create_drone(self, hub_rad, nominal_rad, strut_pos, blade_num):
-        arm_beam = BeamType("annulus",[0.5, 0.45],"material xyz","arm_beam")
-        strut_beam = BeamType("annulus",[0.3, 0.25],"material xyz","arm_beam")
-        hub_beam = BeamType("annulus",[1, 0.5],"material xyz","arm_beam")
+        arm_beam = BeamType("annulus", [0.5, 0.45], "material xyz", "arm_beam")
+        strut_beam = BeamType("annulus", [0.3, 0.25], "material xyz", "strut_beam")
+        hub_beam = BeamType("annulus", [1, 0.5], "material xyz", "hub_beam")
 
         num = 0
         # Rotational Symmetry Nodes
