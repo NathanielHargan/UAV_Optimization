@@ -1,6 +1,7 @@
 import numpy as np
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
+from Scripts.material_properties import Materials
 
 class BeamSystem:
     def __init__(self, name):
@@ -34,11 +35,8 @@ class BeamSystem:
         if name is None:
             name = "Beam_" + str(len(self.beams))
 
-        self.beams.append(
-            Beam(name,
-                 beam_type,
-                 start_node_coords,
-                 end_node_coords))
+        new_beam = Beam(beam_type, start_node_coords, end_node_coords, name)
+        self.beams.append(new_beam)
 
 
 class Beam:
@@ -55,7 +53,7 @@ class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
         self.cross_section = cross_section
         self.cross_section_parameters = cross_section_parameters
-        self.material = material
+        self.material = Materials[material]
 
         # Name is optional so
         if name is None:
@@ -73,3 +71,5 @@ class BeamType:
         else:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
+
+#%%
