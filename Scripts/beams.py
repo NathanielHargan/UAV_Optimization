@@ -39,6 +39,7 @@ class BeamSystem:
         self.beams.append(new_beam)
 
 
+
 class Beam:
     def __init__(self, beam_type, start_node_coords, end_node_coords, name=None):
         self.name = name  # String with the beam name
@@ -47,6 +48,8 @@ class Beam:
         # Coordinates of the nodes
         self.start_node_coords = start_node_coords
         self.end_node_coords = end_node_coords
+
+        self.length = np.linalg.norm(end_node_coords - start_node_coords)
 
 
 class BeamType:
