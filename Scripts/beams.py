@@ -46,10 +46,10 @@ class Beam:
         self.beam_type = beam_type
 
         # Coordinates of the nodes
-        self.start_node_coords = start_node_coords
-        self.end_node_coords = end_node_coords
+        self.start_node_coords = np.array(start_node_coords)
+        self.end_node_coords = np.array(end_node_coords)
 
-        self.length = np.linalg.norm(end_node_coords - start_node_coords)
+        self.length = np.linalg.norm(np.subtract(end_node_coords,start_node_coords))
 
 
 class BeamType:
