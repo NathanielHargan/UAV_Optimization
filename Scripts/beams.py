@@ -1,4 +1,5 @@
 import numpy as np
+import math
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.material_properties import Materials
@@ -38,7 +39,33 @@ class BeamSystem:
         new_beam = Beam(beam_type, start_node_coords, end_node_coords, name)
         self.beams.append(new_beam)
 
+    def rotate_beam_system(self, rot_x, rot_y, rot_z):
+        # Rotation matrix around x-axis
+        r_x = np.array([
+            [1, 0, 0],
+            [0, math.cos(rot_x), -math.sin(rot_x)],
+            [0, math.sin(rot_x), math.cos(rot_x)]])
 
+        # Rotation matrix around y-axis
+        r_y = np.array([
+            [math.cos(rot_y), 0, math.sin(rot_y)],
+            [0, 1, 0],
+            [-math.sin(rot_y), 0, math.cos(rot_y)]])
+
+        # Rotation matrix around z-axis
+        r_z = np.array([
+            [math.cos(rot_z),  -math.sin(rot_z), 0],
+            [math.sin(rot_z), math.cos(rot_z), 0],
+            [0, 0, 1]])
+
+        rotation_matrix = r_x @ r_y @ r_z  # multiplies them all together
+
+        rotated_nodes = np.empty((0, 3))
+        for node in self.nodes:
+            rotated_node = [rotation_matrix @ np.transpose(node)]
+            rotated_nodes = np.concatenate((rotated_nodes, rotated_node), axis=0)
+
+        self.nodes = rotated_nodes  # update nodes
 
 class Beam:
     def __init__(self, beam_type, start_node_coords, end_node_coords, name=None):

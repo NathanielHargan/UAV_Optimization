@@ -8,8 +8,10 @@ class Drone:
         self.name = name  # Name of the drone
         self.beam_system = BeamSystem(self.name + "_system")
 
-    def create_drone(self, nominal_rad, strut_pos, blade_num, arm_beam, strut_beam):
-
+    def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
+        self.nominal_rad = nominal_rad
+        self.strut_pos = strut_pos
+        self.blade_num = blade_num
         num = 0
 
         # Origin
@@ -36,8 +38,9 @@ class Drone:
                 "strut_node_" + str(num))
             num += 1
 
+    def create_drone_beams(self, arm_beam, strut_beam):
         # Adding Beams
-        for i in range(0, blade_num):
+        for i in range(0, self.blade_num):
             # Outer to Strut
             self.beam_system.add_beam(
                 arm_beam,
@@ -53,17 +56,18 @@ class Drone:
         # Final to 0
         self.beam_system.add_beam(
             strut_beam,
-            "strut_node_" + str(blade_num-1),
+            "strut_node_" + str( self.blade_num-1),
             "strut_node_0")
 
-        for i in range(0, blade_num-1):
+        for i in range(0,  self.blade_num-1):
             # Strut to Strut
             self.beam_system.add_beam(
                 strut_beam,
                 "strut_node_" + str(i),
                 "strut_node_" + str(i+1))
 
-
+    def rotate_drone_nodes(self, x, y, z):
+        self.beam_system.rotate_beam_system(x, y, z)
 
 
 
