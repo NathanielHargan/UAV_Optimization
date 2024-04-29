@@ -11,10 +11,18 @@ class BeamSystem:
         self.nodes = np.empty((0, 3))  # List of nodes coordinates
         self.beam_node_indexes = np.empty((0, 2))  # List of the node indexes that beams go between
 
+        self.forces = np.empty((0, 3))  # List of Vectors
+        self.force_node_indexes = np.empty((0, 1)) # List of node indexes
+
+        # The value of the BC
+        self.boundary_conditions = np.empty((0, 1))
+        # List of node indexes. Identifies which node the bc applies to.
+        self.boundary_conditions_node_indexes = np.empty((0, 1))
+        # x | y | z | theta x | theta y | theta z  alternatively 0 | 1 | 2 | 3 | 4 | 5
+        self.boundary_conditions_type = np.empty((0, 1))
+
         self.node_names = []  # List of nodes names
         self.beams = []  # List of beam objects
-        self.boundary_conditions_node_index = []  # List of boundary condition objects
-        self.boundary_conditions_type = []
 
         # placeholder
         self.stiffness_matrix = np.empty(0)
@@ -37,6 +45,27 @@ class BeamSystem:
             return self.node_names.index(node_ref)
         else:
             return "error"
+
+    def select_boundary_condition_type(self, bc_ref):
+        if type(bc_ref) is int:
+            return bc_ref
+        elif type(bc_ref) is str:
+            return ["x", "y", "z", "theta x", "theta y", "theta z"].index(bc_ref)  # life hack
+        else:
+            return "error"
+
+    def add_boundary_condition(self,boundary_val,bc_type_ref,node_ref):
+        node_index = self.select_node(node_ref)
+        bc_type = self.select_boundary_condition_type(bc_type_ref)
+        self.boundary_conditions = np.concatenate((self.boundary_conditions, boundary_val), axis=0)
+        self.boundary_conditions_type = np.concatenate((self.boundary_conditions, bc_type), axis=0)
+        self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions, node_index), axis=0)
+
+    def add_force(self, x, y, z, node_ref):
+        node = self.select_node(node_ref)
+        vector = np.array([[x, y, z]])
+        self.forces = np.concatenate((self.forces, vector), axis=0)
+        self.force_node_indexes = np.concatenate((self.force_node_indexes, node), axis=0)
 
     def add_bifurcated_beam(self, beam_type, start_node, end_node, **kwargs):
         if 'start_beam_name' in kwargs:
