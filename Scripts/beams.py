@@ -3,7 +3,7 @@ import math
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.material_properties import Materials
-
+import Scripts.FEA_3D as FEA_3D
 
 class BeamSystem:
     def __init__(self, name):
@@ -16,17 +16,13 @@ class BeamSystem:
 
         # The value of the BC
         self.boundary_conditions = np.empty((0, 1))
-        # List of node indexes. Identifies which node the bc applies to.
-        self.boundary_conditions_node_indexes = np.empty((0, 1))
         # x | y | z | theta x | theta y | theta z  alternatively 0 | 1 | 2 | 3 | 4 | 5
         self.boundary_conditions_type = np.empty((0, 1))
+        # The boundary condition node index vector
+        self.boundary_conditions_node_indexes = np.empty((0, 1))
 
         self.node_names = []  # List of nodes names
         self.beams = []  # List of beam objects
-
-        # placeholder
-        self.stiffness_matrix = np.empty(0)
-        self.f_vector = np.empty(0)
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -105,11 +101,6 @@ class BeamSystem:
         new_beam = Beam(beam_type, start_node_coords, end_node_coords, name)
         self.beams.append(new_beam)
 
-    def create_boundary_condition(self, node_def, bc_type):
-        node_index = self.select_node(node_def)
-        self.boundary_conditions_node_index.append(node_index)
-        self.boundary_conditions_type.append(bc_type)
-
     def rotate_beam_system(self, rot_x, rot_y, rot_z):
         # Rotation matrix around x-axis
         r_x = np.array([
@@ -138,10 +129,22 @@ class BeamSystem:
 
         self.nodes = rotated_nodes  # update nodes
 
-    def create_stiffness_matrix(self):
-        stiffness_matrix_size = len(self.nodes) * 2 - len(self.boundary_conditions_node_index)
-        self.stiffness_matrix = np.zeros((stiffness_matrix_size,stiffness_matrix_size))
-        self.f_vector = np.array(stiffness_matrix_size)
+    def solve_FEA(self):
+        global_length = np.shape(self.nodes)[0] * 6
+        p_length = np.shape(self.boundary_conditions)[0]
+        u_length = global_length - p_length
+
+        rp = self.boundary_conditions
+        rp_index = self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type
+
+        fu_index_predel = np.arange(global_length)
+        fu_predel = np.zeros(global_length)  # fu before deleting bcs
+        for i in range(len(self.forces)):  # for loop + counter
+            f_index = self.force_node_indexes[i] * 6
+            fu_predel[f_index:f_index+3] += self.forces[i]
+
+        fu = np.delete(fu_predel, rp_index, axis=0)
+        fu_index = np.delete(fu_index_predel, rp_index, axis=0)
 
 
 class Beam:
@@ -155,6 +158,11 @@ class Beam:
 
         self.length = np.linalg.norm(np.subtract(end_node_coords, start_node_coords))
 
+        self.local_stiffness_matrix = self.find_local_stiffness_matrix()
+
+
+    def find_local_stiffness_matrix(self):
+        return np.empty(0)
 
 class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
