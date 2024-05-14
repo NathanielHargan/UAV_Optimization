@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def local_stiffness_3d(a, e, l, g, i_y, i_z, k_y, k_z, k):
+def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y=0, k_z=0):
     x = a*e/l
     phi_y = 12 * e * i_z * k_y / (a * g * l ** 2)
     y_1 = 12 * e * i_z / ((1 + phi_y) * l ** 3)
@@ -73,7 +73,7 @@ def transformation_matrix():
     return t
 
 
-def assemble_stiffness_3d(beam_node_indexes, k11s, k12s, k21s, k22s):
+def assemble_stiffness_3d(beam_node_indexes, ks):
     # beam_node is a nx2 matrix
     # pairs of node indexes for each element
     # [(start node,end node)
@@ -81,11 +81,17 @@ def assemble_stiffness_3d(beam_node_indexes, k11s, k12s, k21s, k22s):
     # ...
     # (start node,end node)]
 
-    # kxxs are a 3d array of stiffness matrixes
+    # ks are a 3d array of stiffness matrixes
     # one matrix for each element i.e
     # [matrix_0,matrix_1,...,matrix_n]
 
     element_num = beam_node_indexes.shape()[0]
+
+    # break it into segments
+    k11s = ks[:, 0:6, 0:6]
+    k12s = ks[:, 0:6, 6:-1]
+    k21s = ks[:, 6:-1, 0:6]
+    k22s = ks[:, 6:-1, 6:-1]
 
     k = np.zeros((element_num*6, element_num*6))
 
@@ -135,7 +141,11 @@ def partition_stiffness_matrix(k, boundary_indexes):
     return kuu, kup, kpu, kpp
 
 
-def solve_3D(ru,dp,kuu,kup,kpu,kpp):
+def local_to_global_stiffness_matrix(k,t):
+    return np.transpose(t) @ k @ t
+
+
+def solve_3D(ru, dp, kuu, kup, kpu, kpp):
     kuu_inv = np.linalg.inv(kuu)
 
     du = kuu_inv @ (ru - kup @ dp)

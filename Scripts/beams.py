@@ -5,6 +5,7 @@ from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.material_properties import Materials
 import Scripts.FEA_3D as FEA_3D
 
+
 class BeamSystem:
     def __init__(self, name):
         self.system_name = name  # A string with the name of the system
@@ -21,8 +22,10 @@ class BeamSystem:
         # The boundary condition node index vector
         self.boundary_conditions_node_indexes = np.empty((0, 1))
 
-        self.node_names = []  # List of nodes names
-        self.beams = []  # List of beam objects
+        self.node_names, self.beams = []  # List of nodes names; List of beam objects
+
+        self.global_stiffness_matrix, self.rp, self.du, self.p_index, self.u_index  = np.empty(0)
+
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -132,19 +135,30 @@ class BeamSystem:
     def solve_FEA(self):
         global_length = np.shape(self.nodes)[0] * 6
         p_length = np.shape(self.boundary_conditions)[0]
-        u_length = global_length - p_length
 
         rp = self.boundary_conditions
-        rp_index = self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type
+        p_index = self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type
 
-        fu_index_predel = np.arange(global_length)
-        fu_predel = np.zeros(global_length)  # fu before deleting bcs
+        u_index_predel = np.arange(global_length)
+        du_predel = np.zeros(global_length)  # fu before deleting bcs
         for i in range(len(self.forces)):  # for loop + counter
-            f_index = self.force_node_indexes[i] * 6
-            fu_predel[f_index:f_index+3] += self.forces[i]
+            d_index = self.force_node_indexes[i] * 6
+            du_predel[d_index:d_index+3] += self.forces[i]
 
-        fu = np.delete(fu_predel, rp_index, axis=0)
-        fu_index = np.delete(fu_index_predel, rp_index, axis=0)
+        du = np.delete(du_predel, p_index, axis=0)
+        u_index = np.delete(u_index_predel, p_index, axis=0)
+
+        self.rp = rp
+        self.p_index = p_index
+        self.du = du
+        self.u_index = u_index
+
+        global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
+
+        for i in range(len(self.beam_node_indexes)):
+            global_element_matrices[i] = self.beams[i].global_stiffness_matrix
+
+        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices)
 
 
 class Beam:
@@ -157,18 +171,32 @@ class Beam:
         self.end_node_coords = np.array(end_node_coords)
 
         self.length = np.linalg.norm(np.subtract(end_node_coords, start_node_coords))
+        # a, e, l, g, i_y, i_z, k, k_y, k_z
+        self.local_stiffness_matrix = FEA_3D.local_stiffness_3d(
+            beam_type.cross_section_properties["area"],
+            beam_type.material_properties["elastic modulus"],
+            self.length,
+            beam_type.material_properties["shear modulus"],
+            beam_type.cross_section_properties['second moment of area y'],
+            beam_type.cross_section_properties['second moment of area z'],
+            beam_type.cross_section_properties["torsional constant"],
+            0,  # I'm ignoring these for now. I'm "neglecting transverse shear deformation."
+            0
+        )
 
-        self.local_stiffness_matrix = self.find_local_stiffness_matrix()
+        self.transformation_matrix = FEA_3D.transformation_matrix(self.start_node_coords - self.end_node_coords)
+
+        self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
+            self.local_stiffness_matrix,
+            self.transformation_matrix)
 
 
-    def find_local_stiffness_matrix(self):
-        return np.empty(0)
 
 class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
         self.cross_section = cross_section
         self.cross_section_parameters = cross_section_parameters
-        self.material = Materials[material]
+        self.material_properties = Materials[material]
 
         # Name is optional so
         if name is None:
