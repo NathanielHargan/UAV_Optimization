@@ -3,7 +3,9 @@ import math
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.material_properties import Materials
+from Scripts.material_properties import Gravity
 import Scripts.FEA_3D as FEA_3D
+import time
 
 
 class BeamSystem:
@@ -22,10 +24,17 @@ class BeamSystem:
         # The boundary condition node index vector
         self.boundary_conditions_node_indexes = np.empty((0, 1))
 
-        self.node_names, self.beams = []  # List of nodes names; List of beam objects
+        self.node_names = []  # List of nodes names
+        self.beams = []  # List of beam objects
 
-        self.global_stiffness_matrix, self.rp, self.du, self.p_index, self.u_index  = np.empty(0)
-
+        # placeholder
+        self.global_stiffness_matrix = np.empty(0)
+        self.ru = np.empty(0)
+        self.dp = np.empty(0)
+        self.p_index = np.empty(0)
+        self.u_index = np.empty(0)
+        self.displacement_angle_vector = np.empty(0)
+        self.force_moment_vector = np.empty(0)
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -53,20 +62,21 @@ class BeamSystem:
         else:
             return "error"
 
-    def add_boundary_condition(self,boundary_val,bc_type_ref,node_ref):
-        node_index = self.select_node(node_ref)
-        bc_type = self.select_boundary_condition_type(bc_type_ref)
-        self.boundary_conditions = np.concatenate((self.boundary_conditions, boundary_val), axis=0)
-        self.boundary_conditions_type = np.concatenate((self.boundary_conditions, bc_type), axis=0)
-        self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions, node_index), axis=0)
+    def add_boundary_condition(self, boundary_val, bc_type_ref, node_ref):
+        boundary_val_ = np.array([[boundary_val]])
+        node_index = np.array([[self.select_node(node_ref)]])
+        bc_type = np.array([[self.select_boundary_condition_type(bc_type_ref)]])
+        self.boundary_conditions = np.concatenate((self.boundary_conditions, boundary_val_), axis=0)
+        self.boundary_conditions_type = np.concatenate((self.boundary_conditions_type, bc_type), axis=0)
+        self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions_node_indexes, node_index), axis=0)
 
     def add_force(self, x, y, z, node_ref):
-        node = self.select_node(node_ref)
+        node = np.array([[self.select_node(node_ref)]])
         vector = np.array([[x, y, z]])
         self.forces = np.concatenate((self.forces, vector), axis=0)
         self.force_node_indexes = np.concatenate((self.force_node_indexes, node), axis=0)
 
-    def add_bifurcated_beam(self, beam_type, start_node, end_node, **kwargs):
+    def add_bifurcated_beam(self, beam_type, start_node, end_node, k_node, **kwargs):
         if 'start_beam_name' in kwargs:
             start_beam_name = kwargs['start_beam_name']
         else:
@@ -84,24 +94,33 @@ class BeamSystem:
 
         midpoint_node = (self.nodes[self.select_node(start_node)] + self.nodes[self.select_node(end_node)]) / 2
         self.add_node(midpoint_node[0], midpoint_node[1], midpoint_node[2], midpoint_node_name)
-        self.add_beam(beam_type, start_node, midpoint_node_name, start_beam_name)
-        self.add_beam(beam_type, midpoint_node_name, end_node, end_beam_name)
+        self.add_beam(beam_type, start_node, midpoint_node_name, k_node, start_beam_name)
+        self.add_beam(beam_type, midpoint_node_name, end_node, k_node, end_beam_name)
 
-    def add_beam(self, beam_type, start_node, end_node, name=None):
+    def add_point_mass_beam(self, beam_type, start_node, end_node, k_node, **kwargs):
+        self.add_bifurcated_beam(beam_type, start_node, end_node, k_node, **kwargs)
+        length = np.linalg.norm(np.subtract(
+            self.nodes[self.select_node(end_node)],
+            self.nodes[self.select_node(start_node)]))
+        mass = -beam_type.material_properties["density"] * beam_type.cross_section_properties["area"] * length * Gravity
+        self.add_force(0, 0, mass, int(len(self.nodes)-1))  # add force on new node
+
+    def add_beam(self, beam_type, start_node, end_node, k_node, name=None):
         start_node_index = self.select_node(start_node)
         end_node_index = self.select_node(end_node)
+        k_node = np.array(k_node)
 
         beam_node_index = np.array([[start_node_index, end_node_index]])
 
         self.beam_node_indexes = np.concatenate((self.beam_node_indexes, beam_node_index), axis=0)
 
         start_node_coords = self.nodes[start_node_index]
-        end_node_coords = self.nodes[start_node_index]
+        end_node_coords = self.nodes[end_node_index]
 
         if name is None:
             name = "Beam_" + str(len(self.beams))
 
-        new_beam = Beam(beam_type, start_node_coords, end_node_coords, name)
+        new_beam = Beam(beam_type, start_node_coords, end_node_coords, k_node, name)
         self.beams.append(new_beam)
 
     def rotate_beam_system(self, rot_x, rot_y, rot_z):
@@ -136,21 +155,23 @@ class BeamSystem:
         global_length = np.shape(self.nodes)[0] * 6
         p_length = np.shape(self.boundary_conditions)[0]
 
-        rp = self.boundary_conditions
-        p_index = self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type
+        dp = self.boundary_conditions
+        p_index = np.intc(self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type)
 
-        u_index_predel = np.arange(global_length)
-        du_predel = np.zeros(global_length)  # fu before deleting bcs
+        u_index_predel = np.intc(np.arange(global_length))
+        ru_predel = np.zeros(global_length)  # fu before deleting bcs
         for i in range(len(self.forces)):  # for loop + counter
-            d_index = self.force_node_indexes[i] * 6
-            du_predel[d_index:d_index+3] += self.forces[i]
+            r_index = int(self.force_node_indexes[i][0] * 6)
+            ru_predel[r_index] += self.forces[i][0]
+            ru_predel[r_index+1] += self.forces[i][1]
+            ru_predel[r_index+2] += self.forces[i][2]
 
-        du = np.delete(du_predel, p_index, axis=0)
-        u_index = np.delete(u_index_predel, p_index, axis=0)
+        ru = np.delete(ru_predel, p_index, axis=0)
+        u_index = np.intc(np.delete(u_index_predel, p_index, axis=0))
 
-        self.rp = rp
+        self.dp = dp
         self.p_index = p_index
-        self.du = du
+        self.ru = ru
         self.u_index = u_index
 
         global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
@@ -160,10 +181,36 @@ class BeamSystem:
 
         self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices)
 
+        kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.global_stiffness_matrix, p_index)
+
+        print("starting the inverse")
+        t = time.time()
+        kuu_inv = np.linalg.inv(kuu)
+        print("s:")
+        print(time.time()-t)
+
+        du = kuu_inv @ (ru - kup @ dp)
+        rp = kpu @ du + kpp @ dp
+
+        dup = np.concatenate((du, dp))
+        rup = np.concatenate((ru, rp))
+        up_index = np.concatenate((u_index,p_index))
+
+        d = np.empty(global_length)
+        r = np.empty(global_length)
+
+        for i in range(global_length):
+            d[i] = dup[up_index[i]]
+            r[i] = rup[up_index[i]]
+
+        self.displacement_angle_vector = d
+        self.force_moment_vector = r
+
 
 class Beam:
-    def __init__(self, beam_type, start_node_coords, end_node_coords, name=None):
+    def __init__(self, beam_type, start_node_coords, end_node_coords, k_node, name=None):
         self.name = name  # String with the beam name
+        self.k_node = k_node
         self.beam_type = beam_type
 
         # Coordinates of the nodes
@@ -171,6 +218,7 @@ class Beam:
         self.end_node_coords = np.array(end_node_coords)
 
         self.length = np.linalg.norm(np.subtract(end_node_coords, start_node_coords))
+
         # a, e, l, g, i_y, i_z, k, k_y, k_z
         self.local_stiffness_matrix = FEA_3D.local_stiffness_3d(
             beam_type.cross_section_properties["area"],
@@ -184,12 +232,13 @@ class Beam:
             0
         )
 
-        self.transformation_matrix = FEA_3D.transformation_matrix(self.start_node_coords - self.end_node_coords)
+        direction = self.start_node_coords - self.end_node_coords
+
+        self.transformation_matrix = FEA_3D.transformation_matrix(direction, k_node)
 
         self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
             self.local_stiffness_matrix,
             self.transformation_matrix)
-
 
 
 class BeamType:

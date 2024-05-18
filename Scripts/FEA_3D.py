@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -47,16 +48,22 @@ def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y=0, k_z=0):
     return k
 
 
-def transformation_matrix():
-    l1 = 0
-    l2 = 0
-    l3 = 0
-    m1 = 0
-    m2 = 0
-    m3 = 0
-    n1 = 0
-    n2 = 0
-    n3 = 0
+def transformation_matrix(coord_dir, k_node_dir):
+    ortho_dir = np.cross(coord_dir, k_node_dir)
+
+    coord_unit = coord_dir / np.linalg.norm(coord_dir)
+    k_node_unit = k_node_dir / np.linalg.norm(k_node_dir)
+    ortho_unit = ortho_dir / np.linalg.norm(ortho_dir)
+
+    l1 = coord_unit[0]
+    l2 = k_node_unit[0]
+    l3 = ortho_unit[0]
+    m1 = coord_unit[1]
+    m2 = k_node_unit[1]
+    m3 = ortho_unit[1]
+    n1 = coord_unit[2]
+    n2 = k_node_unit[2]
+    n3 = ortho_unit[2]
 
     t = np.array([[l1, m1, n1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [l2, m2, n2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -70,6 +77,7 @@ def transformation_matrix():
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l1, m1, n1],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l2, m2, n2],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l3, m3, n3]])
+
     return t
 
 
@@ -85,15 +93,16 @@ def assemble_stiffness_3d(beam_node_indexes, ks):
     # one matrix for each element i.e
     # [matrix_0,matrix_1,...,matrix_n]
 
-    element_num = beam_node_indexes.shape()[0]
+    element_num = np.shape(ks)[0]
 
     # break it into segments
     k11s = ks[:, 0:6, 0:6]
-    k12s = ks[:, 0:6, 6:-1]
-    k21s = ks[:, 6:-1, 0:6]
-    k22s = ks[:, 6:-1, 6:-1]
+    k12s = ks[:, 0:6, 5:-1]
+    k21s = ks[:, 5:-1, 0:6]
+    k22s = ks[:, 5:-1, 5:-1]
 
     k = np.zeros((element_num*6, element_num*6))
+
 
     for i in range(element_num): # cycles through each element
 
@@ -104,15 +113,15 @@ def assemble_stiffness_3d(beam_node_indexes, ks):
         k22 = k22s[i]
 
         # the index of node 0 in the global matrix
-        start_index = beam_node_indexes[i][0] * 6
+        start_index = int(beam_node_indexes[i][0] * 6)
         # the index of node 1 in the global matrix
-        end_index = beam_node_indexes[i][1] * 6
+        end_index = int(beam_node_indexes[i][1] * 6)
 
         # insert element matrices into appropriate locations
-        k[start_index:start_index+6,start_index:start_index+6] = k11
-        k[start_index:start_index+6,end_index:end_index+6] = k12
-        k[end_index:end_index+6,start_index:start_index+6] = k21
-        k[end_index:start_index+6,end_index:start_index+6] = k22
+        k[start_index:start_index+6, start_index:start_index+6] += k11
+        k[start_index:start_index+6, end_index:end_index+6] += k12
+        k[end_index:end_index+6, start_index:start_index+6] += k21
+        k[end_index:end_index+6, end_index:end_index+6] += k22
 
     return k  # returns the global stiffness matrix
 
@@ -126,17 +135,19 @@ def partition_stiffness_matrix(k, boundary_indexes):
 
     # append new rows on k
     for i in boundary_indexes:
-        k = np.concatenate((k, [k[i]]), axis=0)
+        k = np.concatenate((k, k[i]), axis=0)
 
     # delete old rows
-    k = np.delete(k,boundary_indexes,axis=0)
-
+    k = np.delete(k, boundary_indexes, axis=0)
+    print("k: ", np.shape(k))
     boundary_num = len(boundary_indexes)  # number of bcs
     free_num = np.shape(k)[0] - boundary_num  # number of non-bcs
     kuu = k[0:free_num, 0:free_num]
-    kup = k[0:free_num, free_num:-1]
-    kpu = k[free_num:-1, 0:free_num]
-    kpp = k[free_num:-1, free_num:-1]
+    kup = k[0:free_num, free_num-1:-1]
+    kpu = k[free_num-1:-1, 0:free_num]
+    kpp = k[free_num-1:-1, free_num-1:-1]
+    print("kuu: ", np.shape(kuu))
+    print("kpp: ", np.shape(kpp))
 
     return kuu, kup, kpu, kpp
 

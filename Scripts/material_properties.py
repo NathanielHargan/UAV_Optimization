@@ -1,5 +1,5 @@
 # Material Properties (hopefully m-kg-s)
-import pandas as pd
+Gravity = 9.81  # m^2/s
 
 Materials = {
     # https://www.matweb.com/search/datasheet.aspx?matguid=b8d536e0b9b54bd7b69e4124d8f1d20a&ckck=1
