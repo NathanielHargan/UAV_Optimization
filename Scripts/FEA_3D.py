@@ -81,7 +81,7 @@ def transformation_matrix(coord_dir, k_node_dir):
     return t
 
 
-def assemble_stiffness_3d(beam_node_indexes, ks):
+def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
     # beam_node is a nx2 matrix
     # pairs of node indexes for each element
     # [(start node,end node)
@@ -101,11 +101,9 @@ def assemble_stiffness_3d(beam_node_indexes, ks):
     k21s = ks[:, 5:-1, 0:6]
     k22s = ks[:, 5:-1, 5:-1]
 
-    k = np.zeros((element_num*6, element_num*6))
+    k = np.zeros((global_len, global_len))
 
-
-    for i in range(element_num): # cycles through each element
-
+    for i in range(element_num):  # cycles through each element
         # the stiffness matrix partitions for each element
         k11 = k11s[i]
         k12 = k12s[i]
@@ -116,12 +114,14 @@ def assemble_stiffness_3d(beam_node_indexes, ks):
         start_index = int(beam_node_indexes[i][0] * 6)
         # the index of node 1 in the global matrix
         end_index = int(beam_node_indexes[i][1] * 6)
-
+        print([start_index, end_index])
         # insert element matrices into appropriate locations
         k[start_index:start_index+6, start_index:start_index+6] += k11
         k[start_index:start_index+6, end_index:end_index+6] += k12
         k[end_index:end_index+6, start_index:start_index+6] += k21
         k[end_index:end_index+6, end_index:end_index+6] += k22
+
+    plt.imshow(np.where(k == 0, 0, 1), interpolation='none', cmap='gray')
 
     return k  # returns the global stiffness matrix
 
@@ -133,21 +133,21 @@ def partition_stiffness_matrix(k, boundary_indexes):
     # boundary conditions index list
     # which index on k do boundary conditions apply
 
-    # append new rows on k
-    for i in boundary_indexes:
-        k = np.concatenate((k, k[i]), axis=0)
+    # append boundary rows on k
+    for i in range(len(boundary_indexes)):
+        index = boundary_indexes[i][0]
+        new_row = k[index]
+        k = np.concatenate((k, [new_row]), axis=0)
 
     # delete old rows
-    k = np.delete(k, boundary_indexes, axis=0)
-    print("k: ", np.shape(k))
+    k = np.delete(k, boundary_indexes[:, 0], axis=0)
+
     boundary_num = len(boundary_indexes)  # number of bcs
     free_num = np.shape(k)[0] - boundary_num  # number of non-bcs
     kuu = k[0:free_num, 0:free_num]
     kup = k[0:free_num, free_num-1:-1]
     kpu = k[free_num-1:-1, 0:free_num]
     kpp = k[free_num-1:-1, free_num-1:-1]
-    print("kuu: ", np.shape(kuu))
-    print("kpp: ", np.shape(kpp))
 
     return kuu, kup, kpu, kpp
 
@@ -180,3 +180,5 @@ def shape_function_derivative_1(x, length):
                      (1 / length) * (+6 * xi - 6 * xi ** 2),  # N3
                      x * (xi ** 2 - xi)])  # N4
 
+
+#%%

@@ -60,7 +60,7 @@ class Drone:
         # Final to 0
         self.beam_system.add_point_mass_beam(
             strut_beam,
-            "strut_node_" + str( self.blade_num-1),
+            "strut_node_" + str(self.blade_num-1),
             "strut_node_0",
             [0, 0, 1],
             midpoint_node_name="strut_mass_pnt_0")

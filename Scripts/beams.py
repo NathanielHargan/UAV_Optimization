@@ -6,6 +6,7 @@ from Scripts.material_properties import Materials
 from Scripts.material_properties import Gravity
 import Scripts.FEA_3D as FEA_3D
 import time
+import matplotlib.pyplot as plt
 
 
 class BeamSystem:
@@ -35,6 +36,10 @@ class BeamSystem:
         self.u_index = np.empty(0)
         self.displacement_angle_vector = np.empty(0)
         self.force_moment_vector = np.empty(0)
+        self.kuu = np.empty(0)
+        self.kup = np.empty(0)
+        self.kpu = np.empty(0)
+        self.kpp = np.empty(0)
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -179,22 +184,27 @@ class BeamSystem:
         for i in range(len(self.beam_node_indexes)):
             global_element_matrices[i] = self.beams[i].global_stiffness_matrix
 
-        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices)
+        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length)
 
         kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.global_stiffness_matrix, p_index)
 
+        self.kuu = kuu
+        self.kup = kup
+        self.kpu = kpu
+        self.kpp = kpp
+
         print("starting the inverse")
         t = time.time()
-        kuu_inv = np.linalg.inv(kuu)
+        kuu_inv = np.linalg.inv(self.kuu)
         print("s:")
         print(time.time()-t)
 
         du = kuu_inv @ (ru - kup @ dp)
         rp = kpu @ du + kpp @ dp
 
-        dup = np.concatenate((du, dp))
-        rup = np.concatenate((ru, rp))
-        up_index = np.concatenate((u_index,p_index))
+        dup = np.concatenate((du, dp), axis=None)
+        rup = np.concatenate((ru, rp), axis=None)
+        up_index = np.concatenate((u_index,p_index), axis=None)
 
         d = np.empty(global_length)
         r = np.empty(global_length)
