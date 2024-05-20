@@ -158,7 +158,6 @@ class BeamSystem:
 
     def solve_FEA(self):
         global_length = np.shape(self.nodes)[0] * 6
-        p_length = np.shape(self.boundary_conditions)[0]
 
         dp = self.boundary_conditions
         p_index = np.intc(self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type)
@@ -196,15 +195,15 @@ class BeamSystem:
         print("starting the inverse")
         t = time.time()
         kuu_inv = np.linalg.inv(self.kuu)
-        print("s:")
-        print(time.time()-t)
+        self.kuu_inv = kuu_inv
+        print(time.time()-t,' seconds elapsed')
 
         du = kuu_inv @ (ru - kup @ dp)
         rp = kpu @ du + kpp @ dp
 
         dup = np.concatenate((du, dp), axis=None)
         rup = np.concatenate((ru, rp), axis=None)
-        up_index = np.concatenate((u_index,p_index), axis=None)
+        up_index = np.concatenate((u_index, p_index), axis=None)
 
         d = np.empty(global_length)
         r = np.empty(global_length)

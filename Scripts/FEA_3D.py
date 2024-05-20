@@ -114,14 +114,12 @@ def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
         start_index = int(beam_node_indexes[i][0] * 6)
         # the index of node 1 in the global matrix
         end_index = int(beam_node_indexes[i][1] * 6)
-        print([start_index, end_index])
         # insert element matrices into appropriate locations
         k[start_index:start_index+6, start_index:start_index+6] += k11
         k[start_index:start_index+6, end_index:end_index+6] += k12
         k[end_index:end_index+6, start_index:start_index+6] += k21
         k[end_index:end_index+6, end_index:end_index+6] += k22
 
-    plt.imshow(np.where(k == 0, 0, 1), interpolation='none', cmap='gray')
 
     return k  # returns the global stiffness matrix
 
