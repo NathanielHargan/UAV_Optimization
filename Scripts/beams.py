@@ -40,6 +40,12 @@ class BeamSystem:
         self.kup = np.empty(0)
         self.kpu = np.empty(0)
         self.kpp = np.empty(0)
+        self.x_displacements = np.empty(0)
+        self.y_displacements = np.empty(0)
+        self.z_displacements = np.empty(0)
+        self.x_angles = np.empty(0)
+        self.y_angles = np.empty(0)
+        self.z_angles = np.empty(0)
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -215,6 +221,23 @@ class BeamSystem:
         self.displacement_angle_vector = d
         self.force_moment_vector = r
 
+        self.x_displacements = d[0::6]
+        self.y_displacements = d[1::6]
+        self.z_displacements = d[2::6]
+        self.x_angles = d[3::6]
+        self.y_angles = d[4::6]
+        self.z_angles = d[5::6]
+
+        for beam_num, beam in enumerate(self.beams):
+            beam_node_0 = int(self.beam_node_indexes[beam_num, 0])
+            beam_node_1 = int(self.beam_node_indexes[beam_num, 1])
+            beam.x_displacement = np.array([self.x_displacements[beam_node_0], self.x_displacements[beam_node_1]])
+            beam.y_displacement = np.array([self.y_displacements[beam_node_0], self.y_displacements[beam_node_1]])
+            beam.z_displacement = np.array([self.z_displacements[beam_node_0], self.z_displacements[beam_node_1]])
+            beam.x_angles = np.array([self.x_angles[beam_node_0], self.x_angles[beam_node_1]])
+            beam.y_angles = np.array([self.y_angles[beam_node_0], self.y_angles[beam_node_1]])
+            beam.z_angles = np.array([self.z_angles[beam_node_0], self.z_angles[beam_node_1]])
+
 
 class Beam:
     def __init__(self, beam_type, start_node_coords, end_node_coords, k_node, name=None):
@@ -237,8 +260,8 @@ class Beam:
             beam_type.cross_section_properties['second moment of area y'],
             beam_type.cross_section_properties['second moment of area z'],
             beam_type.cross_section_properties["torsional constant"],
-            0,  # I'm ignoring these for now. I'm "neglecting transverse shear deformation."
-            0
+            beam_type.cross_section_properties['transverse shear deflection constant y'],  # I'm ignoring these for now. I'm "neglecting transverse shear deformation."
+            beam_type.cross_section_properties['transverse shear deflection constant z']
         )
 
         direction = self.start_node_coords - self.end_node_coords
@@ -248,6 +271,13 @@ class Beam:
         self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
             self.local_stiffness_matrix,
             self.transformation_matrix)
+
+        self.x_displacement = []
+        self.y_displacement = []
+        self.z_displacement = []
+        self.x_angles = []
+        self.y_angles = []
+        self.z_angles = []
 
 
 class BeamType:
