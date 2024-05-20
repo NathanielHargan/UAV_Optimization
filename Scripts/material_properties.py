@@ -1,5 +1,5 @@
 # Material Properties (hopefully m-kg-s)
-Gravity = 9.81  # m^2/s
+Gravity = 0.00981  # m^2/s
 
 Materials = {
     # https://www.matweb.com/search/datasheet.aspx?matguid=b8d536e0b9b54bd7b69e4124d8f1d20a&ckck=1
