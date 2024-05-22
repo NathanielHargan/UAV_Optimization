@@ -86,7 +86,7 @@ class BeamSystem:
         vector = np.array([[x, y, z]])
         self.forces = np.concatenate((self.forces, vector), axis=0)
         self.force_node_indexes = np.concatenate((self.force_node_indexes, node), axis=0)
-
+    '''
     def add_bifurcated_beam(self, beam_type, start_node, end_node, k_node, **kwargs):
         if 'start_beam_name' in kwargs:
             start_beam_name = kwargs['start_beam_name']
@@ -115,7 +115,7 @@ class BeamSystem:
             self.nodes[self.select_node(start_node)]))
         mass = -beam_type.material_properties["density"] * beam_type.cross_section_properties["area"] * length * Gravity
         self.add_force(0, 0, mass, int(len(self.nodes)-1))  # add force on new node
-
+    '''
     def add_beam(self, beam_type, start_node, end_node, k_node, name=None):
         start_node_index = self.select_node(start_node)
         end_node_index = self.select_node(end_node)
@@ -165,7 +165,7 @@ class BeamSystem:
     def solve_FEA(self):
         global_length = np.shape(self.nodes)[0] * 6
 
-        dp = self.boundary_conditions
+        dp = self.boundary_conditions[:, 0]
         p_index = np.intc(self.boundary_conditions_node_indexes * 6 + self.boundary_conditions_type)
 
         u_index_predel = np.intc(np.arange(global_length))
@@ -198,25 +198,33 @@ class BeamSystem:
         self.kpu = kpu
         self.kpp = kpp
 
+        print(kuu)
         print("starting the inverse")
+
         t = time.time()
         kuu_inv = np.linalg.inv(self.kuu)
         self.kuu_inv = kuu_inv
-        print(time.time()-t,' seconds elapsed')
+        print(time.time()-t, ' seconds elapsed')
 
-        du = kuu_inv @ (ru - kup @ dp)
-        rp = kpu @ du + kpp @ dp
+        du = kuu_inv @ (ru - (kup @ dp))
+        rp = (kpu @ du) + (kpp @ dp)
 
         dup = np.concatenate((du, dp), axis=None)
         rup = np.concatenate((ru, rp), axis=None)
         up_index = np.concatenate((u_index, p_index), axis=None)
 
+        self.du = du
+        self.rp = rp
+        self.rup = rup
+        self.dup = dup
+
         d = np.empty(global_length)
         r = np.empty(global_length)
 
+        print(up_index)
         for i in range(global_length):
-            d[i] = dup[up_index[i]]
-            r[i] = rup[up_index[i]]
+            d[up_index[i]] = dup[i]
+            r[up_index[i]] = rup[i]
 
         self.displacement_angle_vector = d
         self.force_moment_vector = r
@@ -260,12 +268,18 @@ class Beam:
             beam_type.cross_section_properties['second moment of area y'],
             beam_type.cross_section_properties['second moment of area z'],
             beam_type.cross_section_properties["torsional constant"],
-            beam_type.cross_section_properties['transverse shear deflection constant y'],  # I'm ignoring these for now. I'm "neglecting transverse shear deformation."
+            beam_type.cross_section_properties['transverse shear deflection constant y'],
             beam_type.cross_section_properties['transverse shear deflection constant z']
         )
 
-        direction = self.start_node_coords - self.end_node_coords
+        self.mass_matrix = FEA_3D.mass_matrix_3d(
+            beam_type.cross_section_properties["area"],
+            self.length,
+            beam_type.material_properties["density"]
+        )
 
+        direction = self.end_node_coords - self.start_node_coords
+        print(direction)
         self.transformation_matrix = FEA_3D.transformation_matrix(direction, k_node)
 
         self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(

@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y=0, k_z=0):
+def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y, k_z):
     x = a*e/l
-    phi_y = 12 * e * i_z * k_y / (a * g * l ** 2)
+    phi_y = 12 * e * i_z * k_y / (a * g * (l ** 2))
     y_1 = 12 * e * i_z / ((1 + phi_y) * l ** 3)
     y_2 = 6 * e * i_z / ((1 + phi_y) * l ** 2)
     y_3 = (4 + phi_y) * e * i_z / ((1 + phi_y) * l)
@@ -41,9 +41,9 @@ def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y=0, k_z=0):
                     [0, -y_2, 0, 0, 0, y_3]])
 
     # combines the arrays
-    k1 = np.concatenate([k11, k12], axis=0)
-    k2 = np.concatenate([k21, k22], axis=0)
-    k = np.concatenate([k1, k2], axis=1)
+    k1 = np.concatenate((k11, k12), axis=0)
+    k2 = np.concatenate((k21, k22), axis=0)
+    k = np.concatenate((k1, k2), axis=1)
 
     return k
 
@@ -65,6 +65,7 @@ def transformation_matrix(coord_dir, k_node_dir):
     n2 = k_node_unit[2]
     n3 = ortho_unit[2]
 
+    # splice it in
     t = np.array([[l1, m1, n1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [l2, m2, n2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [l3, m3, n3, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -77,8 +78,25 @@ def transformation_matrix(coord_dir, k_node_dir):
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l1, m1, n1],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l2, m2, n2],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l3, m3, n3]])
-
+    print("t: ", t)
     return t
+
+
+def mass_matrix_3d(area, length, density):
+    m = (area * length * density * 0.5 *
+         np.array([[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]))
+    return m
 
 
 def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
@@ -120,17 +138,16 @@ def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
         k[end_index:end_index+6, start_index:start_index+6] += k21
         k[end_index:end_index+6, end_index:end_index+6] += k22
 
-
+    print(k)
     return k  # returns the global stiffness matrix
 
 
 # Splits k into kuu kup kpu and kpp
 def partition_stiffness_matrix(k, boundary_indexes):
     # k is the global stiffness matrix
-
+    print(boundary_indexes)
     # boundary conditions index list
     # which index on k do boundary conditions apply
-
     # append boundary rows on k
     for i in range(len(boundary_indexes)):
         index = boundary_indexes[i][0]
@@ -150,10 +167,10 @@ def partition_stiffness_matrix(k, boundary_indexes):
     return kuu, kup, kpu, kpp
 
 
-def local_to_global_stiffness_matrix(k,t):
+def local_to_global_stiffness_matrix(k, t):
     return np.transpose(t) @ k @ t
 
-
+'''
 def solve_3D(ru, dp, kuu, kup, kpu, kpp):
     kuu_inv = np.linalg.inv(kuu)
 
@@ -161,7 +178,7 @@ def solve_3D(ru, dp, kuu, kup, kpu, kpp):
     rp = kpu @ du + kpp @ dp
 
     return du, rp
-
+'''
 
 def shape_function(x, length):
     xi = x / length

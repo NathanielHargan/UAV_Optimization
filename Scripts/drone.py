@@ -38,41 +38,39 @@ class Drone:
                 "strut_node_" + str(num))
             num += 1
 
+
     def create_drone_beams(self, arm_beam, strut_beam):
         # Adding Beams
         for i in range(0, self.blade_num):
             # Outer to Strut
-            self.beam_system.add_point_mass_beam(
+            self.beam_system.add_beam(
                 arm_beam,
                 "outer_node_" + str(i),
                 "strut_node_" + str(i),
-                [0, 0, 1],
-                midpoint_node_name="outer_mass_pnt_" + str(i))
+                [0, 0, 1])
 
             # Strut to Hub
-            self.beam_system.add_point_mass_beam(
+            self.beam_system.add_beam(
                 arm_beam,
                 "strut_node_" + str(i),
                 "origin",
-                [0, 0, 1],
-                midpoint_node_name="inner_mass_pnt_" + str(i))
+                [0, 0, 1])
 
         # Final to 0
-        self.beam_system.add_point_mass_beam(
+        self.beam_system.add_beam(
             strut_beam,
             "strut_node_" + str(self.blade_num-1),
             "strut_node_0",
-            [0, 0, 1],
-            midpoint_node_name="strut_mass_pnt_0")
+            [0, 0, 1])
 
         for i in range(0,  self.blade_num-1):
             # Strut to Strut
-            self.beam_system.add_point_mass_beam(
+            self.beam_system.add_beam(
                 strut_beam,
                 "strut_node_" + str(i),
                 "strut_node_" + str(i+1),
-                [0, 0, 1],
-                midpoint_node_name="strut_mass_pnt_" + str(i+1))
+                [0, 0, 1])
+
 
     def rotate_drone_nodes(self, x, y, z):
         self.beam_system.rotate_beam_system(x, y, z)
@@ -101,3 +99,5 @@ class Drone:
 
 
     #%%
+
+#%%
