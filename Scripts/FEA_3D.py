@@ -78,7 +78,6 @@ def transformation_matrix(coord_dir, k_node_dir):
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l1, m1, n1],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l2, m2, n2],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l3, m3, n3]])
-    print("t: ", t)
     return t
 
 
@@ -99,7 +98,7 @@ def mass_matrix_3d(area, length, density):
     return m
 
 
-def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
+def assemble_stiffness_3d(beam_node_indexes, ks, global_len, up_index):
     # beam_node is a nx2 matrix
     # pairs of node indexes for each element
     # [(start node,end node)
@@ -115,10 +114,9 @@ def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
 
     # break it into segments
     k11s = ks[:, 0:6, 0:6]
-    k12s = ks[:, 0:6, 5:-1]
-    k21s = ks[:, 5:-1, 0:6]
-    k22s = ks[:, 5:-1, 5:-1]
-
+    k12s = ks[:, 0:6, 6:]
+    k21s = ks[:, 6:, 0:6]
+    k22s = ks[:, 6:, 6:]
     k = np.zeros((global_len, global_len))
 
     for i in range(element_num):  # cycles through each element
@@ -138,31 +136,20 @@ def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
         k[end_index:end_index+6, start_index:start_index+6] += k21
         k[end_index:end_index+6, end_index:end_index+6] += k22
 
-    print(k)
-    return k  # returns the global stiffness matrix
+    refactor_k = np.zeros((global_len, global_len))
+    for i, index_i in enumerate(up_index):
+        for j, index_j in enumerate(up_index):
+            refactor_k[i, j] = k[index_i, index_j]
+
+    return refactor_k  # returns the global stiffness matrix
 
 
 # Splits k into kuu kup kpu and kpp
-def partition_stiffness_matrix(k, boundary_indexes):
-    # k is the global stiffness matrix
-    print(boundary_indexes)
-    # boundary conditions index list
-    # which index on k do boundary conditions apply
-    # append boundary rows on k
-    for i in range(len(boundary_indexes)):
-        index = boundary_indexes[i][0]
-        new_row = k[index]
-        k = np.concatenate((k, [new_row]), axis=0)
-
-    # delete old rows
-    k = np.delete(k, boundary_indexes[:, 0], axis=0)
-
-    boundary_num = len(boundary_indexes)  # number of bcs
-    free_num = np.shape(k)[0] - boundary_num  # number of non-bcs
-    kuu = k[0:free_num, 0:free_num]
-    kup = k[0:free_num, free_num-1:-1]
-    kpu = k[free_num-1:-1, 0:free_num]
-    kpp = k[free_num-1:-1, free_num-1:-1]
+def partition_stiffness_matrix(k, dof_num):
+    kuu = k[0:dof_num, 0:dof_num]
+    kup = k[0:dof_num, dof_num:]
+    kpu = k[dof_num:, 0:dof_num]
+    kpp = k[dof_num:, dof_num:]
 
     return kuu, kup, kpu, kpp
 

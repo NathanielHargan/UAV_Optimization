@@ -170,6 +170,7 @@ class BeamSystem:
 
         u_index_predel = np.intc(np.arange(global_length))
         ru_predel = np.zeros(global_length)  # fu before deleting bcs
+
         for i in range(len(self.forces)):  # for loop + counter
             r_index = int(self.force_node_indexes[i][0] * 6)
             ru_predel[r_index] += self.forces[i][0]
@@ -184,34 +185,27 @@ class BeamSystem:
         self.ru = ru
         self.u_index = u_index
 
+        up_index = np.concatenate((u_index, p_index), axis=None)
         global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
 
         for i in range(len(self.beam_node_indexes)):
             global_element_matrices[i] = self.beams[i].global_stiffness_matrix
 
-        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length)
+        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length, up_index)
 
-        kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.global_stiffness_matrix, p_index)
+        kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.global_stiffness_matrix, len(u_index))
 
         self.kuu = kuu
         self.kup = kup
         self.kpu = kpu
         self.kpp = kpp
 
-        print(kuu)
-        print("starting the inverse")
+        du = np.linalg.solve(kuu, ru)
 
-        t = time.time()
-        kuu_inv = np.linalg.inv(self.kuu)
-        self.kuu_inv = kuu_inv
-        print(time.time()-t, ' seconds elapsed')
-
-        du = kuu_inv @ (ru - (kup @ dp))
         rp = (kpu @ du) + (kpp @ dp)
 
         dup = np.concatenate((du, dp), axis=None)
         rup = np.concatenate((ru, rp), axis=None)
-        up_index = np.concatenate((u_index, p_index), axis=None)
 
         self.du = du
         self.rp = rp
@@ -279,7 +273,6 @@ class Beam:
         )
 
         direction = self.end_node_coords - self.start_node_coords
-        print(direction)
         self.transformation_matrix = FEA_3D.transformation_matrix(direction, k_node)
 
         self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
