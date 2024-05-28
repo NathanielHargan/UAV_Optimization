@@ -1,20 +1,23 @@
-# Material Properties (hopefully m-kg-s)
-Gravity = 0.00981  # m^2/s
+# Material Properties (hopefully N, mm, MPa )
+Gravity = 9806.6499994  # mm/s^2
 
 Materials = {
-    # https://www.matweb.com/search/datasheet.aspx?matguid=b8d536e0b9b54bd7b69e4124d8f1d20a&ckck=1
+    # https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d
     "Aluminum7075-T6": {
-        "density": 2753.23377521,  # [kg/m^3]
-        "elastic modulus": 6.89e7,  # [Pa]
-        "shear modulus": 2.6e7,  # [Pa]
+        "weight density": 2.81e-5,  # [N/mm^3]
+        "mass density": 0,  # [N-s^2/mm^4]
+        "elastic modulus": 71.7,  # [MPa]
+        "shear modulus": 26.9,  # [MPa]
         "poisson ratio": 0.33,  # [-]
-        "yield strength": 2.76e8,  # [Pa]
-        "ultimate strength": 3.1e8,  # [Pa]
-        "fatigue strength coefficient": 1.466e9,  # [Pa]
-        "fatigue strength exponent": -0.134,  # [-]
+        "yield strength": 503,  # [MPa]
+        "ultimate strength": 572,  # [MPa]
+        "fatigue strength coefficient": 1466,  # [MPa]
+        "fatigue strength exponent": -0.143,  # [-]
         "fatigue strength cycles": 5e8  # [-]
     }
 }
+
+Materials["Aluminum7075-T6"]["mass density"] = Materials["Aluminum7075-T6"]["weight density"] / Gravity
 
 
 

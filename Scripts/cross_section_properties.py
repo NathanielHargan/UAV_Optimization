@@ -19,11 +19,11 @@ def cross_section_annulus(cross_section_parameters):
         'radius of gyration y': (1/2) * math.sqrt(r_outer ** 2 + r_inner ** 2),
         'radius of gyration z': (math.sqrt(2)/2) * math.sqrt(r_outer ** 2 + r_inner ** 2),
         'plastic section modulus': (4/3) * (r_outer ** 3 - r_inner ** 3),
-        'elastic section modulus': (math.pi/4) * (r_outer ** 4 - r_inner **4) / r_outer,
+        'elastic section modulus': (math.pi/4) * (r_outer ** 4 - r_inner ** 4) / r_outer,
         'torsional constant': (math.pi/2) * (r_outer ** 4 - r_inner ** 4),
         # I calculated this for poisson = 0
-        'transverse shear deflection constant y': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2)),
-        'transverse shear deflection constant z': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2))
+        'transverse shear deflection constant x': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2)),
+        'transverse shear deflection constant y': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2))
     }
 
 

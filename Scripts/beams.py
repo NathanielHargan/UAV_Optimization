@@ -46,6 +46,12 @@ class BeamSystem:
         self.x_angles = np.empty(0)
         self.y_angles = np.empty(0)
         self.z_angles = np.empty(0)
+        self.x_forces = np.empty(0)
+        self.y_forces = np.empty(0)
+        self.z_forces = np.empty(0)
+        self.x_moments = np.empty(0)
+        self.y_moments = np.empty(0)
+        self.z_moments = np.empty(0)
 
     def add_node(self, x, y, z, name=None):
         coords = np.array([[x, y, z]])
@@ -200,7 +206,8 @@ class BeamSystem:
         self.kpu = kpu
         self.kpp = kpp
 
-        du = np.linalg.solve(kuu, ru)
+
+        du = np.linalg.solve(kuu, ru - (kup @ dp))
 
         rp = (kpu @ du) + (kpp @ dp)
 
@@ -215,7 +222,6 @@ class BeamSystem:
         d = np.empty(global_length)
         r = np.empty(global_length)
 
-        print(up_index)
         for i in range(global_length):
             d[up_index[i]] = dup[i]
             r[up_index[i]] = rup[i]
@@ -229,6 +235,13 @@ class BeamSystem:
         self.x_angles = d[3::6]
         self.y_angles = d[4::6]
         self.z_angles = d[5::6]
+
+        self.x_forces = r[0::6]
+        self.y_forces = r[1::6]
+        self.z_forces = r[2::6]
+        self.x_moments = r[3::6]
+        self.y_moments = r[4::6]
+        self.z_moments = r[5::6]
 
         for beam_num, beam in enumerate(self.beams):
             beam_node_0 = int(self.beam_node_indexes[beam_num, 0])
@@ -259,17 +272,18 @@ class Beam:
             beam_type.material_properties["elastic modulus"],
             self.length,
             beam_type.material_properties["shear modulus"],
+            beam_type.cross_section_properties['second moment of area x'],
             beam_type.cross_section_properties['second moment of area y'],
-            beam_type.cross_section_properties['second moment of area z'],
             beam_type.cross_section_properties["torsional constant"],
-            beam_type.cross_section_properties['transverse shear deflection constant y'],
-            beam_type.cross_section_properties['transverse shear deflection constant z']
+            beam_type.cross_section_properties['transverse shear deflection constant x'],
+            beam_type.cross_section_properties['transverse shear deflection constant y']
+
         )
 
         self.mass_matrix = FEA_3D.mass_matrix_3d(
             beam_type.cross_section_properties["area"],
             self.length,
-            beam_type.material_properties["density"]
+            beam_type.material_properties["mass density"]
         )
 
         direction = self.end_node_coords - self.start_node_coords
