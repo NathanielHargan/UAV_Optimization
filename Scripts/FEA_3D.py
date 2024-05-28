@@ -5,13 +5,11 @@ import numpy as np
 def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y, k_z):
     x = a*e/l
     phi_y = 12 * e * i_z * k_y / (a * g * (l ** 2))
-    print(phi_y)
     y_1 = 12 * e * i_z / ((1 + phi_y) * l ** 3)
     y_2 = 6 * e * i_z / ((1 + phi_y) * l ** 2)
     y_3 = (4 + phi_y) * e * i_z / ((1 + phi_y) * l)
     y_4 = (2 - phi_y) * e * i_z / ((1 + phi_y) * l)
     phi_z = 12 * e * i_y * k_z / (a * g * (l ** 2))
-    print(phi_z)
     z_1 = 12 * e * i_y / ((1 + phi_z) * (l ** 3))
     z_2 = 6 * e * i_y / ((1 + phi_z) * (l ** 2))
     z_3 = (4 + phi_z) * e * i_y / ((1 + phi_z) * l)
