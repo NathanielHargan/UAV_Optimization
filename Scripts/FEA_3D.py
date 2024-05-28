@@ -43,6 +43,7 @@ def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y, k_z):
     k1 = np.concatenate((k11, k12), axis=0)
     k2 = np.concatenate((k21, k22), axis=0)
     k = np.concatenate((k1, k2), axis=1)
+
     return k
 
 

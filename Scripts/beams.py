@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import scipy
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.material_properties import Materials
@@ -206,8 +207,7 @@ class BeamSystem:
         self.kpu = kpu
         self.kpp = kpp
 
-
-        du = np.linalg.solve(kuu, ru - (kup @ dp))
+        du = scipy.linalg.solve(kuu, ru - (kup @ dp))
 
         rp = (kpu @ du) + (kpp @ dp)
 
