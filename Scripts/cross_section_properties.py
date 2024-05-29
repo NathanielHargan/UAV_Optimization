@@ -27,7 +27,6 @@ def cross_section_annulus(cross_section_parameters):
     }
 
 
-
 def cross_section_circle(cross_section_parameters):
     r = cross_section_parameters[0]
 
@@ -43,6 +42,30 @@ def cross_section_circle(cross_section_parameters):
         'plastic section modulus': (4/3) * r ** 3,
         'elastic section modulus': (math.pi/4) * r ** 3,
         'torsional constant': (math.pi/2) * r ** 4,
-        'transverse shear deflection constant y': 6/7,
-        'transverse shear deflection constant z': 6/7
+        'transverse shear deflection constant x': 6/7,
+        'transverse shear deflection constant y': 6/7
+    }
+
+
+def cross_section_rectangle(cross_section_parameters):
+    # https://structx.com/Shape_Formulas_024.html
+    a = cross_section_parameters[0]  # height
+    b = cross_section_parameters[1]  # width
+
+    return {
+        'area': a*b,
+        'perimeter': 2 * (a + b),
+        'second moment of area x': ((a ** 3) * b) / 12,
+        'second moment of area y': (a * (b ** 3)) / 12,
+        'second moment of area z': a * b * ((a ** 2) + (b ** 2)) / 12,  # also polar moment of inertia
+        'radius of gyration x': a / (2 * math.sqrt(3)),
+        'radius of gyration y': b / (2 * math.sqrt(3)),
+        'radius of gyration z': math.sqrt((a ** 2 + b ** 2) / (2 * math.sqrt(3))),
+        'plastic section modulus x': a ** 2 * b / 4,
+        'plastic section modulus y': a * b ** 2 / 4,
+        'elastic section modulus x': (a ** 2 * b) / 6,
+        'elastic section modulus y': (a * b ** 2) / 6,
+        'torsional constant': ((a ** 3) * b) * ((1/3) - (0.21*a/b) * (1 - (a**4 / (12 * b ** 4)))),
+        'transverse shear deflection constant x': 5/6,
+        'transverse shear deflection constant y': 5/6
     }

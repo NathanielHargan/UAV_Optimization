@@ -3,6 +3,7 @@ import math
 import scipy
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
+from Scripts.cross_section_properties import cross_section_rectangle
 from Scripts.material_properties import Materials
 from Scripts.material_properties import Gravity
 import Scripts.FEA_3D as FEA_3D
@@ -17,7 +18,10 @@ class BeamSystem:
         self.beam_node_indexes = np.empty((0, 2))  # List of the node indexes that beams go between
 
         self.forces = np.empty((0, 3))  # List of Vectors
-        self.force_node_indexes = np.empty((0, 1)) # List of node indexes
+        self.force_node_indexes = np.empty((0, 1))  # List of node indexes
+
+        self.moments = np.empty((0, 3))
+        self.moment_node_indexes = np.empty((0, 1))  # List of node indexes
 
         # The value of the BC
         self.boundary_conditions = np.empty((0, 1))
@@ -93,6 +97,13 @@ class BeamSystem:
         vector = np.array([[x, y, z]])
         self.forces = np.concatenate((self.forces, vector), axis=0)
         self.force_node_indexes = np.concatenate((self.force_node_indexes, node), axis=0)
+
+    def add_moment(self, x, y, z, node_ref):
+        node = np.array([[self.select_node(node_ref)]])
+        moment = np.array([[x, y, z]])
+        self.moments = np.concatenate((self.forces, moment), axis=0)
+        self.moment_node_indexes = np.concatenate((self.moment_node_indexes, node), axis=0)
+
     '''
     def add_bifurcated_beam(self, beam_type, start_node, end_node, k_node, **kwargs):
         if 'start_beam_name' in kwargs:
@@ -183,6 +194,12 @@ class BeamSystem:
             ru_predel[r_index] += self.forces[i][0]
             ru_predel[r_index+1] += self.forces[i][1]
             ru_predel[r_index+2] += self.forces[i][2]
+
+        for i in range(len(self.moments)):  # for loop + counter
+            r_index = int(self.moment_node_indexes[i][0] * 6)
+            ru_predel[r_index+3] += self.moments[i][0]
+            ru_predel[r_index+4] += self.moments[i][1]
+            ru_predel[r_index+5] += self.moments[i][2]
 
         ru = np.delete(ru_predel, p_index, axis=0)
         u_index = np.intc(np.delete(u_index_predel, p_index, axis=0))
@@ -320,6 +337,8 @@ class BeamType:
             return cross_section_circle(self.cross_section_parameters)
         elif self.cross_section.lower() == "annulus":
             return cross_section_annulus(self.cross_section_parameters)
+        elif self.cross_section.lower() == "rectangle":
+            return cross_section_rectangle(self.cross_section_parameters)
         else:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
