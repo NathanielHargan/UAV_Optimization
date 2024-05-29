@@ -101,7 +101,7 @@ class BeamSystem:
     def add_moment(self, x, y, z, node_ref):
         node = np.array([[self.select_node(node_ref)]])
         moment = np.array([[x, y, z]])
-        self.moments = np.concatenate((self.forces, moment), axis=0)
+        self.moments = np.concatenate((self.moments, moment), axis=0)
         self.moment_node_indexes = np.concatenate((self.moment_node_indexes, node), axis=0)
 
     '''
@@ -195,6 +195,8 @@ class BeamSystem:
             ru_predel[r_index+1] += self.forces[i][1]
             ru_predel[r_index+2] += self.forces[i][2]
 
+        print("moments:",self.moments)
+        print(self.moment_node_indexes)
         for i in range(len(self.moments)):  # for loop + counter
             r_index = int(self.moment_node_indexes[i][0] * 6)
             ru_predel[r_index+3] += self.moments[i][0]
@@ -223,9 +225,10 @@ class BeamSystem:
         self.kup = kup
         self.kpu = kpu
         self.kpp = kpp
-
+        print(ru)
+        print(kuu)
         du = scipy.linalg.solve(kuu, ru - (kup @ dp))
-
+        print(du)
         rp = (kpu @ du) + (kpp @ dp)
 
         dup = np.concatenate((du, dp), axis=None)

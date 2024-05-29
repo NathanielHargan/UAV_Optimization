@@ -16,6 +16,10 @@ def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y, k_z):
     z_4 = (2 - phi_z) * e * i_y / ((1 + phi_z) * l)
     s = g*k/l
 
+    print("z_1: ", z_1)
+    print("z_2: ",z_2)
+    print("z_3: ",z_3)
+
     k11 = np.array([[x, 0, 0, 0, 0, 0],
                     [0, y_1, 0, 0, 0, y_2],
                     [0, 0, z_1, 0, -z_2, 0],
@@ -39,11 +43,12 @@ def local_stiffness_3d(a, e, l, g, i_y, i_z, k, k_y, k_z):
                     [0, 0, z_2, 0, z_3, 0],
                     [0, -y_2, 0, 0, 0, y_3]])
 
+    print(k11)
     # combines the arrays
-    k1 = np.concatenate((k11, k12), axis=0)
-    k2 = np.concatenate((k21, k22), axis=0)
-    k = np.concatenate((k1, k2), axis=1)
-
+    k1 = np.concatenate((k11, k12), axis=1)
+    k2 = np.concatenate((k21, k22), axis=1)
+    k = np.concatenate((k1, k2), axis=0)
+    print(k == np.transpose(k))
     return k
 
 
