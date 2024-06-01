@@ -195,8 +195,6 @@ class BeamSystem:
             ru_predel[r_index+1] += self.forces[i][1]
             ru_predel[r_index+2] += self.forces[i][2]
 
-        print("moments:",self.moments)
-        print(self.moment_node_indexes)
         for i in range(len(self.moments)):  # for loop + counter
             r_index = int(self.moment_node_indexes[i][0] * 6)
             ru_predel[r_index+3] += self.moments[i][0]
@@ -225,10 +223,9 @@ class BeamSystem:
         self.kup = kup
         self.kpu = kpu
         self.kpp = kpp
-        print(ru)
-        print(kuu)
+
         du = scipy.linalg.solve(kuu, ru - (kup @ dp))
-        print(du)
+
         rp = (kpu @ du) + (kpp @ dp)
 
         dup = np.concatenate((du, dp), axis=None)
@@ -292,8 +289,8 @@ class Beam:
             beam_type.material_properties["elastic modulus"],
             self.length,
             beam_type.material_properties["shear modulus"],
-            beam_type.cross_section_properties['second moment of area x'],
             beam_type.cross_section_properties['second moment of area y'],
+            beam_type.cross_section_properties['second moment of area x'],
             beam_type.cross_section_properties["torsional constant"],
             beam_type.cross_section_properties['transverse shear deflection constant x'],
             beam_type.cross_section_properties['transverse shear deflection constant y']
