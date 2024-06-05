@@ -55,9 +55,9 @@ def cross_section_rectangle(cross_section_parameters):
     return {
         'area': a*b,
         'perimeter': 2 * (a + b),
-        'second moment of area x': ((a ** 3) * b) / 12,
-        'second moment of area y': (a * (b ** 3)) / 12,
-        'second moment of area z': a * b * ((a ** 2) + (b ** 2)) / 12,  # also polar moment of inertia
+        'second moment of area y': ((a ** 3) * b) / 12,  # I1
+        'second moment of area z': (a * (b ** 3)) / 12,  # I2
+        'second moment of area x': a * b * ((a ** 2) + (b ** 2)) / 12,  # also polar moment of inertia
         'radius of gyration x': a / (2 * math.sqrt(3)),
         'radius of gyration y': b / (2 * math.sqrt(3)),
         'radius of gyration z': math.sqrt((a ** 2 + b ** 2) / (2 * math.sqrt(3))),
