@@ -261,15 +261,53 @@ class BeamSystem:
         self.z_moments = r[5::6]
 
         for beam_num, beam in enumerate(self.beams):
-            beam_node_0 = int(self.beam_node_indexes[beam_num, 0])
-            beam_node_1 = int(self.beam_node_indexes[beam_num, 1])
-            beam.x_displacement = np.array([self.x_displacements[beam_node_0], self.x_displacements[beam_node_1]])
-            beam.y_displacement = np.array([self.y_displacements[beam_node_0], self.y_displacements[beam_node_1]])
-            beam.z_displacement = np.array([self.z_displacements[beam_node_0], self.z_displacements[beam_node_1]])
-            beam.x_angles = np.array([self.x_angles[beam_node_0], self.x_angles[beam_node_1]])
-            beam.y_angles = np.array([self.y_angles[beam_node_0], self.y_angles[beam_node_1]])
-            beam.z_angles = np.array([self.z_angles[beam_node_0], self.z_angles[beam_node_1]])
+            beam_index_0 = int(self.beam_node_indexes[beam_num][0] * 6)
+            beam_index_1 = int(self.beam_node_indexes[beam_num][1] * 6)
+            local_d = np.concatenate((d[beam_index_0:beam_index_0 + 6], d[beam_index_1:beam_index_1+6]))
+            local_r = np.concatenate((r[beam_index_0:beam_index_0 + 6], r[beam_index_1:beam_index_1+6]))
+            beam.solve_local(local_d, local_r)
 
+            beam_node_index_0 = int(self.beam_node_indexes[beam_num][0])
+            beam_node_index_1 = int(self.beam_node_indexes[beam_num][1])
+
+            beam.x_displacements_global = np.array([
+                self.x_displacements[beam_node_index_0],
+                self.x_displacements[beam_node_index_1]])
+            beam.y_displacements_global = np.array([
+                self.y_displacements[beam_node_index_0],
+                self.y_displacements[beam_node_index_1]])
+            beam.z_displacements_global = np.array([
+                self.z_displacements[beam_node_index_0],
+                self.z_displacements[beam_node_index_1]])
+            beam.x_angles_global = np.array([
+                self.x_angles[beam_node_index_0],
+                self.x_angles[beam_node_index_1]])
+            beam.y_angles_global = np.array([
+                self.y_angles[beam_node_index_0],
+                self.y_angles[beam_node_index_1]])
+            beam.z_angles_global = np.array([
+                self.z_angles[beam_node_index_0],
+                self.z_angles[beam_node_index_1]])
+
+            beam.x_forces_global = np.array([
+                self.x_forces[beam_node_index_0],
+                self.x_forces[beam_node_index_1]])
+            beam.y_forces_global = np.array([
+                self.y_forces[beam_node_index_0],
+                self.y_forces[beam_node_index_1]])
+            beam.z_forces_global = np.array([
+                self.z_forces[beam_node_index_0],
+                self.z_forces[beam_node_index_1]])
+
+            beam.x_moments_global = np.array([
+                self.x_moments[beam_node_index_0],
+                self.x_moments[beam_node_index_1]])
+            beam.y_moments_global = np.array([
+                self.y_moments[beam_node_index_0],
+                self.y_moments[beam_node_index_1]])
+            beam.z_moments_global = np.array([
+                self.z_moments[beam_node_index_0],
+                self.z_moments[beam_node_index_1]])
 
 class Beam:
     def __init__(self, beam_type, start_node_coords, end_node_coords, k_node, name=None):
@@ -310,12 +348,51 @@ class Beam:
             self.local_stiffness_matrix,
             self.transformation_matrix)
 
-        self.x_displacement = []
-        self.y_displacement = []
-        self.z_displacement = []
-        self.x_angles = []
-        self.y_angles = []
-        self.z_angles = []
+        self.d_local = np.empty(12)
+        self.r_local = np.empty(12)
+
+        self.x_displacements_local = np.empty(2)
+        self.y_displacements_local = np.empty(2)
+        self.z_displacements_local = np.empty(2)
+        self.x_angles_local = np.empty(2)
+        self.y_angles_local = np.empty(2)
+        self.z_angles_local = np.empty(2)
+        self.x_forces_local = np.empty(2)
+        self.y_forces_local = np.empty(2)
+        self.z_forces_local = np.empty(2)
+        self.x_moments_local = np.empty(2)
+        self.y_moments_local = np.empty(2)
+        self.z_moments_local = np.empty(2)
+
+        self.x_displacements_global = np.empty(2)
+        self.y_displacements_global = np.empty(2)
+        self.z_displacements_global = np.empty(2)
+        self.x_angles_global = np.empty(2)
+        self.y_angles_global = np.empty(2)
+        self.z_angles_global = np.empty(2)
+        self.x_forces_global = np.empty(2)
+        self.y_forces_global = np.empty(2)
+        self.z_forces_global = np.empty(2)
+        self.x_moments_global = np.empty(2)
+        self.y_moments_global = np.empty(2)
+        self.z_moments_global = np.empty(2)
+
+    def solve_local(self, d, r):
+        self.d_local = self.transformation_matrix @ d
+        self.r_local = self.transformation_matrix @ r
+        self.x_displacements_local = np.array([self.d_local[0], self.d_local[6]])
+        self.y_displacements_local = np.array([self.d_local[1], self.d_local[7]])
+        self.z_displacements_local = np.array([self.d_local[2], self.d_local[8]])
+        self.x_angles_local = np.array([self.d_local[3], self.d_local[9]])
+        self.y_angles_local = np.array([self.d_local[4], self.d_local[10]])
+        self.z_angles_local = np.array([self.d_local[5], self.d_local[11]])
+
+        self.x_forces_local = np.array([self.r_local[0], self.r_local[6]])
+        self.y_forces_local = np.array([self.r_local[1], self.r_local[7]])
+        self.z_forces_local = np.array([self.r_local[2], self.r_local[8]])
+        self.x_moments_local = np.array([self.r_local[3], self.r_local[9]])
+        self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
+        self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
 
 
 class BeamType:
