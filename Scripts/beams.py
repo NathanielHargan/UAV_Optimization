@@ -322,7 +322,7 @@ class Beam:
 
         self.length = np.linalg.norm(np.subtract(end_node_coords, start_node_coords))
 
-        # a, e, l, g, i_y (i_y), i_z (i_x), k, k_y, k_z
+        # a, e, l, g, i_y, i_z , k, k_y, k_z
         self.local_stiffness_matrix = FEA_3D.local_stiffness_3d(
             beam_type.cross_section_properties["area"],
             beam_type.material_properties["elastic modulus"],
@@ -331,8 +331,8 @@ class Beam:
             beam_type.cross_section_properties['second moment of area y'],
             beam_type.cross_section_properties['second moment of area z'],
             beam_type.cross_section_properties["torsional constant"],
-            beam_type.cross_section_properties['transverse shear deflection constant x'],
-            beam_type.cross_section_properties['transverse shear deflection constant y']
+            beam_type.cross_section_properties['transverse shear deflection constant y'],
+            beam_type.cross_section_properties['transverse shear deflection constant z']
 
         )
 
