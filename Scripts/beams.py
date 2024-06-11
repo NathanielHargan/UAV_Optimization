@@ -444,12 +444,12 @@ class BeamType:
 
         # for shape functions
         eik_z = (self.material_properties["elastic modulus"] *
-                self.cross_section_properties["second moment of area z"] *
-                self.material_properties["transverse shear deflection constant z"])
+                 self.cross_section_properties["second moment of area z"] *
+                 self.material_properties["transverse shear deflection constant z"])
 
         eik_y = (self.material_properties["elastic modulus"] *
-                self.cross_section_properties["second moment of area y"] *
-                self.material_properties["transverse shear deflection constant y"])
+                 self.cross_section_properties["second moment of area y"] *
+                 self.material_properties["transverse shear deflection constant y"])
 
         ga = self.material_properties["shear modulus"] * self.cross_section_properties["area"]
 
