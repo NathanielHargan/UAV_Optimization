@@ -156,6 +156,7 @@ def partition_stiffness_matrix(k, dof_num):
 def local_to_global_stiffness_matrix(k, t):
     return np.transpose(t) @ k @ t
 
+
 '''
 def solve_3D(ru, dp, kuu, kup, kpu, kpp):
     kuu_inv = np.linalg.inv(kuu)
@@ -166,20 +167,16 @@ def solve_3D(ru, dp, kuu, kup, kpu, kpp):
     return du, rp
 '''
 
-def shape_function(x, length):
-    xi = x / length
-    return np.array([1 - (3 * xi ** 2) + (2 * xi ** 3),  # N1
-                     x * (1 - (2 * xi) + (xi ** 2)),  # N2
-                     (3 * (xi ** 2)) - (2 * (xi ** 3)),  # N3
-                     x * ((xi ** 2) - xi)])  # N4
 
+def shape_function_timoshenko_a_inv(L, g):
+    a_inv = (1 / (L ** 2 + 12 * g)) * np.array([
+        [L ** 2 + 12 * g, 0, 0, 0],
+        [-12 / g, L ** 2 + 6 * g, 12 * g / L, 6 * g],
+        [-3, -(2 * L ** 2 + 6 * g)/L, 3, -(L ** 2 - 6 * g)/L],
+        [2/L, 1, -2/L, 1]
+    ])
+    return a_inv
 
-def shape_function_derivative_1(x, length):
-    xi = x / length
-    return np.array([(1 / length) * (-6 * xi + 6 * xi ** 2),  # N1
-                     (1 - 4 * xi + 3 * xi ** 2),  # N2
-                     (1 / length) * (+6 * xi - 6 * xi ** 2),  # N3
-                     x * (xi ** 2 - xi)])  # N4
 
 
 #%%

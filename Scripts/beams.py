@@ -378,6 +378,9 @@ class Beam:
         self.y_moments_global = np.empty(2)
         self.z_moments_global = np.empty(2)
 
+        self.a_inv_y_shape_vector = np.empty(4)
+        self.a_inv_z_shape_vector = np.empty(4)
+
     def solve_local(self, d, r):
         self.d_local = self.transformation_matrix @ d
         self.r_local = self.transformation_matrix @ r
@@ -395,6 +398,35 @@ class Beam:
         self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
 
+    def solve_shape_functions(self):
+        a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
+        a_inv_z = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_z)
+
+        self.a_inv_y_shape_vector = a_inv_y @ np.array([self.y_displacements_global[0],
+                                                        self.z_angles_global[0],
+                                                        self.y_displacements_global[1],
+                                                        self.z_angles_global[1]])
+
+        self.a_inv_z_shape_vector = a_inv_z @ np.array([self.z_displacements_global[0],
+                                                        self.y_angles_global[0],
+                                                        self.z_displacements_global[1],
+                                                        self.y_angles_global[1]])
+
+    def return_shape_functions(self, x):
+        X_y = np.array([
+            [1, x, x**2, x**3],
+            [0, 1, x, (3 * x ** 2) - 6 * self.beam_type.g_y],
+            [0, 0, 0, -6 * self.beam_type.g_y]])
+
+        X_z = np.array([
+            [1, x, x**2, x**3],
+            [0, 1, x, (3 * x ** 2) - 6 * self.beam_type.g_z],
+            [0, 0, 0, -6 * self.beam_type.g_z]])
+
+        y = X_y @ self.a_inv_y_shape_vector
+        z = X_z @ self.a_inv_z_shape_vector
+
+        return y, z
 
 class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
@@ -409,6 +441,20 @@ class BeamType:
             self.name = name
 
         self.cross_section_properties = self.cross_section_properties_init()
+
+        # for shape functions
+        eik_z = (self.material_properties["elastic modulus"] *
+                self.cross_section_properties["second moment of area z"] *
+                self.material_properties["transverse shear deflection constant z"])
+
+        eik_y = (self.material_properties["elastic modulus"] *
+                self.cross_section_properties["second moment of area y"] *
+                self.material_properties["transverse shear deflection constant y"])
+
+        ga = self.material_properties["shear modulus"] * self.cross_section_properties["area"]
+
+        self.g_y = eik_y/ga
+        self.g_z = eik_z/ga
 
     def cross_section_properties_init(self):
         if self.cross_section.lower() == "circle":
