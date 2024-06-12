@@ -310,6 +310,8 @@ class BeamSystem:
                 self.z_moments[beam_node_index_0],
                 self.z_moments[beam_node_index_1]])
 
+            beam.solve_shape_functions()
+
 class Beam:
     def __init__(self, beam_type, start_node_coords, end_node_coords, k_node, name=None):
         self.name = name  # String with the beam name
