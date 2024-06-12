@@ -404,25 +404,26 @@ class Beam:
         a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
         a_inv_z = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_z)
 
-        self.a_inv_y_shape_vector = a_inv_y @ np.array([self.y_displacements_global[0],
-                                                        self.z_angles_global[0],
-                                                        self.y_displacements_global[1],
-                                                        self.z_angles_global[1]])
+        self.a_inv_y_shape_vector = a_inv_y @ np.array([self.y_displacements_local[0],
+                                                        self.z_angles_local[0],
+                                                        self.y_displacements_local[1],
+                                                        self.z_angles_local[1]])
 
-        self.a_inv_z_shape_vector = a_inv_z @ np.array([self.z_displacements_global[0],
-                                                        self.y_angles_global[0],
-                                                        self.z_displacements_global[1],
-                                                        self.y_angles_global[1]])
+        self.a_inv_z_shape_vector = a_inv_z @ np.array([self.z_displacements_local[0],
+                                                        self.y_angles_local[0],
+                                                        self.z_displacements_local[1],
+                                                        self.y_angles_local[1]])
 
-    def return_shape_functions(self, x):
+    def return_shape_functions(self, xi):
+        x = xi * self.length
         X_y = np.array([
             [1, x, x**2, x**3],
-            [0, 1, x, (3 * x ** 2) - 6 * self.beam_type.g_y],
+            [0, 1, 2*x, (3 * x ** 2) - 6 * self.beam_type.g_y],
             [0, 0, 0, -6 * self.beam_type.g_y]])
 
         X_z = np.array([
             [1, x, x**2, x**3],
-            [0, 1, x, (3 * x ** 2) - 6 * self.beam_type.g_z],
+            [0, 1, 2*x, (3 * x ** 2) - 6 * self.beam_type.g_z],
             [0, 0, 0, -6 * self.beam_type.g_z]])
 
         y = X_y @ self.a_inv_y_shape_vector
@@ -447,11 +448,11 @@ class BeamType:
         # for shape functions
         eik_z = (self.material_properties["elastic modulus"] *
                  self.cross_section_properties["second moment of area z"] *
-                 self.material_properties["transverse shear deflection constant z"])
+                 self.cross_section_properties["transverse shear deflection constant z"])
 
         eik_y = (self.material_properties["elastic modulus"] *
                  self.cross_section_properties["second moment of area y"] *
-                 self.material_properties["transverse shear deflection constant y"])
+                 self.cross_section_properties["transverse shear deflection constant y"])
 
         ga = self.material_properties["shear modulus"] * self.cross_section_properties["area"]
 

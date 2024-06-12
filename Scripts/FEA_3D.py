@@ -171,7 +171,7 @@ def solve_3D(ru, dp, kuu, kup, kpu, kpp):
 def shape_function_timoshenko_a_inv(L, g):
     a_inv = (1 / (L ** 2 + 12 * g)) * np.array([
         [L ** 2 + 12 * g, 0, 0, 0],
-        [-12 / g, L ** 2 + 6 * g, 12 * g / L, 6 * g],
+        [-12 / g, L ** 2 + 6 * g, 12 * g / L, -6 * g],
         [-3, -(2 * L ** 2 + 6 * g)/L, 3, -(L ** 2 - 6 * g)/L],
         [2/L, 1, -2/L, 1]
     ])
