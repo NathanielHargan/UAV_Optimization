@@ -65,6 +65,7 @@ def transformation_matrix(coord_dir, k_node_dir):
     n3 = ortho_unit[2]
 
     # splice it in
+    '''
     t = np.array([[l1, m1, n1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [l2, m2, n2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [l3, m3, n3, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -77,7 +78,35 @@ def transformation_matrix(coord_dir, k_node_dir):
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l1, m1, n1],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l2, m2, n2],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, l3, m3, n3]])
+    '''
+    t = np.array([[l1, m1, n1],
+                  [l2, m2, n2],
+                  [l3, m3, n3]])
+    print("3x3:",t)
+
+
     return t
+
+
+def transformation_matrix_node(coord_dir, k_node_dir):
+    zeroes = np.zeros((3, 3))
+    t = transformation_matrix(coord_dir, k_node_dir)
+    t1 = np.concatenate((t, zeroes), axis=1)
+    t2 = np.concatenate((zeroes, t), axis=1)
+    t_node = np.concatenate((t1, t2), axis=0)
+    return t_node
+
+
+def transformation_matrix_element(coord_dir, k_node_dir):
+    zeroes = np.zeros((3, 3))
+    t = transformation_matrix(coord_dir, k_node_dir)
+    print("3x3:",t)
+    t1 = np.concatenate((t, zeroes, zeroes, zeroes), axis=1)
+    t2 = np.concatenate((zeroes, t, zeroes, zeroes), axis=1)
+    t3 = np.concatenate((zeroes, zeroes, t, zeroes), axis=1)
+    t4 = np.concatenate((zeroes, zeroes, zeroes, t), axis=1)
+    t_element = np.concatenate((t1, t2, t3, t4), axis=0)
+    return t_element
 
 
 def mass_matrix_3d(area, length, density):
