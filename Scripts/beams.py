@@ -10,6 +10,9 @@ import Scripts.FEA_3D as FEA_3D
 import time
 import matplotlib.pyplot as plt
 
+import logging
+from numpy.testing import assert_almost_equal
+
 
 class Node:
     def __init__(self, location, node_index, name):
@@ -510,8 +513,102 @@ class BeamType:
             return 'error'
 
 
+#%%
+def test_cantilever_rectangle():
+    beam_system = BeamSystem("Cantilever-end load")
+    arm_beam = BeamType("rectangle", [20, 6], "Aluminum7075-T6", "arm_beam")
+    beam_system.add_node(np.array([0,0,0]),"origin")
+    beam_system.add_node(np.array([500,0,0]),"point_1")
+    beam_system.add_beam(arm_beam,"origin","point_1",np.array([0,0,1]),"beam")
+    beam_system.add_boundary_condition(0,"x","origin")
+    beam_system.add_boundary_condition(0,"y","origin")
+    beam_system.add_boundary_condition(0,"z","origin")
+    beam_system.add_boundary_condition(0,"theta x","origin")
+    beam_system.add_boundary_condition(0,"theta y","origin")
+    beam_system.add_boundary_condition(0,"theta z","origin")
+    beam_system.add_force(np.array([0, 0, -4]), "point_1")
+
+    beam_system.solve_FEA()
+    L = 500
+    I = (6 * 20 ** 3) / 12
+    E = 71700
+    F = 4
+
+    y = - (F * L ** 3) / (3*E*I)
+    m = F * L
+    dydx = (F*L**2)/(2*E*I) - (F*L**2)/(E*I)
+
+    print("Cantilever—end load")
+    print("calculated z: " + str(y) + " | FEA z: " + str(beam_system.z_displacements[1]))
+    print("calculated y: " + str(0) + " | FEA y: " + str(beam_system.y_displacements[1]))
+    print("calculated theta: " + str(-dydx) + " | FEA theta y: " + str(beam_system.y_angles[1]))
+    print("calculated moment: " + str(-m) + " | FEA moment reaction: " + str(beam_system.y_moments[0]))
+    print("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[0]))
+    assert_almost_equal(y, beam_system.z_displacements[1], 3)
+    assert_almost_equal(0, beam_system.y_displacements[1])
+    assert_almost_equal(-dydx, beam_system.y_angles[1])
+    assert_almost_equal(-m, beam_system.y_moments[0])
+    assert_almost_equal(F, beam_system.z_forces[0])
+
+    print("")
+    for i in np.arange(0, 1.1, 0.1):
+        print("Shape z disp " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][0]))
+    print("")
+    for i in np.arange(0, 1.1, 0.1):
+        print("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
 
+def test_center_multidim():
+    beam_system = BeamSystem("Multidimensional Simple Support Center Load")
+    arm_beam = BeamType("annulus", [25, 20], "Aluminum7075-T6", "arm_beam")
+    beam_system.add_node(np.array([-1000, -1000, -1000]), "point_0")
+    beam_system.add_node(np.array([0, 0, 0]), "point_1")
+    beam_system.add_node(np.array([1000, 1000, 1000]), "point_2")
+    beam_system.add_beam(arm_beam, "point_0", "point_1", np.array([0, -1, 1]), "beam_1")
+    beam_system.add_beam(arm_beam, "point_1", "point_2", np.array([0, -1, 1]), "beam_2")
+    beam_system.add_boundary_condition(0, "x","point_0")
+    beam_system.add_boundary_condition(0, "y", "point_0")
+    beam_system.add_boundary_condition(0,"z","point_0")
+    beam_system.add_boundary_condition(0,"x","point_2")
+    beam_system.add_boundary_condition(0,"y","point_2")
+    beam_system.add_boundary_condition(0,"z","point_2")
+    beam_system.add_force(np.array([0, 1, -1]), "point_1")
+    beam_system.solve_FEA()
 
+    L = math.sqrt(3 * 2000 ** 2)
+    I = (math.pi/64) * (50**4 - 40**4)
+    E = 71700
+    F = math.sqrt(2)
+    # kuu
+    # Z1  Z2
+    # Z2  Z3
+    y = -(F * (L**3)) / (48 * E * I)
+    r = F/2
+    dydx = -(F * L ** 2) / (16 * E * I)
+
+    print("")
+    print("Multidimensional Simple Support Center Load")
+    print("FEA x: " + str(beam_system.x_displacements[1]))
+    print("FEA y: " + str(beam_system.y_displacements[1]))
+    print("FEA z: " + str(beam_system.z_displacements[1]))
+    print("FEA x theta: " + str(beam_system.x_angles[1]))
+    print("FEA y theta: " + str(beam_system.y_angles[1]))
+    print("FEA z theta: " + str(beam_system.z_angles[1]))
+    print("FEA x reaction: " + str(beam_system.x_forces[0]))
+    print("FEA y reaction: " + str(beam_system.y_forces[0]))
+    print("FEA z reaction: " + str(beam_system.z_forces[0]))
+
+    total_fea_disp = math.sqrt(beam_system.x_displacements[1] ** 2 + beam_system.y_displacements[1] ** 2 + beam_system.z_displacements[1] ** 2)
+    total_fea_reaction = math.sqrt(beam_system.x_forces[0] ** 2 + beam_system.y_forces[0] ** 2 + beam_system.z_forces[0] ** 2)
+
+    print("Calculated total displacement: " + str(-y) + " | Total displacement FEA: " + str(total_fea_disp))
+    print("Calculated total reaction: " + str(r) + " | Total reaction FEA: " + str(total_fea_reaction))
+    assert_almost_equal(-y, total_fea_disp, 3)
+    assert_almost_equal(r, total_fea_reaction)
+
+
+if __name__ == '__main__':
+    test_cantilever_rectangle()
+    test_center_multidim()
 
 #%%

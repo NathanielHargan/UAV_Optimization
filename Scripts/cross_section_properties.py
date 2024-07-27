@@ -69,3 +69,42 @@ def cross_section_rectangle(cross_section_parameters):
         'transverse shear deflection constant y': 5/6,
         'transverse shear deflection constant z': 5/6
     }
+
+def cross_section_hexagon(cross_section_parameters):
+    # https://structx.com/Shape_Formulas_036.html
+    r = cross_section_parameters[0]  # radius
+    f = r * math.sqrt(3)  # face to face distance
+    a = (3 * math.sqrt(3) * r ** 2) / 2  # area
+    iz = 0.0601 * f ** 4
+    return {
+        'area': a,
+        'perimeter': 6 * r,
+        'second moment of area x': 2 * iz,  # also polar moment of inertia
+        'second moment of area y': iz,  # I1
+        'second moment of area z': iz,  # I2
+        'radius of gyration x': math.sqrt(2 * iz/a),
+        'radius of gyration y': math.sqrt(iz/a),
+        'radius of gyration z': math.sqrt(iz/a),
+        'elastic section modulus': iz/r,
+        'torsional constant': 0.1154 * f ** 4,
+        'transverse shear deflection constant y': 0,
+        'transverse shear deflection constant z': 0
+    }
+
+
+def cross_section_octagon(cross_section_parameters):
+    # https://structx.com/Shape_Formulas_037.html
+    r = cross_section_parameters[0]  # radius
+    return {
+        'area': 4 * r ** 2 * math.sqrt(2) / 2,
+        'perimeter': 8 * r * math.sqrt(2 - math.sqrt(2)),
+        'second moment of area x': 1.2762 * r ** 4,  # also polar moment of inertia
+        'second moment of area y': 0.6381 * r ** 4,  # I1
+        'second moment of area z': 0.6381 * r ** 4,  # I2
+        'radius of gyration x': 0.672 * r,
+        'radius of gyration y': 0.475 * r,
+        'radius of gyration z': 0.475 * r,
+        'elastic section modulus': 0.6381 * r ** 3,
+        'transverse shear deflection constant y': 0,
+        'transverse shear deflection constant z': 0
+    }

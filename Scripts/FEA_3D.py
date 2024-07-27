@@ -82,7 +82,6 @@ def transformation_matrix(coord_dir, k_node_dir):
     t = np.array([[l1, m1, n1],
                   [l2, m2, n2],
                   [l3, m3, n3]])
-    print("3x3:",t)
 
 
     return t
@@ -100,7 +99,6 @@ def transformation_matrix_node(coord_dir, k_node_dir):
 def transformation_matrix_element(coord_dir, k_node_dir):
     zeroes = np.zeros((3, 3))
     t = transformation_matrix(coord_dir, k_node_dir)
-    print("3x3:",t)
     t1 = np.concatenate((t, zeroes, zeroes, zeroes), axis=1)
     t2 = np.concatenate((zeroes, t, zeroes, zeroes), axis=1)
     t3 = np.concatenate((zeroes, zeroes, t, zeroes), axis=1)
@@ -206,6 +204,3 @@ def shape_function_timoshenko_a_inv(L, g):
     ])
     return a_inv
 
-
-
-#%%
