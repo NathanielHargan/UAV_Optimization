@@ -538,24 +538,23 @@ def test_cantilever_rectangle():
     m = F * L
     dydx = (F*L**2)/(2*E*I) - (F*L**2)/(E*I)
 
-    print("Cantilever—end load")
-    print("calculated z: " + str(y) + " | FEA z: " + str(beam_system.z_displacements[1]))
-    print("calculated y: " + str(0) + " | FEA y: " + str(beam_system.y_displacements[1]))
-    print("calculated theta: " + str(-dydx) + " | FEA theta y: " + str(beam_system.y_angles[1]))
-    print("calculated moment: " + str(-m) + " | FEA moment reaction: " + str(beam_system.y_moments[0]))
-    print("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[0]))
+    logging.info("Started Cantilever—end load")
+    logging.debug("calculated z: " + str(y) + " | FEA z: " + str(beam_system.z_displacements[1]))
+    logging.debug("calculated y: " + str(0) + " | FEA y: " + str(beam_system.y_displacements[1]))
+    logging.debug("calculated theta: " + str(-dydx) + " | FEA theta y: " + str(beam_system.y_angles[1]))
+    logging.debug("calculated moment: " + str(-m) + " | FEA moment reaction: " + str(beam_system.y_moments[0]))
+    logging.debug("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[0]))
     assert_almost_equal(y, beam_system.z_displacements[1], 3)
     assert_almost_equal(0, beam_system.y_displacements[1])
     assert_almost_equal(-dydx, beam_system.y_angles[1])
     assert_almost_equal(-m, beam_system.y_moments[0])
     assert_almost_equal(F, beam_system.z_forces[0])
 
-    print("")
     for i in np.arange(0, 1.1, 0.1):
-        print("Shape z disp " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][0]))
-    print("")
+        logging.debug("Shape z disp " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][0]))
+
     for i in np.arange(0, 1.1, 0.1):
-        print("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
+        logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
 
 def test_center_multidim():
@@ -585,29 +584,29 @@ def test_center_multidim():
     y = -(F * (L**3)) / (48 * E * I)
     r = F/2
     dydx = -(F * L ** 2) / (16 * E * I)
-
-    print("")
-    print("Multidimensional Simple Support Center Load")
-    print("FEA x: " + str(beam_system.x_displacements[1]))
-    print("FEA y: " + str(beam_system.y_displacements[1]))
-    print("FEA z: " + str(beam_system.z_displacements[1]))
-    print("FEA x theta: " + str(beam_system.x_angles[1]))
-    print("FEA y theta: " + str(beam_system.y_angles[1]))
-    print("FEA z theta: " + str(beam_system.z_angles[1]))
-    print("FEA x reaction: " + str(beam_system.x_forces[0]))
-    print("FEA y reaction: " + str(beam_system.y_forces[0]))
-    print("FEA z reaction: " + str(beam_system.z_forces[0]))
+    logging.info('Started Multidimensional Simple Support Center Load Test')
+    logging.debug("FEA x: " + str(beam_system.x_displacements[1]))
+    logging.debug("FEA y: " + str(beam_system.y_displacements[1]))
+    logging.debug("FEA z: " + str(beam_system.z_displacements[1]))
+    logging.debug("FEA x theta: " + str(beam_system.x_angles[1]))
+    logging.debug("FEA y theta: " + str(beam_system.y_angles[1]))
+    logging.debug("FEA z theta: " + str(beam_system.z_angles[1]))
+    logging.debug("FEA x reaction: " + str(beam_system.x_forces[0]))
+    logging.debug("FEA y reaction: " + str(beam_system.y_forces[0]))
+    logging.debug("FEA z reaction: " + str(beam_system.z_forces[0]))
 
     total_fea_disp = math.sqrt(beam_system.x_displacements[1] ** 2 + beam_system.y_displacements[1] ** 2 + beam_system.z_displacements[1] ** 2)
     total_fea_reaction = math.sqrt(beam_system.x_forces[0] ** 2 + beam_system.y_forces[0] ** 2 + beam_system.z_forces[0] ** 2)
 
-    print("Calculated total displacement: " + str(-y) + " | Total displacement FEA: " + str(total_fea_disp))
-    print("Calculated total reaction: " + str(r) + " | Total reaction FEA: " + str(total_fea_reaction))
+    logging.debug("Calculated total displacement: " + str(-y) + " | Total displacement FEA: " + str(total_fea_disp))
+    logging.debug("Calculated total reaction: " + str(r) + " | Total reaction FEA: " + str(total_fea_reaction))
     assert_almost_equal(-y, total_fea_disp, 3)
     assert_almost_equal(r, total_fea_reaction)
+    logging.info('Finished')
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_cantilever_rectangle()
     test_center_multidim()
 

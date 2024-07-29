@@ -1,0 +1,123 @@
+INFO:root:Started Cantilever—end load
+DEBUG:root:calculated z: -0.5811250581125058 | FEA z: -0.5816413736845836
+DEBUG:root:calculated y: 0 | FEA y: -0.0
+DEBUG:root:calculated theta: 0.0017433751743375174 | FEA theta y: 0.0017433751743375176
+DEBUG:root:calculated moment: -2000 | FEA moment reaction: -2000.0000000000014
+DEBUG:root:calculated reaction: 4 | FEA reaction z: 4.0
+DEBUG:root:Shape z disp 0.0: 0.0
+DEBUG:root:Shape z disp 0.1: -0.008444126720345285
+DEBUG:root:Shape z disp 0.2: -0.032601175462724105
+DEBUG:root:Shape z disp 0.3: -0.07072213468954999
+DEBUG:root:Shape z disp 0.4: -0.1210579928632364
+DEBUG:root:Shape z disp 0.5: -0.1818597384461969
+DEBUG:root:Shape z disp 0.6: -0.251378359900845
+DEBUG:root:Shape z disp 0.7: -0.3278648456895943
+DEBUG:root:Shape z disp 0.8: -0.40957018427485803
+DEBUG:root:Shape z disp 0.9: -0.49474536411904985
+DEBUG:root:Shape z disp 1.0: -0.5816413736845836
+DEBUG:root:Shape y angle 0.0: -1.864745386542024e-07
+DEBUG:root:Shape y angle 0.1: -0.0003319350303551898
+DEBUG:root:Shape y angle 0.2: -0.0006287033554199956
+DEBUG:root:Shape y angle 0.3: -0.000890491449733072
+DEBUG:root:Shape y angle 0.4: -0.0011172993132944182
+DEBUG:root:Shape y angle 0.5: -0.0013091269461040348
+DEBUG:root:Shape y angle 0.6: -0.001465974348161922
+DEBUG:root:Shape y angle 0.7: -0.0015878415194680788
+DEBUG:root:Shape y angle 0.8: -0.0016747284600225063
+DEBUG:root:Shape y angle 0.9: -0.0017266351698252036
+DEBUG:root:Shape y angle 1.0: -0.0017435616488761718
+INFO:root:Started Multidimensional Simple Support Center Load Test
+DEBUG:root:FEA x: -1.07259596009653e-14
+DEBUG:root:FEA y: 0.0667079675116867
+DEBUG:root:FEA z: -0.06670796751167597
+DEBUG:root:FEA x theta: 0.0001321027948068087
+DEBUG:root:FEA y theta: 0.00013210279480680868
+DEBUG:root:FEA z theta: 0.00013210279480680868
+DEBUG:root:FEA x reaction: 1.4277468096679513e-13
+DEBUG:root:FEA y reaction: -0.5000000000002115
+DEBUG:root:FEA z reaction: 0.5000000000000331
+DEBUG:root:Calculated total displacement: 0.09430402058969596 | Total displacement FEA: 0.09433931237336354
+DEBUG:root:Calculated total reaction: 0.7071067811865476 | Total reaction FEA: 0.7071067811867204
+INFO:root:Finished
+INFO:root:Started Cantilever—end load
+DEBUG:root:calculated z: -0.5811250581125058 | FEA z: -0.5816413736845836
+DEBUG:root:calculated y: 0 | FEA y: -0.0
+DEBUG:root:calculated theta: 0.0017433751743375174 | FEA theta y: 0.0017433751743375176
+DEBUG:root:calculated moment: -2000 | FEA moment reaction: -2000.0000000000014
+DEBUG:root:calculated reaction: 4 | FEA reaction z: 4.0
+DEBUG:root:Shape z disp 0.0: 0.0
+DEBUG:root:Shape z disp 0.1: -0.008444126720345285
+DEBUG:root:Shape z disp 0.2: -0.032601175462724105
+DEBUG:root:Shape z disp 0.3: -0.07072213468954999
+DEBUG:root:Shape z disp 0.4: -0.1210579928632364
+DEBUG:root:Shape z disp 0.5: -0.1818597384461969
+DEBUG:root:Shape z disp 0.6: -0.251378359900845
+DEBUG:root:Shape z disp 0.7: -0.3278648456895943
+DEBUG:root:Shape z disp 0.8: -0.40957018427485803
+DEBUG:root:Shape z disp 0.9: -0.49474536411904985
+DEBUG:root:Shape z disp 1.0: -0.5816413736845836
+DEBUG:root:Shape y angle 0.0: -1.864745386542024e-07
+DEBUG:root:Shape y angle 0.1: -0.0003319350303551898
+DEBUG:root:Shape y angle 0.2: -0.0006287033554199956
+DEBUG:root:Shape y angle 0.3: -0.000890491449733072
+DEBUG:root:Shape y angle 0.4: -0.0011172993132944182
+DEBUG:root:Shape y angle 0.5: -0.0013091269461040348
+DEBUG:root:Shape y angle 0.6: -0.001465974348161922
+DEBUG:root:Shape y angle 0.7: -0.0015878415194680788
+DEBUG:root:Shape y angle 0.8: -0.0016747284600225063
+DEBUG:root:Shape y angle 0.9: -0.0017266351698252036
+DEBUG:root:Shape y angle 1.0: -0.0017435616488761718
+INFO:root:Started Multidimensional Simple Support Center Load Test
+DEBUG:root:FEA x: -1.07259596009653e-14
+DEBUG:root:FEA y: 0.0667079675116867
+DEBUG:root:FEA z: -0.06670796751167597
+DEBUG:root:FEA x theta: 0.0001321027948068087
+DEBUG:root:FEA y theta: 0.00013210279480680868
+DEBUG:root:FEA z theta: 0.00013210279480680868
+DEBUG:root:FEA x reaction: 1.4277468096679513e-13
+DEBUG:root:FEA y reaction: -0.5000000000002115
+DEBUG:root:FEA z reaction: 0.5000000000000331
+DEBUG:root:Calculated total displacement: 0.09430402058969596 | Total displacement FEA: 0.09433931237336354
+DEBUG:root:Calculated total reaction: 0.7071067811865476 | Total reaction FEA: 0.7071067811867204
+INFO:root:Finished
+INFO:root:Started Cantilever—end load
+DEBUG:root:calculated z: -0.5811250581125058 | FEA z: -0.5816413736845836
+DEBUG:root:calculated y: 0 | FEA y: -0.0
+DEBUG:root:calculated theta: 0.0017433751743375174 | FEA theta y: 0.0017433751743375176
+DEBUG:root:calculated moment: -2000 | FEA moment reaction: -2000.0000000000014
+DEBUG:root:calculated reaction: 4 | FEA reaction z: 4.0
+DEBUG:root:Shape z disp 0.0: 0.0
+DEBUG:root:Shape z disp 0.1: -0.008444126720345285
+DEBUG:root:Shape z disp 0.2: -0.032601175462724105
+DEBUG:root:Shape z disp 0.3: -0.07072213468954999
+DEBUG:root:Shape z disp 0.4: -0.1210579928632364
+DEBUG:root:Shape z disp 0.5: -0.1818597384461969
+DEBUG:root:Shape z disp 0.6: -0.251378359900845
+DEBUG:root:Shape z disp 0.7: -0.3278648456895943
+DEBUG:root:Shape z disp 0.8: -0.40957018427485803
+DEBUG:root:Shape z disp 0.9: -0.49474536411904985
+DEBUG:root:Shape z disp 1.0: -0.5816413736845836
+DEBUG:root:Shape y angle 0.0: -1.864745386542024e-07
+DEBUG:root:Shape y angle 0.1: -0.0003319350303551898
+DEBUG:root:Shape y angle 0.2: -0.0006287033554199956
+DEBUG:root:Shape y angle 0.3: -0.000890491449733072
+DEBUG:root:Shape y angle 0.4: -0.0011172993132944182
+DEBUG:root:Shape y angle 0.5: -0.0013091269461040348
+DEBUG:root:Shape y angle 0.6: -0.001465974348161922
+DEBUG:root:Shape y angle 0.7: -0.0015878415194680788
+DEBUG:root:Shape y angle 0.8: -0.0016747284600225063
+DEBUG:root:Shape y angle 0.9: -0.0017266351698252036
+DEBUG:root:Shape y angle 1.0: -0.0017435616488761718
+INFO:root:Started Multidimensional Simple Support Center Load Test
+DEBUG:root:FEA x: -1.07259596009653e-14
+DEBUG:root:FEA y: 0.0667079675116867
+DEBUG:root:FEA z: -0.06670796751167597
+DEBUG:root:FEA x theta: 0.0001321027948068087
+DEBUG:root:FEA y theta: 0.00013210279480680868
+DEBUG:root:FEA z theta: 0.00013210279480680868
+DEBUG:root:FEA x reaction: 1.4277468096679513e-13
+DEBUG:root:FEA y reaction: -0.5000000000002115
+DEBUG:root:FEA z reaction: 0.5000000000000331
+DEBUG:root:Calculated total displacement: 0.09430402058969596 | Total displacement FEA: 0.09433931237336354
+DEBUG:root:Calculated total reaction: 0.7071067811865476 | Total reaction FEA: 0.7071067811867204
+INFO:root:Finished
