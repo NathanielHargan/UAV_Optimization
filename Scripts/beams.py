@@ -1,3 +1,4 @@
+#%%
 import numpy as np
 import math
 import scipy
@@ -22,6 +23,7 @@ class Node:
 
         self.force = np.array([0, 0, 0])
         self.moment = np.array([0, 0, 0])
+        self.local_bc_transform = np.identity(6)
 
     def add_force(self, force):
         self.force = self.force + force
@@ -32,7 +34,11 @@ class Node:
         # Make node class
         # Move more information to the beam class
         # Local transformation option on elements for a specified node.
-        #
+
+    def create_local_transform(self, transform_dir, k_node_dir):
+        self.local_bc_transform = FEA_3D.transformation_matrix_node(transform_dir, k_node_dir)
+
+
 
 
 class Beam:
@@ -84,15 +90,7 @@ class Beam:
         self.a_inv_y_shape_vector = np.empty(4)
         self.a_inv_z_shape_vector = np.empty(4)
 
-        self.local_bc_transform = np.identity(12)
-
         self.solve_stiffness_matrix()
-
-    def create_local_transform(self, transform_dir, k_node_dir, on_start_node):
-        if on_start_node:
-            self.local_bc_transform[0:6, 0:6] = FEA_3D.transformation_matrix_node(transform_dir, k_node_dir)
-        else:
-            self.local_bc_transform[6:, 6:] = FEA_3D.transformation_matrix_node(transform_dir, k_node_dir)
 
     def solve_stiffness_matrix(self):
         # a, e, l, g, i_y, i_z, k, k_y, k_z
@@ -120,7 +118,6 @@ class Beam:
             self.local_stiffness_matrix,
             self.transformation_matrix)
 
-        self.applied_stiffness_matrix = self.global_stiffness_matrix @ self.local_bc_transform
 
     def solve_local(self, d, r):
         self.d_local = self.transformation_matrix @ d
@@ -188,6 +185,9 @@ class BeamSystem:
 
         # placeholder
         self.global_stiffness_matrix = np.empty(0)
+        self.local_bc_transform = np.empty(0)
+        self.transformed_stiffness_matrix = np.empty(0)
+        self.applied_stiffness_matrix = np.empty(0)
         self.ru = np.empty(0)
         self.dp = np.empty(0)
         self.p_index = np.empty(0)
@@ -210,6 +210,7 @@ class BeamSystem:
         self.x_moments = np.empty(0)
         self.y_moments = np.empty(0)
         self.z_moments = np.empty(0)
+
 
     def add_node(self, location, name=None):
         if name is None:
@@ -245,17 +246,16 @@ class BeamSystem:
             print("invalid boundary condition type")
             return "error"
 
-    def add_boundary_condition(self, boundary_val, bc_type_ref, node_ref, beam_ref=None, direction=None, k_node_dir=None):
+    def add_boundary_condition(self, boundary_val, bc_type_ref, node_ref, direction=None, k_node_dir=None):
         node_index = self.select_node(node_ref)
         bc_type = self.select_boundary_condition_type(bc_type_ref)
         self.boundary_conditions = np.concatenate((self.boundary_conditions, [[boundary_val]]))
         self.boundary_conditions_type = np.concatenate((self.boundary_conditions_type, [[bc_type]]))
         self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions_node_indexes, [[node_index]]))
 
-        if beam_ref is not None:
-            beam = self.beams[self.select_element(beam_ref)]
-            beam.create_local_transform(direction, k_node_dir, beam.start_node == node_index)
-
+        if direction is not None:
+            node = self.nodes[node_index]
+            node.create_local_transform(direction, k_node_dir)
 
     def add_force(self, direction, node_ref):
         node = self.nodes[self.select_node(node_ref)]
@@ -374,11 +374,22 @@ class BeamSystem:
         global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
 
         for i in range(len(self.beam_node_indexes)):
-            global_element_matrices[i] = self.beams[i].applied_stiffness_matrix
+            global_element_matrices[i] = self.beams[i].global_stiffness_matrix
 
-        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length, up_index)
+        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length)
 
-        kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.global_stiffness_matrix, len(u_index))
+        local_bc_transform = np.zeros([global_length, global_length])
+
+        for i, node in enumerate(self.nodes):
+            local_bc_transform[i*6:6+i*6, i*6:6+i*6] = node.local_bc_transform
+
+        self.local_bc_transform = local_bc_transform
+
+        self.transformed_stiffness_matrix = self.local_bc_transform @ self.global_stiffness_matrix @ np.transpose(self.local_bc_transform)
+
+        self.applied_stiffness_matrix = FEA_3D.rearrange_stiffness_matrix(self.transformed_stiffness_matrix, up_index)
+
+        kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.applied_stiffness_matrix, len(u_index))
 
         self.kuu = kuu
         self.kup = kup
@@ -565,12 +576,12 @@ def test_center_multidim():
     beam_system.add_node(np.array([1000, 1000, 1000]), "point_2")
     beam_system.add_beam(arm_beam, "point_0", "point_1", np.array([0, -1, 1]), "beam_1")
     beam_system.add_beam(arm_beam, "point_1", "point_2", np.array([0, -1, 1]), "beam_2")
-    beam_system.add_boundary_condition(0, "x","point_0")
+    beam_system.add_boundary_condition(0, "x", "point_0")
     beam_system.add_boundary_condition(0, "y", "point_0")
-    beam_system.add_boundary_condition(0,"z","point_0")
-    beam_system.add_boundary_condition(0,"x","point_2")
-    beam_system.add_boundary_condition(0,"y","point_2")
-    beam_system.add_boundary_condition(0,"z","point_2")
+    beam_system.add_boundary_condition(0, "z", "point_0")
+    beam_system.add_boundary_condition(0, "x", "point_2")
+    beam_system.add_boundary_condition(0, "y", "point_2")
+    beam_system.add_boundary_condition(0, "z", "point_2")
     beam_system.add_force(np.array([0, 1, -1]), "point_1")
     beam_system.solve_FEA()
 
@@ -605,9 +616,72 @@ def test_center_multidim():
     logging.info('Finished')
 
 
+def test_incline_boundary_conditions():
+    beam_system = BeamSystem("Incline Boundary Conditions")
+    beam_12 = BeamType("circle", [27.63953195], "Aluminum7075-T6", "beam_12")
+    beam_3 = BeamType("circle", [32.869128059], "Aluminum7075-T6", "beam_3")
+
+    beam_12.material_properties['elastic modulus'] = 210000
+    beam_3.material_properties['elastic modulus'] = 210000
+    beam_12.cross_section_properties['transverse shear deflection constant y'] = 0
+    beam_12.cross_section_properties['transverse shear deflection constant z'] = 0
+    beam_12.cross_section_properties['transverse shear deflection constant y'] = 0
+    beam_12.cross_section_properties['transverse shear deflection constant z'] = 0
+    print(beam_12.cross_section_properties)
+
+    beam_system.add_node(np.array([0, 0, 0]), "point_1")
+    beam_system.add_node(np.array([0, 1000, 0]), "point_2")
+    beam_system.add_node(np.array([1000, 1000, 0]), "point_3")
+    beam_system.add_beam(beam_12, "point_1", "point_2", np.array([0, 0, 1]), "beam_1")
+    beam_system.add_beam(beam_12, "point_2", "point_3", np.array([0, 0, 1]), "beam_2")
+    beam_system.add_beam(beam_3, "point_1", "point_3", np.array([0, 0, 1]), "beam_3")
+
+    beam_system.add_boundary_condition(0, "x", "point_1")
+    beam_system.add_boundary_condition(0, "y", "point_1")
+    beam_system.add_boundary_condition(0, "z", "point_1")
+    beam_system.add_boundary_condition(0, "theta x", "point_1")
+    beam_system.add_boundary_condition(0, "theta y", "point_1")
+    beam_system.add_boundary_condition(0, "theta z", "point_1")
+
+    beam_system.add_boundary_condition(0, "y", "point_2")
+    beam_system.add_boundary_condition(0, "z", "point_2")
+    beam_system.add_boundary_condition(0, "theta y", "point_2")
+    beam_system.add_boundary_condition(0, "theta z", "point_2")
+
+
+    beam_system.add_boundary_condition(0, "y", "point_3", np.array([0.707, 0.707, 0]), np.array([-0.707, 0.707, 0]))
+    beam_system.add_boundary_condition(0, "z", "point_3")
+    beam_system.add_boundary_condition(0, "theta x", "point_3")
+    beam_system.add_boundary_condition(0, "theta y", "point_3")
+    beam_system.add_boundary_condition(0, "theta z", "point_3")
+    beam_system.add_force(np.array([1000000, 0, 0]), "point_2")
+    beam_system.solve_FEA()
+    np.set_printoptions(linewidth=400)
+
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
+    logging.info('Started Incline Boundary Conditions')
+    logging.debug("\nPRE-TRANSFORM 3:\n" + str(beam_system.global_stiffness_matrix))
+    logging.debug("\nTRANSFORM 3:\n" + str(beam_system.local_bc_transform))
+    logging.debug("\nPOST-TRANSFORM 3:\n" + str(beam_system.applied_stiffness_matrix))
+    logging.debug("FEA 2y: " + str(beam_system.x_displacements[1]) + ' | Expected 11.91')
+    # assert_almost_equal(beam_system.x_displacements[1], 11.91, 3)
+    logging.debug("FEA 1x: " + str(beam_system.x_forces[0]) + ' | Expected -500000')
+    logging.debug("FEA 1x: " + str(beam_system.x_forces[0]) + ' | Expected -500000')
+    # assert_almost_equal(beam_system.x_forces[0], -500000, -4)
+    logging.debug("FEA 1y: " + str(beam_system.y_forces[0]) + ' | Expected -500000')
+    logging.debug("FEA 1y: " + str(beam_system.y_forces[0]) + ' | Expected -500000')
+    # assert_almost_equal(beam_system.y_forces[0], -500000, -4)
+    logging.debug("FEA 2y: " + str(beam_system.y_forces[1]) + ' | Expected 0')
+    # assert_almost_equal(beam_system.y_forces[1], 0, -4)
+    logging.info('Finished')
+
+
 if __name__ == '__main__':
     logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_cantilever_rectangle()
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_center_multidim()
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
+    test_incline_boundary_conditions()
 
 #%%

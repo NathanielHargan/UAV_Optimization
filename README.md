@@ -6,3 +6,5 @@ __name__ = ''=''' (done)
 almost equal (done)
 from numpy.testing import assert_almost_equal (done)
 octo, hexa (done)
+
+Problem formulation

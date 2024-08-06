@@ -124,7 +124,7 @@ def mass_matrix_3d(area, length, density):
     return m
 
 
-def assemble_stiffness_3d(beam_node_indexes, ks, global_len, up_index):
+def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
     # beam_node is a nx2 matrix
     # pairs of node indexes for each element
     # [(start node,end node)
@@ -162,6 +162,11 @@ def assemble_stiffness_3d(beam_node_indexes, ks, global_len, up_index):
         k[end_index:end_index+6, start_index:start_index+6] += k21
         k[end_index:end_index+6, end_index:end_index+6] += k22
 
+    return k
+
+
+def rearrange_stiffness_matrix(k,up_index):
+    global_len = k.shape[0]
     refactor_k = np.zeros((global_len, global_len))
     for i, index_i in enumerate(up_index):
         for j, index_j in enumerate(up_index):
