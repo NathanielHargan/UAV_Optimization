@@ -2,12 +2,14 @@ import numpy as np
 
 
 class mission_profile:
-    def __init__(self, name, initial_payload):
+    def __init__(self, name, initial_payload, acceleration):
         # Name of the segment
         self.name = name
 
         # The ends of each segment are represented by values in the array. 0 for the start of the mission profile.
         self.t_values = np.array([0])
+        self.t_values_acc_x = np.array([0])
+        self.t_values_acc_y = np.array([0])
         self.x_coords = np.array([0])
         self.y_coords = np.array([0])
         self.payload = np.array([initial_payload])
@@ -20,8 +22,12 @@ class mission_profile:
 
         self.thrust = np.array([])
 
+        self.acceleration = acceleration
+        self.a_x_values = np.array([])
+        self.a_y_values = np.array([])
+
     # Adds a new segment to the mission profile
-    def add_segment(self,name,t,x_end=None,y_end=None):
+    def add_segment(self, name, t, x_end=None, y_end=None):
 
         # Adds segment name to array
         self.segment_names.append(name)
@@ -44,19 +50,40 @@ class mission_profile:
 
             self.v_x_values = np.append(self.v_x_values, vx) # Appends the velocity in X
             self.v_y_values = np.append(self.v_y_values, vy) # Appends the velocity in Y
+            if len(self.v_x_values) > 1:
+                if self.v_x_values[-1] > self.v_x_values[-2]:
+                    self.a_x_values = np.append(self.a_x_values, self.acceleration)
+                elif self.v_x_values[-1] < self.v_x_values[-2]:
+                    self.a_x_values = np.append(self.a_x_values, -self.acceleration)
+                else:
+                    self.a_x_values = np.append(self.a_x_values, 0)
 
-        self.t_values = np.append(self.t_values,t + self.t_values[-1]) # Adds time to last time recorded.
+                if self.v_y_values[-1] > self.v_y_values[-2]:
+                    self.a_y_values = np.append(self.a_y_values, self.acceleration)
+                elif self.v_y_values[-1] < self.v_y_values[-2]:
+                    self.a_y_values = np.append(self.a_y_values, -self.acceleration)
+                else:
+                    self.a_y_values = np.append(self.a_y_values, 0)
+            self.a_x_values = np.append(self.a_x_values, 0)
+            self.a_y_values = np.append(self.a_y_values, 0)
+
+        self.t_values = np.append(self.t_values, t + self.t_values[-1])  # Adds time to last time recorded.
+        if len(self.v_x_values) > 1:
+            self.t_values_acc_x = np.append(self.t_values_acc_x, t + self.t_values[-1])
+            self.t_values_acc_x = np.append(self.t_values_acc_x, t + self.t_values[-1] + abs(self.v_x_values[-1] - self.v_x_values[-2]) / self.acceleration)
+            self.t_values_acc_y = np.append(self.t_values_acc_y, t + self.t_values[-1])
+            self.t_values_acc_y = np.append(self.t_values_acc_y, t + self.t_values[-1] + abs(self.v_y_values[-1] - self.v_y_values[-2]) / self.acceleration)
 
     def drop_payload(self, mass):
         self.payload[-1] = self.payload[-1] - mass
 
     # Calculates segment index and returns the position, velocity, and the name of the segment at a given time
-    def time_solve(self,time):
+    def time_solve(self, time):
         i = np.searchsorted(self.t_values, time, side='right') - 1 # Determines the segment time is in
-        return self.time_output(time,i)
+        return self.time_output(time, i)
 
     # For a given value of time and segment index, it interpolates values for position, velocity, and the name of the segment
-    def time_output(self,time,i):
+    def time_output(self, time, i):
         # Finds index of segment time is in
         # Side = 'right' means that if t == self.t_values[value], then it prioritizes the right one.
 

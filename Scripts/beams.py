@@ -24,6 +24,10 @@ class Node:
         self.force = np.array([0, 0, 0])
         self.moment = np.array([0, 0, 0])
         self.local_bc_transform = np.identity(6)
+        self.result_displacement = np.array([0, 0, 0])
+        self.result_angular_displacement = np.array([0, 0, 0])
+        self.result_force = np.array([0, 0, 0])
+        self.result_moment = np.array([0, 0, 0])
 
     def add_force(self, force):
         self.force = self.force + force
@@ -37,8 +41,6 @@ class Node:
 
     def create_local_transform(self, transform_dir, k_node_dir):
         self.local_bc_transform = FEA_3D.transformation_matrix_node(transform_dir, k_node_dir)
-
-
 
 
 class Beam:
@@ -57,6 +59,7 @@ class Beam:
 
         self.local_stiffness_matrix = np.empty((12, 12))
         self.mass_matrix = np.empty((12, 12))
+        self.local_bc_transformation = np.identity(12)
         self.transformation_matrix = np.empty((12, 12))
         self.global_stiffness_matrix = np.empty((12, 12))
         self.applied_stiffness_matrix = np.empty((12, 12))
@@ -92,6 +95,10 @@ class Beam:
 
         self.solve_stiffness_matrix()
 
+        self.stresses_bending_y = np.empty(2)
+        self.stresses_bending_z = np.empty(2)
+        self.stresses_axial = np.empty(2)
+
     def solve_stiffness_matrix(self):
         # a, e, l, g, i_y, i_z, k, k_y, k_z
         self.local_stiffness_matrix = FEA_3D.local_stiffness_3d(
@@ -116,7 +123,7 @@ class Beam:
 
         self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
             self.local_stiffness_matrix,
-            self.transformation_matrix)
+            self.transformation_matrix) #  np.transpose(t) @ k @ t
 
 
     def solve_local(self, d, r):
@@ -135,6 +142,11 @@ class Beam:
         self.x_moments_local = np.array([self.r_local[3], self.r_local[9]])
         self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
+
+        self.stresses_bending_y = self.y_moments_local /self.beam_type.cross_section_properties['second moment of area y']
+        self.stresses_bending_z = self.z_moments_local /self.beam_type.cross_section_properties['second moment of area z']
+        self.stresses_axial = self.y_forces_local / self.beam_type.cross_section_properties["area"]
+
 
     def solve_shape_functions(self):
         a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
@@ -172,6 +184,7 @@ class BeamSystem:
     def __init__(self, name):
         self.system_name = name  # A string with the name of the system
         self.beam_node_indexes = np.empty((0, 2))  # List of the node indexes that beams go between
+
         self.boundary_conditions_node_indexes = np.empty((0, 1))
         self.boundary_conditions_type = np.empty((0, 1))
         self.boundary_conditions = np.empty((0, 1))
@@ -188,16 +201,21 @@ class BeamSystem:
         self.local_bc_transform = np.empty(0)
         self.transformed_stiffness_matrix = np.empty(0)
         self.applied_stiffness_matrix = np.empty(0)
+
         self.ru = np.empty(0)
         self.dp = np.empty(0)
+
         self.p_index = np.empty(0)
         self.u_index = np.empty(0)
+
         self.displacement_angle_vector = np.empty(0)
         self.force_moment_vector = np.empty(0)
+
         self.kuu = np.empty(0)
         self.kup = np.empty(0)
         self.kpu = np.empty(0)
         self.kpp = np.empty(0)
+
         self.x_displacements = np.empty(0)
         self.y_displacements = np.empty(0)
         self.z_displacements = np.empty(0)
@@ -370,7 +388,6 @@ class BeamSystem:
         self.u_index = u_index
 
         up_index = np.concatenate((u_index, p_index), axis=None)
-        print("up_index:", up_index)
         global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
 
         for i in range(len(self.beam_node_indexes)):
@@ -415,22 +432,45 @@ class BeamSystem:
             d[up_index[i]] = dup[i]
             r[up_index[i]] = rup[i]
 
-        self.displacement_angle_vector = d
-        self.force_moment_vector = r
+        self.displacement_angle_vector = np.transpose(self.local_bc_transform) @ d
+        self.force_moment_vector = np.transpose(self.local_bc_transform) @ r
 
-        self.x_displacements = d[0::6]
-        self.y_displacements = d[1::6]
-        self.z_displacements = d[2::6]
-        self.x_angles = d[3::6]
-        self.y_angles = d[4::6]
-        self.z_angles = d[5::6]
+        self.x_displacements = self.displacement_angle_vector[0::6]
+        self.y_displacements = self.displacement_angle_vector[1::6]
+        self.z_displacements = self.displacement_angle_vector[2::6]
 
-        self.x_forces = r[0::6]
-        self.y_forces = r[1::6]
-        self.z_forces = r[2::6]
-        self.x_moments = r[3::6]
-        self.y_moments = r[4::6]
-        self.z_moments = r[5::6]
+        self.x_angles = self.displacement_angle_vector[3::6]
+        self.y_angles = self.displacement_angle_vector[4::6]
+        self.z_angles = self.displacement_angle_vector[5::6]
+
+        self.x_forces = self.force_moment_vector[0::6]
+        self.y_forces = self.force_moment_vector[1::6]
+        self.z_forces = self.force_moment_vector[2::6]
+
+        self.x_moments = self.force_moment_vector[3::6]
+        self.y_moments = self.force_moment_vector[4::6]
+        self.z_moments = self.force_moment_vector[5::6]
+
+        for i, node in enumerate(self.nodes):
+            self.nodes[i].result_displacement = np.array([
+                self.x_displacements[i],
+                self.y_displacements[i],
+                self.z_displacements[i]])
+
+            self.nodes[i].result_angular_displacement = np.array([
+                self.x_angles[i],
+                self.y_angles[i],
+                self.z_angles[i]])
+
+            self.nodes[i].result_force = np.array([
+                self.x_forces[i],
+                self.y_forces[i],
+                self.z_forces[i]])
+
+            self.nodes[i].result_moment = np.array([
+                self.x_moments[i],
+                self.y_moments[i],
+                self.z_moments[i]])
 
         for beam_num, beam in enumerate(self.beams):
             beam_index_0 = int(self.beam_node_indexes[beam_num][0] * 6)
@@ -451,6 +491,7 @@ class BeamSystem:
             beam.z_displacements_global = np.array([
                 self.z_displacements[beam_node_index_0],
                 self.z_displacements[beam_node_index_1]])
+
             beam.x_angles_global = np.array([
                 self.x_angles[beam_node_index_0],
                 self.x_angles[beam_node_index_1]])
@@ -523,8 +564,7 @@ class BeamType:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
 
-
-#%%
+#%% TESTING
 def test_cantilever_rectangle():
     beam_system = BeamSystem("Cantilever-end load")
     arm_beam = BeamType("rectangle", [20, 6], "Aluminum7075-T6", "arm_beam")
@@ -549,12 +589,12 @@ def test_cantilever_rectangle():
     m = F * L
     dydx = (F*L**2)/(2*E*I) - (F*L**2)/(E*I)
 
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     logging.info("Started Cantilever—end load")
-    logging.debug("calculated z: " + str(y) + " | FEA z: " + str(beam_system.z_displacements[1]))
-    logging.debug("calculated y: " + str(0) + " | FEA y: " + str(beam_system.y_displacements[1]))
-    logging.debug("calculated theta: " + str(-dydx) + " | FEA theta y: " + str(beam_system.y_angles[1]))
-    logging.debug("calculated moment: " + str(-m) + " | FEA moment reaction: " + str(beam_system.y_moments[0]))
-    logging.debug("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[0]))
+    print("calculated z displacement: " + str(y) + " | FEA z displacement: " + str(beam_system.z_displacements[1]))
+    print("calculated y displacement: " + str(0) + " | FEA y displacement: " + str(beam_system.y_displacements[1]))
+    print("calculated moment: " + str(-m) + " | FEA moment reaction: " + str(beam_system.y_moments[0]))
+    print("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[0]))
     assert_almost_equal(y, beam_system.z_displacements[1], 3)
     assert_almost_equal(0, beam_system.y_displacements[1])
     assert_almost_equal(-dydx, beam_system.y_angles[1])
@@ -595,6 +635,7 @@ def test_center_multidim():
     y = -(F * (L**3)) / (48 * E * I)
     r = F/2
     dydx = -(F * L ** 2) / (16 * E * I)
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     logging.info('Started Multidimensional Simple Support Center Load Test')
     logging.debug("FEA x: " + str(beam_system.x_displacements[1]))
     logging.debug("FEA y: " + str(beam_system.y_displacements[1]))
@@ -676,12 +717,101 @@ def test_incline_boundary_conditions():
     logging.info('Finished')
 
 
+def test_reversed_cantilever_rectangle():
+    L = 500
+    I = (6 * 20 ** 3) / 12
+    E = 71700
+    F = 4
+
+    y = - (F * L ** 3) / (3*E*I)
+    m = F * L
+    dydx = (F*L**2)/(2*E*I) - (F*L**2)/(E*I)
+
+    beam_system = BeamSystem("Reverse Cantilever-end load")
+    arm_beam = BeamType("rectangle", [20, 6], "Aluminum7075-T6", "arm_beam")
+    beam_system.add_node(np.array([0,0,0]),"origin")
+    beam_system.add_node(np.array([500,0,0]),"point_1")
+    beam_system.add_beam(arm_beam,"origin","point_1",np.array([0,0,1]),"beam")
+    beam_system.add_boundary_condition(0,"x","origin")
+    beam_system.add_boundary_condition(0,"y","origin")
+    beam_system.add_boundary_condition(0,"z","origin")
+    beam_system.add_boundary_condition(0,"theta x","origin")
+    beam_system.add_boundary_condition(0,"theta y","origin")
+    beam_system.add_boundary_condition(0,"theta z","origin")
+    beam_system.add_boundary_condition(-0.5816413736845836,"z", "point_1")
+
+    beam_system.solve_FEA()
+
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
+    logging.info("Started Reverse Cantilever—end load")
+    print("calculated z displacement: " + str(y) + " | FEA z displacement: " + str(beam_system.z_displacements[1]))
+    print("calculated reaction: " + str(F) + " | FEA reaction z: " + str(beam_system.z_forces[1]))
+    print("stress: ", beam_system.beams[0].stresses_bending_z)
+    print("expected stress: ", m/I)
+
+    for i in np.arange(0, 1.1, 0.1):
+        logging.debug("Shape z disp " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][0]))
+
+    for i in np.arange(0, 1.1, 0.1):
+        logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
+
+def test_cantilever_annulus():
+    beam_system = BeamSystem("annulus Cantilever-end load")
+    arm_beam = BeamType("annulus", [20, 6], "Aluminum7075-T6", "arm_beam")
+    beam_system.add_node(np.array([0,0,0]),"origin")
+    beam_system.add_node(np.array([500,0,0]),"point_1")
+    beam_system.add_beam(arm_beam,"origin","point_1",np.array([0,0,1]),"beam")
+    beam_system.add_boundary_condition(0,"x","origin")
+    beam_system.add_boundary_condition(0,"y","origin")
+    beam_system.add_boundary_condition(0,"z","origin")
+    beam_system.add_boundary_condition(0,"theta x","origin")
+    beam_system.add_boundary_condition(0,"theta y","origin")
+    beam_system.add_boundary_condition(0,"theta z","origin")
+    beam_system.add_force(np.array([0, 0, -4]), "point_1")
+
+    beam_system.solve_FEA()
+
+    beam_system_2 = BeamSystem("annulus Cantilever-end load")
+    beam_system_2.add_node(np.array([0,0,0]),"origin")
+    beam_system_2.add_node(np.array([500,0,0]),"point_1")
+    beam_system_2.add_beam(arm_beam,"origin","point_1",np.array([0,0,1]),"beam")
+    beam_system_2.add_boundary_condition(0,"x","origin")
+    beam_system_2.add_boundary_condition(0,"y","origin")
+    beam_system_2.add_boundary_condition(0,"z","origin")
+    beam_system_2.add_boundary_condition(0,"theta x","origin")
+    beam_system_2.add_boundary_condition(0,"theta y","origin")
+    beam_system_2.add_boundary_condition(0,"theta z","origin")
+    beam_system_2.add_boundary_condition(-0.006415616207456355,"z","point_1")
+
+    beam_system_2.solve_FEA()
+    L = 500
+    I = (6 * 20 ** 3) / 12
+    E = 71700
+    F = 4
+
+    y = - (F * L ** 3) / (3*E*I)
+    m = F * L
+    dydx = (F*L**2)/(2*E*I) - (F*L**2)/(E*I)
+
+    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
+    logging.info("Started annulus Cantilever—end load")
+    print(" FEA z displacement: " + str(beam_system.z_displacements[1]))
+    print(" FEA z force: " + str(beam_system_2.z_forces[1]))
+    print("stress: ", beam_system.beams[0].stresses_bending_z)
+    print("expected stress: ", m/beam_system.beams[0].beam_type.cross_section_properties['second moment of area y'])
+
+
+    for i in np.arange(0, 1.1, 0.1):
+        logging.debug("Shape z disp " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][0]))
+
+    for i in np.arange(0, 1.1, 0.1):
+        logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
+
 if __name__ == '__main__':
-    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_cantilever_rectangle()
-    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_center_multidim()
-    logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     test_incline_boundary_conditions()
+    test_reverse_cantilever_rectangle()
+    # no
 
 #%%

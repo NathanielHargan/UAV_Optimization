@@ -70,11 +70,12 @@ class Drone:
 
         local_dir_top = np.array([self.strut_end_x_pos, self.strut_end_y_pos, 0]) - np.array([self.strut_pos, 0, 0])
         local_dir_bot = np.array([self.strut_end_x_pos, -self.strut_end_y_pos, 0]) - np.array([self.strut_pos, 0, 0])
-        self.beam_system.add_boundary_condition(0, "x", "strut_node_top",
-                                                "strut_element_top", local_dir_top, np.array([0,0,1]))
-
-        self.beam_system.add_boundary_condition(0, "x", "strut_node_bottom",
-                                                "strut_element_bottom",  local_dir_bot, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "y", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "y", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "theta y", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "theta y", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "theta z", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "theta z", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
 
     def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
         self.nominal_rad = nominal_rad
