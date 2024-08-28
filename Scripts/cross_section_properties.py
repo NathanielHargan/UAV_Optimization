@@ -87,8 +87,8 @@ def cross_section_hexagon(cross_section_parameters):
         'radius of gyration z': math.sqrt(iz/a),
         'elastic section modulus': iz/r,
         'torsional constant': 0.1154 * f ** 4,
-        'transverse shear deflection constant y': 0,
-        'transverse shear deflection constant z': 0
+        'transverse shear deflection constant y': 0.00001,
+        'transverse shear deflection constant z': 0.00001
     }
 
 

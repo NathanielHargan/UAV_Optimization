@@ -5,6 +5,7 @@ import scipy
 from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.cross_section_properties import cross_section_rectangle
+from Scripts.cross_section_properties import cross_section_hexagon
 from Scripts.material_properties import Materials
 from Scripts.material_properties import Gravity
 import Scripts.FEA_3D as FEA_3D
@@ -560,6 +561,8 @@ class BeamType:
             return cross_section_annulus(self.cross_section_parameters)
         elif self.cross_section.lower() == "rectangle":
             return cross_section_rectangle(self.cross_section_parameters)
+        elif self.cross_section.lower() == "hexagon":
+            return cross_section_hexagon(self.cross_section_parameters)
         else:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
@@ -578,6 +581,10 @@ def test_cantilever_rectangle():
     beam_system.add_boundary_condition(0,"theta y","origin")
     beam_system.add_boundary_condition(0,"theta z","origin")
     beam_system.add_force(np.array([0, 0, -4]), "point_1")
+    beam_system.add_boundary_condition(0,"x","point_1")
+    beam_system.add_boundary_condition(0,"y","point_1")
+    beam_system.add_boundary_condition(0,"theta x","point_1")
+    beam_system.add_boundary_condition(0,"theta z","point_1")
 
     beam_system.solve_FEA()
     L = 500
@@ -738,9 +745,15 @@ def test_reversed_cantilever_rectangle():
     beam_system.add_boundary_condition(0,"theta x","origin")
     beam_system.add_boundary_condition(0,"theta y","origin")
     beam_system.add_boundary_condition(0,"theta z","origin")
-    beam_system.add_boundary_condition(-0.5816413736845836,"z", "point_1")
+    beam_system.add_boundary_condition( -0.5816413736845836,"z", "point_1")
+
 
     beam_system.solve_FEA()
+
+    print("FORCE MOMENT VECTOR: " + str(beam_system.force_moment_vector))
+
+    print("KUU: " + str(beam_system.kuu))
+    print("KPP: " + str(beam_system.kpp))
 
     logging.basicConfig(filename='beams.log', level=logging.DEBUG)
     logging.info("Started Reverse Cantilever—end load")
@@ -757,7 +770,7 @@ def test_reversed_cantilever_rectangle():
 
 def test_cantilever_annulus():
     beam_system = BeamSystem("annulus Cantilever-end load")
-    arm_beam = BeamType("annulus", [20, 6], "Aluminum7075-T6", "arm_beam")
+    arm_beam = BeamType("hexagon", [20], "Aluminum7075-T6", "arm_beam")
     beam_system.add_node(np.array([0,0,0]),"origin")
     beam_system.add_node(np.array([500,0,0]),"point_1")
     beam_system.add_beam(arm_beam,"origin","point_1",np.array([0,0,1]),"beam")
@@ -781,7 +794,7 @@ def test_cantilever_annulus():
     beam_system_2.add_boundary_condition(0,"theta x","origin")
     beam_system_2.add_boundary_condition(0,"theta y","origin")
     beam_system_2.add_boundary_condition(0,"theta z","origin")
-    beam_system_2.add_boundary_condition(-0.006415616207456355,"z","point_1")
+    beam_system_2.add_boundary_condition(-0.00917048964187906,"z","point_1")
 
     beam_system_2.solve_FEA()
     L = 500
@@ -812,6 +825,6 @@ if __name__ == '__main__':
     test_center_multidim()
     test_incline_boundary_conditions()
     test_reverse_cantilever_rectangle()
-    # no
+    test_cantilever_annulus()
 
 #%%

@@ -5,14 +5,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class mission_profile:
-    def __init__(self, name, initial_payload):
+    def __init__(self, name, initial_payload, acc_x, acc_y, max_vel_x, max_vel_y):
         # Name of the segment
         self.name = name
 
         # The ends of each segment are represented by values in the array. 0 for the start of the mission profile.
-        self.t_values = np.array([0])
+        self.t_x_values = np.array([0])
+        self.t_y_values = np.array([0])
         self.x_coords = np.array([0])
         self.y_coords = np.array([0])
+
+        self.acc_x = acc_x
+        self.acc_y = acc_y
+        self.max_vel_x = max_vel_x
+        self.max_vel_y = max_vel_y
+
         self.payload = np.array([initial_payload])
         self.segment_names = []
 
@@ -23,11 +30,62 @@ class mission_profile:
         self.acc_y_values = np.array([0])
 
     # Adds a new segment to the mission profile
-    def add_segment(self, name, t, x_end=None, y_end=None, x_vel_end=None, y_vel_end=None, x_a_end=None, y_a_end=None):
+    def add_segment(self, name, x_end, y_end, x_vel_end, y_vel_end):
 
-        # Adds segment name to array
         self.segment_names.append(name)
         self.payload = np.append(self.payload, self.payload[-1])
+
+        vel_x = self.max_vel_x
+        vel_y = self.max_vel_y
+
+        # Segment 1
+        t_x_1 = (self.max_vel_x - self.vel_x_values[-1]) / self.acc_x  # time to reach max velocity x
+        t_y_1 = (self.max_vel_y - self.vel_y_values[-1]) / self.acc_y  # time to reach max velocity y
+
+        x_disp_1 = t_x_1 * self.vel_x_values[-1] + (self.acc_x * t_x_1 ** 2) / 2
+        y_disp_1 = t_y_1 * self.vel_y_values[-1] + (self.acc_x * t_y_1 ** 2) / 2
+
+        # Segment 3
+        t_x_3 = (self.max_vel_x - x_vel_end) / self.acc_x
+        t_y_3 = (self.max_vel_y - y_vel_end) / self.acc_y
+
+        x_disp_3 = t_x_3 * x_vel_end + (self.acc_x * t_x_3 ** 2) / 2
+        y_disp_3 = t_y_3 * y_vel_end + (self.acc_x * t_y_3 ** 2) / 2
+
+        # Segment 2
+        x_disp_2 = x_end - self.vel_x_values[-1] - x_disp_1 - x_disp_3
+        y_disp_2 = y_end - self.vel_x_values[-1] - y_disp_1 - y_disp_3
+
+        t_x_2 = x_disp_2 / self.max_vel_x
+        t_y_2 = y_disp_2 / self.max_vel_y
+
+        t_total = 0
+        t_total_x = t_x_1 + t_x_2 + t_x_3
+        t_total_y = t_y_1 + t_y_2 + t_y_3
+
+
+        # The time that is longer is the defining time and therefore should use max acceleration and velocity
+        if t_total_x > t_total_y:
+            t_total = t_total_x
+            vel_x_est = t_total_x
+
+        else:
+            t_total = t_total_y
+
+        self.t_x_values = np.append(self.t_x_values, self.t_x_values[-1] + t_x)
+        self.t_x_values = np.append(self.t_y_values, self.t_y_values[-1] + t_y)
+
+        if t_y > t_x:
+
+        else:
+
+        self.vel_y_values = np.append(self.vel_y_values, self.max_vel_y)
+
+
+        self.vel_x_values = np.append(self.vel_x_values, x_vel_end)
+        self.vel_y_values = np.append(self.vel_y_values, y_vel_end)
+
+        # Adds segment name to array
         self.t_values = np.append(self.t_values, self.t_values[-1] + t)
 
         # If X and Y coordinates are not input it assumes loitering.
@@ -38,19 +96,18 @@ class mission_profile:
             self.x_coords = np.append(self.x_coords, x_end)
             self.y_coords = np.append(self.y_coords, y_end)
 
-        if x_a_end is None:
-            self.acc_x_values = np.append(self.acc_x_values,0)
-            self.acc_y_values = np.append(self.acc_y_values,0)
-        else:
-            self.acc_x_values = np.append(self.acc_x_values, x_a_end)
-            self.acc_y_values = np.append(self.acc_y_values, y_a_end)
-
         if x_vel_end is None:
             self.vel_x_values = np.append(self.vel_x_values,0)
             self.vel_y_values = np.append(self.vel_y_values,0)
         else:
             self.vel_x_values = np.append(self.vel_x_values, x_a_end)
             self.vel_y_values = np.append(self.vel_y_values, y_a_end)
+
+
+
+
+
+
 
     def drop_payload(self, mass):
         self.payload[-1] = self.payload[-1] - mass
@@ -62,6 +119,8 @@ class mission_profile:
 
     # For a given value of time and segment index, it interpolates values for position, velocity, and the name of the segment
     def time_output(self, time, i):
+
+
         # Finds index of segment time is in
         # Side = 'right' means that if t == self.t_values[value], then it prioritizes the right one.
 
