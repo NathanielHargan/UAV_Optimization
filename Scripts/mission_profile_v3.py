@@ -221,6 +221,12 @@ def test_mission_profile():
     print(np.round(m1.x_coords,2))
     print("Y:")
     print(np.round(m1.y_coords, 2))
+    print("X vel:")
+    print(np.round(m1.vel_x_values, 2))
+    print("Y vel:")
+    print(np.round(m1.vel_y_values, 2))
+    print("X acc:")
+    print(np.round(m1.acc_x_values, 2))
     print("Y acc:")
     print(np.round(m1.acc_y_values, 2))
 
@@ -233,3 +239,5 @@ def test_mission_profile():
 
 if __name__ == '__main__':
     test_mission_profile()
+
+#%%
