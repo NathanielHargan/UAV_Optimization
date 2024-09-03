@@ -230,12 +230,23 @@ def test_mission_profile():
     print("Y acc:")
     print(np.round(m1.acc_y_values, 2))
 
-    list_y = np.empty(0)
-    list_t = np.empty(0)
-    list_n = []
-    for t in range(200):
-        x, y, v_x, v_y, a_x, a_y, name = m1.time_solve(t)
-        print(name + " - y: " + str(y))
+    list_t = np.arange(0, 20, 1)
+
+    x = np.zeros(len(list_t))
+    y = np.zeros(len(list_t))
+    v_x = np.zeros(len(list_t))
+    v_y = np.zeros(len(list_t))
+    a_x = np.zeros(len(list_t))
+    a_y = np.zeros(len(list_t))
+
+    for i, t in enumerate(list_t):
+        x[i], y[i], v_x[i], v_y[i], a_x[i], a_y[i], name = m1.time_solve(t)
+
+    fig, axs = plt.subplots(2, 2)
+    axs[0,0].set_title("t vs y")
+    axs[0,0].plot(list_t, y)
+    axs[0,0].grid()
+    fig.show()
 
 if __name__ == '__main__':
     test_mission_profile()
