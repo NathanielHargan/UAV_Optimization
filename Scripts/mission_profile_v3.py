@@ -62,6 +62,9 @@ class mission_profile:
         x_disp_2 = x_velocity * t_2
         x_disp_3 = x_velocity * t_3
 
+        if len(self.vel_x_values) == 1:
+            self.vel_x_values = np.array([x_velocity])
+
         # append segment 1
         self.t_values = np.append(self.t_values, self.t_values[-1] + t_1)
         self.x_coords = np.append(self.x_coords, self.x_coords[-1] + x_disp_1)
@@ -130,6 +133,10 @@ class mission_profile:
         y_disp_2 = y_velocity * t_2
         y_disp_3 = y_velocity * t_3
 
+
+        if len(self.vel_y_values) == 1:
+            self.vel_y_values = np.array([y_velocity])
+
         # append segment 1
         self.t_values = np.append(self.t_values, self.t_values[-1] + t_1)
         self.x_coords = np.append(self.x_coords, self.x_coords[-1] + x_disp_1)
@@ -174,7 +181,6 @@ class mission_profile:
     # For a given value of time and segment index, it interpolates values for position, velocity, and the name of the segment
     def time_output(self, time, i):
 
-
         # Finds index of segment time is in
         # Side = 'right' means that if t == self.t_values[value], then it prioritizes the right one.
 
@@ -184,14 +190,14 @@ class mission_profile:
 
         # Calculates position
 
-        a_x = self.acc_x_values[i] + (t / delta_t) * (self.acc_x_values[i+1] - self.acc_x_values[i])
-        a_y = self.acc_y_values[i] + (t / delta_t) * (self.acc_y_values[i+1] - self.acc_y_values[i])
+        a_x = self.acc_x_values[i] + (t / delta_t) * (self.acc_x_values[i] - self.acc_x_values[i])
+        a_y = self.acc_y_values[i] + (t / delta_t) * (self.acc_y_values[i] - self.acc_y_values[i])
 
-        v_x = self.vel_x_values[i] + t * self.acc_x_values[i] + ((t ** 2) / (2 * delta_t)) * (self.acc_x_values[i+1] - self.acc_x_values[i])
-        v_y = self.vel_y_values[i] + t * self.acc_y_values[i] + ((t ** 2) / (2 * delta_t)) * (self.acc_y_values[i+1] - self.acc_y_values[i])
+        v_x = self.vel_x_values[i] + t * self.acc_x_values[i] + ((t ** 2) / (2 * delta_t)) * (self.acc_x_values[i] - self.acc_x_values[i])
+        v_y = self.vel_y_values[i] + t * self.acc_y_values[i] + ((t ** 2) / (2 * delta_t)) * (self.acc_y_values[i] - self.acc_y_values[i])
 
-        x = self.x_coords[i] + t * self.vel_x_values[i] + (t ** 2 / 2) * self.acc_x_values[i] + ((t ** 3) / (6 * delta_t)) * (self.acc_x_values[i+1] - self.acc_x_values[i])
-        y = self.y_coords[i] + t * self.vel_y_values[i] + (t ** 2 / 2) * self.acc_y_values[i] + ((t ** 3) / (6 * delta_t)) * (self.acc_y_values[i+1] - self.acc_y_values[i])
+        x = self.x_coords[i] + t * self.vel_x_values[i] + (t ** 2 / 2) * self.acc_x_values[i] + ((t ** 3) / (6 * delta_t)) * (self.acc_x_values[i] - self.acc_x_values[i])
+        y = self.y_coords[i] + t * self.vel_y_values[i] + (t ** 2 / 2) * self.acc_y_values[i] + ((t ** 3) / (6 * delta_t)) * (self.acc_y_values[i] - self.acc_y_values[i])
 
         yield x # Outputs position X
         yield y # Outputs position Y
@@ -230,25 +236,13 @@ def test_mission_profile():
     print("Y acc:")
     print(np.round(m1.acc_y_values, 2))
 
-    list_t = np.arange(0, 20, 1)
 
-    x = np.zeros(len(list_t))
-    y = np.zeros(len(list_t))
-    v_x = np.zeros(len(list_t))
-    v_y = np.zeros(len(list_t))
-    a_x = np.zeros(len(list_t))
-    a_y = np.zeros(len(list_t))
-
-    for i, t in enumerate(list_t):
-        x[i], y[i], v_x[i], v_y[i], a_x[i], a_y[i], name = m1.time_solve(t)
-
-    fig, axs = plt.subplots(2, 2)
-    axs[0,0].set_title("t vs y")
-    axs[0,0].plot(list_t, y)
-    axs[0,0].grid()
-    fig.show()
 
 if __name__ == '__main__':
     test_mission_profile()
 
+#%%
+
+        if len(self.vel_x_values) == 1:
+            self.vel_x_values = np.array([x_velocity])
 #%%
