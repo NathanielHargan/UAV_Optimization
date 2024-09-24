@@ -24,6 +24,7 @@ class Drone:
 
         self.strut_length = 2*y
 
+
     def create_drone_slice_nodes(self):
         # Origin
         self.beam_system.add_node(np.array([0, 0, 0]), 'center_node')
