@@ -162,16 +162,22 @@ class DroneMass:
             self.strut_global_moments_of_inertia[i] = rotated_moment + translation
             self.total_moment_of_inertia += self.strut_global_moments_of_inertia[i]
 
+
 if __name__ == '__main__':
-    battery_1 = Battery(100, np.array([-5, 0, -1]), np.array([1, 1, 1]))
-    battery_2 = Battery(100, np.array([5, 0, -1]), np.array([1, 1, 1]))
+    # 40.05 N weight
+    # Mass in N-s^2/mm (Mg)
+    battery_1 = Battery(4.292e-3, np.array([0, 86.75, -25]), np.array([260.5, 123.5, 63.5]))
+    battery_2 = Battery(4.292e-3, np.array([0, -86.75, -25]), np.array([260.5, 123.5, 63.5]))
 
-    arm_beam = BeamType("annulus", [25, 20], "Aluminum7075-T6", "arm_beam")
-    strut_beam = BeamType("annulus", [30, 20], "Aluminum7075-T6", "strut_beam")
+    # al: 0.098 lb/in^3
+    # 26.6 kN/m^3 =* 10^-9 *
+    arm_beam = BeamType("annulus", [29, 25], "Aluminum7075-T6", "arm_beam")
+    strut_beam = BeamType("annulus", [14, 12], "Aluminum7075-T6", "strut_beam")
 
-    d1 = Drone("drone_test",500,200,8, arm_beam, strut_beam)
+    d1 = Drone("drone_test", 500, 200, 8, arm_beam, strut_beam)
     
     d1_mass = DroneMass(d1, [battery_1, battery_2])
+    print("total mass: ", d1_mass.total_mass)
     print("moment of inertia tensor: ", d1_mass.total_moment_of_inertia)
     print("center of mass: ", d1_mass.center_of_mass)
 

@@ -3,8 +3,8 @@ import math
 
 # returns diction annulus beam cross section properties
 def cross_section_annulus(cross_section_parameters):
-    r_outer = cross_section_parameters[0]
-    r_inner = cross_section_parameters[1]
+    r_outer = cross_section_parameters[0]/2
+    r_inner = cross_section_parameters[1]/2
     m = r_inner/r_outer
     # https://structx.com/Shape_Formulas_014.html
     return {
@@ -28,7 +28,7 @@ def cross_section_annulus(cross_section_parameters):
 
 
 def cross_section_circle(cross_section_parameters):
-    r = cross_section_parameters[0]
+    r = cross_section_parameters[0]/2
 
     return {
         'area': math.pi * (r ** 2),
@@ -72,7 +72,7 @@ def cross_section_rectangle(cross_section_parameters):
 
 def cross_section_hexagon(cross_section_parameters):
     # https://structx.com/Shape_Formulas_036.html
-    r = cross_section_parameters[0]  # radius
+    r = cross_section_parameters[0]/2  # radius
     f = r * math.sqrt(3)  # face to face distance
     a = (3 * math.sqrt(3) * r ** 2) / 2  # area
     iz = 0.0601 * f ** 4
@@ -94,7 +94,7 @@ def cross_section_hexagon(cross_section_parameters):
 
 def cross_section_octagon(cross_section_parameters):
     # https://structx.com/Shape_Formulas_037.html
-    r = cross_section_parameters[0]  # radius
+    r = cross_section_parameters[0]/2  # radius
     return {
         'area': 4 * r ** 2 * math.sqrt(2) / 2,
         'perimeter': 8 * r * math.sqrt(2 - math.sqrt(2)),
