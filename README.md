@@ -6,3 +6,6 @@ UNITS
 - Force: N
 - Time: s
 
+To do:
+- Solidworks test
+- mass calculating forces

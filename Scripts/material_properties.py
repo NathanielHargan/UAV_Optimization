@@ -4,8 +4,8 @@ Gravity = 9806.6499994  # mm/s^2
 Materials = {
     # https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d
     "Aluminum7075-T6": {
-        "weight density": 26.6e-6,  # [N/mm^3]
-        "mass density": 0.0,  # [N*s^2/mm^4] #(N-s^2/mm)/mm^3
+        "weight density": 0.0,  # [N/mm^3]
+        "mass density": 2.81e-9,  # [N*s^2/mm^4] (N-s^2/mm)/mm^3 Mg/mm^3
         "elastic modulus": 71700,  # [MPa]
         "shear modulus": 26900,  # [MPa]
         "poisson ratio": 0.33,  # [-]
@@ -17,6 +17,6 @@ Materials = {
     }
 }
 
-Materials["Aluminum7075-T6"]["mass density"] = Materials["Aluminum7075-T6"]["weight density"] / Gravity
+Materials["Aluminum7075-T6"]["weight density"] = Materials["Aluminum7075-T6"]["mass density"] * Gravity
 
 

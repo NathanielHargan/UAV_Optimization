@@ -22,7 +22,7 @@ class Drone:
         self.strut_end_x_pos = x
         self.strut_end_y_pos = y
 
-        self.strut_length = 2*y
+        self.strut_length = math.sqrt((x_next - strut_pos)**2 + (y_next - 0)**2)
 
 
     def create_drone_slice_nodes(self):
