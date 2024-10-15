@@ -750,7 +750,7 @@ def test_reversed_cantilever_rectangle():
 
     beam_system.solve_FEA()
 
-    print("FORCE MOMENT VECTOR: " + str(beam_system.force_moment_vector))
+    print("\nFORCE MOMENT VECTOR: \n" + str(beam_system.force_moment_vector))
 
     print("KUU: " + str(beam_system.kuu))
     print("KPP: " + str(beam_system.kpp))

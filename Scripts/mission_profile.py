@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class mission_profile:
+class MissionProfile:
     def __init__(self, name, initial_payload, initial_v_x, initial_v_y):
         # Name of the segment
         self.name = name
@@ -74,7 +74,7 @@ class mission_profile:
 
 def test_mission_profile():
 
-    m1 = mission_profile("m1",
+    m1 = MissionProfile("m1",
                          50,
                          1,
                          2)

@@ -2,29 +2,11 @@ import numpy as np
 import math
 
 
-class Battery:
-    def __init__(self, mass, position, dimensions):
-        self.mass = mass
-        self.position = position # position of the center of the battery
-        self.dimensions = dimensions
-
-        l = dimensions[0]
-        h = dimensions[1]
-        w = dimensions[2]
-
-        self.local_moment_of_inertia = np.array([[(1/12) * mass * (h**2 + w**2), 0, 0],
-                                                [0, (1/12) * mass * (l**2 + w**2), 0],
-                                                [0, 0, (1/12) * mass * (l**2 + h**2)]])
-
-        self.transformation = np.array([[1, 0, 0],
-                                        [0, 1, 0],
-                                        [0, 0, 1]])
-
 
 class DroneMass:
-    def __init__(self, drone, batteries):
+    def __init__(self, drone):
         self.drone = drone
-        self.batteries = batteries
+        self.batteries = drone.batteries
 
         arm_linear_density = self.drone.arm_beam.material_properties["mass density"] * self.drone.arm_beam.cross_section_properties["area"]
         strut_linear_density = self.drone.strut_beam.material_properties["mass density"] * self.drone.strut_beam.cross_section_properties["area"]
@@ -42,7 +24,7 @@ class DroneMass:
         strut_r1 = self.drone.strut_beam.cross_section_parameters[1]/2
         strut_r2 = self.drone.strut_beam.cross_section_parameters[0]/2
 
-        # moment of inertia of a slender rod
+        # moment of inertia of annuli
         self.arm_local_moment_of_inertia = np.array([[(1/2) * self.arm_mass * (arm_r1 ** 2 + arm_r2 ** 2), 0, 0],
                                                      [0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + self.drone.nominal_rad ** 2), 0],
                                                      [0, 0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + self.drone.nominal_rad ** 2)]])
@@ -93,7 +75,8 @@ class DroneMass:
     def transformation_matrix(self, coord_dir, k_node_dir):
         coord_unit = coord_dir / np.linalg.norm(coord_dir)
         k_node_unit = k_node_dir / np.linalg.norm(k_node_dir)
-        ortho_dir = -np.cross(coord_dir, k_node_dir)
+
+        ortho_dir = np.cross(coord_dir, k_node_dir)
         ortho_unit = ortho_dir / np.linalg.norm(ortho_dir)
 
         l1 = coord_unit[0]
@@ -107,8 +90,9 @@ class DroneMass:
         n3 = ortho_unit[2]
 
         t = np.array([[l1, m1, n1],
-                      [l2, m2, n2],
-                      [l3, m3, n3]])
+                      [l3, m3, n3],
+                      [l2, m2, n2]])
+
         return t
 
     def calculate_transformation_matrices(self):
@@ -144,8 +128,8 @@ class DroneMass:
 
     def calculate_global_moments(self):
         for i, battery in enumerate(self.batteries):
-            rotated_moment = self.battery_transformation[i] @ self.batteries[i].local_moment_of_inertia @ np.transpose(self.battery_transformation[i])
-            displacement = self.batteries[i].position
+            rotated_moment = self.batteries[i].local_moment_of_inertia
+            displacement = self.batteries[i].position - self.center_of_mass
             translation = self.batteries[i].mass * (np.dot(displacement, displacement) * np.identity(3) - np.outer(displacement, displacement))
             # https://en.wikipedia.org/wiki/Moment_of_inertia#Inertia_tensor
             self.battery_global_moments_of_inertia[i] = rotated_moment + translation
@@ -153,21 +137,22 @@ class DroneMass:
 
         for i in range(self.drone.blade_num):
             rotated_moment = self.arm_transformation[i] @ self.arm_local_moment_of_inertia @ np.transpose(self.arm_transformation[i])
-            displacement = self.arm_beam_centroids[i]
+            displacement = self.arm_beam_centroids[i] - self.center_of_mass
             translation = self.arm_mass * ((np.dot(displacement, displacement) * np.identity(3)) - np.outer(displacement, displacement))
             self.arm_global_moments_of_inertia[i] = rotated_moment + translation
             self.total_moment_of_inertia += self.arm_global_moments_of_inertia[i]
 
         for i in range(self.drone.blade_num):
             rotated_moment = self.strut_transformation[i] @ self.strut_local_moment_of_inertia @ np.transpose(self.strut_transformation[i])
-            displacement = self.strut_beam_centroids[i]
+            displacement = self.strut_beam_centroids[i] - self.center_of_mass
             translation = self.strut_mass * ((np.dot(displacement, displacement) * np.identity(3)) - np.outer(displacement, displacement))
             self.strut_global_moments_of_inertia[i] = rotated_moment + translation
             self.total_moment_of_inertia += self.strut_global_moments_of_inertia[i]
 
 
 if __name__ == '__main__':
-    from Scripts.drone import Drone
+    from Scripts.drone_battery import Battery
+    from Scripts.drone_geometry import DroneGeometry
     from Scripts.beams import BeamType
 
     # 40.05 N weight
@@ -181,9 +166,9 @@ if __name__ == '__main__':
     arm_beam = BeamType("annulus", [29, 25], "Aluminum7075-T6", "arm_beam")
     strut_beam = BeamType("annulus", [14, 12], "Aluminum7075-T6", "strut_beam")
 
-    d1 = Drone("drone_test", 500, 200, 8, arm_beam, strut_beam)
-    
-    d1_mass = DroneMass(d1, [battery_1, battery_2])
+    d1 = DroneGeometry("drone_test", 1000, 660, 8, arm_beam, strut_beam, [battery_1, battery_2])
+    d1_mass = DroneMass(d1)
+
     print("\nParameters")
     print("- battery density:", battery_1.mass/(battery_1.dimensions[0] * battery_1.dimensions[1] * battery_1.dimensions[2]) * 1e12, "kg/m^3")
     print("- strut length: ", d1.strut_length, "mm")
@@ -205,15 +190,16 @@ if __name__ == '__main__':
     print("- strut iyy: ", d1_mass.strut_local_moment_of_inertia[1, 1] * 1e6, "g*mm^2")
     print("- strut izz: ", d1_mass.strut_local_moment_of_inertia[2, 2] * 1e6, "g*mm^2")
 
-
     print("- total mass: ", d1_mass.total_mass * 1e6, "g")
     print("- total cog z: ", d1_mass.center_of_mass, "mm")
     print("- total Ixx: ", d1_mass.total_moment_of_inertia[0, 0] * 1e6, "g*mm^2")
     print("- total Iyy: ", d1_mass.total_moment_of_inertia[1, 1] * 1e6, "g*mm^2")
-    print("- total Izz: ", d1_mass.total_moment_of_inertia[2, 2] * 1e6, "g*mm^2")
+    print("- total Izz: ", np.round(d1_mass.total_moment_of_inertia[2, 2] * 1e6), "g*mm^2")
+    print("- total I: ",np.round(d1_mass.total_moment_of_inertia))
 
-    print("- single arm I (no cg alignment)", d1_mass.arm_global_moments_of_inertia[1] * 1e6, "g*mm^2")
-
+    print("- single beam I (on axis):\n", np.round(d1_mass.arm_global_moments_of_inertia[0] * 1e6, 3), "g*mm^2")
+    print("- single beam I (on diagonal):\n", np.round(d1_mass.arm_global_moments_of_inertia[1] * 1e6, 3), "g*mm^2")
+    print("- Battery I:\n", np.round((d1_mass.battery_global_moments_of_inertia[0] + d1_mass.battery_global_moments_of_inertia[1])* 1e6, 3), "g*mm^2")
 
     print("\nSolidWorks Results")
     print("- battery Mass:", 4292, "g")
@@ -235,13 +221,22 @@ if __name__ == '__main__':
     print("- total cog:", [0, 0, -40.37], "mm")
     print("- total I:", [164780724.15, 137813551.65, 288204656.86], "g*mm^2")
 
-    #    Moments of inertia: ( grams *  square millimeters )
-    #        Taken at the output coordinate system. (Using positive tensor notation.)
-    #            Ixx = 9964118.36638	Ixy = -9920440.24609	Ixz = 0.00000
-    #            Iyx = -9920440.24609	Iyy = 9964118.36638	Iyz = 0.00000
-    #            Izx = 0.00000	Izy = 0.00000	Izz = 19884558.61247
+    print("- single beam I (on axis):\n", [
+        [10352592.34267, 0, 2405641.75083],
+        [0,  20273032.58876, 0],
+        [2405641.75083, 0, 19884558.61247]])
 
-    # TEST IN SOLIDWORKS
+    print("- single beam I (on diagonal):\n", [
+        [10352592.34267, -9920440.24609,  1701045.59512],
+        [-9920440.24609, 10352592.34267, -1701045.59512],
+        [1701045.59512,  -1701045.59512, 19884558.61247]])
+
+    print("- Battery I :\n", [
+        [79190139.63839, 0, 0],
+        [0,  52222967.14404, 0],
+        [0, 0,  124052570.14069]])
+
+    print("- Post 10, 20, 30 displacement on battery 1: ", [[180521391,-4235164,-354510],[-4235164,137893198,-1187895],[-354510,-11878951,304377532]])
 
 
 #%%

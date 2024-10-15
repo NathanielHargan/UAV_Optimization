@@ -7,5 +7,12 @@ UNITS
 - Time: s
 
 To do:
-- Solidworks test
-- mass calculating forces
+- mass calculating forces DONE
+- Calculate thrust DONE
+- use lift curves to determine rpm NOPE
+- use that to determine power NOPE
+- calculate projected area DONE
+- calculate drag (from raymer) DONE I GUESS
+- thrust = gravity + drag DONE
+- move struts 2/3 along arm DONE
+
