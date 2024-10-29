@@ -40,25 +40,27 @@ class MissionProfile:
         i = np.searchsorted(self.t_values, time, side='right') - 1  # Determines the segment time is in
         return self.time_output(time, i)
 
+
     # For a given value of time and segment index, it interpolates values for position, velocity, and the name of the segment
     def time_output(self, time, i):
+        dt = (self.t_values[i+1] - self.t_values[i])
+        ti = (time - self.t_values[i]) / dt
 
         vector_y = np.array([self.y_coords[i],
-                             self.vel_y_values[i],
+                             self.vel_y_values[i] * dt,
                              self.y_coords[i+1],
-                             self.vel_y_values[i+1]])
+                             self.vel_y_values[i+1] * dt])
 
         vector_x = np.array([self.x_coords[i],
-                           self.vel_x_values[i],
-                           self.x_coords[i+1],
-                           self.vel_x_values[i+1]])
+                             self.vel_x_values[i] * dt,
+                             self.x_coords[i+1],
+                             self.vel_x_values[i+1] * dt])
 
-        ti = (time - self.t_values[i]) / (self.t_values[i+1] - self.t_values[i])
-
-        time_matrix = np.array([[2*ti**3 - 3*ti**2 +1, ti**3 - 2*ti**2 + ti, -2*ti**3 + 3*ti**2, ti**3 - ti**2],
-                                [6*ti**2 - 6*ti, 3*ti**2 - 4*ti + 1, -6*ti**2 + 6*ti, 3*ti**2 - 2*ti],
-                                [12*ti - 6, 6*ti - 4, -12*ti + 6, 6*ti - 2],
-                                [12,6,-12,6]])
+        # https://en.wikipedia.org/wiki/Cubic_Hermite_spline
+        time_matrix = np.array([[2*ti**3 - 3*ti**2 + 1, ti**3 - 2*ti**2 + ti, -2*ti**3 + 3*ti**2, ti**3 - ti**2],
+                                [(6*ti**2 - 6*ti) / dt, (3*ti**2 - 4*ti + 1) / dt, (-6*ti**2 + 6*ti) / dt, (3*ti**2 - 2*ti) / dt],
+                                [(12*ti - 6) / dt ** 2, (6*ti - 4)/ dt ** 2, (-12*ti + 6) / dt ** 2, (6*ti - 2) / dt ** 2],
+                                [12 / dt ** 3, 6 / dt ** 3, -12 / dt ** 3, 6 / dt ** 3]])
 
         x_result = time_matrix @ np.transpose(vector_x)
         y_result = time_matrix @ np.transpose(vector_y)

@@ -1,18 +1,25 @@
-UNITS
+
+<h3> Units </h3>
+
 - Weight: N/mm^3
 - Mass: N*s^2/mm = 1000kg = 1Mg
 - Pressure: MPa = N/mm^2
 - Length: mm
 - Force: N
 - Time: s
+- Power: mW
+- Current: mA 
+- Energy: mJ
 
-To do:
-- mass calculating forces DONE
-- Calculate thrust DONE
-- use lift curves to determine rpm NOPE
-- use that to determine power NOPE
-- calculate projected area DONE
-- calculate drag (from raymer) DONE I GUESS
-- thrust = gravity + drag DONE
-- move struts 2/3 along arm DONE
+<h3> To Do </h3>
+<h5> As of 10/22/24 </h5>
+
+- Create headers for my script files
+- Use propeller test data to determine 
+- Power budget over time plot
+  - implement runge kutta
+    - create independant runge kutta functions
+    - 
+
+
 
