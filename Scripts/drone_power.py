@@ -22,6 +22,7 @@ class DronePower:
     def thrust_to_power(self, thrust):
         # The plot given looks like a parabola with points intersecting at:
         # (thrust,power): (10kg,1kW)/8 , (50kg, 6kW)/8 , (80kg, 13kW)/8
+
         thrust_mass_per_blade_kg = 1000 * thrust / (Gravity * self.blade_num)  # N => N / (mm/s^2) * (1000 mm/m) = kg
         power_kilowatts_per_blade = (0.01238 * thrust_mass_per_blade_kg ** 2 + 0.03214 * thrust_mass_per_blade_kg + 0.06548)
         power_milliwatts_per_blade = power_kilowatts_per_blade * 10 ** 6
@@ -43,7 +44,10 @@ class DronePower:
         for i in range(segment_count):
             t_start = segments[i]
             t_end = segments[i+1]
-            time = np.append(time, np.arange(t_start, t_end, steps))
+            time = np.append(time, np.linspace(t_start, t_end, steps))
+            print(np.linspace(t_start, t_end, steps))
+        time = time[:-1]
+
 
         power_consumed = np.array([self.milliwatt_second_capacity])  # Initial Power
         for i in range(len(time)-1):
