@@ -1,0 +1,36 @@
+'''
+    def energy_consumption(self, steps, segments):
+        # Segment ends are a list of the segment deviations.
+        segment_count = len(segments)-1
+        time = np.empty([])
+
+        # Setting up time segments
+        for i in range(segment_count):
+            t_start = segments[i]
+            t_end = segments[i+1]
+            time = np.append(time, np.linspace(t_start, t_end, steps))
+            print(np.linspace(t_start, t_end, steps))
+        time = time[:-1]
+
+
+        power_consumed = np.array([self.milliwatt_second_capacity])  # Initial Power
+        for i in range(len(time)-1):
+            # Runge Kutta implementation
+            t0 = time[i]
+            t1 = time[i+1]
+            h = t1 - t0
+
+            # negative because power used results in a loss of energy
+            k1 = -self.power_at_time(t0)
+            k2 = -self.power_at_time(t0 + h/2)
+            k3 = -self.power_at_time(t0 + h/2)
+            k4 = -self.power_at_time(t0 + h)
+
+            next_power_consumed = power_consumed[-1] + (h/6) * (k1 + 2*k2 + 2*k3 + k4)
+
+            power_consumed = np.append(power_consumed, next_power_consumed)
+
+        yield time  # Array from 0 to t_final
+        yield power_consumed
+        return
+        '''

@@ -59,8 +59,8 @@ class DroneFEA:
 
         local_dir_top = self.geometry.strut_centroid_coords[0] - self.geometry.strut_nodes_coords[0]
         local_dir_bot = self.geometry.strut_centroid_coords[-1] - self.geometry.strut_nodes_coords[0]
-        self.beam_system.add_boundary_condition(0, "y", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "y", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "x", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "x", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
         self.beam_system.add_boundary_condition(0, "theta y", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
         self.beam_system.add_boundary_condition(0, "theta y", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
         self.beam_system.add_boundary_condition(0, "theta z", "strut_node_top", local_dir_top, np.array([0, 0, 1]))

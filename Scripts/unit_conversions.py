@@ -1,0 +1,22 @@
+from Scripts.material_properties import Gravity
+
+# Length
+mm_to_m = 1000
+
+# Mass
+kg_to_Mg = 1000
+g_to_Mg = 10 ** 6
+Mg_to_lb = 2.20462*1000
+
+
+# Power
+mW_to_kW = 10 ** -6
+kW_to_mW = 10 ** 6
+
+# Time
+hrs_to_s = 3600
+s_to_hrs = 1/3600
+
+# Thrust
+N_to_kgf = 1000/(Gravity)
+

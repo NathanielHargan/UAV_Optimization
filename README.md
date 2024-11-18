@@ -12,12 +12,14 @@
 - Energy: mJ
 
 <h3> To Do </h3>
-<h5> As of 10/30/24 </h5>
+<h5> As of 11/5/24 </h5>
 
 - Create headers for my script files
-- Create unit conversion variables
-- Scipy runge kutta
-- Work on FEA
-- % Throttle Graph
+- Hand calculation for power
+- Charlie papers read
+- Work on FEA 
+  - debug
 
-
+- Create simple use case 45deg / 30 deg beam in axial tension
+- Use example from email
+  - also run example in abaqus

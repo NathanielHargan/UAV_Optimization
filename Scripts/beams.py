@@ -126,7 +126,6 @@ class Beam:
             self.local_stiffness_matrix,
             self.transformation_matrix) #  np.transpose(t) @ k @ t
 
-
     def solve_local(self, d, r):
         self.d_local = self.transformation_matrix @ d
         self.r_local = self.transformation_matrix @ r
@@ -147,7 +146,6 @@ class Beam:
         self.stresses_bending_y = self.y_moments_local /self.beam_type.cross_section_properties['second moment of area y']
         self.stresses_bending_z = self.z_moments_local /self.beam_type.cross_section_properties['second moment of area z']
         self.stresses_axial = self.y_forces_local / self.beam_type.cross_section_properties["area"]
-
 
     def solve_shape_functions(self):
         a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
@@ -199,7 +197,7 @@ class BeamSystem:
 
         # placeholder
         self.global_stiffness_matrix = np.empty(0)
-        self.local_bc_transform = np.empty(0)
+        self.bc_transform = np.empty(0)
         self.transformed_stiffness_matrix = np.empty(0)
         self.applied_stiffness_matrix = np.empty(0)
 
@@ -229,7 +227,6 @@ class BeamSystem:
         self.x_moments = np.empty(0)
         self.y_moments = np.empty(0)
         self.z_moments = np.empty(0)
-
 
     def add_node(self, location, name=None):
         if name is None:
@@ -394,18 +391,14 @@ class BeamSystem:
         for i in range(len(self.beam_node_indexes)):
             global_element_matrices[i] = self.beams[i].global_stiffness_matrix
 
-        self.global_stiffness_matrix = FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length)
-
-        local_bc_transform = np.zeros([global_length, global_length])
-
+        # assembles the global bc node transforms
+        self.bc_transform = np.zeros([len(self.nodes) * 6, len(self.nodes) * 6])
         for i, node in enumerate(self.nodes):
-            local_bc_transform[i*6:6+i*6, i*6:6+i*6] = node.local_bc_transform
+            self.bc_transform[i*6:i*6 + 6,i*6:i*6 + 6] = node.local_bc_transform
 
-        self.local_bc_transform = local_bc_transform
+        self.global_stiffness_matrix = self.bc_transform @ FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length) @ np.transpose(self.bc_transform)
 
-        self.transformed_stiffness_matrix = self.local_bc_transform @ self.global_stiffness_matrix @ np.transpose(self.local_bc_transform)
-
-        self.applied_stiffness_matrix = FEA_3D.rearrange_stiffness_matrix(self.transformed_stiffness_matrix, up_index)
+        self.applied_stiffness_matrix = FEA_3D.rearrange_stiffness_matrix(self.global_stiffness_matrix, up_index)
 
         kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.applied_stiffness_matrix, len(u_index))
 
@@ -426,15 +419,15 @@ class BeamSystem:
         self.rup = rup
         self.dup = dup
 
-        d = np.empty(global_length)
-        r = np.empty(global_length)
+        d = np.empty(global_length) # d'
+        r = np.empty(global_length) # r'
 
         for i in range(global_length):
             d[up_index[i]] = dup[i]
             r[up_index[i]] = rup[i]
 
-        self.displacement_angle_vector = np.transpose(self.local_bc_transform) @ d
-        self.force_moment_vector = np.transpose(self.local_bc_transform) @ r
+        self.displacement_angle_vector = np.transpose(self.bc_transform) @ d
+        self.force_moment_vector = np.transpose(self.bc_transform) @ r
 
         self.x_displacements = self.displacement_angle_vector[0::6]
         self.y_displacements = self.displacement_angle_vector[1::6]
@@ -567,8 +560,8 @@ class BeamType:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
 
-#%% TESTING
-def test_cantilever_rectangle():
+
+def cantilever_rectangle():
     beam_system = BeamSystem("Cantilever-end load")
     arm_beam = BeamType("rectangle", [20, 6], "Aluminum7075-T6", "arm_beam")
     beam_system.add_node(np.array([0,0,0]),"origin")
@@ -615,7 +608,7 @@ def test_cantilever_rectangle():
         logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
 
-def test_center_multidim():
+def center_multidim():
     beam_system = BeamSystem("Multidimensional Simple Support Center Load")
     arm_beam = BeamType("annulus", [25, 20], "Aluminum7075-T6", "arm_beam")
     beam_system.add_node(np.array([-1000, -1000, -1000]), "point_0")
@@ -664,7 +657,7 @@ def test_center_multidim():
     logging.info('Finished')
 
 
-def test_incline_boundary_conditions():
+def incline_boundary_conditions():
     beam_system = BeamSystem("Incline Boundary Conditions")
     beam_12 = BeamType("circle", [27.63953195], "Aluminum7075-T6", "beam_12")
     beam_3 = BeamType("circle", [32.869128059], "Aluminum7075-T6", "beam_3")
@@ -724,7 +717,7 @@ def test_incline_boundary_conditions():
     logging.info('Finished')
 
 
-def test_reversed_cantilever_rectangle():
+def reversed_cantilever_rectangle():
     L = 500
     I = (6 * 20 ** 3) / 12
     E = 71700
@@ -768,7 +761,8 @@ def test_reversed_cantilever_rectangle():
     for i in np.arange(0, 1.1, 0.1):
         logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
-def test_cantilever_annulus():
+
+def cantilever_annulus():
     beam_system = BeamSystem("annulus Cantilever-end load")
     arm_beam = BeamType("hexagon", [20], "Aluminum7075-T6", "arm_beam")
     beam_system.add_node(np.array([0,0,0]),"origin")
@@ -820,11 +814,49 @@ def test_cantilever_annulus():
     for i in np.arange(0, 1.1, 0.1):
         logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
+
+def beam_30_deg():
+    beam_system = BeamSystem("30 Deg Axial Tension")
+    arm_beam = BeamType("circle", [20], "Aluminum7075-T6", "arm_beam")
+
+    # 2 length 200 elements
+    beam_system.add_node(np.array([0, 0, 0]),"origin")
+    beam_system.add_node(np.array([math.sqrt(3)*100, 100, 0]),"point_1")
+    beam_system.add_node(np.array([math.sqrt(3)*200, 200, 0]),"point_2")
+
+    beam_system.add_beam(arm_beam, "origin", "point_1", np.array([0, 0, 1]), "axial_tension_beam")
+    beam_system.add_beam(arm_beam, "point_1", "point_2", np.array([0, 0, 1]), "pulling_beam")
+
+    beam_system.add_boundary_condition(0, "x", "origin")
+    beam_system.add_boundary_condition(0, "y", "origin")
+    beam_system.add_boundary_condition(0, "z", "origin")
+    beam_system.add_boundary_condition(0, "theta x", "origin")
+    beam_system.add_boundary_condition(0, "theta y", "origin")
+    beam_system.add_boundary_condition(0, "theta z", "origin")
+
+    beam_system.add_boundary_condition(0, "y", "point_1", np.array([math.sqrt(3), 1, 0]), np.array([0,0,1]))
+    beam_system.add_boundary_condition(0, "z", "point_1", np.array([math.sqrt(3), 1, 0]), np.array([0,0,1]))
+    beam_system.add_boundary_condition(0, "theta x", "point_1", np.array([math.sqrt(3), 1, 0]), np.array([0,0,1]))
+    beam_system.add_boundary_condition(0, "theta y", "point_1", np.array([math.sqrt(3), 1, 0]), np.array([0,0,1]))
+    beam_system.add_boundary_condition(0, "theta z", "point_1", np.array([math.sqrt(3), 1, 0]), np.array([0,0,1]))
+
+    beam_system.add_force(np.array([0, 1, 0]), "point_2")
+
+    beam_system.solve_FEA()
+
+    N1_disp = beam_system.nodes[beam_system.select_node("point_1")].result_displacement
+    print("Displacement 1: ", N1_disp)
+    print("Displacement 2: ", beam_system.nodes[beam_system.select_node("point_2")].result_displacement)
+
+    print("Displacement 1 theta: ", math.degrees(math.atan(N1_disp[0]/N1_disp[1])))
+
+
+
 if __name__ == '__main__':
-    test_cantilever_rectangle()
-    test_center_multidim()
-    test_incline_boundary_conditions()
-    test_reverse_cantilever_rectangle()
-    test_cantilever_annulus()
+    beam_30_deg()
+
+
+
+#%%
 
 #%%
