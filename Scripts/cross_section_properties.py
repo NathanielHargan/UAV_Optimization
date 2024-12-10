@@ -1,5 +1,5 @@
 import math
-
+import numpy as np
 
 # returns diction annulus beam cross section properties
 def cross_section_annulus(cross_section_parameters):
@@ -22,8 +22,10 @@ def cross_section_annulus(cross_section_parameters):
         'elastic section modulus': (math.pi/4) * (r_outer ** 4 - r_inner ** 4) / r_outer,
         'torsional constant': (math.pi/2) * (r_outer ** 4 - r_inner ** 4),
         # I calculated this for poisson = 0
-        'transverse shear deflection constant y': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2)),
-        'transverse shear deflection constant z': (6 * (1 + m) ** 2) / ((7 * (1 + m) ** 2) + (20 * m ** 2))
+        'transverse shear deflection constant y': (6 * (1 + m ** 2) ** 2) / ((7 * (1 + m ** 2) ** 2) + (20 * m ** 2)),
+        'transverse shear deflection constant z': (6 * (1 + m ** 2) ** 2) / ((7 * (1 + m ** 2) ** 2) + (20 * m ** 2)),
+        'top fiber y': r_outer,
+        'top fiber z': r_outer
     }
 
 
@@ -51,23 +53,24 @@ def cross_section_rectangle(cross_section_parameters):
     # https://structx.com/Shape_Formulas_024.html
     h = cross_section_parameters[0]  # height
     b = cross_section_parameters[1]  # base
-
+    # h in y dir b in z dir
     return {
         'area': h*b,
         'perimeter': 2 * (h + b),
         'second moment of area x': h * b * ((h ** 2) + (b ** 2)) / 12,  # also polar moment of inertia
         'second moment of area y': ((b ** 3) * h) / 12,  # I1
         'second moment of area z': (b * (h ** 3)) / 12,  # I2
-        'radius of gyration x': h / (2 * math.sqrt(3)),
+        'radius of gyration x': math.sqrt((h ** 2 + b ** 2) / (2 * math.sqrt(3))),
         'radius of gyration y': b / (2 * math.sqrt(3)),
-        'radius of gyration z': math.sqrt((h ** 2 + b ** 2) / (2 * math.sqrt(3))),
+        'radius of gyration z': h / (2 * math.sqrt(3)),
         'plastic section modulus x': h ** 2 * b / 4,
         'plastic section modulus y': h * b ** 2 / 4,
         'elastic section modulus x': (h ** 2 * b) / 6,
         'elastic section modulus y': (h * b ** 2) / 6,
         'torsional constant': ((h ** 3) * b) * ((1/3) - (0.21*h/b) * (1 - (h**4 / (12 * b ** 4)))),
         'transverse shear deflection constant y': 5/6,
-        'transverse shear deflection constant z': 5/6
+        'transverse shear deflection constant z': 5/6,
+        'stress points': np.array([[h/2,b/2],[-h/2,b/2],[h/2,-b/2],[-h/2,-b/2]])
     }
 
 def cross_section_hexagon(cross_section_parameters):

@@ -143,9 +143,34 @@ class Beam:
         self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
 
-        self.stresses_bending_y = self.y_moments_local /self.beam_type.cross_section_properties['second moment of area y']
-        self.stresses_bending_z = self.z_moments_local /self.beam_type.cross_section_properties['second moment of area z']
-        self.stresses_axial = self.y_forces_local / self.beam_type.cross_section_properties["area"]
+        n_y_node_0, n_z_node_0, dn_y_node_0, dn_z_node_0, ddn_y_node_0, ddn_z_node_0 = self.return_shape_functions(0)
+        n_y_node_1, n_z_node_1, dn_y_node_1, dn_z_node_1, ddn_y_node_1, ddn_z_node_1 = self.return_shape_functions(1)
+        '''
+        self.stress_points = self.beam_type.cross_section_properties['stress points']
+        self.stresses_0 = np.zeros(len(self.stress_points))
+        self.stresses_1 = np.zeros(len(self.stress_points))
+        for i, stress_point in enumerate(self.stress_points):
+            strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, stress_point[0])
+            strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, stress_point[1])
+            self.stresses_0[i] = stress_y_0 + stress_z_0
+            strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, stress_point[0])
+            strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, stress_point[1])
+            self.stresses_1[i] = stress_y_1 + stress_z_1
+        '''
+
+
+    def stress_strain_shape_function(self, n, dn, y):
+        # Shape function[0] = uy(x)
+        # Shape function[1] = thetaz(x)
+        # Shape function[2] = gamma(x)
+        # h is the height on the axis of the shape function (y or z local axis)
+        strain_bending = -y * dn[1]
+        stress_bending = strain_bending * self.beam_type.material_properties["elastic modulus"]
+        strain_transverse_shear = n[2]
+        torsion = self.beam_type.material_properties["shear modulus"] * n[2] / self.beam_type.cross_section_properties['transverse shear deflection constant y']
+        strain_vector = np.array([[strain_bending, strain_transverse_shear]])
+        stress_vector = np.array([[stress_bending, torsion]])
+        return strain_vector, stress_vector
 
     def solve_shape_functions(self):
         a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
@@ -173,10 +198,25 @@ class Beam:
             [0, 1, 2*x, (3 * x ** 2) - 6 * self.beam_type.g_z],
             [0, 0, 0, -6 * self.beam_type.g_z]])
 
+        # derivative with respect to x (both y and z are the same because g is unchanging with respect to x)
+
+        dX_y_z = np.array([
+            [0, 1, 2 * x, 2 * x**2],
+            [0, 0, 2, (6 * x)],
+            [0, 0, 0, 0]])
+
+        ddX_y_z = np.array([
+            [0, 0, 2, 4 * x],
+            [0, 0, 0, 6],
+            [0, 0, 0, 0]])
+
         y = X_y @ self.a_inv_y_shape_vector
         z = X_z @ self.a_inv_z_shape_vector
-
-        return y, z
+        dy = dX_y_z @ self.a_inv_y_shape_vector
+        dz = dX_y_z @ self.a_inv_z_shape_vector
+        ddy = ddX_y_z @ self.a_inv_y_shape_vector
+        ddz = ddX_y_z @ self.a_inv_z_shape_vector
+        return y, z, dy, dz, ddy, ddz
 
 
 class BeamSystem:
@@ -255,23 +295,35 @@ class BeamSystem:
 
     def select_boundary_condition_type(self, bc_ref):
         if type(bc_ref) is int:
-            return bc_ref
+            return [bc_ref]
         elif type(bc_ref) is str:
-            return ["x", "y", "z", "theta x", "theta y", "theta z"].index(bc_ref)  # life hack
+            return {
+                "x": [0],
+                "y": [1],
+                "z": [2],
+                "theta x": [3],
+                "theta y": [4],
+                "theta z": [5],
+                "x symm": [0, 4, 5],
+                "y symm": [1, 3, 5],
+                "z symm": [2, 3, 4],
+                "pinned": [0, 1, 2, 3, 4, 5],
+            }[bc_ref]  # life hack
         else:
             print("invalid boundary condition type")
             return "error"
 
     def add_boundary_condition(self, boundary_val, bc_type_ref, node_ref, direction=None, k_node_dir=None):
         node_index = self.select_node(node_ref)
-        bc_type = self.select_boundary_condition_type(bc_type_ref)
-        self.boundary_conditions = np.concatenate((self.boundary_conditions, [[boundary_val]]))
-        self.boundary_conditions_type = np.concatenate((self.boundary_conditions_type, [[bc_type]]))
-        self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions_node_indexes, [[node_index]]))
+        bc_types = self.select_boundary_condition_type(bc_type_ref)
+        for bc_type in bc_types:
+            self.boundary_conditions = np.concatenate((self.boundary_conditions, [[boundary_val]]))
+            self.boundary_conditions_type = np.concatenate((self.boundary_conditions_type, [[bc_type]]))
+            self.boundary_conditions_node_indexes = np.concatenate((self.boundary_conditions_node_indexes, [[node_index]]))
 
-        if direction is not None:
-            node = self.nodes[node_index]
-            node.create_local_transform(direction, k_node_dir)
+            if direction is not None:
+                node = self.nodes[node_index]
+                node.create_local_transform(direction, k_node_dir)
 
     def add_force(self, direction, node_ref):
         node = self.nodes[self.select_node(node_ref)]
@@ -469,8 +521,8 @@ class BeamSystem:
         for beam_num, beam in enumerate(self.beams):
             beam_index_0 = int(self.beam_node_indexes[beam_num][0] * 6)
             beam_index_1 = int(self.beam_node_indexes[beam_num][1] * 6)
-            local_d = np.concatenate((d[beam_index_0:beam_index_0 + 6], d[beam_index_1:beam_index_1+6]))
-            local_r = np.concatenate((r[beam_index_0:beam_index_0 + 6], r[beam_index_1:beam_index_1+6]))
+            local_d = np.concatenate((self.displacement_angle_vector[beam_index_0:beam_index_0 + 6], self.displacement_angle_vector[beam_index_1:beam_index_1+6]))
+            local_r = np.concatenate((self.force_moment_vector[beam_index_0:beam_index_0 + 6], self.force_moment_vector[beam_index_1:beam_index_1+6]))
             beam.solve_local(local_d, local_r)
 
             beam_node_index_0 = int(self.beam_node_indexes[beam_num][0])
@@ -562,6 +614,7 @@ class BeamType:
 
 
 def cantilever_rectangle():
+    # Relevant
     beam_system = BeamSystem("Cantilever-end load")
     arm_beam = BeamType("rectangle", [20, 6], "Aluminum7075-T6", "arm_beam")
     beam_system.add_node(np.array([0,0,0]),"origin")
@@ -718,6 +771,7 @@ def incline_boundary_conditions():
 
 
 def reversed_cantilever_rectangle():
+    # Relevant
     L = 500
     I = (6 * 20 ** 3) / 12
     E = 71700
@@ -822,7 +876,7 @@ def beam_30_deg():
     # 2 length 200 elements
     beam_system.add_node(np.array([0, 0, 0]),"origin")
     beam_system.add_node(np.array([math.sqrt(3)*100, 100, 0]),"point_1")
-    beam_system.add_node(np.array([math.sqrt(3)*200, 200, 0]),"point_2")
+    beam_system.add_node(np.array([500, 200, 0]),"point_2")
 
     beam_system.add_beam(arm_beam, "origin", "point_1", np.array([0, 0, 1]), "axial_tension_beam")
     beam_system.add_beam(arm_beam, "point_1", "point_2", np.array([0, 0, 1]), "pulling_beam")
@@ -848,12 +902,167 @@ def beam_30_deg():
     print("Displacement 1: ", N1_disp)
     print("Displacement 2: ", beam_system.nodes[beam_system.select_node("point_2")].result_displacement)
 
-    print("Displacement 1 theta: ", math.degrees(math.atan(N1_disp[0]/N1_disp[1])))
+    print("Displacement 1 theta: ", math.degrees(math.atan2(N1_disp[0], N1_disp[1])))
+
+def timoshenko_simply_supp_point():
+    #
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
+    node_count = 21
+    L = 1000
+    Q = 20 # Load
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([x+0.0001, 0, 0]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 1, 0]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "y", 0)
+    beam_system.add_boundary_condition(0, "y", node_count-1)
+
+    for i in range(node_count):
+        beam_system.add_boundary_condition(0, "z", i)
+
+    print("~Point Load~")
+    beam_system.add_force(np.array([0, -Q, 0]), 10)
+
+    beam_system.solve_FEA()
+    xi_midpoint = int(node_count/2)
+    xi_75 = int(node_count*(3/4))
+    print("Midpoint Disp:", beam_system.nodes[10].result_displacement)
+    print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
+    print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
+
+    # ABAQUS 22 midpoint: -0.178522mm
+    # ABAQUS 23 midpoint: -0.178871mm
+
+def timoshenko_simply_supp():
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
+
+    node_count = 21
+    L = 1000
+    Q = 0.0222411 # Load
+    E = arm_beam.material_properties['elastic modulus']
+    I = arm_beam.cross_section_properties['second moment of area z']
+    EI = E*I
+    K = arm_beam.cross_section_properties['transverse shear deflection constant z']
+    G = arm_beam.material_properties["shear modulus"]
+    A = arm_beam.cross_section_properties['area']
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([x+0.0001, 0, 0]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 1, 0]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "x", 0)
+    beam_system.add_boundary_condition(0, "y", 0)
+    beam_system.add_boundary_condition(0, "x", node_count-1)
+    beam_system.add_boundary_condition(0, "y", node_count-1)
+
+    for i in range(node_count):
+        beam_system.add_boundary_condition(0, "z symm", i)
+    '''
+    beam_system.add_force(np.array([0, -Q, 0]), 10)
+    beam_system.solve_FEA()
+
+    print("Midpoint Disp:", beam_system.nodes[10].result_displacement)
+    print("Midpoint Rotation:", beam_system.nodes[10].result_displacement)
+    # Abaqus Results
+    #
+    '''
+
+    # Add distributed load
+    q = L*Q/(node_count)  # load on each node
+    for i in range(1, node_count-1):  # ingnoring phantom loads
+        beam_system.add_force(np.array([0, -q, 0]), i)
+        print("")
+
+    beam_system.add_moment(np.array([0, 0, (Q * (L/(node_count-1)) ** 2)/12]), 0)
+    beam_system.add_moment(np.array([0, 0, -(Q * (L/(node_count-1)) ** 2)/12]), node_count-1)
+
+    beam_system.solve_FEA()
+    xi_midpoint = int(node_count/2)
+    xi_75 = int(node_count*(3/4))
+    print("Midpoint Disp:", beam_system.nodes[xi_midpoint].result_displacement)
+    print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
+    print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
+
+    x = beam_system.nodes[xi_midpoint].location[0]
+    print("x:", x)
+    w_bending = (Q/EI) * ((x**4 / 24) - ((L**2 * x**2)/16) + (5 * L ** 4)/384)
+    w_shear = (Q/(2 * K * G * A)) * (((L ** 2) / 4) - (x ** 2))
+    w = w_bending + w_shear
+    print("Expected Midpoint Disp from bending: ", w_bending)
+    print("Expected Midpoint Disp from shear: ", w_shear)
+    print("Expected Midpoint Disp from total: ", w)
 
 
+    x = beam_system.nodes[xi_75].location[0]
+    print("75:",x)
+    w_bending = (Q/EI) * ((x**4 / 24) - ((L**2 * x**2)/16) + (5 * L ** 4)/384)
+    w_shear = (Q/(2 * K * G * A)) * (((L ** 2) / 4) - (x ** 2))
+    w = w_bending + w_shear
+    print("Expected 75 Disp from bending: ", w_bending)
+    print("Expected 75 Disp from shear: ", w_shear)
+    print("Expected 75 Disp from total: ", w)
+
+def timoshenko_simply_supp_point_shear():
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
+    node_count = 21
+    L = 50
+    Q = 20 # Load
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([x, 0, 0]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 1, 0]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "x", 0)
+    beam_system.add_boundary_condition(0, "x", node_count-1)
+    beam_system.add_boundary_condition(0, "y", 0)
+    beam_system.add_boundary_condition(0, "y", node_count-1)
+
+    for i in range(node_count):
+        beam_system.add_boundary_condition(0, "z symm", i)
+
+    print("~Point Load Shear~")
+    beam_system.add_force(np.array([0, -Q, 0]), 10)
+
+    beam_system.solve_FEA()
+
+    xi_midpoint = int(node_count/2)
+    xi_75 = int(node_count*(3/4))
+    print("Midpoint Disp:", beam_system.nodes[10].result_displacement)
+    print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
+    print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
+
+    # ABAQUS 22 midpoint: -3.997e-05
+    # ABAQUS 23 midpoint: -2.232e-05
 
 if __name__ == '__main__':
-    beam_30_deg()
+    # beam_30_deg()
+    timoshenko_simply_supp_point()
+    timoshenko_simply_supp()
+    timoshenko_simply_supp_point_shear()
+
+
 
 
 

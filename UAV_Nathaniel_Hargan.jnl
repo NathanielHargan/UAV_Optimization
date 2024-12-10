@@ -693,3 +693,222 @@ mdb.jobs['N100LoadBeam32']._Message(COMPLETED, {
 mdb.jobs['N100LoadBeam32']._Message(JOB_COMPLETED, {
     'time': 'Tue Nov 12 15:10:18 2024', 'jobName': 'N100LoadBeam32'})
 # Save by natha on 2024_11_12-15.17.00; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+del mdb.jobs['UAV_Slice_Attempt_1']
+del mdb.jobs['N100LoadBeam32']
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, name=
+    'UAV_SLICE_ANGLE_CORRECTION', nodalOutputPrecision=SINGLE, numCpus=1, 
+    numGPUs=0, queue=None, resultsFormat=ODB, scratch=
+    'C:\\Desktop\\UAV_Mission', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_SLICE_ANGLE_CORRECTION.odb', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 13908})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MEMORY_ESTIMATE, {
+    'memory': 24.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 1, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STATUS, {'step': 1, 
+    'increment': 1, 'attempts': 1, 'severe': 0, 'equilibrium': 1, 
+    'iterations': 1, 'totalTime': 0.0, 'stepTime': 2.22e-16, 
+    'timeIncrement': 2.22e-16, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(JOB_COMPLETED, {
+    'time': 'Tue Nov 19 00:35:44 2024', 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.models['Model-1'].profiles['Arm'].setValues(t=2.0)
+mdb.models['Model-1'].profiles['Strut'].setValues(t=1.0)
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_SLICE_ANGLE_CORRECTION.odb', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 23152})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MEMORY_ESTIMATE, {
+    'memory': 24.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 1, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STATUS, {'step': 1, 
+    'increment': 1, 'attempts': 1, 'severe': 0, 'equilibrium': 1, 
+    'iterations': 1, 'totalTime': 0.0, 'stepTime': 2.22e-16, 
+    'timeIncrement': 2.22e-16, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(JOB_COMPLETED, {
+    'time': 'Tue Nov 19 00:42:29 2024', 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+# Save by natha on 2024_11_19-00.52.12; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Drone_Slice'].setElementType(elemTypes=(ElemType(
+    elemCode=B32, elemLibrary=STANDARD), ), regions=(
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#f ]', ), ), ))
+mdb.models['Model-1'].sections['Strut'].setValues(beamSectionOffset=(0.0, 0.0), 
+    poissonRatio=0.0)
+del mdb.models['Model-1'].sections['Strut'].beamTransverseShear
+mdb.models['Model-1'].sections['Arm'].setValues(beamSectionOffset=(0.0, 0.0), 
+    poissonRatio=0.0)
+del mdb.models['Model-1'].sections['Arm'].beamTransverseShear
+# Save by natha on 2024_11_19-01.19.15; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_SLICE_ANGLE_CORRECTION.odb', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION', 
+    'clientHost': 'NathanSHargan', 'handle': 22688})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MEMORY_ESTIMATE, {
+    'memory': 24.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(ODB_FRAME, {'step': 0, 
+    'frame': 1, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(STATUS, {'step': 1, 
+    'increment': 1, 'attempts': 1, 'severe': 0, 'equilibrium': 1, 
+    'iterations': 1, 'totalTime': 0.0, 'stepTime': 2.22e-16, 
+    'timeIncrement': 2.22e-16, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(JOB_COMPLETED, {
+    'time': 'Tue Nov 19 01:19:37 2024', 
+    'jobName': 'UAV_SLICE_ANGLE_CORRECTION'})
+mdb.models['Model-1'].sections['Arm'].setValues(beamSectionOffset=(0.0, 0.0), 
+    poissonRatio=0.0)
+# Save by natha on 2024_11_19-01.51.00; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376

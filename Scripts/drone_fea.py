@@ -50,21 +50,12 @@ class DroneFEA:
             "strut_element_bottom")
 
     def boundary_conditions_slice(self):
-        self.beam_system.add_boundary_condition(0, "x", "center_node")
-        self.beam_system.add_boundary_condition(0, "y", "center_node")
-        self.beam_system.add_boundary_condition(0, "z", "center_node")
-        self.beam_system.add_boundary_condition(0, "theta x", "center_node")
-        self.beam_system.add_boundary_condition(0, "theta y", "center_node")
-        self.beam_system.add_boundary_condition(0, "theta z", "center_node")
+        self.beam_system.add_boundary_condition(0, "pinned", "center_node")
 
         local_dir_top = self.geometry.strut_centroid_coords[0] - self.geometry.strut_nodes_coords[0]
         local_dir_bot = self.geometry.strut_centroid_coords[-1] - self.geometry.strut_nodes_coords[0]
-        self.beam_system.add_boundary_condition(0, "x", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "x", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "theta y", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "theta y", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "theta z", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
-        self.beam_system.add_boundary_condition(0, "theta z", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "x symm", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
+        self.beam_system.add_boundary_condition(0, "x symm", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
     '''
     def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
         self.nominal_rad = nominal_rad
@@ -132,12 +123,7 @@ class DroneFEA:
         self.beam_system.rotate_beam_system(x, y, z)
 
     def boundary_conditions(self):
-        self.beam_system.add_boundary_condition(0, "x", "origin")
-        self.beam_system.add_boundary_condition(0, "y", "origin")
-        self.beam_system.add_boundary_condition(0, "z", "origin")
-        self.beam_system.add_boundary_condition(0, "theta x", "origin")
-        self.beam_system.add_boundary_condition(0, "theta y", "origin")
-        self.beam_system.add_boundary_condition(0, "theta z", "origin")
+        self.beam_system.add_boundary_condition(0, "pinned", "origin")
 
     def solve_fea(self):
         self.beam_system.solve_FEA()

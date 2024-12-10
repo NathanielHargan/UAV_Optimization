@@ -1,6 +1,5 @@
 
 <h3> Units </h3>
-
 - Weight: N/mm^3
 - Mass: N*s^2/mm = 1000kg = 1Mg = Tonnes
 - Pressure: MPa = N/mm^2
@@ -17,9 +16,27 @@
 - Create headers for my script files
 - Hand calculation for power
 - Charlie papers read
-- Work on FEA 
-  - debug
+- check timeshenko (done)
+- Post process FEA element local (Stress/strain)
+- Scipi optimize
+- If there is issue with calling outside of the mission profile, return 0 outside (if it doesn't break continuity)
+- Test stress with abaqus (euler slenderness ratio)
 
-- Create simple use case 45deg / 30 deg beam in axial tension
-- Use example from email
-  - also run example in abaqus
+- Design Constraints
+  - (Everything is a FOS)
+  - Yield
+  - Allowable Deflection
+  - Natural freq.
+  - capacity battery
+  - Fatigue
+- Design variables (check these)
+  - Pipe diameter and thickness
+  - Radius 
+  - Section type
+  - Hub diameter
+
+- Cathy hill spring graduation or summer
+- Project overview for committee
+- Yield constraint, deflection constraint, pipe diameter variable; minimize mass optimization
+- check timeshenko
+- Post process FEA element local (Stress/strain)
