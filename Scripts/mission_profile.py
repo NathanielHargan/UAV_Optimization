@@ -37,8 +37,11 @@ class MissionProfile:
 
     # Calculates segment index and returns the position, velocity, and the name of the segment at a given time
     def time_solve(self, time):
-        i = np.searchsorted(self.t_values, time, side='right') - 1  # Determines the segment time is in
-        return self.time_output(time, i)
+        if time < 0 or time > self.t_values[-1]:
+            return np.array([0, 0, 0, 0]), np.array([0, 0, 0, 0]), "NA"
+        else:
+            i = np.searchsorted(self.t_values, time, side='right') - 1  # Determines the segment time is in
+            return self.time_output(time, i)
 
 
     # For a given value of time and segment index, it interpolates values for position, velocity, and the name of the segment

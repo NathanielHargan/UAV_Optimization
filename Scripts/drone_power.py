@@ -51,7 +51,7 @@ class DronePower:
         yield integration.y
         return
     '''
-
+    '''
     def energy_consumption_calc(self, segments, steps_mult, steps_init, max_error):
         # Segment ends are a list of the segment deviations.
         segment_count = len(segments)-1
@@ -63,7 +63,7 @@ class DronePower:
 
         while max(error) > max_error:
             time = np.array([])
-
+            
             # Setting up time segments
             for i in range(segment_count):
                 t_start = segments[i]
@@ -96,6 +96,20 @@ class DronePower:
         self.error = error
         self.timesteps = time  # Array from 0 to t_final
         self.energy_consumption = power_consumed
+    '''
+    def energy_consumption_calc(self, segments, steps):
+        segment_count = len(segments)-1
+        time = np.array([])
+        for i in range(segment_count):
+            t_start = segments[i]
+            t_end = segments[i+1]
+            time = np.append(time, np.linspace(t_start, t_end, steps, endpoint = False))
+
+        power = np.zeros(len(time))
+        for i in range(len(time)):
+            power[i] = self.neg_power_at_time(time[i])
+        self.timesteps = time
+        self.energy_consumption = scipy.integrate.cumulative_trapezoid(power, time, initial=self.milliwatt_second_capacity)
 
     def throttle_ratio_calc(self, max_power_full_battery_kw):
         # assuming max throttle is proportional to the percent energy left in the battery.

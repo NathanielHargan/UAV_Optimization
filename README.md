@@ -21,6 +21,7 @@
 - Scipi optimize
 - If there is issue with calling outside of the mission profile, return 0 outside (if it doesn't break continuity)
 - Test stress with abaqus (euler slenderness ratio)
+- Mark lutz module development reload vs import
 
 - Design Constraints
   - (Everything is a FOS)

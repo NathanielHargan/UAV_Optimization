@@ -25,7 +25,8 @@ def cross_section_annulus(cross_section_parameters):
         'transverse shear deflection constant y': (6 * (1 + m ** 2) ** 2) / ((7 * (1 + m ** 2) ** 2) + (20 * m ** 2)),
         'transverse shear deflection constant z': (6 * (1 + m ** 2) ** 2) / ((7 * (1 + m ** 2) ** 2) + (20 * m ** 2)),
         'top fiber y': r_outer,
-        'top fiber z': r_outer
+        'top fiber z': r_outer,
+        'stress points': []
     }
 
 
@@ -45,7 +46,8 @@ def cross_section_circle(cross_section_parameters):
         'elastic section modulus': (math.pi/4) * r ** 3,
         'torsional constant': (math.pi/2) * r ** 4,
         'transverse shear deflection constant y': 6/7,
-        'transverse shear deflection constant z': 6/7
+        'transverse shear deflection constant z': 6/7,
+        'stress points': []
     }
 
 
@@ -70,7 +72,8 @@ def cross_section_rectangle(cross_section_parameters):
         'torsional constant': ((h ** 3) * b) * ((1/3) - (0.21*h/b) * (1 - (h**4 / (12 * b ** 4)))),
         'transverse shear deflection constant y': 5/6,
         'transverse shear deflection constant z': 5/6,
-        'stress points': np.array([[h/2,b/2],[-h/2,b/2],[h/2,-b/2],[-h/2,-b/2]])
+        'stress points': np.array([[0,h/2],[b/2,h/2],[b/2,0],[b/2,-h/2],[0,-h/2],[-b/2,-h/2],[-b/2,0],[-b/2,h/2]])
+        # 'stress points': np.array([[h/2,0],[0,b/2],[-h/2,0],[0,-b/2]])
     }
 
 def cross_section_hexagon(cross_section_parameters):
@@ -91,7 +94,8 @@ def cross_section_hexagon(cross_section_parameters):
         'elastic section modulus': iz/r,
         'torsional constant': 0.1154 * f ** 4,
         'transverse shear deflection constant y': 0.00001,
-        'transverse shear deflection constant z': 0.00001
+        'transverse shear deflection constant z': 0.00001,
+        'stress points': np.array([[r,0], [f/2,r/2], [f/2,-r/2], [0,-r], [-f/2,r/2], [-f/2,-r/2]])
     }
 
 

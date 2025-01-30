@@ -96,8 +96,6 @@ class Beam:
 
         self.solve_stiffness_matrix()
 
-        self.stresses_bending_y = np.empty(2)
-        self.stresses_bending_z = np.empty(2)
         self.stresses_axial = np.empty(2)
 
     def solve_stiffness_matrix(self):
@@ -143,28 +141,47 @@ class Beam:
         self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
 
+    def find_stresses(self):
         n_y_node_0, n_z_node_0, dn_y_node_0, dn_z_node_0, ddn_y_node_0, ddn_z_node_0 = self.return_shape_functions(0)
         n_y_node_1, n_z_node_1, dn_y_node_1, dn_z_node_1, ddn_y_node_1, ddn_z_node_1 = self.return_shape_functions(1)
-        '''
         self.stress_points = self.beam_type.cross_section_properties['stress points']
-        self.stresses_0 = np.zeros(len(self.stress_points))
-        self.stresses_1 = np.zeros(len(self.stress_points))
-        for i, stress_point in enumerate(self.stress_points):
-            strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, stress_point[0])
-            strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, stress_point[1])
-            self.stresses_0[i] = stress_y_0 + stress_z_0
-            strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, stress_point[0])
-            strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, stress_point[1])
-            self.stresses_1[i] = stress_y_1 + stress_z_1
-        '''
+        self.bending_stresses_0 = np.zeros(len(self.stress_points))
+        self.bending_stresses_1 = np.zeros(len(self.stress_points))
+        self.bending_strains_0 = np.zeros(len(self.stress_points))
+        self.bending_strains_1 = np.zeros(len(self.stress_points))
+        if len(self.stress_points) != 0:
+            for i, stress_point in enumerate(self.stress_points):
+                strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, stress_point[0])
+                strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, stress_point[1])
+                self.bending_stresses_0[i] = stress_y_0[0][0] + stress_z_0[0][0]
+                self.bending_strains_0[i] = strain_y_0[0][0] + strain_z_0[0][0]
+                strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, stress_point[0])
+                strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, stress_point[1])
+                self.bending_stresses_1[i] = stress_y_1[0][0] + stress_z_1[0][0]
+                self.bending_strains_1[i] = strain_y_1[0][0] + strain_z_1[0][0]
+        else: #assume circle
+            self.bending_stresses_0 = np.array([])
+            self.bending_stresses_1 = np.zeros(len(self.stress_points))
+            self.bending_strains_0 = np.zeros(len(self.stress_points))
+            self.bending_strains_1 = np.zeros(len(self.stress_points))
+            radius = self.beam_type.cross_section_parameters[0]/2
+            strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, radius)
+            strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, radius)
+            self.bending_stresses_0 = np.array([math.sqrt(stress_y_0[0][0]**2 + stress_z_0[0][0]**2)])
+            self.bending_strains_0 = np.array([math.sqrt(strain_y_0[0][0]**2 + strain_z_0[0][0]**2)])
+            strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, radius)
+            strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, radius)
+            self.bending_stresses_1 = np.array([math.sqrt(stress_y_1[0][0]**2 + stress_z_1[0][0]**2)])
+            self.bending_strains_1 = np.array([math.sqrt(strain_y_1[0][0]**2 + strain_z_1[0][0]**2)])
 
 
-    def stress_strain_shape_function(self, n, dn, y):
+
+    def stress_strain_shape_function(self, n, dn, h):
         # Shape function[0] = uy(x)
         # Shape function[1] = thetaz(x)
         # Shape function[2] = gamma(x)
         # h is the height on the axis of the shape function (y or z local axis)
-        strain_bending = -y * dn[1]
+        strain_bending = -h * dn[1]
         stress_bending = strain_bending * self.beam_type.material_properties["elastic modulus"]
         strain_transverse_shear = n[2]
         torsion = self.beam_type.material_properties["shear modulus"] * n[2] / self.beam_type.cross_section_properties['transverse shear deflection constant y']
@@ -182,9 +199,9 @@ class Beam:
                                                         self.z_angles_local[1]])
 
         self.a_inv_z_shape_vector = a_inv_z @ np.array([self.z_displacements_local[0],
-                                                        self.y_angles_local[0],
+                                                        -self.y_angles_local[0],
                                                         self.z_displacements_local[1],
-                                                        self.y_angles_local[1]])
+                                                        -self.y_angles_local[1]])
 
     def return_shape_functions(self, xi):
         x = xi * self.length
@@ -238,7 +255,6 @@ class BeamSystem:
         # placeholder
         self.global_stiffness_matrix = np.empty(0)
         self.bc_transform = np.empty(0)
-        self.transformed_stiffness_matrix = np.empty(0)
         self.applied_stiffness_matrix = np.empty(0)
 
         self.ru = np.empty(0)
@@ -307,7 +323,8 @@ class BeamSystem:
                 "x symm": [0, 4, 5],
                 "y symm": [1, 3, 5],
                 "z symm": [2, 3, 4],
-                "pinned": [0, 1, 2, 3, 4, 5],
+                "pinned": [0, 1, 2],
+                "en castre": [0, 1, 2, 3, 4, 5],
             }[bc_ref]  # life hack
         else:
             print("invalid boundary condition type")
@@ -569,6 +586,7 @@ class BeamSystem:
                 self.z_moments[beam_node_index_1]])
 
             beam.solve_shape_functions()
+            beam.find_stresses()
 
 
 class BeamType:
@@ -868,7 +886,6 @@ def cantilever_annulus():
     for i in np.arange(0, 1.1, 0.1):
         logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
-
 def beam_30_deg():
     beam_system = BeamSystem("30 Deg Axial Tension")
     arm_beam = BeamType("circle", [20], "Aluminum7075-T6", "arm_beam")
@@ -909,6 +926,7 @@ def timoshenko_simply_supp_point():
     beam_system = BeamSystem("timoshenko_simply_supp")
     arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
     node_count = 21
+    midpoint_index = int((node_count-1)/2)
     L = 1000
     Q = 20 # Load
 
@@ -925,21 +943,24 @@ def timoshenko_simply_supp_point():
     beam_system.add_boundary_condition(0, "y", 0)
     beam_system.add_boundary_condition(0, "y", node_count-1)
 
-    for i in range(node_count):
-        beam_system.add_boundary_condition(0, "z", i)
 
-    print("~Point Load~")
-    beam_system.add_force(np.array([0, -Q, 0]), 10)
+    print("~Point Load Slender~")
+    beam_system.add_force(np.array([0, -Q, 0]), midpoint_index)
 
     beam_system.solve_FEA()
-    xi_midpoint = int(node_count/2)
+    xi_midpoint = midpoint_index
     xi_75 = int(node_count*(3/4))
-    print("Midpoint Disp:", beam_system.nodes[10].result_displacement)
+    print("Midpoint Disp:", beam_system.nodes[midpoint_index].result_displacement)
     print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
     print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
 
     # ABAQUS 22 midpoint: -0.178522mm
     # ABAQUS 23 midpoint: -0.178871mm
+    # Abaqus max stress: 1.920
+
+    for beam in beam_system.beams:
+        print("Max Stress 0", max(beam.bending_stresses_0))
+        print("Max Stress 1", max(beam.bending_stresses_1))
 
 def timoshenko_simply_supp():
     beam_system = BeamSystem("timoshenko_simply_supp")
@@ -1017,6 +1038,8 @@ def timoshenko_simply_supp():
     print("Expected 75 Disp from shear: ", w_shear)
     print("Expected 75 Disp from total: ", w)
 
+
+
 def timoshenko_simply_supp_point_shear():
     beam_system = BeamSystem("timoshenko_simply_supp")
     arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
@@ -1042,7 +1065,7 @@ def timoshenko_simply_supp_point_shear():
     for i in range(node_count):
         beam_system.add_boundary_condition(0, "z symm", i)
 
-    print("~Point Load Shear~")
+    print("~Point Load Shear Test~")
     beam_system.add_force(np.array([0, -Q, 0]), 10)
 
     beam_system.solve_FEA()
@@ -1056,11 +1079,117 @@ def timoshenko_simply_supp_point_shear():
     # ABAQUS 22 midpoint: -3.997e-05
     # ABAQUS 23 midpoint: -2.232e-05
 
+def timoshenko_stress_circle():
+    #
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("circle", [25], "Aluminum7075-T6", "arm_beam")
+    node_count = 21
+    midpoint_index = int((node_count-1)/2)
+    L = 1000
+    Q = 20 # Load
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([x+0.0001, 0, 0.01]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 0, 1]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "pinned", 0)
+    beam_system.add_boundary_condition(0, "pinned", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", 0)
+
+
+    print("~Point Load Slender~")
+    beam_system.add_force(np.array([0, -Q, -Q]), midpoint_index)
+
+    beam_system.solve_FEA()
+    xi_midpoint = midpoint_index
+    xi_75 = int(node_count*(3/4))
+    print("Midpoint Disp:", beam_system.nodes[midpoint_index].result_displacement)
+    print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
+    print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
+
+    # ABAQUS 22 midpoint: -0.178522mm
+    # ABAQUS 23 midpoint: -0.178871mm
+    # Abaqus max stress: 1.920
+    for beam in beam_system.beams:
+        print("Max Stress 0", np.round(beam.bending_stresses_0,5))
+        print("Max Stress 1", np.round(beam.bending_stresses_1,5))
+
+    print(beam_system.y_angles)
+    # print(beam_system.du)
+
+    # print(beam_system.kuu)
+    print(beam_system.z_angles)
+    # print(beam_system.beams[10].transformation_matrix)
+    # print(beam_system.beams[10].transformation_matrix)
+    # print(beam_system.du)
+
+def timoshenko_stress():
+    #
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("rectangle", [25,25], "Aluminum7075-T6", "arm_beam")
+    node_count = 21
+    midpoint_index = int((node_count-1)/2)
+    L = 1000
+    Q = 20 # Load
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([0.0001, x, 0.01]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([1, 0, 0]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "pinned", 0)
+    beam_system.add_boundary_condition(0, "pinned", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", 0)
+
+
+    print("~Point Load Slender~")
+    beam_system.add_force(np.array([0, -Q, -Q]), midpoint_index)
+
+    beam_system.solve_FEA()
+    xi_midpoint = midpoint_index
+    xi_75 = int(node_count*(3/4))
+    print("Midpoint Disp:", beam_system.nodes[midpoint_index].result_displacement)
+    print("0 rotation:", beam_system.nodes[0].result_angular_displacement)
+    print("0.75 Disp:", beam_system.nodes[xi_75].result_displacement)
+
+    # ABAQUS 22 midpoint: -0.178522mm
+    # ABAQUS 23 midpoint: -0.178871mm
+    # Abaqus max stress: 1.920
+    for beam in beam_system.beams:
+        print("Max Stress 0", np.round(beam.bending_stresses_0,5))
+        print("Max Stress 1", np.round(beam.bending_stresses_1,5))
+
+    print(beam_system.y_angles)
+    # print(beam_system.du)
+
+    # print(beam_system.kuu)
+    print(beam_system.z_angles)
+    # print(beam_system.beams[10].transformation_matrix)
+    # print(beam_system.beams[10].transformation_matrix)
+    # print(beam_system.du)
+
+
 if __name__ == '__main__':
     # beam_30_deg()
-    timoshenko_simply_supp_point()
-    timoshenko_simply_supp()
-    timoshenko_simply_supp_point_shear()
+    # timoshenko_simply_supp_point()
+    # timoshenko_simply_supp()
+    # timoshenko_simply_supp_point_shear()
+    # timoshenko_stress()
+    timoshenko_stress_circle()
+
 
 
 
