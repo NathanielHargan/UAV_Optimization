@@ -14,7 +14,6 @@ class DroneFEA:
     def create_drone_slice_nodes(self):
         # Origin
         self.beam_system.add_node(np.array([0, 0, 0]), 'center_node')
-        print(self.geometry.strut_nodes_coords[0])
         self.beam_system.add_node(self.geometry.strut_nodes_coords[0], 'strut_node')
         self.beam_system.add_node(self.geometry.outer_nodes_coords[0], 'outer_node')
         self.beam_system.add_node(self.geometry.strut_centroid_coords[0], 'strut_node_top')
@@ -50,7 +49,7 @@ class DroneFEA:
             "strut_element_bottom")
 
     def boundary_conditions_slice(self):
-        self.beam_system.add_boundary_condition(0, "pinned", "center_node")
+        self.beam_system.add_boundary_condition(0, "en castre", "center_node")
 
         local_dir_top = self.geometry.strut_centroid_coords[0] - self.geometry.strut_nodes_coords[0]
         local_dir_bot = self.geometry.strut_centroid_coords[-1] - self.geometry.strut_nodes_coords[0]
@@ -123,7 +122,9 @@ class DroneFEA:
         self.beam_system.rotate_beam_system(x, y, z)
 
     def boundary_conditions(self):
-        self.beam_system.add_boundary_condition(0, "pinned", "origin")
+        self.beam_system.add_boundary_condition(0, "en castre", "origin")
 
     def solve_fea(self):
         self.beam_system.solve_FEA()
+        self.beam_system.solve_natural_frequencies()
+        self.beam_system.solve_failure()

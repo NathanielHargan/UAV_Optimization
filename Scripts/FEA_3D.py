@@ -108,7 +108,7 @@ def transformation_matrix_element(coord_dir, k_node_dir):
 
 
 def mass_matrix_3d(area, length, density):
-    m = (area * length * density * 0.5 *
+    m_matrix = (area * length * density * 0.5 *
          np.array([[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -123,6 +123,22 @@ def mass_matrix_3d(area, length, density):
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]))
     return m
 
+
+def mass_matrix_lumped_3d(area, length, density, I):
+    m = area * length * density
+    m_matrix = 0.5 * np.array([[m, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                   [0, m, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, m, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, I[0][0], 0, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, I[1][1], 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, I[2][2], 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, m, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, m, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, 0, m, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, 0, 0, I[0][0], 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, I[1][1], 0],
+                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, I[2][2]]])
+    return m_matrix
 
 def assemble_stiffness_3d(beam_node_indexes, ks, global_len):
     # beam_node is a nx2 matrix
@@ -184,7 +200,7 @@ def partition_stiffness_matrix(k, dof_num):
     return kuu, kup, kpu, kpp
 
 
-def local_to_global_stiffness_matrix(k, t):
+def local_to_global_matrix(k, t):
     return np.transpose(t) @ k @ t
 
 

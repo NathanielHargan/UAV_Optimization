@@ -27,7 +27,7 @@
   - (Everything is a FOS)
   - Yield
   - Allowable Deflection
-  - Natural freq.
+  - Natural freq. (maximize)
   - capacity battery
   - Fatigue
 - Design variables (check these)

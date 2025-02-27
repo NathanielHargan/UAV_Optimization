@@ -7,6 +7,8 @@ from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.cross_section_properties import cross_section_rectangle
 from Scripts.cross_section_properties import cross_section_hexagon
 from Scripts.material_properties import Materials
+from Scripts.material_properties import NU_Daniel_failure
+import Scripts.mass_properties as MassProperties
 from Scripts.material_properties import Gravity
 import Scripts.FEA_3D as FEA_3D
 import time
@@ -59,9 +61,12 @@ class Beam:
         self.r_local = np.empty(12)
 
         self.local_stiffness_matrix = np.empty((12, 12))
-        self.mass_matrix = np.empty((12, 12))
+        self.local_mass_matrix = np.empty((12, 12))
+        self.global_mass_matrix = np.empty((12, 12))
         self.local_bc_transformation = np.identity(12)
         self.transformation_matrix = np.empty((12, 12))
+        self.transformation_matrix_node = np.empty((12, 12))
+        self.transformation_matrix_node_inv = np.empty((12, 12))
         self.global_stiffness_matrix = np.empty((12, 12))
         self.applied_stiffness_matrix = np.empty((12, 12))
 
@@ -111,18 +116,23 @@ class Beam:
             self.beam_type.cross_section_properties['transverse shear deflection constant y'],
             self.beam_type.cross_section_properties['transverse shear deflection constant z']
         )
-
-        self.mass_matrix = FEA_3D.mass_matrix_3d(
+        self.mass_moment_matrix = self.beam_type.mass_moment(self.length)
+        self.local_mass_matrix = FEA_3D.mass_matrix_lumped_3d(
             self.beam_type.cross_section_properties["area"],
             self.length,
-            self.beam_type.material_properties["mass density"]
+            self.beam_type.material_properties["mass density"],
+            self.mass_moment_matrix
         )
 
         self.transformation_matrix = FEA_3D.transformation_matrix_element(self.direction, self.k_node)
+        self.transformation_matrix_node = FEA_3D.transformation_matrix_node(self.direction, self.k_node)
+        self.transformation_matrix_node_inv = np.linalg.inv(self.transformation_matrix_node)
 
-        self.global_stiffness_matrix = FEA_3D.local_to_global_stiffness_matrix(
+        self.global_stiffness_matrix = FEA_3D.local_to_global_matrix(
             self.local_stiffness_matrix,
             self.transformation_matrix) #  np.transpose(t) @ k @ t
+
+        self.global_mass_matrix = FEA_3D.local_to_global_matrix(self.local_mass_matrix, self.transformation_matrix)
 
     def solve_local(self, d, r):
         self.d_local = self.transformation_matrix @ d
@@ -142,6 +152,18 @@ class Beam:
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
 
     def find_stresses(self):
+        strn0, strss0, transv0, shearstrss0 = self.strain_stress_at_point_circle(0)
+        strn1, strss1, transv1, shearstrss1 = self.strain_stress_at_point_circle(1)
+        self.bending_strains_0 = strn0
+        self.bending_strains_1 = strn1
+        self.bending_stresses_0 = strss0
+        self.bending_stresses_1 = strss1
+        self.strain_transverse_shear_0 = transv0
+        self.strain_transverse_shear_1 = transv1
+        self.stress_transverse_shear_0 = shearstrss0
+        self.stress_transverse_shear_1 = shearstrss1
+
+        '''
         n_y_node_0, n_z_node_0, dn_y_node_0, dn_z_node_0, ddn_y_node_0, ddn_z_node_0 = self.return_shape_functions(0)
         n_y_node_1, n_z_node_1, dn_y_node_1, dn_z_node_1, ddn_y_node_1, ddn_z_node_1 = self.return_shape_functions(1)
         self.stress_points = self.beam_type.cross_section_properties['stress points']
@@ -173,8 +195,20 @@ class Beam:
             strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, radius)
             self.bending_stresses_1 = np.array([math.sqrt(stress_y_1[0][0]**2 + stress_z_1[0][0]**2)])
             self.bending_strains_1 = np.array([math.sqrt(strain_y_1[0][0]**2 + strain_z_1[0][0]**2)])
+        '''
 
+    def strain_stress_at_point_circle(self, xi):
+        y, z, dy, dz, ddy, ddz = self.return_shape_functions(xi)
+        h = self.beam_type.cross_section_properties['circumscribed']
+        strain_y, stress_y = self.stress_strain_shape_function(y, dy, h)
+        strain_z, stress_z = self.stress_strain_shape_function(z, dz, h)
 
+        strain_bending = np.linalg.norm([strain_y[0], strain_z[0]])
+        stress_bending = np.linalg.norm([stress_y[0], stress_z[0]])
+        strain_transverse_shear = strain_y[1]
+        stress_transverse_shear= stress_y[1]
+
+        return strain_bending, stress_bending, strain_transverse_shear, stress_transverse_shear
 
     def stress_strain_shape_function(self, n, dn, h):
         # Shape function[0] = uy(x)
@@ -184,9 +218,9 @@ class Beam:
         strain_bending = -h * dn[1]
         stress_bending = strain_bending * self.beam_type.material_properties["elastic modulus"]
         strain_transverse_shear = n[2]
-        torsion = self.beam_type.material_properties["shear modulus"] * n[2] / self.beam_type.cross_section_properties['transverse shear deflection constant y']
-        strain_vector = np.array([[strain_bending, strain_transverse_shear]])
-        stress_vector = np.array([[stress_bending, torsion]])
+        stress_transverse_shear = self.beam_type.material_properties["shear modulus"] * n[2] / self.beam_type.cross_section_properties['transverse shear deflection constant y']
+        strain_vector = np.array([strain_bending, strain_transverse_shear])
+        stress_vector = np.array([stress_bending, stress_transverse_shear])
         return strain_vector, stress_vector
 
     def solve_shape_functions(self):
@@ -235,6 +269,18 @@ class Beam:
         ddz = ddX_y_z @ self.a_inv_z_shape_vector
         return y, z, dy, dz, ddy, ddz
 
+    def return_deformation_global(self, xi):
+        n_y, n_z, dn_y, dn_z, ddn_y, ddn_z = self.return_shape_functions(xi)
+        n_x = self.x_displacements_local[0] + xi * (self.x_displacements_local[1] - self.x_displacements_local[0]) # linear
+        n_x_theta = self.x_angles_local[0] + xi * (self.x_angles_local[1] - self.x_angles_local[0]) # linear
+        deformation_local = np.array([[n_x], [n_y[0]], [n_z[0]], [n_x_theta], [n_y[1]], [n_z[1]]])
+        deformation_global = self.transformation_matrix_node_inv @ deformation_local
+        return deformation_global
+
+    def failure_criterion(self):
+        max_shear = max(self.stress_transverse_shear_0, self.stress_transverse_shear_1)
+        max_stress = max(self.bending_stresses_0, self.bending_stresses_1)
+        return NU_Daniel_failure(max_stress,max_shear, self.beam_type.material_properties)
 
 class BeamSystem:
     def __init__(self, name):
@@ -254,8 +300,10 @@ class BeamSystem:
 
         # placeholder
         self.global_stiffness_matrix = np.empty(0)
+        self.global_mass_matrix = np.empty(0)
         self.bc_transform = np.empty(0)
         self.applied_stiffness_matrix = np.empty(0)
+        self.applied_mass_matrix = np.empty(0)
 
         self.ru = np.empty(0)
         self.dp = np.empty(0)
@@ -456,9 +504,12 @@ class BeamSystem:
 
         up_index = np.concatenate((u_index, p_index), axis=None)
         global_element_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
+        global_element_mass_matrices = np.empty((len(self.beam_node_indexes), 12, 12))
+
 
         for i in range(len(self.beam_node_indexes)):
             global_element_matrices[i] = self.beams[i].global_stiffness_matrix
+            global_element_mass_matrices[i] = self.beams[i].global_mass_matrix
 
         # assembles the global bc node transforms
         self.bc_transform = np.zeros([len(self.nodes) * 6, len(self.nodes) * 6])
@@ -466,15 +517,23 @@ class BeamSystem:
             self.bc_transform[i*6:i*6 + 6,i*6:i*6 + 6] = node.local_bc_transform
 
         self.global_stiffness_matrix = self.bc_transform @ FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_matrices, global_length) @ np.transpose(self.bc_transform)
+        self.global_mass_matrix = self.bc_transform @ FEA_3D.assemble_stiffness_3d(self.beam_node_indexes, global_element_mass_matrices, global_length) @ np.transpose(self.bc_transform)
 
         self.applied_stiffness_matrix = FEA_3D.rearrange_stiffness_matrix(self.global_stiffness_matrix, up_index)
+        self.applied_mass_matrix = FEA_3D.rearrange_stiffness_matrix(self.global_mass_matrix, up_index)
 
         kuu, kup, kpu, kpp = FEA_3D.partition_stiffness_matrix(self.applied_stiffness_matrix, len(u_index))
+        muu, mup, mpu, mpp = FEA_3D.partition_stiffness_matrix(self.applied_mass_matrix, len(u_index))
 
         self.kuu = kuu
         self.kup = kup
         self.kpu = kpu
         self.kpp = kpp
+
+        self.muu = muu
+        self.mup = mup
+        self.mpu = mpu
+        self.mpp = mpp
 
         du = scipy.linalg.solve(kuu, ru - (kup @ dp))
 
@@ -588,6 +647,18 @@ class BeamSystem:
             beam.solve_shape_functions()
             beam.find_stresses()
 
+    def solve_failure(self):
+        max_failure_crit = 0
+        for beam in self.beams:
+            max_failure_crit = max([beam.failure_criterion()[0], beam.failure_criterion()[1], max_failure_crit])
+        self.max_failure_crit = max_failure_crit
+
+
+    def solve_natural_frequencies(self):
+        eigenvals = scipy.linalg.eigvals(self.kuu, self.muu)
+        self.natural_frequencies_eigenvals = eigenvals
+        self.natural_frequencies = np.sort(np.real(np.sqrt(eigenvals)))
+
 
 class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
@@ -603,6 +674,7 @@ class BeamType:
 
         self.cross_section_properties = self.cross_section_properties_init()
 
+
         # for shape functions
         eik_z = (self.material_properties["elastic modulus"] *
                  self.cross_section_properties["second moment of area z"] *
@@ -616,6 +688,45 @@ class BeamType:
 
         self.g_y = eik_y/ga
         self.g_z = eik_z/ga
+
+    def mass_moment(self, L):
+        if self.cross_section.lower() == "circle":
+            return MassProperties.mass_moment_circle(
+                self.cross_section_parameters,
+                L,
+                self.material_properties["mass density"])
+        elif self.cross_section.lower() == "annulus":
+            return MassProperties.mass_moment_annulus(
+                self.cross_section_parameters,
+                L,
+                self.material_properties["mass density"])
+        elif self.cross_section.lower() == "rectangle":
+            return MassProperties.mass_moment_rectangle(
+                self.cross_section_parameters,
+                L,
+                self.material_properties["mass density"])
+        elif self.cross_section.lower() == "hexagon":
+            return MassProperties.mass_moment_hexagon(
+                self.cross_section_parameters,
+                L,
+                self.material_properties["mass density"])
+        else:
+            print('incorrect cross section in beam ' + self.name)
+            return 'error'
+
+
+    def cross_section_properties_init(self):
+        if self.cross_section.lower() == "circle":
+            return cross_section_circle(self.cross_section_parameters)
+        elif self.cross_section.lower() == "annulus":
+            return cross_section_annulus(self.cross_section_parameters)
+        elif self.cross_section.lower() == "rectangle":
+            return cross_section_rectangle(self.cross_section_parameters)
+        elif self.cross_section.lower() == "hexagon":
+            return cross_section_hexagon(self.cross_section_parameters)
+        else:
+            print('incorrect cross section in beam ' + self.name)
+            return 'error'
 
     def cross_section_properties_init(self):
         if self.cross_section.lower() == "circle":
@@ -1142,11 +1253,11 @@ def timoshenko_stress():
     # Create nodes
     for i in range(node_count):
         x = L * (i/(node_count-1)) - (L/2)
-        beam_system.add_node(np.array([0.0001, x, 0.01]))
+        beam_system.add_node(np.array([x + 0.0001, 0.0001, 0.01]))
 
     # Create elements
     for i in range(node_count-1):
-        beam_system.add_beam(arm_beam, i, i+1, np.array([1, 0, 0]))
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 0, 1]))
 
     # Create BCS
     beam_system.add_boundary_condition(0, "pinned", 0)
@@ -1172,14 +1283,72 @@ def timoshenko_stress():
         print("Max Stress 0", np.round(beam.bending_stresses_0,5))
         print("Max Stress 1", np.round(beam.bending_stresses_1,5))
 
-    print(beam_system.y_angles)
+    # print(beam_system.y_angles)
     # print(beam_system.du)
 
     # print(beam_system.kuu)
-    print(beam_system.z_angles)
+    # print(beam_system.z_angles)
+    print(np.shape(beam_system.global_stiffness_matrix))
+    print(np.shape(beam_system.global_mass_matrix))
+
+    beam_system.solve_natural_frequencies()
+    print("nf:", beam_system.natural_frequencies)
+    print("ev:", beam_system.natural_frequencies_eigenvals)
+    print("ev shape:", np.shape(beam_system.natural_frequencies_eigenvals))
+    print("k shape:", np.shape(beam_system.global_stiffness_matrix))
+
     # print(beam_system.beams[10].transformation_matrix)
     # print(beam_system.beams[10].transformation_matrix)
     # print(beam_system.du)
+
+def timoshenko_freq():
+    #
+    beam_system = BeamSystem("timoshenko_simply_supp")
+    arm_beam = BeamType("rectangle", [25,25], "Aluminum7075-T6", "arm_beam")
+    node_count = 50
+    midpoint_index = int((node_count-1)/2)
+    L = 1000
+
+    # Create nodes
+    for i in range(node_count):
+        x = L * (i/(node_count-1)) - (L/2)
+        beam_system.add_node(np.array([x + 0.0001, 0.0001, 0.01]))
+
+    # Create elements
+    for i in range(node_count-1):
+        beam_system.add_beam(arm_beam, i, i+1, np.array([0, 0, 1]))
+
+    # Create BCS
+    beam_system.add_boundary_condition(0, "pinned", 0)
+    beam_system.add_boundary_condition(0, "pinned", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", node_count-1)
+    beam_system.add_boundary_condition(0, "theta x", 0)
+    beam_system.solve_FEA()
+
+    np.set_printoptions(linewidth=4000)
+    # print(np.shape(beam_system.kuu))
+    # print(np.shape(beam_system.muu))
+
+    # print("kuu,", np.round(beam_system.kuu,7))
+    print("muu,", np.round(beam_system.muu,7))
+    # print("m,", np.round(beam_system.global_mass_matrix,7))
+    # print("m_e,", np.round(beam_system.beams[0].global_mass_matrix,7))
+
+    beam_system.solve_natural_frequencies()
+    # print("lamda:", beam_system.natural_frequencies_eigenvals)
+    # print("omega:", beam_system.natural_frequencies)
+    print("Hz:", np.round(beam_system.natural_frequencies/(2*math.pi)))
+    # print("ev shape:", np.shape(beam_system.natural_frequencies_eigenvals))
+    # print("k shape:", np.shape(beam_system.global_stiffness_matrix))
+
+    # m = 8.0605e-4 * np.array([[2,0],[0,1]])
+    # k = 2.6507e6 * np.array([[2,-1],[-1,1]])
+    # print("m:",m)
+    # print("k:",k)
+    # eigenvals = scipy.linalg.eigvals(k, m)
+    # print("e,", eigenvals)
+    # print("w,", np.sqrt(eigenvals))
+    # print("hz,", np.sqrt(eigenvals)/(2*math.pi))
 
 
 if __name__ == '__main__':
@@ -1188,13 +1357,5 @@ if __name__ == '__main__':
     # timoshenko_simply_supp()
     # timoshenko_simply_supp_point_shear()
     # timoshenko_stress()
-    timoshenko_stress_circle()
-
-
-
-
-
-
-#%%
-
-#%%
+    #timoshenko_stress_circle()
+    timoshenko_freq()
