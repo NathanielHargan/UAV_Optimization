@@ -26,7 +26,6 @@ class DronePower:
         self.error = np.array([])
 
     def thrust_to_power(self, thrust):
-        # The plot given looks like a parabola with points intersecting at:
         # (thrust,power): (10kg,1kW)/8 , (50kg, 6kW)/8 , (80kg, 13kW)/8
 
         thrust_mass_per_blade_kg = uc.N_to_kgf * thrust / self.blade_num  # N => (N / (mm/s^2)) * (1000 mm/m) = kg
@@ -109,7 +108,8 @@ class DronePower:
         for i in range(len(time)):
             power[i] = self.neg_power_at_time(time[i])
         self.timesteps = time
-        self.energy_consumption = scipy.integrate.cumulative_trapezoid(power, time, initial=self.milliwatt_second_capacity)
+        self.power = power
+        self.energy_consumption = self.milliwatt_second_capacity + scipy.integrate.cumulative_trapezoid(power, time, initial = 0)
 
     def throttle_ratio_calc(self, max_power_full_battery_kw):
         # assuming max throttle is proportional to the percent energy left in the battery.
@@ -120,11 +120,6 @@ class DronePower:
             max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
             self.percent_throttle[i] = self.power_at_time(t) / (max_throttle_power)
 
-
-
-if __name__ == '__main__':
-    import numpy as np
-    print(np.array([4,4,2])/np.array([2,2,2]))
 
 
 #%%

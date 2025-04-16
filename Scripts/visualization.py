@@ -387,3 +387,6 @@ def drone_geometry_stress_transverse_shear(drone, m, q):
 
     plt.show()
 
+
+
+

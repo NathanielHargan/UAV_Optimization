@@ -1,4 +1,5 @@
 from Scripts.material_properties import Gravity
+import math
 
 # Length
 mm_to_m = 1000
@@ -19,4 +20,7 @@ s_to_hrs = 1/3600
 
 # Thrust
 N_to_kgf = 1000/(Gravity)
+
+rad_per_s_to_Hz = 1/(2*math.pi)
+Hz_to_rad_per_s = 2*math.pi
 

@@ -126,5 +126,15 @@ class DroneFEA:
 
     def solve_fea(self):
         self.beam_system.solve_FEA()
+
+    def solve_static(self):
+        self.beam_system.solve_static()
+
+    def solve_natural_frequencies(self):
         self.beam_system.solve_natural_frequencies()
+
+    def solve_failure(self):
         self.beam_system.solve_failure()
+
+    def solve_frequency_analysis(self,w):
+        self.beam_system.solve_frequency_analysis(w)
