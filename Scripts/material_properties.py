@@ -25,6 +25,9 @@ Materials = {
         "shear yield strength": 345 * 0.577,  # [MPa]
         "tension yield strength": 345,  # [MPa]
         "ultimate strength": 345,  # [MPa]
+        "fatigue strength coefficient": 1466,  # [MPa]
+        "fatigue strength exponent": -0.143,  # [-]
+        "fatigue strength cycles": 5e8  # [-]
     }
 }
 

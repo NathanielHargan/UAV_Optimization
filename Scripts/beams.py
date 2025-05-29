@@ -28,21 +28,28 @@ class Node:
 
         self.force = np.array([0, 0, 0])
         self.moment = np.array([0, 0, 0])
+
+        self.dynamic_force = np.zeros(6)
+
         self.local_bc_transform = np.identity(6)
         self.result_displacement = np.array([0, 0, 0])
         self.result_angular_displacement = np.array([0, 0, 0])
-        self.result_force = np.array([0, 0, 0])
+        self.result_force = np.array([0, 0,  0])
         self.result_moment = np.array([0, 0, 0])
+
+        self.result_displacement_amplitude = np.array([0, 0, 0])
+        self.result_angular_displacement_amplitude = np.array([0, 0, 0])
+        self.result_force_amplitude = np.array([0, 0, 0])
+        self.result_moment_amplitude = np.array([0, 0, 0])
 
     def add_force(self, force):
         self.force = self.force + force
 
+    def add_dynamic_force(self, dynamic_force):
+        self.dynamic_force = self.dynamic_force + dynamic_force
+
     def add_moment(self, moment):
         self.moment = self.moment + moment
-        # To do:
-        # Make node class
-        # Move more information to the beam class
-        # Local transformation option on elements for a specified node.
 
     def create_local_transform(self, transform_dir, k_node_dir):
         self.local_bc_transform = FEA_3D.transformation_matrix_node(transform_dir, k_node_dir)
@@ -61,6 +68,10 @@ class Beam:
 
         self.d_local = np.empty(12)
         self.r_local = np.empty(12)
+
+        self.d_local_dynamic = np.empty(12)
+        self.r_local_dynamic = np.empty(12)
+
 
         self.local_stiffness_matrix = np.empty((12, 12))
         self.local_mass_matrix = np.empty((12, 12))
@@ -85,6 +96,19 @@ class Beam:
         self.y_moments_local = np.empty(2)
         self.z_moments_local = np.empty(2)
 
+        self.x_displacements_local_dynamic = np.empty(2)
+        self.y_displacements_local_dynamic = np.empty(2)
+        self.z_displacements_local_dynamic = np.empty(2)
+        self.x_angles_local_dynamic = np.empty(2)
+        self.y_angles_local_dynamic = np.empty(2)
+        self.z_angles_local_dynamic = np.empty(2)
+        self.x_forces_local_dynamic = np.empty(2)
+        self.y_forces_local_dynamic = np.empty(2)
+        self.z_forces_local_dynamic = np.empty(2)
+        self.x_moments_local_dynamic = np.empty(2)
+        self.y_moments_local_dynamic = np.empty(2)
+        self.z_moments_local_dynamic = np.empty(2)
+
         self.x_displacements_global = np.empty(2)
         self.y_displacements_global = np.empty(2)
         self.z_displacements_global = np.empty(2)
@@ -98,8 +122,24 @@ class Beam:
         self.y_moments_global = np.empty(2)
         self.z_moments_global = np.empty(2)
 
+        self.x_displacements_global_dynamic = np.empty(2)
+        self.y_displacements_global_dynamic = np.empty(2)
+        self.z_displacements_global_dynamic = np.empty(2)
+        self.x_angles_global_dynamic = np.empty(2)
+        self.y_angles_global_dynamic = np.empty(2)
+        self.z_angles_global_dynamic = np.empty(2)
+        self.x_forces_global_dynamic = np.empty(2)
+        self.y_forces_global_dynamic = np.empty(2)
+        self.z_forces_global_dynamic = np.empty(2)
+        self.x_moments_global_dynamic = np.empty(2)
+        self.y_moments_global_dynamic = np.empty(2)
+        self.z_moments_global_dynamic = np.empty(2)
+
         self.a_inv_y_shape_vector = np.empty(4)
         self.a_inv_z_shape_vector = np.empty(4)
+
+        self.a_inv_y_shape_vector_dynamic = np.empty(4)
+        self.a_inv_z_shape_vector_dynamic = np.empty(4)
 
         self.solve_stiffness_matrix()
 
@@ -142,6 +182,7 @@ class Beam:
         self.x_displacements_local = np.array([self.d_local[0], self.d_local[6]])
         self.y_displacements_local = np.array([self.d_local[1], self.d_local[7]])
         self.z_displacements_local = np.array([self.d_local[2], self.d_local[8]])
+
         self.x_angles_local = np.array([self.d_local[3], self.d_local[9]])
         self.y_angles_local = np.array([self.d_local[4], self.d_local[10]])
         self.z_angles_local = np.array([self.d_local[5], self.d_local[11]])
@@ -152,6 +193,24 @@ class Beam:
         self.x_moments_local = np.array([self.r_local[3], self.r_local[9]])
         self.y_moments_local = np.array([self.r_local[4], self.r_local[10]])
         self.z_moments_local = np.array([self.r_local[5], self.r_local[11]])
+
+    def solve_local_dynamic(self, d, r):
+        self.d_local_dynamic = self.transformation_matrix @ d
+        self.r_local_dynamic = self.transformation_matrix @ r
+        self.x_displacements_local_dynamic = np.array([self.d_local_dynamic[0], self.d_local_dynamic[6]])
+        self.y_displacements_local_dynamic = np.array([self.d_local_dynamic[1], self.d_local_dynamic[7]])
+        self.z_displacements_local_dynamic = np.array([self.d_local_dynamic[2], self.d_local_dynamic[8]])
+
+        self.x_angles_local_dynamic = np.array([self.d_local_dynamic[3], self.d_local_dynamic[9]])
+        self.y_angles_local_dynamic = np.array([self.d_local_dynamic[4], self.d_local_dynamic[10]])
+        self.z_angles_local_dynamic = np.array([self.d_local_dynamic[5], self.d_local_dynamic[11]])
+
+        self.x_forces_local_dynamic = np.array([self.r_local_dynamic[0], self.r_local_dynamic[6]])
+        self.y_forces_local_dynamic = np.array([self.r_local_dynamic[1], self.r_local_dynamic[7]])
+        self.z_forces_local_dynamic = np.array([self.r_local_dynamic[2], self.r_local_dynamic[8]])
+        self.x_moments_local_dynamic = np.array([self.r_local_dynamic[3], self.r_local_dynamic[9]])
+        self.y_moments_local_dynamic = np.array([self.r_local_dynamic[4], self.r_local_dynamic[10]])
+        self.z_moments_local_dynamic = np.array([self.r_local_dynamic[5], self.r_local_dynamic[11]])
 
     def find_stresses(self):
         strn0, strss0, transv0, shearstrss0 = self.strain_stress_at_point_circle(0)
@@ -165,39 +224,17 @@ class Beam:
         self.stress_transverse_shear_0 = shearstrss0
         self.stress_transverse_shear_1 = shearstrss1
 
-        '''
-        n_y_node_0, n_z_node_0, dn_y_node_0, dn_z_node_0, ddn_y_node_0, ddn_z_node_0 = self.return_shape_functions(0)
-        n_y_node_1, n_z_node_1, dn_y_node_1, dn_z_node_1, ddn_y_node_1, ddn_z_node_1 = self.return_shape_functions(1)
-        self.stress_points = self.beam_type.cross_section_properties['stress points']
-        self.bending_stresses_0 = np.zeros(len(self.stress_points))
-        self.bending_stresses_1 = np.zeros(len(self.stress_points))
-        self.bending_strains_0 = np.zeros(len(self.stress_points))
-        self.bending_strains_1 = np.zeros(len(self.stress_points))
-        if len(self.stress_points) != 0:
-            for i, stress_point in enumerate(self.stress_points):
-                strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, stress_point[0])
-                strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, stress_point[1])
-                self.bending_stresses_0[i] = stress_y_0[0][0] + stress_z_0[0][0]
-                self.bending_strains_0[i] = strain_y_0[0][0] + strain_z_0[0][0]
-                strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, stress_point[0])
-                strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, stress_point[1])
-                self.bending_stresses_1[i] = stress_y_1[0][0] + stress_z_1[0][0]
-                self.bending_strains_1[i] = strain_y_1[0][0] + strain_z_1[0][0]
-        else: #assume circle
-            self.bending_stresses_0 = np.array([])
-            self.bending_stresses_1 = np.zeros(len(self.stress_points))
-            self.bending_strains_0 = np.zeros(len(self.stress_points))
-            self.bending_strains_1 = np.zeros(len(self.stress_points))
-            radius = self.beam_type.cross_section_parameters[0]/2
-            strain_y_0, stress_y_0 = self.stress_strain_shape_function(n_y_node_0, dn_y_node_0, radius)
-            strain_z_0, stress_z_0 = self.stress_strain_shape_function(n_z_node_0, dn_z_node_0, radius)
-            self.bending_stresses_0 = np.array([math.sqrt(stress_y_0[0][0]**2 + stress_z_0[0][0]**2)])
-            self.bending_strains_0 = np.array([math.sqrt(strain_y_0[0][0]**2 + strain_z_0[0][0]**2)])
-            strain_y_1, stress_y_1 = self.stress_strain_shape_function(n_y_node_1, dn_y_node_1, radius)
-            strain_z_1, stress_z_1 = self.stress_strain_shape_function(n_z_node_1, dn_z_node_1, radius)
-            self.bending_stresses_1 = np.array([math.sqrt(stress_y_1[0][0]**2 + stress_z_1[0][0]**2)])
-            self.bending_strains_1 = np.array([math.sqrt(strain_y_1[0][0]**2 + strain_z_1[0][0]**2)])
-        '''
+    def find_stresses_dynamic(self):
+        strn0, strss0, transv0, shearstrss0 = self.strain_stress_at_point_circle_dynamic(0)
+        strn1, strss1, transv1, shearstrss1 = self.strain_stress_at_point_circle_dynamic(1)
+        self.bending_strains_0_dynamic = strn0
+        self.bending_strains_1_dynamic = strn1
+        self.bending_stresses_0_dynamic = strss0
+        self.bending_stresses_1_dynamic = strss1
+        self.strain_transverse_shear_0_dynamic = transv0
+        self.strain_transverse_shear_1_dynamic = transv1
+        self.stress_transverse_shear_0_dynamic = shearstrss0
+        self.stress_transverse_shear_1_dynamic = shearstrss1
 
     def strain_stress_at_point_circle(self, xi):
         y, z, dy, dz, ddy, ddz = self.return_shape_functions(xi)
@@ -208,7 +245,20 @@ class Beam:
         strain_bending = np.linalg.norm([strain_y[0], strain_z[0]])
         stress_bending = np.linalg.norm([stress_y[0], stress_z[0]])
         strain_transverse_shear = strain_y[1]
-        stress_transverse_shear= stress_y[1]
+        stress_transverse_shear = stress_y[1]
+
+        return strain_bending, stress_bending, strain_transverse_shear, stress_transverse_shear
+
+    def strain_stress_at_point_circle_dynamic(self, xi):
+        y, z, dy, dz, ddy, ddz = self.return_shape_functions_dynamic(xi)
+        h = self.beam_type.cross_section_properties['circumscribed']
+        strain_y, stress_y = self.stress_strain_shape_function(y, dy, h)
+        strain_z, stress_z = self.stress_strain_shape_function(z, dz, h)
+
+        strain_bending = np.linalg.norm([strain_y[0], strain_z[0]])
+        stress_bending = np.linalg.norm([stress_y[0], stress_z[0]])
+        strain_transverse_shear = strain_y[1]
+        stress_transverse_shear = stress_y[1]
 
         return strain_bending, stress_bending, strain_transverse_shear, stress_transverse_shear
 
@@ -238,6 +288,20 @@ class Beam:
                                                         -self.y_angles_local[0],
                                                         self.z_displacements_local[1],
                                                         -self.y_angles_local[1]])
+
+    def solve_shape_functions_dynamic(self):
+        a_inv_y = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_y)
+        a_inv_z = FEA_3D.shape_function_timoshenko_a_inv(self.length, self.beam_type.g_z)
+
+        self.a_inv_y_shape_vector_dynamic = a_inv_y @ np.array([self.y_displacements_local_dynamic[0],
+                                                        self.z_angles_local_dynamic[0],
+                                                        self.y_displacements_local_dynamic[1],
+                                                        self.z_angles_local_dynamic[1]])
+
+        self.a_inv_z_shape_vector_dynamic = a_inv_z @ np.array([self.z_displacements_local_dynamic[0],
+                                                        -self.y_angles_local_dynamic[0],
+                                                        self.z_displacements_local_dynamic[1],
+                                                        -self.y_angles_local_dynamic[1]])
 
     def return_shape_functions(self, xi):
         x = xi * self.length
@@ -271,6 +335,38 @@ class Beam:
         ddz = ddX_y_z @ self.a_inv_z_shape_vector
         return y, z, dy, dz, ddy, ddz
 
+    def return_shape_functions_dynamic(self, xi):
+        x = xi * self.length
+        X_y = np.array([
+            [1, x, x**2, x**3],
+            [0, 1, 2*x, (3 * x ** 2) - 6 * self.beam_type.g_y],
+            [0, 0, 0, -6 * self.beam_type.g_y]])
+
+        X_z = np.array([
+            [1, x, x**2, x**3],
+            [0, 1, 2*x, (3 * x ** 2) - 6 * self.beam_type.g_z],
+            [0, 0, 0, -6 * self.beam_type.g_z]])
+
+        # derivative with respect to x (both y and z are the same because g is unchanging with respect to x)
+
+        dX_y_z = np.array([
+            [0, 1, 2 * x, 2 * x**2],
+            [0, 0, 2, (6 * x)],
+            [0, 0, 0, 0]])
+
+        ddX_y_z = np.array([
+            [0, 0, 2, 4 * x],
+            [0, 0, 0, 6],
+            [0, 0, 0, 0]])
+
+        y = X_y @ self.a_inv_y_shape_vector_dynamic
+        z = X_z @ self.a_inv_z_shape_vector_dynamic
+        dy = dX_y_z @ self.a_inv_y_shape_vector_dynamic
+        dz = dX_y_z @ self.a_inv_z_shape_vector_dynamic
+        ddy = ddX_y_z @ self.a_inv_y_shape_vector_dynamic
+        ddz = ddX_y_z @ self.a_inv_z_shape_vector_dynamic
+        return y, z, dy, dz, ddy, ddz
+
     def return_deformation_global(self, xi):
         n_y, n_z, dn_y, dn_z, ddn_y, ddn_z = self.return_shape_functions(xi)
         n_x = self.x_displacements_local[0] + xi * (self.x_displacements_local[1] - self.x_displacements_local[0]) # linear
@@ -282,7 +378,24 @@ class Beam:
     def failure_criterion(self):
         max_shear = max(self.stress_transverse_shear_0, self.stress_transverse_shear_1)
         max_stress = max(self.bending_stresses_0, self.bending_stresses_1)
-        return NU_Daniel_failure(max_stress,max_shear, self.beam_type.material_properties)
+        return NU_Daniel_failure(max_stress, max_shear, self.beam_type.material_properties)
+
+    def calc_failure_criterion_swt(self):
+        fatigue_str_coeff = self.beam_type.material_properties["fatigue strength coefficient"]
+        fatigue_str_exp = self.beam_type.material_properties["fatigue strength exponent"]
+        self.stress_max_0 = self.bending_stresses_0 + self.bending_stresses_0_dynamic
+        self.stress_max_1 = self.bending_stresses_1 + self.bending_stresses_1_dynamic
+        self.stress_equivalent_alternating_0 = np.sqrt(self.stress_max_0 * self.bending_stresses_0_dynamic)
+        self.stress_equivalent_alternating_1 = np.sqrt(self.stress_max_1 * self.bending_stresses_1_dynamic)
+        self.cycle_num_0 = (1/2) * (self.stress_equivalent_alternating_0/fatigue_str_coeff) ** (1/fatigue_str_exp)
+        self.cycle_num_1 = (1/2) * (self.stress_equivalent_alternating_1/fatigue_str_coeff) ** (1/fatigue_str_exp)
+
+    def failure_criterion_swt(self):
+
+        cycle_limit = self.beam_type.material_properties["fatigue strength cycles"]
+
+        return np.array([self.cycle_num_0 / cycle_limit, self.cycle_num_1 / cycle_limit])
+
 
 
 class BeamSystem:
@@ -352,6 +465,23 @@ class BeamSystem:
 
         self.mag_displacements = np.empty(0)
 
+        self.frequency = np.empty(0)
+        self.x_displacements_amplitude = np.empty(0)
+        self.y_displacements_amplitude = np.empty(0)
+        self.z_displacements_amplitude = np.empty(0)
+
+        self.x_angles_amplitude = np.empty(0)
+        self.y_angles_amplitude = np.empty(0)
+        self.z_angles_amplitude = np.empty(0)
+
+        self.x_forces_amplitude = np.empty(0)
+        self.y_forces_amplitude = np.empty(0)
+        self.z_forces_amplitude = np.empty(0)
+
+        self.x_moments_amplitude = np.empty(0)
+        self.y_moments_amplitude = np.empty(0)
+        self.z_moments_amplitude = np.empty(0)
+
     def add_node(self, location, name=None):
         if name is None:
             name = "Node_" + str(len(self.nodes))
@@ -414,10 +544,18 @@ class BeamSystem:
         node = self.nodes[self.select_node(node_ref)]
         node.add_force(direction)
 
+    def init_dynamic_forces(self, frequency):
+        self.frequency = frequency
+
+    def add_dynamic_force(self, direction, node_ref):
+        node = self.nodes[self.select_node(node_ref)]
+        node.add_dynamic_force(direction)
+
 
     def add_moment(self, direction, node_ref):
         node = self.nodes[self.select_node(node_ref)]
         node.add_moment(direction)
+
 
     '''
     def add_bifurcated_beam(self, beam_type, start_node, end_node, k_node, **kwargs):
@@ -556,6 +694,9 @@ class BeamSystem:
         self.mpu = mpu
         self.mpp = mpp
 
+        self.displacement_angle_vector_amplitude = np.empty([len(self.nodes)*6])
+        self.force_moment_vector_amplitude = np.empty([len(self.nodes)*6])
+
 
     def solve_static(self):
         self.du = scipy.linalg.solve(self.kuu, self.ru - (self.kup @ self.dp))
@@ -671,8 +812,17 @@ class BeamSystem:
     def solve_failure(self):
         max_failure_crit = 0
         for beam in self.beams:
-            max_failure_crit = max([beam.failure_criterion()[0], beam.failure_criterion()[1], max_failure_crit])
+            fail_crit = beam.failure_criterion()
+            max_failure_crit = max([fail_crit[0], fail_crit[1], max_failure_crit])
         self.max_failure_crit = max_failure_crit
+
+
+    def solve_failure_swt(self):
+        max_failure_crit_swt = 0
+        for beam in self.beams:
+            fail_crit_swt = beam.failure_criterion_swt()
+            max_failure_crit_swt = max([fail_crit_swt[0], fail_crit_swt[1], max_failure_crit_swt])
+        self.max_failure_crit_swt = max_failure_crit_swt
 
 
     def solve_natural_frequencies(self):
@@ -680,118 +830,117 @@ class BeamSystem:
         self.natural_frequencies_eigenvals = eigenvals
         self.natural_frequencies = np.sort(np.real(np.sqrt(eigenvals)))
 
-    def solve_frequency_analysis(self, w):
-        self.kduu = self.kuu - (w ** 2) * self.muu
+    def solve_dynamic(self, alpha, beta):
+        self.displacement_angle_vector_amplitude = np.empty([self.global_length])
+        self.force_moment_vector_amplitude = np.empty([self.global_length])
 
-        self.du = scipy.linalg.solve(self.kduu, self.ru - (self.kup @ self.dp))
-        self.rp = (self.kpu @ self.du) + (self.kpp @ self.dp)
+        ru_predel = np.zeros(self.global_length)  # fu before deleting bcs
 
-        dup = np.concatenate((self.du, self.dp), axis=None)
-        rup = np.concatenate((self.ru, self.rp), axis=None)
+        for i in range(len(self.nodes)):  # for loop + counter
+            r_index = int(i * 6)
+            ru_predel[r_index:r_index+6] += self.nodes[i].dynamic_force
 
-        self.rup = rup
-        self.dup = dup
+        ru = np.delete(ru_predel, self.p_index, axis=0) # deleting boundary conditions
 
-        d = np.empty(self.global_length) # d'
-        r = np.empty(self.global_length) # r'
+        ang_vel = self.frequency
+
+        self.kduu = self.kuu - (ang_vel ** 2) * self.muu - ang_vel * (self.muu * alpha + self.kuu * beta)
+        self.kdup = self.kup - (ang_vel ** 2) * self.mup - ang_vel * (self.mup * alpha + self.kup * beta)
+        self.kdpp = self.kpp - (ang_vel ** 2) * self.mpp - ang_vel * (self.mpp * alpha + self.kpp * beta)
+        self.kdpu = self.kpu - (ang_vel ** 2) * self.mpu - ang_vel * (self.mpu * alpha + self.kpu * beta)
+
+        du = scipy.linalg.solve(self.kduu, ru - (self.kdup @ self.dp))
+        rp = (self.kdpu @ du) + (self.kdpp @ self.dp)
+
+        dup = np.concatenate((du, self.dp), axis=None)
+        rup = np.concatenate((self.ru, rp), axis=None)
+
+        d = np.empty(self.global_length)  # d'
+        r = np.empty(self.global_length)  # r'
 
         for i in range(self.global_length):
             d[self.up_index[i]] = dup[i]
             r[self.up_index[i]] = rup[i]
 
-        self.displacement_angle_vector = np.transpose(self.bc_transform) @ d
-        self.force_moment_vector = np.transpose(self.bc_transform) @ r
+        displacement_angle_vector = np.transpose(self.bc_transform) @ d
+        force_moment_vector = np.transpose(self.bc_transform) @ r
 
-        self.x_displacements = self.displacement_angle_vector[0::6]
-        self.y_displacements = self.displacement_angle_vector[1::6]
-        self.z_displacements = self.displacement_angle_vector[2::6]
-        self.mag_displacements = np.linalg.norm(np.vstack((self.x_displacements, self.y_displacements, self.z_displacements)),axis = 0)
+        self.displacement_angle_vector_amplitude = displacement_angle_vector
+        self.force_moment_vector_amplitude = force_moment_vector
 
-        self.x_angles = self.displacement_angle_vector[3::6]
-        self.y_angles = self.displacement_angle_vector[4::6]
-        self.z_angles = self.displacement_angle_vector[5::6]
+        # Replace with Vstack
+        self.x_displacements_amplitude = displacement_angle_vector[0::6]
+        self.y_displacements_amplitude = displacement_angle_vector[1::6]
+        self.z_displacements_amplitude = displacement_angle_vector[2::6]
 
-        self.x_forces = self.force_moment_vector[0::6]
-        self.y_forces = self.force_moment_vector[1::6]
-        self.z_forces = self.force_moment_vector[2::6]
+        self.x_angles_amplitude = displacement_angle_vector[3::6]
+        self.y_angles_amplitude = displacement_angle_vector[4::6]
+        self.z_angles_amplitude = displacement_angle_vector[5::6]
 
-        self.x_moments = self.force_moment_vector[3::6]
-        self.y_moments = self.force_moment_vector[4::6]
-        self.z_moments = self.force_moment_vector[5::6]
+        self.x_forces_amplitude = force_moment_vector[0::6]
+        self.y_forces_amplitude = force_moment_vector[1::6]
+        self.z_forces_amplitude = force_moment_vector[2::6]
 
-        for i, node in enumerate(self.nodes):
-            self.nodes[i].result_displacement = np.array([
-                self.x_displacements[i],
-                self.y_displacements[i],
-                self.z_displacements[i]])
-
-            self.nodes[i].result_angular_displacement = np.array([
-                self.x_angles[i],
-                self.y_angles[i],
-                self.z_angles[i]])
-
-            self.nodes[i].result_force = np.array([
-                self.x_forces[i],
-                self.y_forces[i],
-                self.z_forces[i]])
-
-            self.nodes[i].result_moment = np.array([
-                self.x_moments[i],
-                self.y_moments[i],
-                self.z_moments[i]])
+        self.x_moments_amplitude = force_moment_vector[3::6]
+        self.y_moments_amplitude = force_moment_vector[4::6]
+        self.z_moments_amplitude = force_moment_vector[5::6]
 
         for beam_num, beam in enumerate(self.beams):
             beam_index_0 = int(self.beam_node_indexes[beam_num][0] * 6)
             beam_index_1 = int(self.beam_node_indexes[beam_num][1] * 6)
-            local_d = np.concatenate((self.displacement_angle_vector[beam_index_0:beam_index_0 + 6], self.displacement_angle_vector[beam_index_1:beam_index_1+6]))
-            local_r = np.concatenate((self.force_moment_vector[beam_index_0:beam_index_0 + 6], self.force_moment_vector[beam_index_1:beam_index_1+6]))
-            beam.solve_local(local_d, local_r)
+            local_d = np.concatenate((self.displacement_angle_vector_amplitude[beam_index_0:beam_index_0 + 6], self.displacement_angle_vector_amplitude[beam_index_1:beam_index_1+6]))
+            local_r = np.concatenate((self.force_moment_vector_amplitude[beam_index_0:beam_index_0 + 6], self.force_moment_vector_amplitude[beam_index_1:beam_index_1+6]))
+            beam.solve_local_dynamic(local_d, local_r)
 
             beam_node_index_0 = int(self.beam_node_indexes[beam_num][0])
             beam_node_index_1 = int(self.beam_node_indexes[beam_num][1])
 
-            beam.x_displacements_global = np.array([
-                self.x_displacements[beam_node_index_0],
-                self.x_displacements[beam_node_index_1]])
-            beam.y_displacements_global = np.array([
-                self.y_displacements[beam_node_index_0],
-                self.y_displacements[beam_node_index_1]])
-            beam.z_displacements_global = np.array([
-                self.z_displacements[beam_node_index_0],
-                self.z_displacements[beam_node_index_1]])
+            beam.x_displacements_global_dynamic = np.array([
+                self.x_displacements_amplitude[beam_node_index_0],
+                self.x_displacements_amplitude[beam_node_index_1]])
+            beam.y_displacements_global_dynamic = np.array([
+                self.y_displacements_amplitude[beam_node_index_0],
+                self.y_displacements_amplitude[beam_node_index_1]])
+            beam.z_displacements_global_dynamic = np.array([
+                self.z_displacements_amplitude[beam_node_index_0],
+                self.z_displacements_amplitude[beam_node_index_1]])
 
-            beam.x_angles_global = np.array([
-                self.x_angles[beam_node_index_0],
-                self.x_angles[beam_node_index_1]])
-            beam.y_angles_global = np.array([
-                self.y_angles[beam_node_index_0],
-                self.y_angles[beam_node_index_1]])
-            beam.z_angles_global = np.array([
-                self.z_angles[beam_node_index_0],
-                self.z_angles[beam_node_index_1]])
+            beam.x_angles_global_dynamic = np.array([
+                self.x_angles_amplitude[beam_node_index_0],
+                self.x_angles_amplitude[beam_node_index_1]])
+            beam.y_angles_global_dynamic = np.array([
+                self.y_angles_amplitude[beam_node_index_0],
+                self.y_angles_amplitude[beam_node_index_1]])
+            beam.z_angles_global_dynamic = np.array([
+                self.z_angles_amplitude[beam_node_index_0],
+                self.z_angles_amplitude[beam_node_index_1]])
 
-            beam.x_forces_global = np.array([
-                self.x_forces[beam_node_index_0],
-                self.x_forces[beam_node_index_1]])
-            beam.y_forces_global = np.array([
-                self.y_forces[beam_node_index_0],
-                self.y_forces[beam_node_index_1]])
-            beam.z_forces_global = np.array([
-                self.z_forces[beam_node_index_0],
-                self.z_forces[beam_node_index_1]])
+            beam.x_forces_global_dynamic = np.array([
+                self.x_forces_amplitude[beam_node_index_0],
+                self.x_forces_amplitude[beam_node_index_1]])
+            beam.y_forces_global_dynamic = np.array([
+                self.y_forces_amplitude[beam_node_index_0],
+                self.y_forces_amplitude[beam_node_index_1]])
+            beam.z_forces_global_dynamic = np.array([
+                self.z_forces_amplitude[beam_node_index_0],
+                self.z_forces_amplitude[beam_node_index_1]])
 
-            beam.x_moments_global = np.array([
-                self.x_moments[beam_node_index_0],
-                self.x_moments[beam_node_index_1]])
-            beam.y_moments_global = np.array([
-                self.y_moments[beam_node_index_0],
-                self.y_moments[beam_node_index_1]])
-            beam.z_moments_global = np.array([
-                self.z_moments[beam_node_index_0],
-                self.z_moments[beam_node_index_1]])
+            beam.x_moments_global_dynamic = np.array([
+                self.x_moments_amplitude[beam_node_index_0],
+                self.x_moments_amplitude[beam_node_index_1]])
+            beam.y_moments_global_dynamic = np.array([
+                self.y_moments_amplitude[beam_node_index_0],
+                self.y_moments_amplitude[beam_node_index_1]])
+            beam.z_moments_global_dynamic = np.array([
+                self.z_moments_amplitude[beam_node_index_0],
+                self.z_moments_amplitude[beam_node_index_1]])
 
-            beam.solve_shape_functions()
-            beam.find_stresses()
+            beam.solve_shape_functions_dynamic()
+            beam.find_stresses_dynamic()
+            beam.calc_failure_criterion_swt()
+
+    def fatigue_analysis(self):
+        pass
 
 
 class BeamType:
@@ -1132,6 +1281,7 @@ def cantilever_annulus():
     for i in np.arange(0, 1.1, 0.1):
         logging.debug("Shape y angle " + str(round(i,2)) + ": " + str(beam_system.beams[0].return_shape_functions(i)[0][1]))
 
+
 def beam_30_deg():
     beam_system = BeamSystem("30 Deg Axial Tension")
     arm_beam = BeamType("circle", [20], "Aluminum7075-T6", "arm_beam")
@@ -1167,6 +1317,7 @@ def beam_30_deg():
     print("Displacement 2: ", beam_system.nodes[beam_system.select_node("point_2")].result_displacement)
 
     print("Displacement 1 theta: ", math.degrees(math.atan2(N1_disp[0], N1_disp[1])))
+
 
 def timoshenko_simply_supp_point():
     #
@@ -1208,6 +1359,7 @@ def timoshenko_simply_supp_point():
     for beam in beam_system.beams:
         print("Max Stress 0", max(beam.bending_stresses_0))
         print("Max Stress 1", max(beam.bending_stresses_1))
+
 
 def timoshenko_simply_supp():
     beam_system = BeamSystem("timoshenko_simply_supp")
@@ -1286,7 +1438,6 @@ def timoshenko_simply_supp():
     print("Expected 75 Disp from total: ", w)
 
 
-
 def timoshenko_simply_supp_point_shear():
     beam_system = BeamSystem("timoshenko_simply_supp")
     arm_beam = BeamType("rectangle", [25, 25], "Aluminum7075-T6", "arm_beam")
@@ -1325,6 +1476,7 @@ def timoshenko_simply_supp_point_shear():
 
     # ABAQUS 22 midpoint: -3.997e-05
     # ABAQUS 23 midpoint: -2.232e-05
+
 
 def timoshenko_stress_circle():
     #
@@ -1376,6 +1528,7 @@ def timoshenko_stress_circle():
     # print(beam_system.beams[10].transformation_matrix)
     # print(beam_system.beams[10].transformation_matrix)
     # print(beam_system.du)
+
 
 def timoshenko_stress():
     #
@@ -1437,6 +1590,7 @@ def timoshenko_stress():
     # print(beam_system.beams[10].transformation_matrix)
     # print(beam_system.du)
 
+
 def timoshenko_freq():
     #
     beam_system = BeamSystem("timoshenko_simply_supp")
@@ -1495,3 +1649,5 @@ if __name__ == '__main__':
     # timoshenko_stress()
     #timoshenko_stress_circle()
     # timoshenko_freq()
+
+#%%

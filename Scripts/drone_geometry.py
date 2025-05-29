@@ -4,7 +4,7 @@ from Scripts.beams import BeamSystem
 
 
 class DroneGeometry:
-    def __init__(self, name, nominal_rad, strut_pos, blade_num, arm_beam, strut_beam, batteries):
+    def __init__(self, name, nominal_rad, strut_pos, blade_num, arm_beam, strut_beam, batteries=[]):
         self.name = name  # Name of the drone
 
         self.nominal_rad = nominal_rad

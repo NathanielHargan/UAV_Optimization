@@ -55,7 +55,12 @@ class DroneFEA:
         local_dir_bot = self.geometry.strut_centroid_coords[-1] - self.geometry.strut_nodes_coords[0]
         self.beam_system.add_boundary_condition(0, "x symm", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
         self.beam_system.add_boundary_condition(0, "x symm", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
-    '''
+
+        # Remove Later PLEASE
+        self.beam_system.add_boundary_condition(0, "y", "outer_node")
+        self.beam_system.add_boundary_condition(0, "theta z", "outer_node")
+        self.beam_system.add_boundary_condition(0, "theta x", "outer_node")
+
     def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
         self.nominal_rad = nominal_rad
         self.strut_pos = strut_pos
@@ -64,25 +69,25 @@ class DroneFEA:
 
         # Origin
         self.beam_system.add_node(
+            np.array([0,
             0,
-            0,
-            0,
+            0]),
             'origin')
 
         # Rotational Symmetry Nodes
         for theta in np.linspace(0, 2*math.pi*(blade_num-1)/blade_num, num=blade_num):
             # Adds the node where the blades are
             self.beam_system.add_node(
-                math.cos(theta) * nominal_rad,
+                np.array([math.cos(theta) * nominal_rad,
                 math.sin(theta) * nominal_rad,
-                0,
+                0]),
                 'outer_node_' + str(num))
 
             # Adds the node the struts connect to
             self.beam_system.add_node(
-                math.cos(theta) * strut_pos,
+                np.array([math.cos(theta) * strut_pos,
                 math.sin(theta) * strut_pos,
-                0,
+                0]),
                 "strut_node_" + str(num))
             num += 1
 
@@ -117,7 +122,7 @@ class DroneFEA:
                 "strut_node_" + str(i),
                 "strut_node_" + str(i+1),
                 [0, 0, 1])
-    '''
+
     def rotate_drone_nodes(self, x, y, z):
         self.beam_system.rotate_beam_system(x, y, z)
 
@@ -136,5 +141,8 @@ class DroneFEA:
     def solve_failure(self):
         self.beam_system.solve_failure()
 
-    def solve_frequency_analysis(self,w):
-        self.beam_system.solve_frequency_analysis(w)
+    def solve_failure_swt(self):
+        self.beam_system.solve_failure_swt()
+
+    def solve_dynamic(self, alpha, beta):
+        self.beam_system.solve_dynamic(alpha, beta)

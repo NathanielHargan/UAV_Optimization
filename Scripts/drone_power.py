@@ -22,6 +22,7 @@ class DronePower:
         self.drone_forces = drone_forces
         self.timesteps = np.array([])
         self.energy_consumption = np.array([])
+        self.frequency = np.array([])
         self.ratio_throttle = np.array([])
         self.error = np.array([])
 
@@ -120,6 +121,7 @@ class DronePower:
             max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
             self.percent_throttle[i] = self.power_at_time(t) / (max_throttle_power)
 
-
+    def freq_calc(self, rpm):
+        self.frequency = uc.Hz_to_rad_per_s * rpm * self.percent_throttle / 30
 
 #%%
