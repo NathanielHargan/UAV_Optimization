@@ -14,7 +14,6 @@
 <h5> As of 11/5/24 </h5>
 
 # TO DO:
-- Rayleigh Damping alpha * M + B * K (attempt)
+- 
 - Fatigue Constraint (attempt)
-
-# Smith watson topper SWT ( page 397 / 403)
+- 

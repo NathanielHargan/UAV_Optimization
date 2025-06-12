@@ -939,8 +939,6 @@ class BeamSystem:
             beam.find_stresses_dynamic()
             beam.calc_failure_criterion_swt()
 
-    def fatigue_analysis(self):
-        pass
 
 
 class BeamType:
@@ -971,6 +969,8 @@ class BeamType:
 
         self.g_y = eik_y/ga
         self.g_z = eik_z/ga
+
+
 
     def mass_moment(self, L):
         if self.cross_section.lower() == "circle":

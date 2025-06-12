@@ -1,4 +1,5 @@
 # Material Properties (hopefully N, mm, MPa )
+import math
 Gravity = 9806.6499994  # mm/s^2
 
 Materials = {
@@ -30,6 +31,19 @@ Materials = {
         "fatigue strength cycles": 5e8  # [-]
     }
 }
+
+# Calculate Fatigue Strength exponent and coefficient
+Materials["Carbon Fiber"]["fatigue strength exponent"] = math.log(4/9) / math.log(Materials["Carbon Fiber"]["fatigue strength cycles"])
+Materials["Carbon Fiber"]["fatigue strength coefficient"] = 0.9 * Materials["Carbon Fiber"]["ultimate strength"]
+
+'''
+# Tests 
+
+print(Materials["Carbon Fiber"]["fatigue strength coefficient"])
+print(Materials["Carbon Fiber"]["fatigue strength exponent"])
+print(Materials["Carbon Fiber"]["ultimate strength"] * 0.9 * (2 * 0.5) ** Materials["Carbon Fiber"]["fatigue strength exponent"])
+print(Materials["Carbon Fiber"]["ultimate strength"] * 0.9 * (2 * 5e8) ** Materials["Carbon Fiber"]["fatigue strength exponent"])
+'''
 
 Materials["Aluminum7075-T6"]["weight density"] = Materials["Aluminum7075-T6"]["mass density"] * Gravity
 Materials["Carbon Fiber"]["weight density"] = Materials["Carbon Fiber"]["mass density"] * Gravity
