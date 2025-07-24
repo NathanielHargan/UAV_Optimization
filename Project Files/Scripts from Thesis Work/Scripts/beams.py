@@ -448,7 +448,7 @@ class BeamSystem:
 
     def add_dynamic_force(self, direction, frequency, phase, node_ref):
         node = self.nodes[self.select_node(node_ref)]
-        node.add_dynamic_force(direction, frequency, phase)
+        node.add_dynamic_harmonic_force(direction, frequency, phase)
         self.dynamic_force_indexes.append([self.select_node(node_ref), len(node.dynamic_forces_phase)-1])
 
 

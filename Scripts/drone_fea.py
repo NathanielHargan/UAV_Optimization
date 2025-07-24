@@ -144,5 +144,5 @@ class DroneFEA:
     def solve_failure_swt(self):
         self.beam_system.solve_failure_swt()
 
-    def solve_dynamic(self, alpha, beta):
-        self.beam_system.solve_dynamic(alpha, beta)
+    def solve_dynamic_harmonic(self, alpha, beta):
+        self.beam_system.solve_dynamic_harmonic(alpha, beta)

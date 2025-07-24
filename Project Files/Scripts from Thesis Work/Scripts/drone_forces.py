@@ -66,7 +66,7 @@ if __name__ == '__main__':
     from Scripts.drone_battery import Battery
     from Scripts.drone_geometry import DroneGeometry
     from Scripts.beams import BeamType
-    from Scripts.mission_profile import MissionProfile
+    from Scripts.mission_profile import MissionProfileCubicSpline
 
     # Mass Analysis Setup
     battery_1 = Battery(4.292e-3, np.array([0, 86.75, -50]), np.array([260.5, 123.5, 63.5]))
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     surface_area = d1_mass.total_mass
 
     # Mission Profile generation
-    m1 = MissionProfile("m1", 1, 1, 0)
+    m1 = MissionProfileCubicSpline("m1", 1, 1, 0)
     m1.add_segment("takeoff",10,50,5,5,1)
     m1.add_segment("climb",30,550,1000,30,1)
     m1.add_segment("cruise",100,1000,1100,30,1)
