@@ -28,3 +28,8 @@
 - Cycle Counting library
 - Office space (115) Get desk 
 - Lab 151
+
+- Fix forcing function (probably sign issue)
+- Add prelift force (rev up)
+- Therory of vibrations with applications thomson 3rd page 63
+- 
