@@ -44,3 +44,14 @@ def mass_moment_hexagon(cross_section_parameters, L, density):
     ])
     return I
 
+def mass_moment_i_beam(cross_section_parameters, L, density):
+    h = cross_section_parameters[0]
+    b = cross_section_parameters[1]
+    m = h * b * L * density
+    I = np.array([
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ])
+    return I
+

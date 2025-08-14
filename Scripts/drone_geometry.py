@@ -4,14 +4,19 @@ from Scripts.beams import BeamSystem
 
 
 class DroneGeometry:
-    def __init__(self, name, nominal_rad, strut_pos, blade_num, arm_beam, strut_beam, batteries=[]):
+    def __init__(self, name, nominal_rad, hub_radius, strut_pos, blade_num, arm_beam, strut_beam, hub_beam, batteries=[]):
         self.name = name  # Name of the drone
 
         self.nominal_rad = nominal_rad
+        self.hub_radius = hub_radius
         self.strut_pos = strut_pos
         self.blade_num = blade_num
+
+        self.hub_beam = hub_beam
         self.arm_beam = arm_beam
         self.strut_beam = strut_beam
+
+        self.hub_edge_length = 2 * hub_radius * math.sin(math.pi/blade_num)
 
         theta = 2 * math.pi / blade_num
         x_next = math.cos(theta) * strut_pos
@@ -22,6 +27,7 @@ class DroneGeometry:
         self.strut_end_x_pos = x
         self.strut_end_y_pos = y
 
+        self.hub_nodes_coords = np.zeros([blade_num,3])
         self.outer_nodes_coords = np.zeros([blade_num,3])
         self.strut_nodes_coords = np.zeros([blade_num,3])
         self.strut_centroid_coords = np.zeros([blade_num,3])
@@ -43,6 +49,8 @@ class DroneGeometry:
             self.outer_nodes_coords[i, 1] = math.sin(theta) * self.nominal_rad
             self.strut_nodes_coords[i, 0] = math.cos(theta) * self.strut_pos
             self.strut_nodes_coords[i, 1] = math.sin(theta) * self.strut_pos
+            self.hub_nodes_coords[i, 0] = math.cos(theta) * self.hub_radius
+            self.hub_nodes_coords[i, 1] = math.sin(theta) * self.hub_radius
 
             self.outer_centroid_coords[i, 0] = math.cos(theta) * self.nominal_rad/2
             self.outer_centroid_coords[i, 1] = math.sin(theta) * self.nominal_rad/2

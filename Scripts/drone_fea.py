@@ -10,19 +10,30 @@ class DroneFEA:
         self.beam_system = BeamSystem(self.name + "_system")
         self.arm_beam = self.geometry.arm_beam
         self.strut_beam = self.geometry.strut_beam
+        self.hub_beam = self.geometry.hub_beam
 
     def create_drone_slice_nodes(self):
         # Origin
+        # self.beam_system.add_node(np.array([0, 0, 228.6]), 'center_node')
         self.beam_system.add_node(np.array([0, 0, 0]), 'center_node')
+        self.beam_system.add_node(self.geometry.hub_nodes_coords[0], 'hub_node')
         self.beam_system.add_node(self.geometry.strut_nodes_coords[0], 'strut_node')
         self.beam_system.add_node(self.geometry.outer_nodes_coords[0], 'outer_node')
         self.beam_system.add_node(self.geometry.strut_centroid_coords[0], 'strut_node_top')
         self.beam_system.add_node(self.geometry.strut_centroid_coords[-1], 'strut_node_bottom')
 
     def create_drone_slice_beams(self):
+
+        self.beam_system.add_beam(
+            self.hub_beam,
+            "center_node",
+            "hub_node",
+            [0, 0, 1],
+            "hub_beam")
+
         self.beam_system.add_beam(
             self.arm_beam,
-            "center_node",
+            "hub_node",
             "strut_node",
             [0, 0, 1],
             "center_beam")
@@ -56,10 +67,19 @@ class DroneFEA:
         self.beam_system.add_boundary_condition(0, "x symm", "strut_node_top", local_dir_top, np.array([0, 0, 1]))
         self.beam_system.add_boundary_condition(0, "x symm", "strut_node_bottom",  local_dir_bot, np.array([0, 0, 1]))
 
-        # Remove Later PLEASE
         self.beam_system.add_boundary_condition(0, "y", "outer_node")
         self.beam_system.add_boundary_condition(0, "theta z", "outer_node")
         self.beam_system.add_boundary_condition(0, "theta x", "outer_node")
+
+        self.beam_system.add_boundary_condition(0, "y", "strut_node")
+        self.beam_system.add_boundary_condition(0, "theta z", "strut_node")
+        self.beam_system.add_boundary_condition(0, "theta x", "strut_node")
+
+
+        self.beam_system.add_boundary_condition(0, "y", "hub_node")
+        self.beam_system.add_boundary_condition(0, "theta z", "hub_node")
+        self.beam_system.add_boundary_condition(0, "theta x", "hub_node")
+
 
     def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
         self.nominal_rad = nominal_rad

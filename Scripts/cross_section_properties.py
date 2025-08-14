@@ -103,20 +103,69 @@ def cross_section_hexagon(cross_section_parameters):
     }
 
 
-def cross_section_octagon(cross_section_parameters):
-    # https://structx.com/Shape_Formulas_037.html
-    r = cross_section_parameters[0]/2  # radius
+# https://structx.com/Shape_Formulas_013.html x=z
+def cross_section_i_beam(cross_section_parameters):
+    b = cross_section_parameters[0]
+    d = cross_section_parameters[1]
+    s = cross_section_parameters[2]
+    t = cross_section_parameters[3]
+
+    h = d - 2*s
+    cz = b/2
+    cy = d/2
+    # Area
+    area = b * d - h * (b - t)
+
+    # Second moment strong axis (z-axis, horizontal bending)
+    Iz = (b * d ** 3) / 12.0 - ((b - t) * h ** 3) / 12.0
+
+    # Second moment weak axis (y-axis, vertical bending)
+    Iy_flange = 2 * (s * b ** 3) / 12.0
+    Iy_web = (h * t ** 3) / 12.0
+    Iy = Iy_flange + Iy_web
+
+    # Polar second moment (centroidal)
+    J_polar = Iy ** 2 + Iz
+
+    # Saint-Venant torsional constant
+    J_torsion = (1.0 / 3.0) * (2 * b * s ** 3 + h * t ** 3)
+
+    # Radii of gyration
+    kx = math.sqrt(J_polar / area)
+    ky = math.sqrt(Iy / area)
+    kz = math.sqrt(Iz / area)
+
+    # Elastic section modulus
+    Sy = Iy / (b / 2.0)
+    Sz = Iz / (d / 2.0)
+
+    # Plastic section moduli
+    Zp_z = 2 * (b * s * (d / 2.0 - s / 2.0) + t * (h / 2.0) * (h / 4.0))
+    Zp_y = (s * b ** 2) / 2.0 + (h * t ** 2) / 4.0
+
+    # Shear deflection constants
+    m = (2*b*s)/(h*t)
+    n = b / h
+    kappa_z = 10 * (1 + 3*m) ** 2 / ((12+72*m+150*m**2+90*m**3) + (30*n**2)*(m+m**2))
+    kappa_y = 10 * (1 + 3*m) ** 2 / ((12+72*m+150*m**2+90*m**3) + (30*n**2)*(m+m**2))
+
     return {
-        'area': 4 * r ** 2 * math.sqrt(2) / 2,
-        'perimeter': 8 * r * math.sqrt(2 - math.sqrt(2)),
-        'second moment of area x': 1.2762 * r ** 4,  # also polar moment of inertia
-        'second moment of area y': 0.6381 * r ** 4,  # I1
-        'second moment of area z': 0.6381 * r ** 4,  # I2
-        'radius of gyration x': 0.672 * r,
-        'radius of gyration y': 0.475 * r,
-        'radius of gyration z': 0.475 * r,
-        'elastic section modulus': 0.6381 * r ** 3,
-        'transverse shear deflection constant y': 0,
-        'transverse shear deflection constant z': 0,
-        'circumscribed': r
+        'area': area,
+        'second moment of area y': Iy,
+        'second moment of area z': Iz,
+        'second moment of area x': J_polar,
+        'polar moment of inertia': J_polar,
+        'torsional constant': J_torsion,
+        'radius of gyration x': kx,
+        'radius of gyration y': ky,
+        'radius of gyration z': kz,
+        'elastic section modulus y': Sy,
+        'elastic section modulus z': Sz,
+        'plastic section modulus y': Zp_y,
+        'plastic section modulus z': Zp_z,
+        'transverse shear deflection constant y': kappa_y,
+        'transverse shear deflection constant z': kappa_z,
+        'top fiber y': cy,
+        'top fiber z': cz,
+        'circumscribed': np.sqrt(cy ** 2 + cz ** 2)
     }

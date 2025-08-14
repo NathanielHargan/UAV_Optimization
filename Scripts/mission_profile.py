@@ -107,10 +107,8 @@ class MissionProfileLinearAcc:
         self.constraints_values = np.array([])
         self.duration = 0
 
-    def add_segment(self, dt, node_name='node', seg_name='segment'):
+    def add_segment(self, dt, seg_name='segment'):
 
-        if node_name == 'node':
-            node_name = 'node'+str(len(self.nodes))
 
         if seg_name == 'segment':
             seg_name = 'segment'+str(len(self.segments))
@@ -120,7 +118,6 @@ class MissionProfileLinearAcc:
 
 
         self.nodes = np.append(self.nodes, self.nodes[-1] + dt)
-        self.node_names.append(node_name)
 
 
 
@@ -188,6 +185,11 @@ class MissionProfileLinearAcc:
         py = self.py[seg_i] + tau * self.vy[seg_i] + (tau**2 / 2) * self.ay[seg_i] + (tau**3 / (6*dt)) * (self.ay[seg_i+1] - self.ay[seg_i])
 
         return np.array([px,py]), np.array([vx,vy]), np.array([ax,ay])
+
+    def segment_name_at_time(self, t):
+        seg_i = np.searchsorted(self.nodes, t, side='right') - 1
+        return self.segments[seg_i].name
+
 
 def mission_profile():
 

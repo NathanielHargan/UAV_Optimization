@@ -1,6 +1,11 @@
 #%%
 
 #%%
+
+
+#%%
+
+#%%
 import numpy as np
 import math
 import scipy
@@ -8,6 +13,7 @@ from Scripts.cross_section_properties import cross_section_circle
 from Scripts.cross_section_properties import cross_section_annulus
 from Scripts.cross_section_properties import cross_section_rectangle
 from Scripts.cross_section_properties import cross_section_hexagon
+from Scripts.cross_section_properties import cross_section_i_beam
 from Scripts.material_properties import Materials
 from Scripts.material_properties import NU_Daniel_failure
 import Scripts.mass_properties as MassProperties
@@ -1426,6 +1432,11 @@ class BeamType:
                 self.cross_section_parameters,
                 L,
                 self.material_properties["mass density"])
+        elif self.cross_section.lower() == "i_beam":
+            return MassProperties.mass_moment_i_beam(
+                self.cross_section_parameters,
+                L,
+                self.material_properties["mass density"])
         else:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
@@ -1440,19 +1451,8 @@ class BeamType:
             return cross_section_rectangle(self.cross_section_parameters)
         elif self.cross_section.lower() == "hexagon":
             return cross_section_hexagon(self.cross_section_parameters)
-        else:
-            print('incorrect cross section in beam ' + self.name)
-            return 'error'
-
-    def cross_section_properties_init(self):
-        if self.cross_section.lower() == "circle":
-            return cross_section_circle(self.cross_section_parameters)
-        elif self.cross_section.lower() == "annulus":
-            return cross_section_annulus(self.cross_section_parameters)
-        elif self.cross_section.lower() == "rectangle":
-            return cross_section_rectangle(self.cross_section_parameters)
-        elif self.cross_section.lower() == "hexagon":
-            return cross_section_hexagon(self.cross_section_parameters)
+        elif self.cross_section.lower() == "i_beam":
+            return cross_section_i_beam(self.cross_section_parameters)
         else:
             print('incorrect cross section in beam ' + self.name)
             return 'error'
@@ -2131,8 +2131,3 @@ if __name__ == '__main__':
     # timoshenko_stress_circle()
     # timoshenko_freq()
     transient_displacement()
-
-#%%
-
-
-#%%

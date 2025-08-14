@@ -15,16 +15,16 @@ class BatterySystem:
 
 
 class DronePower:
-    def __init__(self, blade_num, mwh, drone_forces):
+    def __init__(self, blade_num, mwh, total_thrust_y, timesteps):
         self.blade_num = blade_num
         self.milliwatt_hour_capacity = mwh
         self.milliwatt_second_capacity = mwh * (uc.hrs_to_s)
-        self.drone_forces = drone_forces
-        self.timesteps = np.array([])
+        self.drone_forces = total_thrust_y
         self.energy_consumption = np.array([])
         self.frequency = np.array([])
         self.ratio_throttle = np.array([])
         self.error = np.array([])
+        self.timesteps = timesteps
 
     def thrust_to_power(self, thrust):
         # (thrust,power): (10kg,1kW)/8 , (50kg, 6kW)/8 , (80kg, 13kW)/8
@@ -36,7 +36,7 @@ class DronePower:
         return power_milliwatts_per_blade * self.blade_num
 
     def power_at_time(self, t):
-        thrust_y, drag = self.drone_forces.time_solve(t)
+        thrust_y = self.drone_forces(t)
         power = self.thrust_to_power(thrust_y)
 
         return power
@@ -97,31 +97,33 @@ class DronePower:
         self.timesteps = time  # Array from 0 to t_final
         self.energy_consumption = power_consumed
     '''
-    def energy_consumption_calc(self, segments, steps):
-        segment_count = len(segments)-1
-        time = np.array([])
-        for i in range(segment_count):
-            t_start = segments[i]
-            t_end = segments[i+1]
-            time = np.append(time, np.linspace(t_start, t_end, steps, endpoint = False))
-
-        power = np.zeros(len(time))
-        for i in range(len(time)):
-            power[i] = self.neg_power_at_time(time[i])
-        self.timesteps = time
+    def energy_consumption_calc(self):
+        power = np.zeros(len(self.timesteps))
+        for i, t in enumerate(self.timesteps):
+            power[i] = self.neg_power_at_time(float(t))
         self.power = power
-        self.energy_consumption = self.milliwatt_second_capacity + scipy.integrate.cumulative_trapezoid(power, time, initial = 0)
+        self.energy_consumption = self.milliwatt_second_capacity + scipy.integrate.cumulative_trapezoid(power, self.timesteps, initial = 0)
 
-    def throttle_ratio_calc(self, max_power_full_battery_kw):
+    def throttle_ratio_trans_calc(self, max_power_full_battery_kw):
         # assuming max throttle is proportional to the percent energy left in the battery.
         self.percent_throttle = np.zeros(len(self.timesteps))
+        max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
         for i, t in enumerate(self.timesteps):
             # percent_energy = self.energy_consumption[i] / self.milliwatt_second_capacity # % energy in the battery
             # max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW) * percent_energy
-            max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
             self.percent_throttle[i] = self.power_at_time(t) / (max_throttle_power)
 
-    def freq_calc(self, rpm):
-        self.frequency = uc.Hz_to_rad_per_s * rpm * self.percent_throttle / 30
+    def throttle_ratio_calc(self, max_power_full_battery_kw, t):
+        max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
+        return self.power_at_time(t) / (max_throttle_power)
+
+    def freq_trans_calc(self, rpm_max):
+        frequency = np.zeros(len(self.timesteps))
+        for i, t in enumerate(self.timesteps):
+            frequency[i] = uc.Hz_to_rad_per_s * rpm_max * self.percent_throttle[i] / 30
+        self.frequency = frequency
+
+    def freq_calc(self, rpm_max, max_power_full_battery_kw, t):
+        return uc.Hz_to_rad_per_s * rpm_max * self.throttle_ratio_calc(max_power_full_battery_kw, t) / 30
 
 #%%
