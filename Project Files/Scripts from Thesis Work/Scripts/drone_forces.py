@@ -1,5 +1,5 @@
 import numpy as np
-from Scripts.material_properties import Gravity
+from Scripts.Finite_Elements.material_properties import Gravity
 
 air_density = 1.225e-12 # Mg/mm^3
 
@@ -62,11 +62,11 @@ class DroneForces:
 
 
 if __name__ == '__main__':
-    from Scripts.drone_mass import DroneMass
-    from Scripts.drone_battery import Battery
+    from Scripts.Mass_Analysis.drone_mass import DroneMass
+    from Scripts.Mass_Analysis.drone_battery import Battery
     from Scripts.drone_geometry import DroneGeometry
-    from Scripts.beams import BeamType
-    from Scripts.mission_profile import MissionProfileCubicSpline
+    from Scripts.Finite_Elements.Beam_FEA_System.beam_type import BeamType
+    from Scripts.Mission_Profile.mission_profile import MissionProfileCubicSpline
 
     # Mass Analysis Setup
     battery_1 = Battery(4.292e-3, np.array([0, 86.75, -50]), np.array([260.5, 123.5, 63.5]))

@@ -1,7 +1,7 @@
 import numpy as np
 import math
-from Scripts.beams import BeamSystem
-from Scripts.beams import BeamSystem
+from Scripts.Finite_Elements.Beam_FEA_System.beam_system import BeamSystem
+
 
 class DroneFEA:
     def __init__(self, DroneGeometry):

@@ -4,17 +4,14 @@
 import numpy as np
 import math
 import scipy
-from Scripts.cross_section_properties import cross_section_circle
-from Scripts.cross_section_properties import cross_section_annulus
-from Scripts.cross_section_properties import cross_section_rectangle
-from Scripts.cross_section_properties import cross_section_hexagon
-from Scripts.material_properties import Materials
-from Scripts.material_properties import NU_Daniel_failure
-import Scripts.mass_properties as MassProperties
-from Scripts.material_properties import Gravity
-import Scripts.FEA_3D as FEA_3D
-import time
-import matplotlib.pyplot as plt
+from Scripts.Finite_Elements.cross_section_properties import cross_section_circle
+from Scripts.Finite_Elements.cross_section_properties import cross_section_annulus
+from Scripts.Finite_Elements.cross_section_properties import cross_section_rectangle
+from Scripts.Finite_Elements.cross_section_properties import cross_section_hexagon
+from Scripts.Finite_Elements.material_properties import Materials
+from Scripts.Finite_Elements.material_properties import NU_Daniel_failure
+import Scripts.Mass_Analysis.mass_properties as MassProperties
+import Scripts.Finite_Elements.FEA_3D as FEA_3D
 
 import logging
 from numpy.testing import assert_almost_equal

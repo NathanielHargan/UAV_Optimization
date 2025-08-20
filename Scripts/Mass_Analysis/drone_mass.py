@@ -151,9 +151,9 @@ class DroneMass:
 
 
 if __name__ == '__main__':
-    from Scripts.drone_battery import Battery
+    from Scripts.Mass_Analysis.drone_battery import Battery
     from Scripts.drone_geometry import DroneGeometry
-    from Scripts.beams import BeamType
+    from Scripts.Finite_Elements.Beam_FEA_System.beam_type import BeamType
 
     # 40.05 N weight
     # Mass in N-s^2/mm (Mg)

@@ -1,5 +1,3 @@
-from Scripts.material_properties import Gravity
-
 import scipy
 import numpy as np
 import Scripts.unit_conversions as uc

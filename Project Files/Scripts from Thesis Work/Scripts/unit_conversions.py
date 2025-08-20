@@ -1,4 +1,4 @@
-from Scripts.material_properties import Gravity
+from Scripts.Finite_Elements.material_properties import Gravity
 import math
 
 # Length
