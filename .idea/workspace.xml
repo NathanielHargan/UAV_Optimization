@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/14">
+      <change beforePath="$PROJECT_DIR$/Freq_vis.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Freq_vis.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/ME5974_Project.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/ME5974_Project.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/me5634_project2_Hargan_Nathaniel.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/me5634_project2_Hargan_Nathaniel.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotDrone3D.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotDrone3D.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotForces.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotForces.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotFrequency.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotFrequency.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotMass.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotMass.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotPower.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotPower.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotProfiles.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/ME5974_Project.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/ME5974_Project.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/beams.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/beams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_forces.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_forces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_geometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_mass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_power.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/unit_conversions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/FEA_3D.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/FEA_3D.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/beams.log" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beams.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/beams.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/cross_section_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/cross_section_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_battery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_battery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_forces.py" beforeDir="false" afterPath="$PROJECT_DIR$/old/drone_forces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_mass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/mass_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/material_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/material_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/mission_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/mission_profile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/unit_conversions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Transient.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Transient.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_Optimize.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Optimize.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/OLD_BeamDeformation_Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/OLD_BeamDeformation_Test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/PlotDrone.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/PlotDrone.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/PlotProfiles.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/Test_deformation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/Test_deformation.ipynb" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="30bWVrX8aimG1ngkJtpVkXcike8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.beams.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Desktop/UAV_Mission"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Desktop\UAV_Mission\Scripts\Finite_Elements" />
+      <recent name="C:\Desktop\UAV_Mission\Scripts\Mission_Profile" />
+      <recent name="C:\Desktop\UAV_Mission\old" />
+      <recent name="C:\Desktop\UAV_Mission\Scripts\Mass_Analysis" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="beams" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Scripts/Finite_Elements/beams.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.beams" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-2e738b810fe0-05660e73b189-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-251.26927.91" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="" />
+      <created>1753896779216</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1753896779216</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="8/14" />
+    <option name="LAST_COMMIT_MESSAGE" value="8/14" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
+          <line>674</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
+          <line>347</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
+          <line>627</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
