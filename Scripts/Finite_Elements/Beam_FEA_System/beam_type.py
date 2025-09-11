@@ -8,6 +8,7 @@ class BeamType:
     def __init__(self, cross_section, cross_section_parameters, material, name=None):
         self.cross_section = cross_section
         self.cross_section_parameters = cross_section_parameters
+        self.material = material
         self.material_properties = Materials[material]
 
         # Name is optional so

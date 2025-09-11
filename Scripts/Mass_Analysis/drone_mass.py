@@ -10,10 +10,12 @@ class DroneMass:
 
         arm_linear_density = self.drone.arm_beam.material_properties["mass density"] * self.drone.arm_beam.cross_section_properties["area"]
         strut_linear_density = self.drone.strut_beam.material_properties["mass density"] * self.drone.strut_beam.cross_section_properties["area"]
+        hub_linear_density = self.drone.hub_beam.material_properties["mass density"] * self.drone.hub_beam.cross_section_properties["area"]
 
-        self.arm_mass = arm_linear_density * self.drone.nominal_rad
+        self.hub_mass = hub_linear_density * (self.drone.hub_radius)
+        self.arm_mass = arm_linear_density * (self.drone.nominal_rad - self.drone.hub_radius)
         self.strut_mass = strut_linear_density * self.drone.strut_length
-        self.lumped_mass_frame = self.drone.blade_num * (self.arm_mass + self.strut_mass)
+        self.lumped_mass_frame = self.drone.blade_num * (self.arm_mass + self.strut_mass + self.hub_mass)
 
         self.total_mass = self.lumped_mass_frame
         self.total_mass_calculation()  # add battery masses

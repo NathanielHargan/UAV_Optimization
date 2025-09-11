@@ -3,13 +3,13 @@ import numpy as np
 import Scripts.unit_conversions as uc
 
 class BatterySystem:
-    def __init__(self, name, volts_battery, amp_hours_battery, battery_series_num):
+    def __init__(self, name, volts_battery, milliamp_hours_battery, battery_series_num):
         self.name = name
         self.volts_battery = volts_battery
-        self.milliamp_hours_battery = amp_hours_battery
+        self.milliamp_hours_battery = milliamp_hours_battery
         self.battery_series_num = battery_series_num
         self.volts_total = volts_battery * battery_series_num
-        self.milliwatt_hours = amp_hours_battery * self.volts_total
+        self.milliwatt_hours = milliamp_hours_battery * self.volts_total
 
 
 class DronePower:
@@ -18,7 +18,7 @@ class DronePower:
         self.milliwatt_hour_capacity = mwh
         self.milliwatt_second_capacity = mwh * (uc.hrs_to_s)
         self.drone_forces = total_thrust_y
-        self.energy_consumption = np.array([])
+        self.energy_remaining = np.array([])
         self.frequency = np.array([])
         self.ratio_throttle = np.array([])
         self.error = np.array([])
@@ -100,7 +100,7 @@ class DronePower:
         for i, t in enumerate(self.timesteps):
             power[i] = self.neg_power_at_time(float(t))
         self.power = power
-        self.energy_consumption = self.milliwatt_second_capacity + scipy.integrate.cumulative_trapezoid(power, self.timesteps, initial = 0)
+        self.energy_remaining = self.milliwatt_second_capacity + scipy.integrate.cumulative_trapezoid(power, self.timesteps, initial = 0)
 
     def throttle_ratio_trans_calc(self, max_power_full_battery_kw):
         # assuming max throttle is proportional to the percent energy left in the battery.

@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from Scripts.Finite_Elements.Beam_FEA_System.beam_system import BeamSystem
+from Scripts.Finite_Elements.Beam_FEA_System.beam_type import BeamType
 
 
 class DroneFEA:
@@ -11,29 +12,43 @@ class DroneFEA:
         self.arm_beam = self.geometry.arm_beam
         self.strut_beam = self.geometry.strut_beam
         self.hub_beam = self.geometry.hub_beam
+        self.hub_sections = self.geometry.hub_sections
+        self.final_hub_node_name = ""
 
     def create_drone_slice_nodes(self):
         # Origin
         # self.beam_system.add_node(np.array([0, 0, 228.6]), 'center_node')
-        self.beam_system.add_node(np.array([0, 0, 0]), 'center_node')
-        self.beam_system.add_node(self.geometry.hub_nodes_coords[0], 'hub_node')
+
+        # Add hub nodes
+        for i in range(self.hub_sections+1):
+            hub_node_name = 'hub_node_' + str(i)
+            self.beam_system.add_node(self.geometry.hub_nodes_coords[0, i], hub_node_name)
+
         self.beam_system.add_node(self.geometry.strut_nodes_coords[0], 'strut_node')
         self.beam_system.add_node(self.geometry.outer_nodes_coords[0], 'outer_node')
         self.beam_system.add_node(self.geometry.strut_centroid_coords[0], 'strut_node_top')
         self.beam_system.add_node(self.geometry.strut_centroid_coords[-1], 'strut_node_bottom')
 
     def create_drone_slice_beams(self):
+        # Add hub beams
+        for i in range(self.hub_sections):
+            parameters = self.hub_beam.cross_section_parameters
+            parameters[0] = self.geometry.beam_widths[i]
+            hub_beam_type = BeamType(self.hub_beam.cross_section,parameters,self.hub_beam.material,self.hub_beam.name)
+            hub_beam_name = 'hub_beam_' + str(i)
+            hub_node_name_0 = 'hub_node_' + str(i)
+            hub_node_name_1 = 'hub_node_' + str(i+1)
+            self.beam_system.add_beam(
+                hub_beam_type,
+                hub_node_name_0,
+                hub_node_name_1,
+                [0, 0, 1],
+                hub_beam_name)
 
-        self.beam_system.add_beam(
-            self.hub_beam,
-            "center_node",
-            "hub_node",
-            [0, 0, 1],
-            "hub_beam")
-
+        self.final_hub_node_name = 'hub_node_' + str(self.hub_sections)
         self.beam_system.add_beam(
             self.arm_beam,
-            "hub_node",
+             self.final_hub_node_name,
             "strut_node",
             [0, 0, 1],
             "center_beam")
@@ -60,7 +75,7 @@ class DroneFEA:
             "strut_element_bottom")
 
     def boundary_conditions_slice(self):
-        self.beam_system.add_boundary_condition(0, "en castre", "center_node")
+        self.beam_system.add_boundary_condition(0, "en castre", "hub_node_0")
 
         local_dir_top = self.geometry.strut_centroid_coords[0] - self.geometry.strut_nodes_coords[0]
         local_dir_bot = self.geometry.strut_centroid_coords[-1] - self.geometry.strut_nodes_coords[0]
@@ -76,9 +91,9 @@ class DroneFEA:
         self.beam_system.add_boundary_condition(0, "theta x", "strut_node")
 
 
-        self.beam_system.add_boundary_condition(0, "y", "hub_node")
-        self.beam_system.add_boundary_condition(0, "theta z", "hub_node")
-        self.beam_system.add_boundary_condition(0, "theta x", "hub_node")
+        self.beam_system.add_boundary_condition(0, "y", self.final_hub_node_name)
+        self.beam_system.add_boundary_condition(0, "theta z", self.final_hub_node_name)
+        self.beam_system.add_boundary_condition(0, "theta x", self.final_hub_node_name)
 
 
     def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):

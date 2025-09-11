@@ -1,12 +1,18 @@
+'''
+
+Cross section properties for different cross section shapes
+dimensions are a 1D array.
+
+'''
 import math
 import numpy as np
 
-# returns diction annulus beam cross section properties
+# Source:
+# https://structx.com/Shape_Formulas_014.html
 def cross_section_annulus(cross_section_parameters):
     r_outer = cross_section_parameters[0]/2
     r_inner = cross_section_parameters[1]/2
     m = r_inner/r_outer
-    # https://structx.com/Shape_Formulas_014.html
     return {
         'area': math.pi * (r_outer ** 2 - r_inner ** 2),
         'perimeter': math.pi * 2 * (r_outer + r_inner),
@@ -52,9 +58,9 @@ def cross_section_circle(cross_section_parameters):
         'circumscribed': r
     }
 
-
+# Source:
+# https://structx.com/Shape_Formulas_024.html
 def cross_section_rectangle(cross_section_parameters):
-    # https://structx.com/Shape_Formulas_024.html
     h = cross_section_parameters[0]  # height
     b = cross_section_parameters[1]  # base
     # h in y dir b in z dir
@@ -78,9 +84,9 @@ def cross_section_rectangle(cross_section_parameters):
         'circumscribed': np.linalg.norm([h/2,b/2])
         # 'stress points': np.array([[h/2,0],[0,b/2],[-h/2,0],[0,-b/2]])
     }
-
+# Source:
+# https://structx.com/Shape_Formulas_036.html
 def cross_section_hexagon(cross_section_parameters):
-    # https://structx.com/Shape_Formulas_036.html
     r = cross_section_parameters[0]/2  # radius
     f = r * math.sqrt(3)  # face to face distance
     a = (3 * math.sqrt(3) * r ** 2) / 2  # area
@@ -102,7 +108,7 @@ def cross_section_hexagon(cross_section_parameters):
         'circumscribed': r
     }
 
-
+# Source:
 # https://structx.com/Shape_Formulas_013.html x=z
 def cross_section_i_beam(cross_section_parameters):
     b = cross_section_parameters[0]

@@ -1,5 +1,5 @@
 import numpy as np
-
+import math
 def mass_moment_annulus(cross_section_parameters, L, density):
     r_2 = cross_section_parameters[0]/2  # outer
     r_1 = cross_section_parameters[1]/2  # inner
@@ -34,9 +34,8 @@ def mass_moment_rectangle(cross_section_parameters, L, density):
     return I
 
 def mass_moment_hexagon(cross_section_parameters, L, density):
-    h = cross_section_parameters[0]
-    b = cross_section_parameters[1]
-    m = h * b * L * density
+    r = cross_section_parameters[0]
+    m = (3/8) * math.sqrt(3) * (r ** 2) * L * density
     I = np.array([
         [0, 0, 0],
         [0, 0, 0],

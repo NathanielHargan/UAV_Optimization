@@ -4,7 +4,7 @@ from Scripts.Finite_Elements import FEA_3D as FEA_3D
 from Scripts.Finite_Elements.material_properties import NU_Daniel_failure
 
 
-class Beam:
+class BeamElement:
     def __init__(self, beam_type, start_node, end_node, k_node, name=None):
         self.name = name  # String with the beam name
         self.k_node = k_node

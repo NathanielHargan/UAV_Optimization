@@ -24,3 +24,5 @@ N_to_kgf = 1000/(Gravity)
 rad_per_s_to_Hz = 1/(2*math.pi)
 Hz_to_rad_per_s = 2*math.pi
 
+rpm_to_rad_per_s = math.pi / 30
+

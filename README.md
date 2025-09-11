@@ -57,3 +57,37 @@ TO DO 8/14:
 - Grid on all plots
 - n-hub elements for tapered cross section?
 
+8/21:
+- MDDO 
+- Formulate objective and constraint
+- NLP formulation 
+- Create natural frequency constraint (will be active)
+- First natural frequency > forcing function * FOS 
+- forcing function * FOS  / First natural frequency < 1
+- nallow = 1/FOS 
+- 3/8in allowable
+- FOS > FOS allowable
+- eric sandrin gentic algorithms
+
+- 8/28: 
+- Make the test function work for the optimizer
+- Take FOS into account
+
+- 9/4:
+- Work on energy constraint (done)
+- Format constraints in terms of FOS
+- Check energy constraint fomula (done)
+-  put design variables in the numerator if possible 
+
+- Fixed Energy constraint
+- More detailed test print statements
+- made hub height a parameter
+
+9/11:
+- Use harmonic solver instead of natural frequency 
+- "allowable_disp_to_amplitude_ratio"
+- U_mag/N
+- Normalize the design variables
+- Test upper and lower bounds on design variables
+- Outline thesis
+

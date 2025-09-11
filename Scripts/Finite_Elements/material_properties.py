@@ -15,7 +15,7 @@ Materials = {
         "ultimate strength": 572,  # [MPa]
         "fatigue strength coefficient": 1466,  # [MPa]
         "fatigue strength exponent": -0.143,  # [-]
-        "fatigue strength cycles": 5e8  # [-]
+        "fatigue strength cycles": 1e6  # [-]
     },
     "Carbon Fiber": {
         "weight density": 0.0,  # [N/mm^3]
@@ -26,15 +26,18 @@ Materials = {
         "shear yield strength": 345 * 0.577,  # [MPa]
         "tension yield strength": 345,  # [MPa]
         "ultimate strength": 345,  # [MPa]
-        "fatigue strength coefficient": 1466,  # [MPa]
-        "fatigue strength exponent": -0.143,  # [-]
-        "fatigue strength cycles": 5e8  # [-]
+        "fatigue strength coefficient": 1466,  # [MPa] # Change later
+        "fatigue strength exponent": -0.143,  # [-] # Change later
+        "fatigue strength cycles": 1e6,  # [-] # Change later
+        "completely_reversed_stress_amplitude": 0
     }
 }
 
 # Calculate Fatigue Strength exponent and coefficient
 Materials["Carbon Fiber"]["fatigue strength exponent"] = math.log(4/9) / math.log(Materials["Carbon Fiber"]["fatigue strength cycles"])
 Materials["Carbon Fiber"]["fatigue strength coefficient"] = 0.9 * Materials["Carbon Fiber"]["ultimate strength"]
+
+Materials["Carbon Fiber"]["completely_reversed_stress_amplitude"] = Materials["Carbon Fiber"]["fatigue strength coefficient"]  * (2 * Materials["Carbon Fiber"]["fatigue strength cycles"]) ** (Materials["Carbon Fiber"]["fatigue strength exponent"])
 
 '''
 # Tests 

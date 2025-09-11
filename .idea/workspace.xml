@@ -4,45 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/14">
+    <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
+      <change afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Freq_vis.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Freq_vis.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/ME5974_Project.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/ME5974_Project.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/me5634_project2_Hargan_Nathaniel.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/me5634_project2_Hargan_Nathaniel.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotDrone3D.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotDrone3D.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotForces.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotForces.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/ME5794_Nathaniel_Hargan_Midterm.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/ME5794_Nathaniel_Hargan_Midterm.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlotFrequency.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotFrequency.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotMass.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotMass.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlotPower.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotPower.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotProfiles.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/ME5974_Project.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/ME5974_Project.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/beams.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/beams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_fea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_forces.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_forces.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_geometry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_mass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/drone_power.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project Files/Scripts from Thesis Work/Scripts/unit_conversions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/FEA_3D.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/FEA_3D.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/beams.log" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beams.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/beams.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/cross_section_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/cross_section_properties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_battery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_battery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_forces.py" beforeDir="false" afterPath="$PROJECT_DIR$/old/drone_forces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_element.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_type.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_type.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beams.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/cross_section_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/cross_section_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/material_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/material_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_mass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/drone_mass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/mass_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/material_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/material_properties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/mission_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/mission_profile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/optimization.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/unit_conversions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Transient.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Transient.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UAV_Optimize.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Optimize.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/OLD_BeamDeformation_Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/OLD_BeamDeformation_Test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/PlotDrone.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/PlotDrone.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/PlotProfiles.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/Test_deformation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/old/Test_deformation.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +38,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -67,58 +53,198 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.beams.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Desktop/UAV_Mission"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.test_center_multidim.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in beam_system_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in optimization_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.beams.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Desktop/UAV_Mission&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Desktop\UAV_Mission\Scripts\Optimization" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Finite_Elements" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Mission_Profile" />
       <recent name="C:\Desktop\UAV_Mission\old" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Mass_Analysis" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="beams" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests in optimization_tests.py">
+    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Scripts/Finite_Elements/beams.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase.test_constraints&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase.test_constraints&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_cantilever_annulus&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_cantilever_annulus&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for beam_system_tests.MyTestCase.test_center_multidim" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_center_multidim&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for beam_system_tests.MyTestCase.test_center_multidim" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_center_multidim&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in beam_system_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in beam_system_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in optimization_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in optimization_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.beams" />
+        <item itemvalue="Python tests.Python tests in optimization_tests.py" />
+        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" />
+        <item itemvalue="Python tests.Python tests in beam_system_tests.py" />
+        <item itemvalue="Python tests.Python tests for beam_system_tests.MyTestCase.test_center_multidim" />
+        <item itemvalue="Python tests.Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-2e738b810fe0-05660e73b189-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-251.26927.91" />
+        <option value="bundled-python-sdk-21f4d9598332-a636b6f4477c-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-252.23892.514" />
       </set>
     </attachedChunks>
   </component>
@@ -134,25 +260,46 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="8/14" />
-    <option name="LAST_COMMIT_MESSAGE" value="8/14" />
+    <MESSAGE value="8/20" />
+    <option name="LAST_COMMIT_MESSAGE" value="8/20" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
-          <line>674</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py</url>
+          <line>633</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
-          <line>347</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py</url>
+          <line>534</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beams.py</url>
-          <line>627</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py</url>
+          <line>517</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py</url>
+          <line>392</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py</url>
+          <line>503</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/cross_section_properties.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 
 from Scripts.Finite_Elements import FEA_3D as FEA_3D
-from Scripts.Finite_Elements.Beam_FEA_System.beam import Beam
+from Scripts.Finite_Elements.Beam_FEA_System.beam_element import BeamElement
 from Scripts.Finite_Elements.Beam_FEA_System.node import Node
 
 
@@ -292,7 +292,7 @@ class BeamSystem:
         if name is None:
             name = "Beam_" + str(len(self.beams))
 
-        new_beam = Beam(beam_type, self.nodes[start_node_index], self.nodes[end_node_index], k_node, name)
+        new_beam = BeamElement(beam_type, self.nodes[start_node_index], self.nodes[end_node_index], k_node, name)
         self.beams.append(new_beam)
         self.beam_names.append(name)
     '''
@@ -627,7 +627,7 @@ class BeamSystem:
 
             beam.solve_shape_functions_dynamic_harmonic()
             beam.find_stresses_dynamic()
-            beam.calc_failure_criterion_swt()
+            # beam.calc_failure_criterion_swt()
 
     def initialize_dynamic_transient(self, dt, ts_num, alpha, delta):
         # dt = timestep interval
