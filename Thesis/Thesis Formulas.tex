@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+
+\title{Optimization of a UAV for Wildfire Management}
+\author{Nathaniel Hargan}
+\usepackage{amsmath}
+\date{}
+
+\begin{document}
+	
+	\maketitle
+	
+	\large
+	
+	The problem is formulated as follows:
+	$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
+	
+	subject to:
+	
+	$$g_j(x) \le 0; j = 0, 1, 2, ..., J$$
+	$$x_i^L \le x_i \le x_i^U$$
+	
+	design variables: 
+	
+	\begin{itemize}
+		\item $d_a$: arm diameter,
+		\item $t_a$: arm thickness,
+		\item $d_s$: strut diameter,
+		\item $t_s$: strut thickness,
+		\item $r_s$: strut distance from center,
+		\item $t_f$: hub flange thickness,
+		\item $t_w$: hub web thickness 
+	\end{itemize}
+	
+	derived variables:
+	\begin{itemize}
+		\item $d_{tip}$: Deflection at tip
+		\item $\sigma_{max}$: Maximum stress from bending 
+		\item $f_{amp}$: Amplitude of displacement at the tip of the uav arm
+		\item $D$: Damage per mission
+		\item $ E_{used}$: Energy used over th duration of the mission
+		\item $ E_{total}$: Energy used over th duration of the mission
+		
+	\end{itemize}
+	
+	design parameters:
+	\begin{itemize}
+		\item $d_{allowable}$: Deflection allowable
+		\item $\sigma_{allowable}$: Stress allowable from bending 
+		\item $R_{allowable}$: Allowable amplitude displacement ratio
+		\item $n_{missions} $: numbr of missions before damage
+	\end{itemize}
+		
+	Constraints: \\
+	\large
+	
+	Limit on deflection from bending by force required to lift the UAV. \\
+	$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{tip} \le d_{allowable} $$
+	
+	Limit on stress from bending by force required to lift the UAV. \\
+	$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{max} \le \sigma_{allowable} $$
+	
+	
+	Limit on amplitude of displacement given a forcing function based on the propeller speed of the UAV. \\
+	$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \frac{f_{amp}}{d_{tip}} \le R_{allowable} $$
+	
+	
+	Limit on the damage the UAV during a mission. \\
+	$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = D * n_{missions} \le 1 $$
+	
+	Energy
+	$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{total} \le 0.8 $$
+	
+	
+	
+	\begin{comment}
+		
+	
+		
+		1. Introduction
+			a. Overview
+			b. Goals and objectives
+			c. Scope
+			d. thesis outline
+		2. Literature Review
+		3. Methodology
+			a. problem formulation
+				i. design 
+				i. constraints
+				
+			b. optimization
+			
+		
+		
+	\end{comment}
+	
+	
+		
+	
+	
+	
+	
+\end{document}
