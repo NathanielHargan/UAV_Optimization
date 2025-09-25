@@ -73,9 +73,10 @@ class Optimizer:
         self.active_constraints_defaults = {
             "deflection":True,
             "stress":True,
-            "natural frequency":True,
+            "natural frequency":False,
             "energy":True,
             "damage":True,
+            "frequency":True
         }
 
         self.simulation_settings_defaults = {
@@ -107,7 +108,7 @@ class Optimizer:
             "allowable_deflection": 50,
             "stress_FOS": 4,
             "allowable_natural_frequency_FOS":1.2,
-            "allowable_disp_to_amplitude_ratio": 1.5,
+            "allowable_amplitude_to_disp_ratio": 1.5,
             "energy_remaining":0.2,
             "mission_count_damage":10000,
         }
@@ -122,6 +123,18 @@ class Optimizer:
             "hub_flange_thickness": (0.7, 12.7),
             "hub_web_thickness": (0.7, 3.175)
         }
+
+        self.design_variables_multipliers = {
+            "arm_diameter": 100,
+            "arm_thickness": 1,
+            "strut_diameter": 100,
+            "strut_thickness": 1,
+            "strut_distance": 1000,
+            "hub_radius": 100,
+            "hub_flange_thickness": 1,
+            "hub_web_thickness": 1
+        }
+
         # Normalize these
         self.design_variables_initial_guess_defaults = {
             "arm_diameter": 29,
@@ -303,7 +316,7 @@ class Optimizer:
         drone_mass = DroneMass(drone_geometry).lumped_mass_frame
 
         return drone_mass
-    def constraint_calculations(self, design_variables, active_constraints):
+    def constraint_calculations(self, design_variables, active_constraints, detailed_output=False):
         constraints = []
         constraint_labels = []
         # arm length calculation
@@ -352,10 +365,12 @@ class Optimizer:
         d1_fea.create_drone_slice_beams()
         d1_fea.boundary_conditions_slice()
 
-        d1_fea.beam_system.add_force(np.array([0, 0, -self.parameters["gravity"] * (self.parameters["payload"] / self.parameters["blade_num"])]), "outer_node")
+        static_force = -self.parameters["gravity"] * (self.parameters["payload"] / self.parameters["blade_num"])
+        d1_fea.beam_system.add_force(np.array([0, 0, static_force]), "outer_node")
         d1_fea.solve_fea()
+        d1_fea.solve_static()
 
-        if active_constraints["deflection"] or active_constraints["stress"]:
+        if active_constraints["deflection"] or active_constraints["stress"] or active_constraints["frequency"]:
             d1_fea.solve_static()
 
         if active_constraints["deflection"]:
@@ -372,20 +387,24 @@ class Optimizer:
             constraint_labels.append("stress")
 
 
-        if active_constraints["energy"] or active_constraints["damage"] or active_constraints["natural frequency"]:
+        if active_constraints["energy"] or active_constraints["damage"] or active_constraints["natural frequency"] or active_constraints["frequency"]:
             def t_y(t):
                 return self.total_force_y(t, drone_mass, drone_geometry.projected_surface_area)
+
             drone_power_module = DronePower(self.parameters["blade_num"], self.battery_system.milliwatt_hours,
                                             t_y, self.energy_calc_timesteps)
             drone_power_module.energy_consumption_calc()
             drone_power_module.throttle_ratio_trans_calc(16)
 
+        freq_forcing_function = 0
+        if active_constraints["natural frequency"] or active_constraints["frequency"]:
+            propeller_RPM = self.parameters["propeller_max_RPM"] * max(drone_power_module.percent_throttle)
+            freq_forcing_function = propeller_RPM * uc.rpm_to_rad_per_s * 2
+
         # Natural frequency constraint
         if active_constraints["natural frequency"]:
             d1_fea.solve_natural_frequencies()
             first_nf = d1_fea.beam_system.natural_frequencies[0]
-            propeller_RPM = self.parameters["propeller_max_RPM"] * max(drone_power_module.percent_throttle)
-            freq_forcing_function = propeller_RPM * uc.rpm_to_rad_per_s * 2
             print("Propeller Freq",freq_forcing_function)
             print("NF:", d1_fea.beam_system.natural_frequencies)
             FOS_nf = first_nf / freq_forcing_function
@@ -394,6 +413,17 @@ class Optimizer:
             constraints.append(nf_constraint)
             constraint_labels.append("natural frequency")
 
+
+        if active_constraints["frequency"]:
+            max_disp = max(d1_fea.beam_system.mag_displacements)
+            d1_fea.beam_system.init_dynamic_forces(freq_forcing_function)
+            d1_fea.beam_system.add_dynamic_harmonic_force(np.array([0,0,static_force,0,0,0]),"outer_node")
+            d1_fea.solve_dynamic_harmonic(0,0)
+            max_amp = max(d1_fea.beam_system.mag_displacements_amplitude)
+            amp_disp_rat = max_amp / max_disp
+            freq_constraint = amp_disp_rat / self.constraints_constants["allowable_amplitude_to_disp_ratio"]
+            constraints.append(freq_constraint)
+            constraint_labels.append("frequency")
 
         if active_constraints["energy"]:
             energy_used = drone_power_module.milliwatt_second_capacity - drone_power_module.energy_remaining[-1]
@@ -434,60 +464,91 @@ class Optimizer:
             constraints.append(damage_constraint)
             constraint_labels.append("damage")
 
+        if detailed_output:
+            # Nodes of intrest
+            strut_node = d1_fea.beam_system.select_node('strut_node')
+            strut_node_top = d1_fea.beam_system.select_node('strut_node_top')
+            outer_node = d1_fea.beam_system.select_node('outer_node')
+            center_node = d1_fea.beam_system.select_node('hub_node_0')
+
+            # Elements of intrest
+            hub_beam_0 = d1_fea.beam_system.select_element('hub_beam_0')
+            strut_top_beam = d1_fea.beam_system.select_element("strut_element_top")
+            outer_beam = d1_fea.beam_system.select_element("outer_beam")
+            center_beam = d1_fea.beam_system.select_element("center_beam")
+
+            strut_disp = d1_fea.beam_system.mag_displacements[strut_node]
+            stress_strut = d1_fea.beam_system.beams[strut_top_beam].bending_stresses_0
+            stress_hub = d1_fea.beam_system.beams[hub_beam_0].bending_stresses_0
+            stress_outer = d1_fea.beam_system.beams[outer_beam].bending_stresses_0
+            print("=== Optimizer Results ===")
+            print(f"Wingspan: {wingspan} mm")
+            print(f"Force: {-self.parameters["gravity"] * (self.parameters["payload"] / self.parameters["blade_num"])} N")
+            print(f"Hub Beam Width: {(2/3) * hub_side_length} mm")
+            print(f"Tip Displacement: {max_disp} mm")
+            print(f"Strut Center Displacement: {strut_disp} mm")
+
+            print(f"Stress Strut: {stress_strut} MPa")
+            print(f"Stress Hub: {stress_hub} MPa")
+            print(f"Stress Outer Beam: {stress_outer} MPa")
+
+            print(f"Tip Displacement Amplitude: {max_amp} mm")
+            print(f"Propeller Frequency {freq_forcing_function} rad/s")
+
         # When done LOG everything, then return constraints
         return np.array(constraints), constraint_labels
 
     def run_opt(self):
-        c_len = sum(self.active_constraints.values())
+        dvm_list = np.array(list(self.design_variables_multipliers.values()))
 
-        x_init = list(self.design_variables_initial_guess.values())
+        c_len = sum(list(self.active_constraints.values()))
+
+        x_init = np.array(list(self.design_variables_initial_guess.values()))
+
+        x_init_norm = x_init / dvm_list
 
         def mass_opt(x):
-            d_v =  {
-                "arm_diameter": x[0],
-                "arm_thickness": x[1],
-                "strut_diameter": x[2],
-                "strut_thickness": x[3],
-                "strut_distance": x[4],
-                "hub_radius": x[5],
-                "hub_flange_thickness": x[6],
-                "hub_web_thickness": x[7],
+            d_v = {
+                "arm_diameter": x[0] * dvm_list[0],
+                "arm_thickness": x[1] * dvm_list[1],
+                "strut_diameter": x[2] * dvm_list[2],
+                "strut_thickness": x[3] * dvm_list[3],
+                "strut_distance": x[4] * dvm_list[4],
+                "hub_radius": x[5] * dvm_list[5],
+                "hub_flange_thickness": x[6] * dvm_list[6],
+                "hub_web_thickness": x[7] * dvm_list[7],
             }
             return self.mass(d_v) * self.simulation_settings["mass_multiplier"]
         def constraint_calculations_opt(x):
+
             d_v =  {
-                "arm_diameter": x[0],
-                "arm_thickness": x[1],
-                "strut_diameter": x[2],
-                "strut_thickness": x[3],
-                "strut_distance": x[4],
-                "hub_radius": x[5],
-                "hub_flange_thickness": x[6],
-                "hub_web_thickness": x[7],
+                "arm_diameter": x[0] * dvm_list[0],
+                "arm_thickness": x[1] * dvm_list[1],
+                "strut_diameter": x[2] * dvm_list[2],
+                "strut_thickness": x[3] * dvm_list[3],
+                "strut_distance": x[4] * dvm_list[4],
+                "hub_radius": x[5] * dvm_list[5],
+                "hub_flange_thickness": x[6] * dvm_list[6],
+                "hub_web_thickness": x[7] * dvm_list[7],
             }
             res, labels = self.constraint_calculations(d_v, self.active_constraints)
             return res
         # Change to be an array of FOS
 
+        # x_i' m(x') c(x') b' -> x_r' => x_r
         consts = (
             scipy.optimize.NonlinearConstraint(constraint_calculations_opt, np.zeros(c_len), np.ones(c_len))
         )
 
-
-        boundaries = [self.boundaries["arm_diameter"],
-                               self.boundaries["arm_thickness"],
-                               self.boundaries["strut_diameter"],
-                               self.boundaries["strut_thickness"],
-                               self.boundaries["strut_distance"],
-                               self.boundaries["hub_radius"],
-                               self.boundaries["hub_flange_thickness"],
-                               self.boundaries["hub_web_thickness"]]
-
-        results = scipy.optimize.minimize(mass_opt, x_init, constraints=consts, bounds=boundaries, method='SLSQP')
+        boundaries = list(self.boundaries.values())
+        boundaries_norm = []
+        for i, bound in enumerate(boundaries):
+            boundaries_norm.append((bound[0] / dvm_list[i], bound[1] / dvm_list[i]))
+        results = scipy.optimize.minimize(mass_opt, x_init_norm, constraints=consts, bounds=boundaries_norm, method='SLSQP')
 
         return results
 
-    def test_results(self, x):
+    def test_results(self, x, detailed_output=False):
 
         d_v = {
             "arm_diameter": x[0],
@@ -499,7 +560,7 @@ class Optimizer:
             "hub_flange_thickness": x[6],
             "hub_web_thickness": x[7],
         }
-        return self.constraint_calculations(d_v, self.active_constraints_defaults)
+        return self.constraint_calculations(d_v, self.active_constraints_defaults,detailed_output=detailed_output)
 
 
 

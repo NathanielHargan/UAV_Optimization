@@ -912,3 +912,742 @@ mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']._Message(JOB_COMPLETED, {
 mdb.models['Model-1'].sections['Arm'].setValues(beamSectionOffset=(0.0, 0.0), 
     poissonRatio=0.0)
 # Save by natha on 2024_11_19-01.51.00; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Drone_Slice'].setValues(space=THREE_D, type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Drone_Slice'].regenerate()
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+mdb.models['Model-1'].sketches['__edit__'].Spot(point=(285.0, 0.0))
+mdb.models['Model-1'].sketches['__edit__'].CoincidentConstraint(addUndoState=
+    False, entity1=mdb.models['Model-1'].sketches['__edit__'].vertices[13], 
+    entity2=mdb.models['Model-1'].sketches['__edit__'].geometry[2])
+mdb.models['Model-1'].sketches['__edit__'].undo()
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    345.0, 80.0))
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    370.0, 65.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    370.0, 65.0))
+mdb.models['Model-1'].sketches['__edit__'].dimensions[0].setValues(textPoint=(
+    370.0, 65.0))
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[0], ))
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].geometry[2], ))
+mdb.models['Model-1'].sketches['__edit__'].Line(point1=(0.0, 0.0), point2=(
+    320.0, 0.0))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(addUndoState=
+    False, entity=mdb.models['Model-1'].sketches['__edit__'].geometry[11])
+mdb.models['Model-1'].sketches['__edit__'].Line(point1=(320.0, 0.0), point2=(
+    660.0, 0.0))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(addUndoState=
+    False, entity=mdb.models['Model-1'].sketches['__edit__'].geometry[12])
+mdb.models['Model-1'].sketches['__edit__'].ParallelConstraint(addUndoState=
+    False, entity1=mdb.models['Model-1'].sketches['__edit__'].geometry[11], 
+    entity2=mdb.models['Model-1'].sketches['__edit__'].geometry[12])
+mdb.models['Model-1'].sketches['__edit__'].ObliqueDimension(textPoint=(
+    212.110656738281, 27.8504333496094), value=200.0, vertex1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[13], vertex2=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[14])
+mdb.models['Model-1'].sketches['__edit__'].HorizontalDimension(textPoint=(
+    343.790954589844, 56.1293334960938), value=500.0, vertex1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[2], vertex2=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[0])
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[1], ))
+# Save by natha on 2025_09_25-12.53.32; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].constraints[6], ))
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].geometry[2], 
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[0], 
+    mdb.models['Model-1'].sketches['__edit__'].constraints[12]))
+mdb.models['Model-1'].sketches['__edit__'].Line(point1=(0.0, 0.0), point2=(
+    345.0, 0.0))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(addUndoState=
+    False, entity=mdb.models['Model-1'].sketches['__edit__'].geometry[11])
+mdb.models['Model-1'].sketches['__edit__'].Line(point1=(345.0, 0.0), point2=(
+    660.0, 0.0))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(addUndoState=
+    False, entity=mdb.models['Model-1'].sketches['__edit__'].geometry[12])
+mdb.models['Model-1'].sketches['__edit__'].ParallelConstraint(addUndoState=
+    False, entity1=mdb.models['Model-1'].sketches['__edit__'].geometry[11], 
+    entity2=mdb.models['Model-1'].sketches['__edit__'].geometry[12])
+mdb.models['Model-1'].sketches['__edit__'].HorizontalDimension(textPoint=(
+    313.667999267578, 33.8489990234375), value=200.0, vertex1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[2], vertex2=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[14])
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[1], 
+    mdb.models['Model-1'].sketches['__edit__'].constraints[11]))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalDimension(textPoint=(
+    652.766357421875, 199.237670898438), value=1127.3, vertex1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[2], vertex2=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[1])
+mdb.models['Model-1'].sketches['__edit__'].ObliqueDimension(textPoint=(
+    665.439208984375, 131.123641967773), value=500.0, vertex1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[2], vertex2=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[0])
+mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].setValues(sketch=
+    mdb.models['Model-1'].sketches['__edit__'])
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[8], points=((
+    401.451659053548, -237.916741262293), (400.0, -240.0), (415.0, -220.0), (
+    420.0, -210.0), (425.0, -205.0), (425.0, -195.0), (430.0, -185.0), (430.0, 
+    -175.0), (435.0, -170.0), (440.0, -160.0), (440.0, -150.0), (445.0, 
+    -150.0), (435.0, -155.0), (430.0, -165.0), (425.0, -170.0), (420.0, 
+    -175.0), (415.0, -180.0), (425.0, -180.0), (430.0, -175.0), (430.0, 
+    -165.0), (430.0, -165.0)))
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[7], points=((
+    401.451659053548, 237.916741262293), (400.0, 240.0), (410.0, 230.0), (
+    415.0, 225.0), (420.0, 215.0), (425.0, 210.0), (430.0, 205.0), (435.0, 
+    195.0), (440.0, 190.0), (440.0, 180.0), (440.0, 175.0)))
+mdb.models['Model-1'].sketches['__edit__'].AngularDimension(line1=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[11], line2=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[10], textPoint=(
+    88.0946044921875, 11.9191379547119), value=22.5)
+mdb.models['Model-1'].sketches['__edit__'].AngularDimension(line1=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[11], line2=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[9], textPoint=(
+    126.019134521484, -33.8756332397461), value=22.5)
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[8], points=((
+    431.412427893639, -165.585046789419), (430.0, -165.0), (425.0, -180.0), (
+    420.0, -185.0), (420.0, -185.0), (425.0, -180.0), (430.0, -175.0), (430.0, 
+    -170.0)))
+mdb.models['Model-1'].sketches['__edit__'].CoincidentConstraint(entity1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[8], entity2=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[9])
+mdb.models['Model-1'].sketches['__edit__'].CoincidentConstraint(entity1=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[7], entity2=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[10])
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[14], points=((200.0, 
+    0.0), (200.0, 0.0), (205.0, -20.0), (205.0, -35.0), (210.0, -45.0), (215.0, 
+    -55.0), (220.0, -50.0), (235.0, -30.0), (265.0, -5.0), (290.0, 15.0), (
+    295.0, 25.0), (305.0, 40.0), (310.0, 45.0), (310.0, 60.0), (315.0, 65.0), (
+    320.0, 75.0), (320.0, 90.0), (320.0, 100.0), (320.0, 110.0)))
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[0], points=((500.0, 
+    0.0), (500.0, 0.0), (525.0, -10.0), (570.0, -15.0), (605.0, -20.0), (670.0, 
+    -20.0), (725.0, -20.0), (760.0, -20.0), (780.0, -20.0), (795.0, -20.0), (
+    805.0, -15.0), (810.0, -15.0)))
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[1], points=((1127.3, 
+    0.0), (1125.0, 0.0), (1125.0, -20.0), (1120.0, -40.0), (1115.0, -50.0), (
+    1115.0, -60.0), (1110.0, -75.0), (1100.0, -90.0), (1100.0, -95.0), (1090.0, 
+    -105.0), (1090.0, -115.0), (1080.0, -125.0), (1080.0, -130.0), (1070.0, 
+    -145.0), (1065.0, -150.0), (1065.0, -150.0), (1070.0, -140.0), (1075.0, 
+    -115.0), (1080.0, -100.0), (1085.0, -80.0), (1095.0, -45.0), (1100.0, 
+    -20.0), (1105.0, -5.0), (1105.0, 5.0), (1105.0, 15.0), (1105.0, 25.0), (
+    1105.0, 20.0)))
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(entity=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[3])
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(entity=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[12])
+mdb.models['Model-1'].sketches['__edit__'].HorizontalConstraint(entity=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[11])
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].geometry[12], points=((
+    244.928436279297, 0.0), (245.0, 0.0), (265.0, -5.0), (280.0, -5.0), (295.0, 
+    -5.0), (320.0, -5.0), (320.0, -10.0), (305.0, -10.0), (285.0, -20.0), (
+    260.0, -20.0), (250.0, -20.0), (245.0, -20.0)))
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[14], points=((200.0, 
+    0.0), (200.0, 0.0), (185.0, -5.0), (175.0, -10.0), (160.0, -15.0), (150.0, 
+    -15.0), (140.0, -20.0), (145.0, -20.0), (165.0, -15.0), (205.0, -5.0), (
+    270.0, 10.0), (330.0, 10.0), (360.0, 10.0), (350.0, 5.0), (320.0, -5.0), (
+    225.0, -20.0), (130.0, -20.0), (60.0, -20.0), (0.0, -15.0), (-5.0, -10.0)))
+mdb.models['Model-1'].sketches['__edit__'].dragEntity(entity=
+    mdb.models['Model-1'].sketches['__edit__'].vertices[0], points=((500.0, 
+    0.0), (500.0, 0.0), (500.0, -20.0), (495.0, -40.0), (495.0, -55.0), (490.0, 
+    -70.0), (490.0, -70.0), (500.0, -55.0), (515.0, -20.0), (520.0, 0.0), (
+    520.0, 15.0), (515.0, 25.0), (515.0, 15.0), (515.0, 5.0), (510.0, -10.0), (
+    505.0, -25.0), (505.0, -30.0)))
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[6], ))
+mdb.models['Model-1'].sketches['__edit__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__edit__'].dimensions[5], ))
+mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].setValues(sketch=
+    mdb.models['Model-1'].sketches['__edit__'])
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.models['Model-1'].HomogeneousSolidSection(material='Aluminum7075', name=
+    'Hub', thickness=None)
+mdb.models['Model-1'].ConstrainedSketch(name='__edit__', objectToCopy=
+    mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'].sketch)
+mdb.models['Model-1'].parts['Drone_Slice'].projectReferencesOntoSketch(filter=
+    COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__edit__'], 
+    upToFeature=mdb.models['Model-1'].parts['Drone_Slice'].features['Wire-1'])
+del mdb.models['Model-1'].sketches['__edit__']
+mdb.models['Model-1'].parts['Drone_Slice'].regenerate()
+del mdb.models['Model-1'].sections['Hub']
+mdb.models['Model-1'].IProfile(b1=79.0, b2=79.0, h=68.0, l=34.0, name=
+    'Profile-3', t1=2.0, t2=2.0, t3=2.0)
+mdb.models['Model-1'].BeamSection(beamSectionOffset=(0.0, 0.0), 
+    consistentMassMatrix=False, integration=DURING_ANALYSIS, material=
+    'Aluminum7075', name='Hub', poissonRatio=0.0, profile='Profile-3', 
+    temperatureVar=LINEAR)
+mdb.models['Model-1'].profiles.changeKey(fromName='Profile-3', toName='Hub')
+mdb.models['Model-1'].profiles['Strut'].setValues(r=14.5, t=2.0)
+mdb.models['Model-1'].Material(name='Carbon Fiber')
+mdb.models['Model-1'].materials['Carbon Fiber'].Elastic(table=((19000.0, 0.3), 
+    ))
+del mdb.models['Model-1'].parts['Drone_Slice'].sectionAssignments[0]
+del mdb.models['Model-1'].parts['Drone_Slice'].sectionAssignments[0]
+mdb.models['Model-1'].parts['Drone_Slice'].Set(edges=
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#10 ]', ), ), name='Set-10')
+mdb.models['Model-1'].parts['Drone_Slice'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Drone_Slice'].sets['Set-10'], sectionName=
+    'Hub', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['Drone_Slice'].Set(edges=
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#6 ]', ), ), name='Set-11')
+mdb.models['Model-1'].parts['Drone_Slice'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Drone_Slice'].sets['Set-11'], sectionName=
+    'Arm', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['Drone_Slice'].Set(edges=
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#9 ]', ), ), name='Set-12')
+mdb.models['Model-1'].parts['Drone_Slice'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Drone_Slice'].sets['Set-12'], sectionName=
+    'Strut', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].sections['Arm'].setValues(beamSectionOffset=(0.0, 0.0), 
+    material='Carbon Fiber', poissonRatio=0.0)
+# Save by natha on 2025_09_25-13.18.14; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.regenerate()
+#* FeatureError: Regeneration failed
+del mdb.models['Model-1'].sections['Hub']
+mdb.models['Model-1'].BeamSection(beamSectionOffset=(0.0, 0.0), 
+    consistentMassMatrix=False, integration=DURING_ANALYSIS, material=
+    'Carbon Fiber', name='HUB_beam', poissonRatio=0.0, profile='Hub', 
+    temperatureVar=LINEAR)
+# Save by natha on 2025_09_25-13.21.26; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].sections['Strut'].setValues(beamSectionOffset=(0.0, 0.0), 
+    material='Carbon Fiber', poissonRatio=0.0)
+mdb.models['Model-1'].parts['Drone_Slice'].regenerate()
+mdb.models['Model-1'].parts['Drone_Slice'].Set(edges=
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#1f ]', ), ), name='Set-13')
+mdb.models['Model-1'].parts['Drone_Slice'].assignBeamSectionOrientation(method=
+    N1_COSINES, n1=(0.0, 0.0, -1.0), region=
+    mdb.models['Model-1'].parts['Drone_Slice'].sets['Set-13'])
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].loads['N100 Force'].setValues(cf3=-55.0, 
+    distributionType=UNIFORM, field='')
+mdb.models['Model-1'].parts['Drone_Slice'].seedEdgeByNumber(constraint=FINER, 
+    edges=mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask(
+    ('[#1f ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, name=
+    'UAV_TEST_MODEL', nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, queue=
+    None, resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', 
+    waitHours=0, waitMinutes=0)
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *NSET, file "UAV_TEST_MODEL.inp", line 19: The following sets/ids do not exist: SET-5', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *NSET, file "UAV_TEST_MODEL.inp", line 23: The following sets/ids do not exist: SET-6', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *BOUNDARY, file "UAV_TEST_MODEL.inp", line 45: Unknown assembly node set ORIGIN', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *BOUNDARY, file "UAV_TEST_MODEL.inp", line 48: Unknown assembly node set SET-5', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *BOUNDARY, file "UAV_TEST_MODEL.inp", line 51: Unknown assembly node set SET-6', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'in keyword *CLOAD, file "UAV_TEST_MODEL.inp", line 57: Unknown assembly set SET-2', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'THIS MODEL HAS EITHER INCORRECT OR NO ELEMENT DEFINITIONS.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ABORTED, {
+    'message': 'Analysis phase failed due to errors', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error - Please see the  UAV_TEST_MODEL.dat file for possible error messages if the file exists.', 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error - Please see the  UAV_TEST_MODEL.dat file for possible error messages if the file exists.', 
+    'jobName': 'UAV_TEST_MODEL'})
+del mdb.models['Model-1'].boundaryConditions['BC-1']
+mdb.models['Model-1'].rootAssembly.DatumCsysByThreePoints(coordSysType=
+    CARTESIAN, line2=(40958.130368, 214728.760736, 0.0), name='Datum csys-4', 
+    origin=(0.0, 0.0, 0.0), point1=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].InterestingPoint(
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].edges[3], 
+    MIDDLE))
+mdb.models['Model-1'].rootAssembly.DatumCsysByThreePoints(coordSysType=
+    CARTESIAN, name='Datum csys-5', origin=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices[4], 
+    point1=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].InterestingPoint(
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].edges[3], 
+    MIDDLE), point2=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices[0])
+del mdb.models['Model-1'].boundaryConditions['Top_Symm']
+mdb.models['Model-1'].XsymmBC(createStepName='Force Apllied 100N', localCsys=
+    mdb.models['Model-1'].rootAssembly.datums[41], name='BC-2', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-6'])
+mdb.models['Model-1'].boundaryConditions.changeKey(fromName='BC-2', toName=
+    'Top Symm')
+# Save by natha on 2025_09_25-13.29.57; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.Set(name='Center', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices.getSequenceFromMask(
+    ('[#20 ]', ), ))
+mdb.models['Model-1'].EncastreBC(createStepName='Force Apllied 100N', 
+    localCsys=None, name='BC-3', region=
+    mdb.models['Model-1'].rootAssembly.sets['Center'])
+mdb.models['Model-1'].parts['Drone_Slice'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['Drone_Slice'].sectionAssignments[0].setValues(
+    sectionName='HUB_beam')
+mdb.models['Model-1'].parts['Drone_Slice'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 9508})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 13:32:26 2025', 'jobName': 'UAV_TEST_MODEL'})
+mdb.models['Model-1'].boundaryConditions.changeKey(fromName='BC-3', toName=
+    'Center')
+mdb.models['Model-1'].profiles['Hub'].setValues(b1=110.0, b2=110.0)
+del mdb.models['Model-1'].rootAssembly.features['Datum csys-2']
+mdb.models['Model-1'].loads.changeKey(fromName='N100 Force', toName='Force')
+del mdb.jobs['UAV_SLICE_ANGLE_CORRECTION']
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 20064})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 13:49:58 2025', 'jobName': 'UAV_TEST_MODEL'})
+mdb.models['Model-1'].parts['Drone_Slice'].Set(edges=
+    mdb.models['Model-1'].parts['Drone_Slice'].edges.getSequenceFromMask((
+    '[#10 ]', ), ), name='Set-15')
+mdb.models['Model-1'].parts['Drone_Slice'].assignBeamSectionOrientation(method=
+    N1_COSINES, n1=(0.0, 1.0, 0.0), region=
+    mdb.models['Model-1'].parts['Drone_Slice'].sets['Set-15'])
+mdb.models['Model-1'].parts['Drone_Slice'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 10224})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 14:08:32 2025', 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 1648})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 14:09:35 2025', 'jobName': 'UAV_TEST_MODEL'})
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'MISES', 'E', 'EE', 'LE', 'U', 'UR', 'RF', 'CF', 'SF', 'NFORCSO', 
+    'ELEDEN'))
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 15148})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 15:49:34 2025', 'jobName': 'UAV_TEST_MODEL'})
+# Save by natha on 2025_09_25-15.58.40; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['Bottom_Symm'].suppress()
+mdb.models['Model-1'].boundaryConditions['Top Symm'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(name='Set-8', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Force Apllied 100N', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=mdb.models['Model-1'].rootAssembly.datums[23], name='BC-4', 
+    region=mdb.models['Model-1'].rootAssembly.sets['Set-8'], u1=0.0, u2=UNSET, 
+    u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-9', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices.getSequenceFromMask(
+    ('[#10 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Force Apllied 100N', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=mdb.models['Model-1'].rootAssembly.datums[41], name='BC-5', 
+    region=mdb.models['Model-1'].rootAssembly.sets['Set-9'], u1=0.0, u2=UNSET, 
+    u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.jobs['UAV_TEST_MODEL'].submit(consistencyChecking=OFF)
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 'handle': 0})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(WARNING, {
+    'message': 'STRAIN OUTPUT REQUEST LE IS NOT VALID FOR SOME ELEMENTS IN THIS ANALYSIS. THIS REQUEST IS SWITCHED TO THE STRAIN MEASURE, E.', 
+    'phase': BATCHPRE_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FILE, {
+    'file': 'C:\\temp\\UAV_TEST_MODEL.odb', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': BATCHPRE_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL', 'clientHost': 'NathanSHargan', 
+    'handle': 24596})
+mdb.jobs['UAV_TEST_MODEL']._Message(STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MEMORY_ESTIMATE, {'memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(PHYSICAL_MEMORY, {
+    'physical_memory': 16109.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(MINIMUM_MEMORY, {'minimum_memory': 17.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(ODB_FRAME, {'step': 0, 'frame': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(STATUS, {'step': 1, 'increment': 1, 
+    'attempts': 1, 'severe': 0, 'equilibrium': 1, 'iterations': 1, 
+    'totalTime': 0.0, 'stepTime': 2.22e-16, 'timeIncrement': 2.22e-16, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(END_STEP, {'stepId': 1, 
+    'phase': STANDARD_PHASE, 'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
+    'message': 'Analysis phase complete', 'phase': STANDARD_PHASE, 
+    'jobName': 'UAV_TEST_MODEL'})
+mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
+    'time': 'Thu Sep 25 16:17:28 2025', 'jobName': 'UAV_TEST_MODEL'})
+# Save by natha on 2025_09_25-16.18.11; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376

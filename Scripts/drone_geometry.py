@@ -44,6 +44,7 @@ class DroneGeometry:
             self.beam_widths[i] = width_at_centroid
 
 
+
         self.outer_nodes_coords = np.zeros([blade_num,3])
         self.strut_nodes_coords = np.zeros([blade_num,3])
         self.strut_centroid_coords = np.zeros([blade_num,3])

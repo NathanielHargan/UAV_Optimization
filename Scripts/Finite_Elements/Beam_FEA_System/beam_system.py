@@ -98,7 +98,7 @@ class BeamSystem:
         self.x_forces_amplitude = np.empty(0)
         self.y_forces_amplitude = np.empty(0)
         self.z_forces_amplitude = np.empty(0)
-
+        self.mag_displacements_amplitude = np.empty(0)
         self.x_moments_ts= np.empty(0)
         self.y_moments_ts = np.empty(0)
         self.z_moments_ts = np.empty(0)
@@ -562,6 +562,8 @@ class BeamSystem:
         self.x_displacements_amplitude = displacement_angle_vector[0::6]
         self.y_displacements_amplitude = displacement_angle_vector[1::6]
         self.z_displacements_amplitude = displacement_angle_vector[2::6]
+
+        self.mag_displacements_amplitude = np.linalg.norm(np.vstack((self.x_displacements_amplitude, self.y_displacements_amplitude, self.z_displacements_amplitude)),axis = 0)
 
         self.x_angles_amplitude = displacement_angle_vector[3::6]
         self.y_angles_amplitude = displacement_angle_vector[4::6]

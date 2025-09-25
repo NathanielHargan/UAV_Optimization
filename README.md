@@ -84,10 +84,21 @@ TO DO 8/14:
 - made hub height a parameter
 
 9/11:
-- Use harmonic solver instead of natural frequency 
-- "allowable_disp_to_amplitude_ratio"
-- U_mag/N
-- Normalize the design variables
-- Test upper and lower bounds on design variables
+- Use harmonic solver instead of natural frequency (done)
+- "allowable_disp_to_amplistude_ratio" (done)
+- U_mag/N (done)
+- Normalize the design variables (done)
+- Test upper and lower bounds on design variables (done)
 - Outline thesis
+  - write constraints in english (write in terms of FOS (1.2))
+- figures
+
+- find abaqus to determine stress state in strut (done
+
+9/25 
+- Check orientation of the hub
+- Test with 8 force model
+- Look into optimizer documentation 
+- Test with differnt algorithms 
+- Move abaqus files into folder
 
