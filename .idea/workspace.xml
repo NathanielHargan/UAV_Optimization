@@ -6,13 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ABQcaeK.00.22232.exception" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotDrone3D.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotDrone3D.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotMass.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotMass.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotProfiles.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.cae" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.cae" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.jnl" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.jnl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.cae" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.jnl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.com" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.inp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.ipm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.msg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.odb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.prt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.sta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/abaqus.rpy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/abaqus_acis.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +42,25 @@
       <list>
         <option value="Python Script" />
         <option value="Python Unit Test" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;NathanielHargan&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NathanielHargan/UAV_Mission.git&quot;,
+    &quot;accountId&quot;: &quot;cc3df61b-fba2-477f-9928-bfe9a4e6975c&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -41,6 +72,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for beam_system_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
@@ -67,6 +99,21 @@
     </key>
   </component>
   <component name="RunManager" selected="Python tests.Python tests in optimization_tests.py">
+    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
@@ -109,36 +156,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="UAV_Mission" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_cantilever_annulus&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for beam_system_tests.MyTestCase.test_center_multidim" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="UAV_Mission" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;beam_system_tests.MyTestCase.test_center_multidim&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -220,10 +237,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests in optimization_tests.py" />
-        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer" />
+        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase" />
         <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" />
+        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer" />
         <item itemvalue="Python tests.Python tests in beam_system_tests.py" />
-        <item itemvalue="Python tests.Python tests for beam_system_tests.MyTestCase.test_center_multidim" />
       </list>
     </recent_temporary>
   </component>
@@ -288,14 +305,14 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py</url>
-          <line>215</line>
-          <option name="timeStamp" value="15" />
+          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
+          <line>331</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>319</line>
-          <option name="timeStamp" value="17" />
+          <line>330</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

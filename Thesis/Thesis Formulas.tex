@@ -1,3 +1,6 @@
+
+
+
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage[a4paper, total={6in, 8in}]{geometry}
@@ -76,8 +79,7 @@
 	
 	\begin{comment}
 		
-	
-		
+
 		1. Introduction
 			a. Overview
 			b. Goals and objectives
@@ -85,13 +87,74 @@
 			d. thesis outline
 		2. Literature Review
 		3. Methodology
-			a. problem formulation
-				i. design 
-				i. constraints
+			a. UAV design
+				i. UAV geometry 
+					a) octocopter, batteries, payload
+						i. free body diagram
+					b) wingspan calculation
+					c) describe drone_geometry module
+				ii. mission profile design
+				`	a) define mission profile segments 
+					b) demonstrate kinematic constraints used
+					c) results
 				
-			b. optimization
-			
+				iii. battery and propeller selection
+				
+			c. finite element model
+				i. description of the UAV segment model
+					a. describe the boundary conditions, materials ect. 
+				ii. beam element formulation
+					a) timeshenko beams
+					b) boundary conditions
+					c) mass matrices
+				iii. solvers
+					a) static 
+						i. outputs stress strain
+							a) stress and stain plots of th UAV given the payload
+					b) dynamic 
+						i. inputs 
+							a) description of the loads
+						ii. outputs amplitude of the response given a force strain, displacement, reactions, ect.
+					c) transient
+						i. input 
+							a) description of the loads
+						ii. outputs reactions and displacements over time. Assumes no damping.
+					iv. Results 
+						
+			d. optimization 
+				a. objective function: mass calculation
+				
+				b. design variables
+					i. figure showing design variable measurements
+					ii. upper and lower bounds 
+				
+				c. constraints
+					i. displacement
+						a) describe force
+						b) static solver
+					ii. stress (treating like black aluminum)
+						a) describe force
+						b) static solver
+					iii. frequency
+						a) constraint formula 	
+						b) describe forcing function 
+						c) dynamic solver
+					iv. damage
+						a) constraint formula 	
+						b) describe forcing function 
+						c) transient solver
+					v. energy
+						a) constraint formula 
+						b) show energy consumption calculation
+				
+				d. results 
+	
+			a) plots of the design space
+			b) show optimized value and compare it to initial
+		5. Summary				
+		6. Conclusions
 		
+	
 		
 	\end{comment}
 	

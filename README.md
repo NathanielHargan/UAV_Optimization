@@ -96,9 +96,49 @@ TO DO 8/14:
 - find abaqus to determine stress state in strut (done
 
 9/25 
-- Check orientation of the hub
+- Check orientation of the hub (done)
 - Test with 8 force model
 - Look into optimizer documentation 
 - Test with differnt algorithms 
 - Move abaqus files into folder
+
+10/2
+Questions:
+How in depth should I get with my specific implmentation in the thesis. Should I talk about how my program works? no.
+
+Change parameters to check results (done)
+  experiments with optimizer (Make stress active) (focus on vehicle)
+Make plots (turn off dark mode) (starting)
+Read thesis (done)
+Move abaqus files into folder (done)
+Look at VT template for latex thesis (grad school site) (done)
+
+10/9:
+
+Todo make deesign variablees active on inactive from input
+Seperate force functions outside
+visualize design space
+Consider using it practically 
+Test the full model no sector 
+Differeentiate symetric and asymmetric modes
+
+To Do:
+
+Plot Design Space 
+  - Check frequency constraint 
+  - Plot frequency as Z
+
+Test the full model
+  - Check natural frequencies 
+
+Allow to set design variables to parameters. 
+
+Start writing FEA section of thesis
+  - Annotate plots in powerpoint
+
+Find Exact Deadline
+  - Create plan for thesis
+
+
+
 

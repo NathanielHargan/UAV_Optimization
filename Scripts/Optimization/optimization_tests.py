@@ -14,12 +14,13 @@ class MyTestCase(unittest.TestCase):
 
         opt.active_constraints = {
             "deflection": True,
-            "stress": False,
+            "stress": True,
             "frequency": True,
             "natural frequency": False,
             "energy": False,
             "damage": False,
         }
+        opt.design_variables_initial_guess["strut_distance"] = 575
         '''
         
         opt.design_variables_initial_guess = {
@@ -33,6 +34,7 @@ class MyTestCase(unittest.TestCase):
             "hub_web_thickness": 10
         }
         '''
+
         res = opt.run_opt()
 
         x = np.array(res.x) * np.array(list(opt.design_variables_multipliers.values()))
@@ -71,7 +73,82 @@ class MyTestCase(unittest.TestCase):
 
         print("Initial guess opt actual:")
         print(res.x)
+        '''
+        NO MULT
+        design variables
+           arm_diameter: 49.99999999999997
+           arm_thickness: 0.3211725866649314
+           strut_diameter: 50.0
+           strut_thickness: 0.3591731107507465
+           strut_distance: 495.21354488405416
+           hub_radius: 100.0
+           hub_flange_thickness: 0.7000000000000001
+           hub_web_thickness: 0.7000000000000022
+        constraints
+           deflection: 0.9999999999985973
+           stress: 0.9568074766549263
+           frequency: 0.27331598356573267
+           energy: 0.3260688812472388
+           damage: 0.0
+        '''
+        # mass: 0.8275629847103303
 
+        '''
+        Starting 600
+        ===== Optimized =====
+            design variables
+               arm_diameter: 50.0
+               arm_thickness: 0.29458154397114766
+               strut_diameter: 49.99999999999961
+               strut_thickness: 0.3462775923814778
+               strut_distance: 598.6565815937422
+               hub_radius: 104.39581041184776
+               hub_flange_thickness: 0.7
+               hub_web_thickness: 0.7
+            constraints
+               deflection: 1.000000497957219
+               stress: 1.0159101537875042
+               frequency: 1.000193766034515
+               energy: 0.3260837080288574
+               damage: 0.0
+            mass w/o payload: 0.8272803134225961 kg
+        '''
+
+        '''
+            RAISED ITER LIMIT
+            ===== Optimized =====
+            design variables
+               arm_diameter: 50.0
+               arm_thickness: 0.2963381407683932
+               strut_diameter: 49.999999999999865
+               strut_thickness: 0.34910466145795416
+               strut_distance: 601.8658063700772
+               hub_radius: 100.0
+               hub_flange_thickness: 0.7000000000000013
+               hub_web_thickness: 0.700000000000012
+            constraints
+               deflection: 1.0000000000000007
+               stress: 1.0131786520729813
+               frequency: 0.9999999999995449
+               energy: 0.32606836206828305
+               damage: 0.0
+            mass w/ payload: 0.8265502599010393 kg
+            OPT_OUTPUT
+            === Optimizer Results ===
+            Wingspan: 1127.3025260953375 mm
+            Force: -55.162406246625004 N
+            Hub Beam Width: 55.22847498307934 mm
+            Tip Displacement: 50.000000000000036 mm
+            Strut Center Displacement: 15.242743721339828 mm
+            Stress Strut: 37.385234634421295 MPa
+            Stress Hub: 62.393099678285 MPa
+            Stress Outer Beam: 50.7078967987886 MPa
+            Tip Displacement Amplitude: 74.99999999996592 mm
+            Propeller Frequency 355.51173598844576 rad/s
+            Initial guess opt actual:
+            [5.00000000e+01 2.96338141e-01 5.00000000e+01 3.49104661e-01
+             6.01865806e+02 1.00000000e+02 7.00000000e-01 7.00000000e-01]
+        '''
 
     def test_bounds(self):
         opt = Optimizer()
@@ -206,8 +283,6 @@ class MyTestCase(unittest.TestCase):
 
         cons, cons_labels = opt.constraint_calculations(dv_test, opt.active_constraints_defaults, True)
 
-        print("Abaqus Results")
-        print()
 
 
 

@@ -83,7 +83,7 @@ class Optimizer:
             "hub_sections":5,
             "transient_timesteps": 1000,
             "energy_timesteps": 1000,
-            "mass_multiplier": 1000
+            "mass_multiplier": 1
         }
 
         self.parameters_defaults = {
@@ -123,7 +123,7 @@ class Optimizer:
             "hub_flange_thickness": (0.7, 12.7),
             "hub_web_thickness": (0.7, 3.175)
         }
-
+        '''
         self.design_variables_multipliers = {
             "arm_diameter": 100,
             "arm_thickness": 1,
@@ -134,7 +134,17 @@ class Optimizer:
             "hub_flange_thickness": 1,
             "hub_web_thickness": 1
         }
-
+        '''
+        self.design_variables_multipliers = {
+            "arm_diameter": 1,
+            "arm_thickness": 1,
+            "strut_diameter": 1,
+            "strut_thickness": 1,
+            "strut_distance": 1,
+            "hub_radius": 1,
+            "hub_flange_thickness": 1,
+            "hub_web_thickness": 1
+        }
         # Normalize these
         self.design_variables_initial_guess_defaults = {
             "arm_diameter": 29,
@@ -154,6 +164,8 @@ class Optimizer:
         self.constraints_constants = self.constraints_constants_defaults.copy()
         self.simulation_settings = self.simulation_settings_defaults.copy()
         self.boundaries = self.boundaries_defaults.copy()
+        self.drone_geometry = 0
+
 
 
 
@@ -495,6 +507,9 @@ class Optimizer:
             print(f"Tip Displacement Amplitude: {max_amp} mm")
             print(f"Propeller Frequency {freq_forcing_function} rad/s")
 
+            self.drone_geometry = drone_geometry
+            self.fea = d1_fea
+
         # When done LOG everything, then return constraints
         return np.array(constraints), constraint_labels
 
@@ -544,7 +559,15 @@ class Optimizer:
         boundaries_norm = []
         for i, bound in enumerate(boundaries):
             boundaries_norm.append((bound[0] / dvm_list[i], bound[1] / dvm_list[i]))
-        results = scipy.optimize.minimize(mass_opt, x_init_norm, constraints=consts, bounds=boundaries_norm, method='SLSQP')
+        results = scipy.optimize.minimize(mass_opt,
+                                          x_init_norm,
+                                          constraints=consts,
+                                          bounds=boundaries_norm,
+                                          method='SLSQP',
+                                          tol=1e-12,
+                                          options={'maxiter': 10000})
+        print(results.message)
+        # scipy.optimize.show_options(solver='minimize',method='SLSQP')
 
         return results
 
@@ -560,8 +583,312 @@ class Optimizer:
             "hub_flange_thickness": x[6],
             "hub_web_thickness": x[7],
         }
-        return self.constraint_calculations(d_v, self.active_constraints_defaults,detailed_output=detailed_output)
+        return self.constraint_calculations(d_v, self.active_constraints_defaults, detailed_output=detailed_output)
 
+'''
+class Opt_Results:
+    def __init__(self, x, para, sim, cons):
+        self.design_variables = {
+            "arm_diameter": x[0],
+            "arm_thickness": x[1],
+            "strut_diameter": x[2],
+            "strut_thickness": x[3],
+            "strut_distance": x[4],
+            "hub_radius": x[5],
+            "hub_flange_thickness": x[6],
+            "hub_web_thickness": x[7],
+        }
+
+        self.simulation_settings = sim
+        self.parameters = para
+        self.constraints_constants = cons
+        self.independent_properties_calc()
+
+        constraints = []
+        # arm length calculation
+        wingspan = (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
+            math.pi / self.parameters["blade_num"])
+
+        arm_inner_diameter = self.design_variables["arm_diameter"] - self.design_variables["arm_thickness"] * 2
+        strut_inner_diameter = self.design_variables["strut_diameter"] - self.design_variables["strut_thickness"] * 2
+        hub_side_length = 2 * self.design_variables["hub_radius"] * math.tan(math.pi / self.parameters["blade_num"])
+
+        arm_beam_properties = BeamType("annulus",
+                                            np.array([self.design_variables["arm_diameter"], arm_inner_diameter]),
+                                            "Carbon Fiber",
+                                            "arm_beam")
+
+        strut_beam_properties = BeamType("annulus",
+                                              np.array([self.design_variables["strut_diameter"],
+                                                        strut_inner_diameter]),
+                                              "Carbon Fiber",
+                                              "strut_beam")
+
+        hub_beam_properties = BeamType("i_beam",
+                                       np.array([hub_side_length,
+                                                 self.parameters["hub_height"] + 2 * self.design_variables[
+                                                     "hub_flange_thickness"],
+                                                 self.design_variables["hub_flange_thickness"],
+                                                 self.design_variables["hub_web_thickness"]]),
+                                       "Carbon Fiber",
+                                       "hub_beam")
+
+        drone_geometry = DroneGeometry("drone",
+                                       wingspan,
+                                       self.design_variables["hub_radius"],
+                                       self.design_variables["strut_distance"],
+                                       self.parameters["blade_num"],
+                                       arm_beam_properties,
+                                       strut_beam_properties,
+                                       hub_beam_properties,
+                                       self.simulation_settings["hub_sections"],
+                                       [self.mass_battery_1, self.mass_battery_2])
+
+        mass_module = DroneMass(drone_geometry)
+        drone_mass = mass_module.total_mass + self.parameters["payload"]
+
+        # FEA
+        d1_fea = DroneFEA(drone_geometry)
+        d1_fea.create_drone_slice_nodes()
+        d1_fea.create_drone_slice_beams()
+        d1_fea.boundary_conditions_slice()
+
+        static_force = -self.parameters["gravity"] * (self.parameters["payload"] / self.parameters["blade_num"])
+        d1_fea.beam_system.add_force(np.array([0, 0, static_force]), "outer_node")
+        d1_fea.solve_fea()
+        d1_fea.solve_static()
+
+        max_disp = max(d1_fea.beam_system.mag_displacements)
+        FOS_disp = self.constraints_constants["allowable_deflection"] / max_disp
+        deflection_constraint = max_disp / self.constraints_constants["allowable_deflection"]
+        constraints.append(deflection_constraint)
+
+        d1_fea.solve_failure()
+        stress_constraint = d1_fea.beam_system.max_failure_crit * self.constraints_constants["stress_FOS"]
+        constraints.append(stress_constraint)
+        def t_y(t):
+            return self.total_force_y(t, drone_mass, drone_geometry.projected_surface_area)
+
+        drone_power_module = DronePower(self.parameters["blade_num"], self.battery_system.milliwatt_hours,
+                                        t_y, self.energy_calc_timesteps)
+        drone_power_module.energy_consumption_calc()
+        drone_power_module.throttle_ratio_trans_calc(16)
+
+        freq_forcing_function = 0
+        propeller_RPM = self.parameters["propeller_max_RPM"] * max(drone_power_module.percent_throttle)
+        freq_forcing_function = propeller_RPM * uc.rpm_to_rad_per_s * 2
+
+        # Natural frequency constraint
+        d1_fea.solve_natural_frequencies()
+        first_nf = d1_fea.beam_system.natural_frequencies[0]
+        print("Propeller Freq", freq_forcing_function)
+        print("NF:", d1_fea.beam_system.natural_frequencies)
+        FOS_nf = first_nf / freq_forcing_function
+        nf_constraint = self.constraints_constants["allowable_natural_frequency_FOS"] / FOS_nf
+
+        constraints.append(nf_constraint)
+
+        max_disp = max(d1_fea.beam_system.mag_displacements)
+        d1_fea.beam_system.init_dynamic_forces(freq_forcing_function)
+        d1_fea.beam_system.add_dynamic_harmonic_force(np.array([0, 0, static_force, 0, 0, 0]), "outer_node")
+        d1_fea.solve_dynamic_harmonic(0, 0)
+        max_amp = max(d1_fea.beam_system.mag_displacements_amplitude)
+        amp_disp_rat = max_amp / max_disp
+        freq_constraint = amp_disp_rat / self.constraints_constants["allowable_amplitude_to_disp_ratio"]
+        constraints.append(freq_constraint)
+
+        energy_used = drone_power_module.milliwatt_second_capacity - drone_power_module.energy_remaining[-1]
+
+        energy_total = drone_power_module.milliwatt_second_capacity
+
+        # Starts at 0 ends at 1
+        energy_used_percent = energy_used / energy_total
+
+        energy_constraint = energy_used_percent + self.constraints_constants["energy_remaining"]
+
+        constraints.append(energy_constraint)
+
+        surface_area = drone_geometry.projected_surface_area
+
+        def f_t(t):
+            return self.force_transient(t, drone_mass, surface_area)
+
+        def f_o_t(t):
+            return np.array(
+                [0, 0, self.force_oscillation_transient(t, drone_power_module, drone_mass, surface_area), 0, 0, 0])
+
+        q = self.total_mission_duration / self.simulation_settings["transient_timesteps"]
+        d1_fea.beam_system.initialize_dynamic_transient(q, self.simulation_settings["transient_timesteps"], 0.25,
+                                                        0.5)
+        d1_fea.beam_system.add_dynamic_transient_force(f_t, "outer_node")
+        d1_fea.beam_system.add_dynamic_transient_force(f_o_t, "outer_node")
+        d1_fea.beam_system.solve_dynamic_transient()
+
+        stress_curve = d1_fea.beam_system.beams[0].bending_stresses_0_ts
+        detector = RF.FourPointDetector(recorder=RF.LoopValueRecorder())
+        detector.process(stress_curve)
+        collective = detector.recorder.collective
+        cl = collective.load_collective
+        damage_per_mission = self.woehler_curve_data_carbon_fiber.fatigue.damage(cl).sum()
+        damage_constraint = damage_per_mission * self.constraints_constants["mission_count_damage"]
+
+        self.fea_model = d1_fea
+        self.drone_geometry = drone_geometry
+        self.mass_module = mass_module
+    def independent_properties_calc(self):
+
+        self.mission_profile = self.mission_profile_calc()
+
+        self.total_mission_duration = self.mission_profile.duration + self.parameters["rev_up_time"] + self.parameters["rev_down_time"]
+
+        self.battery_system = BatterySystem("Tattu 40000mAh 6S 10C 22.8V High Voltage UAV Lipo Battery Pack with AS150+AS150",
+            self.parameters["battery_mah"],
+            self.parameters["battery_volts"],
+            2)
+
+        self.energy_calc_timesteps = np.linspace(0, self.total_mission_duration, self.simulation_settings["energy_timesteps"])
+
+        self.completely_reversed_stress_amplitude = 1466 * (2 * 1e6) ** (-0.143)
+
+        self.woehler_curve_data_carbon_fiber = pd.Series({
+                'SD': self.completely_reversed_stress_amplitude,
+                'ND': 1e6,
+                'k_1': -0.143
+        }) # Data soon
+
+        self.mass_battery_1 = Battery(self.parameters["battery_mass"],
+                                      np.array([0, 86.75, -50]),
+                                      self.parameters["battery_dimensions"])
+
+        self.mass_battery_2 = Battery(self.parameters["battery_mass"],
+                                      np.array([0, -86.75, -50]),
+                                      self.parameters["battery_dimensions"])
+
+
+
+    def mission_profile_calc(self): 
+        m1 = MissionProfileLinearAcc("profile")
+
+        m1.add_segment(15, "Takeoff")
+        m1.add_segment(10, "Climb1")
+        m1.add_segment(10, "Climb2")
+        m1.add_segment(25, "cruise1")
+        m1.add_segment(25, "cruise2")
+        m1.add_segment(10, "decent1")
+        m1.add_segment(10, "decent2")
+        m1.add_segment(15, "land")
+
+        # Takeoff
+        m1.add_constraint(0, "x", 0)
+        m1.add_constraint(0, "y", 0)
+        m1.add_constraint(0, "vx", 0)
+        m1.add_constraint(0, "vy", 0)
+        m1.add_constraint(0, "ax", 0)
+        m1.add_constraint(0, "ay", 0)
+
+        # Cruise
+        m1.add_constraint(550000, "x", 3)
+        m1.add_constraint(100000, "y", 3)
+        m1.add_constraint(0, "ax", 3)
+        m1.add_constraint(0, "vy", 3)
+        m1.add_constraint(1250000, "x", 4)
+        m1.add_constraint(105000, "y", 4)
+        m1.add_constraint(2000000, "x", 5)
+        m1.add_constraint(0, "ax", 5)
+        m1.add_constraint(110000, "y", 5)
+        m1.add_constraint(0, "vy", 5)
+
+        # Decent
+        m1.add_constraint(2400000, "x", 8)
+        m1.add_constraint(0, "y", 8)
+        m1.add_constraint(0, "vx", 8)
+        m1.add_constraint(0, "vy", 8)
+        m1.add_constraint(0, "ax", 8)
+        m1.add_constraint(0, "ay", 8)
+
+        m1.solve_kinematics()
+
+        return m1
+
+    def force_oscillation_transient(self, t, dpm, m, sa):
+            Returns a oscillating force describing the vibration from the propeller.
+            args:
+                t: time (s)
+                dpm: drone power module (see drone_power_module.py)
+
+            returns:
+                a scalar force (N)
+
+        return math.sin(dpm.freq_calc(self.parameters["propeller_max_RPM"], 16, t) * t) * self.force_transient(t, m, sa)[2] * 0.01
+
+    def total_force_y(self, t, m, sa):
+        return self.force_transient(t, m, sa)[2] * 8
+
+    def force_transient(self, t, m, sa):
+            forces applied to the drone to follow the mission profile.
+            args:
+                t: time (s)
+                sa: surface area (mm^2)
+                m: mass (Mg)
+
+            returns:
+                a numpy array describing force [x, y, z, mxx, myy, mzz] (N / N*mm)
+        # sa = surface_area
+        lift_thrust = m / self.parameters["blade_num"]
+        rev_time = self.parameters["rev_up_time"]
+        if t < rev_time:
+            return np.array([0, 0, (t / rev_time) * lift_thrust, 0, 0, 0])
+        elif t < rev_time + self.mission_profile.duration:
+            # Calculate force per propeller
+            p, v, a = self.mission_profile.time_solve(t - rev_time)
+            return np.array([0, 0, np.sign(v[1]) * (v[1] ** 2) * sa * self.parameters["air_density"] * self.parameters["drag_coeff"] + (
+                        a[1] + self.parameters["gravity"]) * m / self.parameters["blade_num"], 0, 0, 0])
+        else:
+            return np.array([0, 0, lift_thrust - ((t - rev_time - self.mission_profile.duration) / rev_time) * (lift_thrust), 0, 0, 0])
+
+
+    def mass(self, design_variables):
+        wingspan = (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
+            math.pi / self.parameters["blade_num"])
+
+        arm_inner_diameter = design_variables["arm_diameter"] - design_variables["arm_thickness"] * 2
+        strut_inner_diameter = design_variables["strut_diameter"] - design_variables["strut_thickness"] * 2
+        hub_side_length = 2 * design_variables["hub_radius"] * math.tan(math.pi / self.parameters["blade_num"])
+
+        arm_beam_properties = BeamType("annulus",
+                                       [design_variables["arm_diameter"], arm_inner_diameter],
+                                       "Carbon Fiber",
+                                       "arm_beam")
+
+        strut_beam_properties = BeamType("annulus",
+                                         [design_variables["strut_diameter"],
+                                          strut_inner_diameter],
+                                         "Carbon Fiber",
+                                         "strut_beam")
+
+        hub_beam_properties = BeamType("i_beam",
+                                       [hub_side_length * (2 / 3),
+                                        self.parameters["hub_height"] + 2 * design_variables["hub_flange_thickness"],
+                                        design_variables["hub_flange_thickness"],
+                                        design_variables["hub_web_thickness"]],
+                                       "Carbon Fiber",
+                                       "hub_beam")
+
+        drone_geometry = DroneGeometry("drone",
+                                       wingspan,
+                                       design_variables["hub_radius"],
+                                       design_variables["strut_distance"],
+                                       self.parameters["blade_num"],
+                                       arm_beam_properties,
+                                       strut_beam_properties,
+                                       hub_beam_properties,
+                                       self.simulation_settings["hub_sections"],
+                                       [self.mass_battery_1, self.mass_battery_2])
+
+        drone_mass = DroneMass(drone_geometry).lumped_mass_frame
+
+        return drone_mass
+'''
 
 
 
