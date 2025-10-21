@@ -125,19 +125,42 @@ Differeentiate symetric and asymmetric modes
 To Do:
 
 Plot Design Space 
-  - Check frequency constraint 
-  - Plot frequency as Z
+  - Check frequency constraint (done)
+  - Plot frequency as Z (done)
 
-Test the full model
+Test the full model (done)
   - Check natural frequencies 
 
-Allow to set design variables to parameters. 
+Allow to set design variables to parameters. (done)
 
 Start writing FEA section of thesis
   - Annotate plots in powerpoint
 
 Find Exact Deadline
   - Create plan for thesis
+
+Thesis Deadline
+  10/23 (Finish FEA section)
+  10/29 (Finish Drone Geometry section)
+  11/6 (Finish Main content)
+  11/14 (Results)
+  11/21 (Finish thesis draft)
+  11/28 (Revision)
+  12/1/25 (Finish thesis final draft)
+  12/3/25 (Minimum)
+
+To Do:
+  Save opt object to file
+  Make CSV files for results
+  Dataframes for results
+  Change name of frequncy constraint on plots 
+  Use different line styles
+  
+  Test points around solution to test sensitivity 
+
+Refine outline 
+
+
 
 
 

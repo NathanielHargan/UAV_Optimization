@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Line3DCollection
-
+from matplotlib.lines import Line2D
 
 def drone_geometry(drone):
     ax = plt.figure().add_subplot(projection='3d')
@@ -388,5 +388,124 @@ def drone_geometry_stress_transverse_shear(drone, m, q):
     plt.show()
 
 
+def design_space_mass(opt, design_variable_x, design_variable_y, sample_num, design_variables=None, x_var_bounds=None, y_var_bounds=None, active_constraints=None):
+    # opt is opt object
+    # constraints is an array of booleans
+    if x_var_bounds is None:
+        x_var_bounds = opt.boundaries[design_variable_x]
+    if  y_var_bounds is None:
+        y_var_bounds = opt.boundaries[design_variable_y]
+
+    x_space = np.linspace(x_var_bounds[0], x_var_bounds[1], sample_num)
+    y_space = np.linspace(y_var_bounds[0], y_var_bounds[1], sample_num)
+
+    if design_variables is None:
+        design_variables = opt.design_variables_initial_guess
+
+    if active_constraints is None:
+        active_constraints = opt.active_constraints_defaults
+
+    cons_num = sum(1 for value in active_constraints.values() if value == True)
+
+    constraints_map = np.zeros((sample_num, sample_num, cons_num))
+    var_map = np.zeros((sample_num, sample_num))
+    labels = []
+
+    for x_i, x in enumerate(x_space):
+        for y_i, y in enumerate(y_space):
+            design_variables[design_variable_x] = x
+            design_variables[design_variable_y] = y
+            constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints)
+            constraints_map[x_i, y_i] = constraints_res
+            var_map[x_i, y_i] = opt.mass(design_variables) * 1000
+            
+    plt.figure(figsize=(10, 10))
+
+    img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[1], y_var_bounds[0]])
+    cbar = plt.colorbar(img)
+
+    # Set custom tick labels
+    cbar.set_ticks(np.linspace(np.min(var_map), np.max(var_map), num=5))
+
+    cbar.set_label('Mass (kg)')
+
+    colors = ['r', 'g', 'b', 'y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
+    lvls = np.array([0.95, 1, 1.05])
+    contours = []
+    for i in range(cons_num):
+        contours.append(plt.contour(x_space, y_space, constraints_map[:, :, i], levels=lvls, colors=colors[i]))
+
+    for i in range(cons_num):
+        plt.clabel(contours[i], lvls, inline=True, fontsize=8, fmt='%1.3f')
+        plt.gca().set_aspect('auto', adjustable='box')
+
+    legend_elements = []
+    for i in range(cons_num):
+        legend_elements.append(Line2D([0], [0], lw=2, label=labels[i], color=colors[i]))
+
+    # Add the legend to the plot
+    plt.legend(handles=legend_elements, loc='upper right')
 
 
+def design_space_freq(opt, design_variable_x, design_variable_y, sample_num, design_variables=None, x_var_bounds=None,
+                      y_var_bounds=None, active_constraints=None):
+    # opt is opt object
+    # constraints is an array of booleans
+    if x_var_bounds is None:
+        x_var_bounds = opt.boundaries[design_variable_x]
+    if y_var_bounds is None:
+        y_var_bounds = opt.boundaries[design_variable_y]
+
+    x_space = np.linspace(x_var_bounds[0], x_var_bounds[1], sample_num)
+    y_space = np.linspace(y_var_bounds[0], y_var_bounds[1], sample_num)
+
+    if design_variables is None:
+        design_variables = opt.design_variables_initial_guess
+
+    if active_constraints is None:
+        active_constraints = opt.active_constraints_defaults
+
+    cons_num = sum(1 for value in active_constraints.values() if value == True)
+
+    constraints_map = np.zeros((sample_num, sample_num, cons_num))
+    var_map = np.zeros((sample_num, sample_num))
+    labels = []
+
+    for x_i, x in enumerate(x_space):
+        for y_i, y in enumerate(y_space):
+            design_variables[design_variable_x] = x
+            design_variables[design_variable_y] = y
+            constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints, True)
+            constraints_map[x_i, y_i] = constraints_res
+            var_map[x_i, y_i] = opt.max_amp
+
+    plt.figure(figsize=(10, 10))
+
+    img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[1], y_var_bounds[0]],
+                     norm=mpl.colors.LogNorm(vmin=var_map.min(), vmax=var_map.max()))
+
+    cbar = plt.colorbar(img)
+
+    # Set custom tick labels
+    cbar.set_ticks(np.logspace(np.log10(var_map.min()), np.log10(var_map.max()), num=5))
+
+    cbar.set_label('Amplitude (mm)')
+
+    colors = ['r', 'g', 'b', 'y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
+    lvls = np.array([0.95, 1, 1.05])
+    contours = []
+    for i in range(cons_num):
+        contours.append(plt.contour(x_space, y_space, constraints_map[:, :, i], levels=lvls, colors=colors[i]))
+
+    for i in range(cons_num):
+        plt.clabel(contours[i], lvls, inline=True, fontsize=8, fmt='%1.3f')
+        plt.gca().set_aspect('auto', adjustable='box')
+
+    legend_elements = []
+    for i in range(cons_num):
+        legend_elements.append(Line2D([0], [0], lw=2, label=labels[i], color=colors[i]))
+
+    # Add the legend to the plot
+    plt.legend(handles=legend_elements, loc='upper right')

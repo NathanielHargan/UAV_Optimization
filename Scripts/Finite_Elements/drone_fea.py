@@ -96,12 +96,7 @@ class DroneFEA:
         self.beam_system.add_boundary_condition(0, "theta x", self.final_hub_node_name)
 
 
-    def create_drone_nodes(self, nominal_rad, strut_pos, blade_num):
-        self.nominal_rad = nominal_rad
-        self.strut_pos = strut_pos
-        self.blade_num = blade_num
-        num = 0
-
+    def create_drone_nodes(self):
         # Origin
         self.beam_system.add_node(
             np.array([0,
@@ -109,53 +104,71 @@ class DroneFEA:
             0]),
             'origin')
 
-        # Rotational Symmetry Nodes
-        for theta in np.linspace(0, 2*math.pi*(blade_num-1)/blade_num, num=blade_num):
-            # Adds the node where the blades are
-            self.beam_system.add_node(
-                np.array([math.cos(theta) * nominal_rad,
-                math.sin(theta) * nominal_rad,
-                0]),
-                'outer_node_' + str(num))
+        for i in range(self.geometry.blade_num):
+            for j in range(1, self.hub_sections+1):
+                hub_node_name = 'hub_node_' + str(j) + '_' + str(i)
+                self.beam_system.add_node(self.geometry.hub_nodes_coords[i, j], hub_node_name)
 
-            # Adds the node the struts connect to
-            self.beam_system.add_node(
-                np.array([math.cos(theta) * strut_pos,
-                math.sin(theta) * strut_pos,
-                0]),
-                "strut_node_" + str(num))
-            num += 1
+            self.beam_system.add_node(self.geometry.strut_nodes_coords[i], f'strut_node_{i}')
+            self.beam_system.add_node(self.geometry.outer_nodes_coords[i], f'outer_node_{i}')
 
-    def create_drone_beams(self, arm_beam, strut_beam):
+
+    def create_drone_beams(self):
+        arm_beam = self.geometry.arm_beam
+        strut_beam = self.geometry.strut_beam
+
         # Adding Beams
-        for i in range(0, self.blade_num):
+        for i in range(0, self.geometry.blade_num):
             # Outer to Strut
             self.beam_system.add_beam(
                 arm_beam,
-                "outer_node_" + str(i),
-                "strut_node_" + str(i),
+                f'strut_node_{i}',
+                f'outer_node_{i}',
                 [0, 0, 1])
 
             # Strut to Hub
             self.beam_system.add_beam(
                 arm_beam,
                 "strut_node_" + str(i),
-                "origin",
+                'hub_node_' + str(self.hub_sections) + '_' + str(i),
                 [0, 0, 1])
+
+            parameters = self.hub_beam.cross_section_parameters
+            parameters[0] = self.geometry.beam_widths[0]
+            hub_beam_type = BeamType(self.hub_beam.cross_section, parameters, self.hub_beam.material,
+                                     self.hub_beam.name)
+
+            self.beam_system.add_beam(
+                hub_beam_type,
+                "origin",
+                'hub_node_1_' + str(i),
+                [0, 0, 1])
+
+            for j in range(self.hub_sections-1):
+                parameters = self.hub_beam.cross_section_parameters
+                parameters[0] = self.geometry.beam_widths[j+1]
+                hub_beam_type = BeamType(self.hub_beam.cross_section, parameters, self.hub_beam.material,
+                                         self.hub_beam.name)
+                self.beam_system.add_beam(
+                    hub_beam_type,
+                    'hub_node_' + str(j+1) + '_' + str(i),
+                    'hub_node_' + str(j+2) + '_' + str(i),
+                    [0, 0, 1])
+
 
         # Final to 0
         self.beam_system.add_beam(
             strut_beam,
-            "strut_node_" + str(self.blade_num-1),
+            "strut_node_" + str(self.geometry.blade_num-1),
             "strut_node_0",
             [0, 0, 1])
 
-        for i in range(0,  self.blade_num-1):
+        for i in range(0,  self.geometry.blade_num-1):
             # Strut to Strut
             self.beam_system.add_beam(
                 strut_beam,
-                "strut_node_" + str(i),
-                "strut_node_" + str(i+1),
+                f'strut_node_{i}',
+                f'strut_node_{i+1}',
                 [0, 0, 1])
 
     def rotate_drone_nodes(self, x, y, z):

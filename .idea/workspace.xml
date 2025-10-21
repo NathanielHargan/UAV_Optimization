@@ -6,31 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ABQcaeK.00.22232.exception" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotDrone3D.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotDrone3D.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotMass.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotMass.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotProfiles.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abaqus Model/UAV_Nathaniel_Hargan.cae" beforeDir="false" afterPath="$PROJECT_DIR$/Abaqus Model/UAV_Nathaniel_Hargan.cae" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abaqus Model/UAV_Nathaniel_Hargan.jnl" beforeDir="false" afterPath="$PROJECT_DIR$/Abaqus Model/UAV_Nathaniel_Hargan.jnl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.synctex.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis Formulas.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis Formulas.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.cae" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_Nathaniel_Hargan.jnl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.com" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.inp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.ipm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.odb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.prt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_SLICE_ANGLE_CORRECTION.sta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/abaqus.rpy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/abaqus_acis.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/visualization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.out" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.toc" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UAV_Optimize.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Optimize.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,14 +83,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Desktop\UAV_Mission" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Optimization" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Finite_Elements" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Mission_Profile" />
       <recent name="C:\Desktop\UAV_Mission\old" />
-      <recent name="C:\Desktop\UAV_Mission\Scripts\Mass_Analysis" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in optimization_tests.py">
+  <component name="RunManager" selected="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase">
     <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
@@ -236,9 +228,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests in optimization_tests.py" />
         <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase" />
         <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" />
+        <item itemvalue="Python tests.Python tests in optimization_tests.py" />
         <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer" />
         <item itemvalue="Python tests.Python tests in beam_system_tests.py" />
       </list>
@@ -305,14 +297,9 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>331</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>330</line>
-          <option name="timeStamp" value="19" />
+          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

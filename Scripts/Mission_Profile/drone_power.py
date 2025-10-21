@@ -26,6 +26,7 @@ class DronePower:
 
     def thrust_to_power(self, thrust):
         # (thrust,power): (10kg,1kW)/8 , (50kg, 6kW)/8 , (80kg, 13kW)/8
+        # Cite this from project
 
         thrust_mass_per_blade_kg = uc.N_to_kgf * thrust / self.blade_num  # N => (N / (mm/s^2)) * (1000 mm/m) = kg
         power_kilowatts_per_blade = (0.01238 * thrust_mass_per_blade_kg ** 2 + 0.03214 * thrust_mass_per_blade_kg + 0.06548)

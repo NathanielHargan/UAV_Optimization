@@ -11,16 +11,24 @@
 \contentsline {section}{\numberline {3.3}UAV Batteries}{6}{section.3.3}%
 \contentsline {chapter}{\numberline {4}Finite Element Analysis}{7}{chapter.4}%
 \contentsline {section}{\numberline {4.1}UAV Segment Model}{7}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Beam Element Formulation}{7}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Solvers}{7}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Static}{7}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Dynamic}{7}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Transient}{7}{subsection.4.3.3}%
-\contentsline {chapter}{\numberline {5}Results}{8}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusions}{9}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Summary}{10}{chapter.7}%
-\contentsline {chapter}{Appendices}{11}{section*.4}%
-\contentsline {chapter}{Appendix \numberline {A}First Appendix}{12}{appendix.a.A}%
-\contentsline {section}{\numberline {A.1}Section one}{12}{section.a.A.1}%
-\contentsline {section}{\numberline {A.2}Section two}{13}{section.a.A.2}%
-\contentsline {chapter}{Appendix \numberline {B}Second Appendix}{15}{appendix.a.B}%
+\contentsline {section}{\numberline {4.2}Beam Element Formulation}{8}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Solvers}{8}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Static}{8}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Dynamic}{8}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Transient}{8}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Optimization}{8}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Objective Function and Design Variables}{11}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Constraints}{11}{subsection.4.4.2}%
+\contentsline {subsubsection}{Displacement}{11}{section*.4}%
+\contentsline {subsubsection}{Stress}{11}{section*.5}%
+\contentsline {subsubsection}{Frequency}{11}{section*.6}%
+\contentsline {subsubsection}{Damage}{11}{section*.7}%
+\contentsline {subsubsection}{Energy}{12}{section*.8}%
+\contentsline {chapter}{\numberline {5}Results}{13}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusions}{14}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Summary}{15}{chapter.7}%
+\contentsline {chapter}{Appendices}{16}{section*.9}%
+\contentsline {chapter}{Appendix \numberline {A}First Appendix}{17}{appendix.a.A}%
+\contentsline {section}{\numberline {A.1}Section one}{17}{section.a.A.1}%
+\contentsline {section}{\numberline {A.2}Section two}{19}{section.a.A.2}%
+\contentsline {chapter}{Appendix \numberline {B}Second Appendix}{21}{appendix.a.B}%

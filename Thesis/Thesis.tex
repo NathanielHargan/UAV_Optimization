@@ -111,16 +111,32 @@
 	
 	
 	\chapter{Finite Element Analysis} \label{ch:fea}
-	
+		In order for the optimization algorithm to run repeatedly, a finite element beam model was created. The finite element solver is based on a Timeshenko beam theory. This formulation accounts for transverse shear deformation, which is important when analyzing beams with a short cross-section. 
+		
+		 
 	\section{UAV Segment Model} \label{se:seg_model}
+		The FEA model is a single slice of the UAV with symmetric constraints at the midpoints of the strut beams. This allows for faster analysis, and ignores the asymmetric modes, which were analyzed separately. Each beam is defined as an annular cross section. The hub is represented as a series of repeatedly narrowing I-beam cross sections. Each hub beam is labeled "hub_beam_x." The number of hub sections is arbitrary and is increased until the solution converges.  Attached to the hub is an annular arm section that spans the hub to the point where the strut and the hub connect. This is connected two annular strut beams. The boundary conditions at the beam midpoints are assigned a local coordinate system symmetric across the cross-section of the beam. Finally, an annular arm beam spans from the point where the strut and arm meet to the outer node. The center node has an en castre boundary condition applied, which fixes it in displacement and rotation. 
+		
+		
+		[include figure]
+		
 	
 	\section{Beam Element Formulation} \label{se:beam_element_form}
-	
+		Each beam element is a Timeshenko beam. This beam model takes shear deformation effects into account.
+		The mass for each beam is modeled as a 3D lumped mass matrix.
+		
+		 
+		
+		
 	\section{Solvers} \label{se:solvers}
+		The FEA model has three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
 	\subsection{Static} \label{ss:static}
+		The static solver takes an input of a point loads at given points. The static solver outputs the bending stresses and strains experienced by the beams.
 	\subsection{Dynamic} \label{ss:dynamic}
+		[source]
+		The dynamic solve requires a 
 	\subsection{Transient} \label{ss:transient}
-	
+		[source]
 	\section{Optimization} \label{se:optimization}
 		The problem is formulated as follows:
 		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
@@ -232,7 +248,7 @@
 	
 \end{document}
 
-	\begin{comment}
+\begin{comment}
 	
 	
 	1. Introduction
@@ -308,7 +324,6 @@
 	b) show optimized value and compare it to initial
 	5. Summary				
 	6. Conclusions
-	
 	
 	
 \end{comment}

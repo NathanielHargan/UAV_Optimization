@@ -1651,3 +1651,23 @@ mdb.jobs['UAV_TEST_MODEL']._Message(COMPLETED, {
 mdb.jobs['UAV_TEST_MODEL']._Message(JOB_COMPLETED, {
     'time': 'Thu Sep 25 16:17:28 2025', 'jobName': 'UAV_TEST_MODEL'})
 # Save by natha on 2025_09_25-16.18.11; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376
+from part import *
+from material import *
+from section import *
+from optimization import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.Set(name='Set-10', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Drone_Slice-1'].vertices.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].ZasymmBC(createStepName='Force Apllied 100N', localCsys=
+    None, name='BC-6', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-10'])
+# Save by natha on 2025_10_09-18.28.43; build 2024.HF3 2024_05_20-11.43.19 RELr426 191376

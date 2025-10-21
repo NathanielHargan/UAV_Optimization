@@ -37,7 +37,7 @@ class MyTestCase(unittest.TestCase):
 
         res = opt.run_opt()
 
-        x = np.array(res.x) * np.array(list(opt.design_variables_multipliers.values()))
+        x = np.array(res.x)
 
         cons_res_opt, cons_labels_opt = opt.test_results(x)
 
