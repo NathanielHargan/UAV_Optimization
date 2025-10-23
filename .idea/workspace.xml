@@ -5,22 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
-      <change afterPath="$PROJECT_DIR$/Thesis/Tables/Sensitivity_Testing.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotDrone3D.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotDrone3D.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/visualization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lof" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lof" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lot" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.out" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FBD.drawio" beforeDir="false" afterPath="$PROJECT_DIR$/FBD.drawio" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.toc" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.toc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

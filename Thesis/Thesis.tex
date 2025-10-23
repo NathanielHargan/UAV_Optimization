@@ -229,13 +229,13 @@
 			- Stress Amplitude
 			- calculated from the local displacment in each element
 		- Strain Amplitude
-			- calculated from the local displacment in each elemen
+			- calculated from the local displacment in each element
 			- Natural Frequency
 	\subsection{Transient} \label{ss:transient}
 		- Inputs
 			Function describing a force at a given time
 		- Uses Newmark inteegration to calculate resulting transient displacements and reactions
-		- The transient stress is obtained from the transient 
+		- The transient stress is obtained from the transient displacements and reactions
 	\section{Optimization} \label{se:optimization}
 		The problem is formulated as follows:
 		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
@@ -274,7 +274,7 @@
 			\item $d_{allowable}$: Deflection allowable
 			\item $\sigma_{allowable}$: Stress allowable from bending 
 			\item $R_{allowable}$: Allowable amplitude displacement ratio
-			\item $n_{missions} $: numbr of missions before damage
+			\item $n_{missions} $: number of missions before damage
 		\end{itemize}
 		
 		Constraints: \\
@@ -322,24 +322,34 @@
 	\subsection{Constraints} \label{ss:consts}
 	
 	\subsubsection{Displacement} \label{sss:displacement}
-		- The static solver as used to calculate the displacement
-		- 1/8 of the mass of the frame  was modelled as a point load at the end of the UAV arm pointing upward while the center of the UAV is fixed 
+		- 1/8 of the mass of the frame and playload was modelled as a point load at the end of the UAV arm pointing upward while the center of the UAV is fixed
+		- The static solver as used to calculate the maximum displacement magnitude.
 		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{tip} \le d_{allowable} $$
 	\subsubsection{Stress} \label{sss:stress}
-		- Similarly, for the stess caclualtion the 
+		- The stress calculation is the same method as the displacement calculation.
+		- The allowable stress is deteermined by the maximum stress of the material and a factor of safety. 
 		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{max} \le \sigma_{allowable} $$
 	\subsubsection{Frequency} \label{sss:frquency}
-	
-	
+		- The goal of the frequency constraint is to make sure that the frequency experienced by the propeller is not near the natural frequency of the vehicle 
+		- The dynamic solver is used. 
+		- A frequency of 2 * the rad/s of the propeller is used as the propeller has 2 blades.   
+		- A force of 1 Neewton is input  at the tip of the UAV bladd
+			[frequency plot]
 		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \frac{f_{amp}}{d_{tip}} \le R_{allowable} $$
 	\subsubsection{Damage} \label{sss:damage}
 	
-		Thie mission profile with a rev up and rev down time of 5 seconds was added to the mission profile. 
+	
+		- Mission profile with 5s rev up rev down
+		- Osciallating force based on propeller freequency 
+		- [figurree of oscillating stress]
+		- Raincounting
 	
 	 	- "mission_count_damage":10000,
 		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = D * n_{missions} \le 1 $$
 	\subsubsection{Energy} \label{sss:energy}
-		
+		- Mission profile
+		- Power to trust calcualtion
+		- Battery capacity
 		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{total} \le 0.8 $$
 	
 	
@@ -348,8 +358,9 @@
 	
 	
 	\chapter{Results} \label{ch:results}
-		- The initial guess	were based off of measurement of the orginial UAV design. 
-		- arm_diameter, strut diamter, and 
+		- The initial guess	were based off of measurements from the original UAV design. 
+		- arm_diameter, strut diameter, hub radius, flange thickness, and web thickness were all found to converge to boundary conditions
+		
 	
 		initial_guess = {
 			"arm_diameter": 50.0,
@@ -379,6 +390,8 @@
 		damage: 0.0
 		mass w/ payload: 0.8250115057269486 kg
 		
+		-Sensitivity analysis 
+			- The value of the design variables which did not converge to the boundary conditions were varied by +-0.1\% of thier values to test the optimal solution.   
 			\begin{table}[htb]
 								\centering
 								\caption{}
@@ -390,6 +403,7 @@
 			\end{table}
 	% \chapter{Discussion} \label{ch:discussion}
 	\chapter{Conclusions} \label{ch:conclusions}
+	
 	\chapter{Summary} \label{ch:summary}
 	
 	% This is the standard bibtex file. Do not include the .bib extension in <bib_file_name>.
