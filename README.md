@@ -151,12 +151,12 @@ Thesis Deadline
 
 To Do:
   Save opt object to file
-  Make CSV files for results
-  Dataframes for results
-  Change name of frequncy constraint on plots 
+  Make CSV files for results (done)
+  Dataframes for results (done)
+  Change name of frequncy constraint on plots (done)
   Use different line styles
   
-  Test points around solution to test sensitivity 
+  Test points around solution to test sensitivity (done))
 
 Refine outline 
 

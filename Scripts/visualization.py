@@ -27,7 +27,7 @@ def drone_geometry_deformation(drone, m, q):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    plt.title("UAV Deformation")
+    plt.title("UAV Slice Deformation")
 
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
@@ -98,7 +98,7 @@ def drone_geometry_stress(drone, m, q):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    plt.title("UAV Bending Stress")
+    plt.title("UAV Slice Bending Stress")
 
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
@@ -172,7 +172,7 @@ def drone_geometry_strain(drone, m, q):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    plt.title("UAV Bending Strain")
+    plt.title("UAV Slice Bending Strain")
 
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
@@ -246,7 +246,7 @@ def drone_geometry_strain_transverse_shear(drone, m, q):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    plt.title("UAV Transverse Shear Strain")
+    plt.title("UAV Slice Transverse Shear Strain")
 
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
@@ -493,7 +493,7 @@ def design_space_freq(opt, design_variable_x, design_variable_y, sample_num, des
 
     cbar.set_label('Amplitude (mm)')
 
-    colors = ['r', 'g', 'b', 'y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
+    colors = ['y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
     lvls = np.array([0.95, 1, 1.05])
     contours = []
     for i in range(cons_num):
@@ -509,3 +509,22 @@ def design_space_freq(opt, design_variable_x, design_variable_y, sample_num, des
 
     # Add the legend to the plot
     plt.legend(handles=legend_elements, loc='upper right')
+
+
+def plot_drone_geometry(drone):
+    ax = plt.figure(figsize=(15, 15)).add_subplot(projection='3d')
+    ax.set_xlim([-1000, 1000])
+    ax.set_ylim([-1000, 1000])
+    ax.set_zlim([-5, 5])
+    drone_geo = drone.beam_system
+    node_loc = []
+    for i in range(len(drone_geo.nodes)):
+        node_loc.append(drone_geo.nodes[i].location)
+    # ax.scatter(node_loc[:][0] + drone_geo.x_displacements,
+    #           node_loc[:][1] + drone_geo.y_displacements,
+    #           node_loc[:][2] + drone_geo.z_displacements)
+
+    for beam in drone_geo.beams:
+        ax.plot([beam.start_node.location[0], beam.end_node.location[0]],
+                [beam.start_node.location[1], beam.end_node.location[1]],
+                [beam.start_node.location[2], beam.end_node.location[2]], color='k')

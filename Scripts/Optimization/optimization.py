@@ -129,7 +129,7 @@ class Optimizer:
             "arm_thickness": (0.254, 3.175),
             "strut_diameter": (9, 50),
             "strut_thickness": (0.254, 3.175),
-            "strut_distance": (400, 1500),
+            "strut_distance": (400, 1127.3),
             "hub_radius": (100, 400),
             "hub_flange_thickness": (0.7, 12.7),
             "hub_web_thickness": (0.7, 3.175)
@@ -447,7 +447,7 @@ class Optimizer:
             amp_disp_rat = max_amp / max_disp
             freq_constraint = amp_disp_rat / self.constraints_constants["allowable_amplitude_to_disp_ratio"]
             constraints.append(freq_constraint)
-            constraint_labels.append("frequency")
+            constraint_labels.append("displacement amplitude")
 
         if active_constraints["energy"]:
             energy_used = drone_power_module.milliwatt_second_capacity - drone_power_module.energy_remaining[-1]
@@ -520,9 +520,12 @@ class Optimizer:
                 print(f"Tip Displacement Amplitude: {max_amp} mm")
                 print(f"Propeller Frequency {freq_forcing_function} rad/s")
 
+
             self.drone_geometry = drone_geometry
             self.fea = d1_fea
             self.max_amp = max_amp
+
+
 
         # When done LOG everything, then return constraints
         return np.array(constraints), constraint_labels
