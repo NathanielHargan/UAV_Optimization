@@ -160,8 +160,31 @@ To Do:
 
 Refine outline 
 
+- Talk about the specific implementation of the UAV FEA
+  - Archetecture dont rederive 
+  - 
+  - 564 citation (article)
+  - make sure it is reeproducable
+  - Pngs tables
+  - Color tables
+  - Highlight Sector model
+  - Addreess fact that I can not fit battery in reality 
+  - mass + I1 + I2 + I3
 
-
+- Date 10/30
+  - Find justification for mission profile numbers
+  - rand's document (dp 10 to red line and back)
+  - Maximum: 12m/s Limit Cruise speed
+  - 5600m ( distance across palisades fire)
+  - Cite nyt and google earth
+  - 100m treetop height
+  - 1360ft (414.528) https://apps.nationalmap.gov/viewer/
+  - https://www.arcgis.com/home/item.html?id=ba0631e5417f4c5f8c02a834d121bd81
+  - cite the email
+  - cite nick's thesis for orginal UAV design
+  - Sample points for displacement constraint to validate solution 
+  - mass + I1 + I2 + I3
+  - Switch to overleaf
 
 
 

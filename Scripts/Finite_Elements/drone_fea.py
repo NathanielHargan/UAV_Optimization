@@ -95,7 +95,6 @@ class DroneFEA:
         self.beam_system.add_boundary_condition(0, "theta z", self.final_hub_node_name)
         self.beam_system.add_boundary_condition(0, "theta x", self.final_hub_node_name)
 
-
     def create_drone_nodes(self):
         # Origin
         self.beam_system.add_node(
@@ -111,7 +110,6 @@ class DroneFEA:
 
             self.beam_system.add_node(self.geometry.strut_nodes_coords[i], f'strut_node_{i}')
             self.beam_system.add_node(self.geometry.outer_nodes_coords[i], f'outer_node_{i}')
-
 
     def create_drone_beams(self):
         arm_beam = self.geometry.arm_beam

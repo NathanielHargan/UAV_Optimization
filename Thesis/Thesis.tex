@@ -12,7 +12,7 @@
 %
 %In addition to the standard formatting options, the following options are defined for the VTthesis class: proposal, prelim, doublespace, draft. 
 
-\documentclass[doublespace,draft,nopageskip]{VTthesis} % nopageskip - Removes arbitrary blank pages.
+\documentclass[doublespace,nopageskip]{VTthesis} % nopageskip - Removes arbitrary blank pages.
 %Remove "draft" from \documentclass to remove draft watermark and to display figures you've created.
 
 % Using the following header instead will create a draft copy of your thesis
@@ -79,7 +79,7 @@
 	
 	% sample text for abbreviations:
 	NLP is a field of computer science, artificial intelligence, and linguistics concerned with the interactions between computers and human (natural) languages.
-	
+	 
 	\nomenclature{NLP}{Natural Language Processing}
 	
 	$\sigma$ is the eighteenth letter of the Greek alphabet, and carries the 's' sound. In the system of Greek numerals, it has a value of 200. 
@@ -91,24 +91,84 @@
 	
 	%now go ahead and start writing your thesis
 	\chapter{Introduction} \label{ch:introduction}
-	\lipsum[1]
 	
 	%Copy/paste the code below to add sections and subsections to each chapter. Add your own text to the chapter and (sub)section labels to create custom headings.          
 	\section{One Section} \label{se:one_section}
-	\lipsum[2]
 	\subsection{A sub-section} \label{ss:this_subsection}
-	\lipsum[1-4]
 	\section{Another Section} \label{se:another_section}
-	\lipsum[1-2]
 	
 	\chapter{Review of Literature} \label{ch:lit_review}
 	
 	\chapter{UAV Design} \label{ch:uav_design}
 	\section{UAV Geometry} \label{se:uav_geo}
+		% General design
+		The UAV is modeled as a simplified octocopter frame. [Talk about original UAV design??? [reference???]] The UAV geometry is shown in figure \ref{fig:arm} - figure \ref{fig:hub} with the UAV frame components highlighted. The frame model contains 3 components: the arms, the struts, and the hubs. The arms and struts are both beams with annular cross sections.The hub is two octagonal plates connected with a web shown in figure \ref{fig:hubsec}. The hub model is an simplification, as it can not fit the entire battery within the bounds of hub. Further work can be done to create a more detailed model. 
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/arm.png}
+			\caption{Optimized UAV Model with Highlighted Arm}
+			\label{fig:arm}
+		\end{figure}
+			
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/strut.png}
+			\caption{Optimized UAV Model with Highlighted Strut} 
+			\label{fig:strut}
+		\end{figure}
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/hub.png}
+			\caption{Optimized UAV Model with Highlighted Strut} 
+			\label{fig:hub}
+		\end{figure}
+		
+		\begin{figure}[htb]
+			\centering
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.8]{Images/hubtop.png}
+				\caption{Top View} 
+				\label{fig:hubsectop}
+			\end{subfigure}
+			
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.8]{Images/hubsectioniso.png}
+				\caption{Isometric View} 
+				\label{fig:hubseciso}
+			\end{subfigure}
+			\caption{Optimized UAV Model Hub Cross-section View}
+			\label{fig:main_figure}
+		\end{figure}
+		
+		
+		% Dimensions and Design variables
+		The hub has 3 design variables, the web thickness, the circumscribed hub radius, and the thickness of the plates.  Figure [ref] shows the design variables is[figure showing DVs] The hub height is a parameter set to 64mm as to fit the with UAV battery. [citation needed] 
+		% # https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoqN5rYTguPKErrR2RGJXuesTt9UqwIoJ9aieuGaF-ipxM2Kz1VW
+		
+		The arm beams span from the faces of hub to the wingspan. The design variables are thickness and radius. The wingspan is 1127.3mm. It is the minimum length required to fit all 8 propellers with a radius of [440mm??] and a propeller spacing of 25mm.  
+		
+		The strut beams have 3 design variables, thickness, radius, and, the distance from the hub center to the arm end. Strut deign variables are shown in figure [XYZ fig]. 
+		
+		The UAV carries a payload of 45kg. All frame components are made from carbon fiber with material properties shown in table [ref XYZ]. [DO I CITE EMAIL? CITATION NEEDED]
+		   
+		From these design variables relevant cross-section properties are calculated.
+		
+		The drone batteries are also have a mass of [mass] and dimensions of [dimension]
+		
+		
+il		% My architecture
+		The DroneGeometry class within the UAV{\_}Geometry module stores relevant design variables for a drone geometry. The relevant coordinates for hub, arm, and struts are calculated. The projected surface area for drag calculation a drone geometry is calculated using the calc{\_}projected{\_}surfac{\_}area method. [talk about this in detail later]
+		
+	
+		\begin{comment}
 		- The UAV is modeled as a simplified version of a UAV frame 
 
 		
-		- Talk about the breifly original UAV design (I do not know where to find this)
+		[Talk about the briefly original UAV design (I do not know where to find this)
 		
 		- Frame designed from 3 components
 			- Arms
@@ -135,80 +195,96 @@
 		- Cross Section Properties
 			- Table of the relevant cross section properties
 		
-			- Arm length is assumed to be the minimum allowable length that allows for 50mm of spacing betweeen propellers.
+			- Arm length is assumed to be the minimum allowable length that allows for 50mm of spacing between propellers.
 		 	 
 		
 		- Hub height is determined to be 64mm to allow for clearance of the battery. [battery source]
 		
+		\end{comment}
 	
 		
 	
 	\section{Mission Profile} \label{se:mission_profile}
-		= Thee goal of the mission is to go dow
-		- Mission profile is broken into segments
-			- climb
-			- 
-		- methodology used to create the mission profile
-			- The objective was to create a mission profile to describe a potential UAV mission with continuous position, velocity and acceleration 
-			- Constraints are set up on the position velocity and acceleration at the nodes between mission profile segments
-			- a matrix of kinematic equations are used to determine the position and acceleration at the nodes 
-				- [reference book]
-			- between mission segments nodes the position, velocity, and acceleration are interpolated using a cubic hermite spline
-				- [reference]
+		% mission profile general
+		A model of the mission profile was created to describe a potential mission with continuous position, velocity, and acceleration with respect to time. The mission profile is modeled as a series of mission profile segments. Constraints are put on the position, velocity, and acceleration at the nodes between mission profile segments. The remaining values at the nodes are calculated using basic kinematic equations. At values of time between mission segment nodes, the position, velocity, and acceleration are interpolated using cubic Hermite splines. [citation needed] Acceleration changes linearly with respect to time. 
+		
+		% The mission profile 
+		The mission profile has an initial takeoff period, a climb to an 100 meter altitude, a cruise period where the UAV travels 2000 meters downrange and increases in altitude 10 meters. Then the UAV descends for 20 seconds and then lands. The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied. 
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/XvY.png}
+			\caption{Downrange Position vs. Altitude}
+			\label{fig:xvy}
+		\end{figure}
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/YposvT.png}
+			\caption{Altitude vs. Time} 
+			\label{fig:yvt}
+		\end{figure}
+		
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/XposVT.png}
+			\caption{Downrange position vs. Time} 
+			\label{fig:xvt}
+		\end{figure}
+		
+
+		\begin{table}[htb]
+			\centering
+			\caption{Mission Profile Constraints} 
+			\includegraphics[scale=0.8]{Tables/profcons.png}
+			\label{tab:profcons}
+		\end{table}
+		
+		% My specific Architecture
+		Mission profiles are generated with a mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic matrix function. The MissionProfile contains a list of constraints added by the add{\_}constraint method, and a list of segment durations added by the add{\_}segment method. It also contains the solve{\_}kinematics and time{\_}solve method. The solve{\_}kinamatics method assembles matrixes generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The time{\_}solve method uses a cubic Hermite spline to find interpolate values at a given time. 
+		
+		
+		
 			
 	\section{UAV Batteries} \label{se:batteeries}
-		https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoo89wjweOS5x2-_3PrUxTjnsa3qDuCLy9eYPu2Dz_ErwfbAG77_
-		"battery_mass": 4.292e-3,
 		
-		"battery_dimensions": np.array([260.5, 123.5, 63.5]),
+		% https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoo89wjweOS5x2-_3PrUxTjnsa3qDuCLy9eYPu2Dz_ErwfbAG77_
+		% "battery_mass": 4.292e-3,
 		
-		"battery_volts": 22.8,
+		% "battery_dimensions": np.array([260.5, 123.5, 63.5]),
+		 
+		% "battery_volts": 22.8,
 		
-		"battery_mah": 40000
+		% "battery_mah": 40000
 		
+
+	
+	
 	\chapter{Finite Element Analysis} \label{ch:fea}
 		
- 
-		- A finite eleement model was creeated in python 
-			- the reasoning being that it can be run repeatedly so that it can be run repeatedly and quickly by the optimization algorithm 
-		- The FEA model uses a timeshenko beam model for increased accuracy
-			- Timeshenko beam model takes shear deformation into account
-		 
-	\section{UAV Segment Model} \label{se:seg_model}
-		- The FEA model is a single slice of the UAV.
-		- symmetric constraints at the midpoints of the strut beams. 
-			- This means that only symmetric frequncy modes are considered.
-			- Asymmeetric modes can be considered in a seperate analysis by crating asymmetrical boundary conditions.  
-		- Each beam is defined as an annular cross section.
-		- The hub is represented as a series of repeated I-beam cross sections.
-			- The width of the cross section is calculate to be the centroid of the trapezoidal section of the octogonal hub being modeeled by the I beam
- 	
+		A finite element model was create to be run repeatedly by the optimization algorithm. 
+
+	
 		
 		
+	\section{Beam Element Formulation} \label{se:beam_element_form}
+	
+		% Description	
 		
-		[include figure]
+		Beams are modeled as timeshenko beams elements with 12 degrees of freedom [citation needed?]. This beam model takes shear deformation effects into account. The mass for each beam is modeled as a 3D lumped mass matrix. Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts. 
+		
+		% Architecture
 		
 	
-	\section{Beam Element Formulation} \label{se:beam_element_form}
-		
-		
-		- Each beam element is a Timeshenko beam. This beam model takes shear deformation effects into account.
-		
-		
-		- The mass for each beam is modeled as a 3D lumped mass matrix.
-		
-		- Boundary Conditions
-			- Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts can be set
-		
-		
-		
-		 
 		
 		
 	\section{Solvers} \label{se:solvers}
 		
 		An FEA model was crated with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
+		
 	\subsection{Static} \label{ss:static}
+	
+		The static solver uses point loads to 
 		- Inputs
 			- Point Loads
 		- Outputs 
@@ -234,8 +310,35 @@
 	\subsection{Transient} \label{ss:transient}
 		- Inputs
 			Function describing a force at a given time
-		- Uses Newmark inteegration to calculate resulting transient displacements and reactions
+		- Uses Newmark integration to calculate resulting transient displacements and reactions
 		- The transient stress is obtained from the transient displacements and reactions
+	
+	
+	\section{UAV Segment Model} \label{se:seg_model}
+	
+	% Description
+	A FEA model of single slice of the UAV frame was created. There are symmetric constraints at the midpoints of the strut beams. The center of the UAV is fixed in all 6 degrees of freedom. This assumes that the modes of frequency are symmetric. [maybe write about an asymmetric frequency model if I do that analysis] The arm and struts have an annular cross section. The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the FEA model is the width at the centroid of the corresponding trapezoidal area of the hub.
+
+	
+	\begin{comment}
+		
+		- The FEA model is a single slice of the UAV.
+		-
+		- This means that only symmetric frequncy modes are considered.
+		- Asymmetric modes can be considered in a seperate analysis by crating asymmetrical boundary conditions.  
+		- Each beam is defined as an annular cross section.
+		- 
+		- The width of the cross section is calculate to be the centroid of the trapezoidal section of the octogonal hub being modeeled by the I beam
+		
+		
+		
+		
+		[include figure]
+	\end{comment}
+	
+	% Archetcture
+	The UAV segment model is generated in the DroneFEA class within the drone{\_}fea module. This module requires a DroneGeometry object as input. A BeamSystem object is generated to perform the FEA analysis. The nodes are generated using the create{\_}drone{\_}slice{\_}node method which adds nodes to the BeamSystem object. The  create{\_}drone{\_}slice{\_}beams method calculates the hub section parameters and adds the beams to the BeamSystem object. The boundary{\_}conditions{\_}slice method applies the boundary conditions to the beam model.  
+	
 	\section{Optimization} \label{se:optimization}
 		The problem is formulated as follows:
 		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
@@ -306,14 +409,14 @@
 		$$ 400\text{mm} ≤ d_s ≤ 1127.3\text{mm} $$
 		$$ 100\text{mm} ≤ h_l ≤ 1127.3\text{mm} $$
 		
-		"arm_diameter": (9, 50),
-		"arm_thickness": (0.254, 3.175),
-		"strut_diameter": (9, 50),
-		"strut_thickness": (0.254, 3.175),
-		"strut_distance": (400, 1127.3),
-		"hub_radius": (100, 400),
-		"hub_flange_thickness": (0.7, 12.7),
-		"hub_web_thickness": (0.7, 3.175)
+		% "arm_diameter": (9, 50),
+		% "arm_thickness": (0.254, 3.175),
+		% "strut_diameter": (9, 50),
+		% "strut_thickness": (0.254, 3.175),
+		% "strut_distance": (400, 1127.3),
+		% "hub_radius": (100, 400),
+		% "hub_flange_thickness": (0.7, 12.7),
+		% "hub_web_thickness": (0.7, 3.175)
 		
 		- Optimization algorithm used is SLSQP method using scipi's minimization function.
 		   
@@ -344,7 +447,7 @@
 		- [figurree of oscillating stress]
 		- Raincounting
 	
-	 	- "mission_count_damage":10000,
+	 	% - "mission_count_damage":10000,
 		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = D * n_{missions} \le 1 $$
 	\subsubsection{Energy} \label{sss:energy}
 		- Mission profile
@@ -359,20 +462,20 @@
 	
 	\chapter{Results} \label{ch:results}
 		- The initial guess	were based off of measurements from the original UAV design. 
-		- arm_diameter, strut diameter, hub radius, flange thickness, and web thickness were all found to converge to boundary conditions
+		- arm diameter, strut diameter, hub radius, flange thickness, and web thickness were all found to converge to boundary conditions
 		
 	
-		initial_guess = {
-			"arm_diameter": 50.0,
-			"arm_thickness": 0.6,
-			"strut_diameter": 50.0,
-			"strut_thickness": 0.6,
-			"strut_distance": 425,
-			"hub_radius": 100.0,
-			"hub_flange_thickness": 0.7,
-			"hub_web_thickness": 0.7
-		}	
-	
+		% initial_guess = {
+		%	"arm_diameter": 50.0,
+		%	"arm_thickness": 0.6,
+		%	"strut_diameter": 50.0,
+		%	"strut_thickness": 0.6,
+		%	"strut_distance": 425,
+		%	"hub_radius": 100.0,
+		%	"hub_flange_thickness": 0.7,
+		%	"hub_web_thickness": 0.7
+		% }	
+		\begin{comment}
 		design variables
 		arm_diameter: 50.0
 		arm_thickness: 0.30233957405287726
@@ -389,6 +492,8 @@
 		energy: 0.3260612162830091
 		damage: 0.0
 		mass w/ payload: 0.8250115057269486 kg
+		
+		\end{comment}
 		
 		-Sensitivity analysis 
 			- The value of the design variables which did not converge to the boundary conditions were varied by +-0.1\% of thier values to test the optimal solution.   

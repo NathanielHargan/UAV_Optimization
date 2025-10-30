@@ -237,13 +237,13 @@ class Optimizer:
         m1.add_constraint(550000, "x", 3)
         m1.add_constraint(100000, "y", 3)
         m1.add_constraint(0, "ax", 3)
-        m1.add_constraint(0, "vy", 3)
+        m1.add_constraint(0, "ay", 3)
         m1.add_constraint(1250000, "x", 4)
         m1.add_constraint(105000, "y", 4)
         m1.add_constraint(2000000, "x", 5)
         m1.add_constraint(0, "ax", 5)
         m1.add_constraint(110000, "y", 5)
-        m1.add_constraint(0, "vy", 5)
+        m1.add_constraint(0, "ay", 5)
 
         # Decent
         m1.add_constraint(2400000, "x", 8)
