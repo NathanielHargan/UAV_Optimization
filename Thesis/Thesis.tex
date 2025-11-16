@@ -22,6 +22,7 @@
 \usepackage{lipsum}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{siunitx}
 
 % Title of your thesis
 \title{Optimization of a UAV for Wildfire Management}
@@ -209,25 +210,27 @@ il		% My architecture
 		A model of the mission profile was created to describe a potential mission with continuous position, velocity, and acceleration with respect to time. The mission profile is modeled as a series of mission profile segments. Constraints are put on the position, velocity, and acceleration at the nodes between mission profile segments. The remaining values at the nodes are calculated using basic kinematic equations. At values of time between mission segment nodes, the position, velocity, and acceleration are interpolated using cubic Hermite splines. [citation needed] Acceleration changes linearly with respect to time. 
 		
 		% The mission profile 
-		The mission profile has an initial takeoff period, a climb to an 100 meter altitude, a cruise period where the UAV travels 2000 meters downrange and increases in altitude 10 meters. Then the UAV descends for 20 seconds and then lands. The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied. 
+		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timeesteps were set so that maximum x-velocity to be under 12m/s. [cite nick thesis?]
+	
+		The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied. 
 		
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/XvY.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/XvY.png}
 			\caption{Downrange Position vs. Altitude}
 			\label{fig:xvy}
 		\end{figure}
 		
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/YposvT.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/YposvT.png}
 			\caption{Altitude vs. Time} 
 			\label{fig:yvt}
 		\end{figure}
 		
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/XposVT.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/XposVT.png}
 			\caption{Downrange position vs. Time} 
 			\label{fig:xvt}
 		\end{figure}
@@ -236,17 +239,37 @@ il		% My architecture
 		\begin{table}[htb]
 			\centering
 			\caption{Mission Profile Constraints} 
-			\includegraphics[scale=0.8]{Tables/profcons.png}
+			\includegraphics[scale=0.5]{Tables/profcons.png}
 			\label{tab:profcons}
 		\end{table}
 		
 		% My specific Architecture
 		Mission profiles are generated with a mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic matrix function. The MissionProfile contains a list of constraints added by the add{\_}constraint method, and a list of segment durations added by the add{\_}segment method. It also contains the solve{\_}kinematics and time{\_}solve method. The solve{\_}kinamatics method assembles matrixes generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The time{\_}solve method uses a cubic Hermite spline to find interpolate values at a given time. 
 		
+	\subsection{Thrust Calculation}\label{ss:thrust}
 		
+		A calculation of the thrust profile is required in order to preform the power and fatigue analysis. 
 		
-			
-	\section{UAV Batteries} \label{se:batteeries}
+		The thrust equation over the duration of the mission profile is shown below. Both the acceleration and drag forces are considered.  		
+		
+		$$ F_\text{thrust}(t)= +-v(t)^2 * s_a * \rho * c_d + (a(t) + g) * m $$ \label{eq:thrust}
+		
+		The v(t) and a(t) represent the velocity and acceleration of the mission profile at given point in time. 
+		
+		$s_a$ is an estimate of the surface area of UAV. This is obtained by summing the projected surface of every beam and hub segment with the projected surface area of the two batteries. It is a function of thee design variables.
+		
+		$\rho = 1.2250\unit{\kilogram\per\meter\cubed}$ is the air density. $c_d = 0.256$ is the drag coefficient. [How to justify?] $g = 9.8066\unit{\meter\second\squared}$ was used for the gravity constant. 
+		
+		The mass is estimated as the sum of 45kg payload, the mass of the frame, and the mass of the two batteries.
+		
+		To simulate the pre-liftoff, and post-landing period, a rev up and rev down period were added to the thrust forcing function. This was modeled as a linear increasing force with respect to time up until the force required for take off for the rev up period. The rev down period was modeled as a linearly decreasing force until no force is applied. A duration of 5 seconds was selected for both periods.  
+		
+		[include plot of thrust function] 
+		
+	
+	
+	\section{UAV Power} \label{se:batteeries}
+
 		
 		% https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoo89wjweOS5x2-_3PrUxTjnsa3qDuCLy9eYPu2Dz_ErwfbAG77_
 		% "battery_mass": 4.292e-3,
@@ -257,36 +280,108 @@ il		% My architecture
 		
 		% "battery_mah": 40000
 		
+		
+		A model of the drone power system was developed to describe the power demand of the vehicle throughout the mission. The trust at a given time is converted to power based on experimental data. [CITE] This is interpolated as a quadratic function. This allows the power draw to be calculated at any point during the mission. The power over the thrust profile is integrated over time to obtain energy  consumeed. [Cite? Has anyone else done this? Idk?]
+		
+		Equation \ref{eq:t_to_p} shows the resulting thrust to power requirement. 
+		
+		
+		$$  P(t) = 0.01238T(t) ^ 2 + 0.03214T(t) + 0.06548  $$ \label{eq:t_to_p} 
+		
+		[plot of power]
+		
+		The batteries in the design are two "Tattu 40000mAh 6S 10C 22.8V High Voltage UAV Lipo Battery Pack with AS150+AS150 Plug" [I don't know how to format this]
+		They have 40000mah and supply 22.8 volts of power.   
+		
+		% 
+		The percent throttle function is calculated as a power required divided by the power required for maximum throttle. P_{max} is 16 kW. [According to what? Cite paper? Justification pleas?] 
+		
+		$$ T_{percent}(t)=P(t)/P_{max}  $$ \label{eq:Percent_throttle} 
+		
+		[plot of percent throttle]
+		
+		
+		% Archetecture. 
+		Power calculations are done with the DronePower class within the drone{\_}power module. The class takes battery data, the thrust profile, and a timestep as inputs to calculate the consumed energy and power consumption over the duration of the mission.  The integral of the power is calculated using scipy.integrate.cumulative{\_}trapezoid to find the energy consumed.
+	
+	\subsection{Oscillation Calculation}\label{ss:oscillation}
+	
+		For the transient damage analysis a model of oscillations caused by propeller perturbations was also required. This as modeled as a force over time. The desired function is a sinusoidal wave with a frequency matching the propeller frequency. The amplitude was estimated to be 1\% of the thrust. Equation \ref{eq:thr} shows the completed equation for the perturbation forcing function. \omega_{max} is the maximum angular velocity of the propeller.
+		
+		$$F_\text{perturbation}(t)=0.01sin(\omega_{max}T_{percent}(t)t)F_\text{thrust}(t)$$ \label{eq:thr}
+		
+		
+		[ Plot of perturbation graph?]
 
 	
 	
 	\chapter{Finite Element Analysis} \label{ch:fea}
 		
-		A finite element model was create to be run repeatedly by the optimization algorithm. 
-
-	
+		% Description
+		A finite element model was created to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easiy adapted for different frame models
+		
+		- Describe the matrix assembly process? (mass a stiffneess)
+		
+		% Archetecture - All modules
+		The finite element model is divided into several different modules. The beam{\_}system module contains the BeamSystem class. The beam{\_}type module contains BeamType class which stores beam cross section and material definitions. The beam{\_}element module contains information about each beam element in the BeamElement class. The node module contains the Node class. 
+		
+		A material property dictionary is stored in matrial{\_}properties module. Cross section properties are calculated using functions in the cross{\_}section{\_}properties module.
+		
+		% Archetecture - The Heirachy 
+		The BeamSystem class contains list of BeamElement objects and a list of Node objects. The BeamElement object. Each BeamElement object references a BeamType object. The BeamType object stores the material properties retrieved from the material{\_}module. The cross section porperties are calculated for a given cross section using functions within the cross{\_}section{\_}properties module.
+		
+		% Archetecture - BeamSystem class
+		Nodes are added using the add{\_}node method in the BeamSystem class. The nodes contain a single position in the global coordinate system. 
+		
+		Beam elements are added to the BeamSystem class using the add{\_}beam method. The add{\_}beam method requires a refrence to a start and an end node, a BeamType object and a k node to determine the orientation of the beam's cross-section. 
+		
+		The boundary conditions are added with the add{\_}boundary{\_}condition method. The method requires the value of the boundary condition, the boundary condition type (x, y z, x rotation, ect.), and node reference here the boundary condition is applied. 
+		
+		The solve{\_}FEA method solves the stiffness and mass matrixes for the given system. The solve{\_}static, solve{\_}dynamic{\_}harmonic, and solve{\_}transient methods find the solution for given forces.   
 		
 		
 	\section{Beam Element Formulation} \label{se:beam_element_form}
 	
 		% Description	
 		
-		Beams are modeled as timeshenko beams elements with 12 degrees of freedom [citation needed?]. This beam model takes shear deformation effects into account. The mass for each beam is modeled as a 3D lumped mass matrix. Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts. 
+		Beams are modeled as timeshenko beams elements with 12 degrees of freedom [citation needed?]. This beam model takes shear deformation effects into account. The mass for each beam is modeled as a 3D lumped mass matrix.
 		
-		% Architecture
+		- More detail on mass matrix (it includes rotations)
 		
+		 Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts. 
+		
+		Stresses and strains are calculated using the formula ??? [cite presentation]
+		
+		% Archetecture - BeamElement class
+		Each beam element within the beam system is associated with a BeamElement object. The local stiffness and mass matrices are calculated with the solve{\_}stiffness{\_}matrix method. 
+		
+		% Archetecture - BeamElement class
+		 Intrmediate values for displacments are found using the return{\_}shape{\_}functions, return{\_}shape{\_}functions{\_}dynamic, and return{\_}shape{\_}functions{\_}dynamic method. Intermediate values of stress and strain are found using the stress{\_}strain{\_}shape{\_}function method.  
 	
+		\subsection{Beam Element Stress} \label{ss:seg_model}
 		
+		[Discuss the strss shape function meethod?] [Cite the lecture idk]
+		
+		Beam element failure is calculated for each element. The stress shape function for the beam is calculated and the maximum stress state between the starting node and the ending node of each element is found. Then the maximum between the two nodes is the maximum stress.   
+		
+		Stresses and strains are calculated with the find{\_}stresses, find{\_}stresses{\_}dynamic and find{\_}stresses{\_}transient methods.The failure criterion is calculated in the calc{\_}failure{\_}criterion{\_}swt method within the BeamElement class. 
+	
+	
+	\section{UAV Segment Model} \label{se:seg_model}
+	
+	% Description
+	A FEA model of single slice of the UAV frame was created. There are symmetric constraints at the midpoints of the strut beams. The center of the UAV is fixed in all 6 degrees of freedom. This assumes that the modes of frequency are symmetric. [maybe write about an asymmetric frequency model if I do that analysis] The arm and struts have an annular cross section. The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the FEA model is the width at the centroid of the corresponding trapezoidal area of the hub.
 		
 	\section{Solvers} \label{se:solvers}
 		
-		An FEA model was crated with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
+	An FEA model was created with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
+		
+	
 		
 	\subsection{Static} \label{ss:static}
-	
-		The static solver uses point loads to 
-		- Inputs
-			- Point Loads
+		
+		
+		The static solver uses point loads calculate
 		- Outputs 
 			- Stress 
 				- Explain how stress caclualtion is obtained
@@ -307,6 +402,7 @@ il		% My architecture
 		- Strain Amplitude
 			- calculated from the local displacment in each element
 			- Natural Frequency
+			
 	\subsection{Transient} \label{ss:transient}
 		- Inputs
 			Function describing a force at a given time
@@ -314,10 +410,7 @@ il		% My architecture
 		- The transient stress is obtained from the transient displacements and reactions
 	
 	
-	\section{UAV Segment Model} \label{se:seg_model}
 	
-	% Description
-	A FEA model of single slice of the UAV frame was created. There are symmetric constraints at the midpoints of the strut beams. The center of the UAV is fixed in all 6 degrees of freedom. This assumes that the modes of frequency are symmetric. [maybe write about an asymmetric frequency model if I do that analysis] The arm and struts have an annular cross section. The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the FEA model is the width at the centroid of the corresponding trapezoidal area of the hub.
 
 	
 	\begin{comment}
@@ -340,7 +433,10 @@ il		% My architecture
 	The UAV segment model is generated in the DroneFEA class within the drone{\_}fea module. This module requires a DroneGeometry object as input. A BeamSystem object is generated to perform the FEA analysis. The nodes are generated using the create{\_}drone{\_}slice{\_}node method which adds nodes to the BeamSystem object. The  create{\_}drone{\_}slice{\_}beams method calculates the hub section parameters and adds the beams to the BeamSystem object. The boundary{\_}conditions{\_}slice method applies the boundary conditions to the beam model.  
 	
 	\section{Optimization} \label{se:optimization}
+	
+	
 		The problem is formulated as follows:
+		
 		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
 		
 		subject to:
@@ -422,26 +518,48 @@ il		% My architecture
 		   
 		
 	\subsection{Objective Function and Design Variables} \label{ss:desvar}
+	
+	
+	\subsection{Optimization parameters} \label{ss:optpara}
+	
 	\subsection{Constraints} \label{ss:consts}
 	
 	\subsubsection{Displacement} \label{sss:displacement}
-		- 1/8 of the mass of the frame and playload was modelled as a point load at the end of the UAV arm pointing upward while the center of the UAV is fixed
-		- The static solver as used to calculate the maximum displacement magnitude.
-		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{tip} \le d_{allowable} $$
+		
+		The static FEA solver was used to calculate the maximum displacement magnitude. To simulate the loading at hover, the loading is located at the end of the UAV arm pointing upward while the center of the UAV is fixed in displacement and rotation. The load is a point load and is equivalent to the mass of the payload multiplied by gravity divided by the number of blades.  
+		
+		The formula for the constraint is shown in \ref{eq:opt_disp}. d_{max} is th maximum displacement of the UAV frame with the described loading. d_{allowable} is the maximum allowable displacement, 
+	
+		[show figure of loading?]
+		
+		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{max} \le d_{allowable} $$ \label{eq:opt_disp}
+		
+		
 	\subsubsection{Stress} \label{sss:stress}
-		- The stress calculation is the same method as the displacement calculation.
-		- The allowable stress is deteermined by the maximum stress of the material and a factor of safety. 
-		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{max} \le \sigma_{allowable} $$
+		
+		The loading described for the displacement constraint was also used for the stress constraint. The static FEA solver was used. The allowable stress is determined by the maximum stress of the material and a factor of safety.
+		
+		\sigma_{max} is the maximum nodal bending stress in the FEA beam system as calculated by the . \sigma_{yeild} is the tension yield strength of the material. \text{FOS} is the FOS associated with the stress constraint. 
+		 
+		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{max} \le \sigma_{yield} * \text{FOS} $$
+		
 	\subsubsection{Frequency} \label{sss:frquency}
-		- The goal of the frequency constraint is to make sure that the frequency experienced by the propeller is not near the natural frequency of the vehicle 
-		- The dynamic solver is used. 
-		- A frequency of 2 * the rad/s of the propeller is used as the propeller has 2 blades.   
-		- A force of 1 Neewton is input  at the tip of the UAV bladd
-			[frequency plot]
-		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \frac{f_{amp}}{d_{tip}} \le R_{allowable} $$
+	
+		The objective of the frequency constraint is to ensure that the frequency experienced by the propeller is not near the natural frequency of the vehicle.
+		
+		Two analyses were done. The static analysis and the frequency analysis. The static analysis is equivalent to the on displacement constraint. A frequency analysis was done with a amplitude equivalent to the magnitude of the force in the static analysis. Formula \ref{eq:opt_freq} describes the ratio of the amplitude of displacement ($d_{amplitude}$) in the dynamic analysis to the resulting displacement of static analysis $(d_{static}$). The should be less than the allowable ratio ($R_{allowable}$). The magnitude of these force could be any number, the payload was chosen so the static analysis could be reused, saving computation time. [Justify??? Source??? ]
+		
+		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \frac{d_{amplitude}}{d_{static}} \le R_{allowable} $$ \label{eq:opt_freq}
+		
+		
+		The frequency of the oscillating loading function is described as two times the maximum rad/s of the propeller times the maximum percent throttle experienced during the mission profile. The forcing function is assumed to be twice propeller speed due to the propeller having two blades.
+		
+		This is used for the frequency of the oscillating force for the dynamic solver. The location of the force and boundary conditions are the same as the static analysis. 
+		
+		
 	\subsubsection{Damage} \label{sss:damage}
 	
-	
+		
 		- Mission profile with 5s rev up rev down
 		- Osciallating force based on propeller freequency 
 		- [figurree of oscillating stress]
@@ -450,10 +568,9 @@ il		% My architecture
 	 	% - "mission_count_damage":10000,
 		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = D * n_{missions} \le 1 $$
 	\subsubsection{Energy} \label{sss:energy}
-		- Mission profile
-		- Power to trust calcualtion
-		- Battery capacity
-		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{total} \le 0.8 $$
+	
+		The energy constraint 
+		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{total} \le E_{\%remaining} $$
 	
 	
 	
@@ -513,8 +630,8 @@ il		% My architecture
 	
 	% This is the standard bibtex file. Do not include the .bib extension in <bib_file_name>.
 	% Uncomment the following lines to include your bibliography: 
-	%\bibliography{<bib_file_name>}
-	%\bibliographystyle{plainnat}   
+	\bibliography{Thesis_refs}
+	\bibliographystyle{plainnat}   
 	
 	% This formats the chapter name to appendix to properly define the headers:
 	\appendix
@@ -603,7 +720,7 @@ il		% My architecture
 	b) show energy consumption calculation
 	
 	d. results 
-	
+	ImagesImages
 	a) plots of the design space
 	b) show optimized value and compare it to initial
 	5. Summary				

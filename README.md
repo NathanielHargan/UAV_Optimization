@@ -178,13 +178,38 @@ Refine outline
   - 5600m ( distance across palisades fire)
   - Cite nyt and google earth
   - 100m treetop height
-  - 1360ft (414.528) https://apps.nationalmap.gov/viewer/
+  - 1500ft (487ft) https://apps.nationalmap.gov/viewer/
   - https://www.arcgis.com/home/item.html?id=ba0631e5417f4c5f8c02a834d121bd81
-  - cite the email
+  - cite the email 
   - cite nick's thesis for orginal UAV design
   - Sample points for displacement constraint to validate solution 
-  - mass + I1 + I2 + I3
-  - Switch to overleaf
+  - mass + I1 + I2 + I3 (working on it)
+  - Switch to overleaf (meh)
+  - sample design space (done)
+
+- 11/6 
+  - Finish Text Body
+    - Citations
+      - cite the email with dragonplate material propertiess
+      - Cite nyt article? 
+      - https://www.arcgis.com/home/item.html?id=ba0631e5417f4c5f8c02a834d121bd81
+      - https://apps.nationalmap.gov/viewer/
+      - cite nick's thesis for orginal UAV design
+    - 1825ft 556.26m
+    - State in thesis that I can create a more complex mission profile, uav beams. (not done) 
+    - I assume a flat earth
+      - Geodesic' 
+      -  talk about deflection over span for justiciation. 
+      - literature review for justification (other people did it, so i can do it )
+
+    - Sum of rectangles of for I beam mass_momnt of inertia. High priority. 
+
+    - sum moments of inertia with parallel axis theorem to get global moment of inertia of FEA model to use for objective
 
 
+
+
+11/13
+- Discuss Stress Failure Criterion: Smith Watson Tepper? Nu-Daniel?
+  
 

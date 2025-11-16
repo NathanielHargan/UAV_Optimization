@@ -28,16 +28,28 @@ class DroneMass:
 
         # moment of inertia of annuli
         self.arm_local_moment_of_inertia = np.array([[(1/2) * self.arm_mass * (arm_r1 ** 2 + arm_r2 ** 2), 0, 0],
-                                                     [0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + self.drone.nominal_rad ** 2), 0],
-                                                     [0, 0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + self.drone.nominal_rad ** 2)]])
+                                                     [0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + (self.drone.arm_length) ** 2), 0],
+                                                     [0, 0, (1/12) * self.arm_mass * (3 * (arm_r1 ** 2 + arm_r2 ** 2) + (self.drone.arm_length) ** 2)]])
 
         self.strut_local_moment_of_inertia = np.array([[(1/2) * self.strut_mass * (strut_r1 ** 2 + strut_r2 ** 2), 0, 0],
                                                        [0, (1/12) * self.strut_mass * (3 * (strut_r1 ** 2 + strut_r2 ** 2) + self.drone.strut_length ** 2), 0],
                                                        [0, 0, (1/12) * self.strut_mass * (3 * (strut_r1 ** 2 + strut_r2 ** 2) + self.drone.strut_length ** 2)]])
+        self.hub_tri_cent_h = (self.drone.hub_beam.cross_section_parameters[1] - self.drone.hub_beam.cross_section_parameters[2])/2
+
+        h_w = 0 # plaaceholder
+        h_d = 0 # plaaceholder
+        h_h = (self.drone.hub_beam.cross_section_parameters[1]/2) - self.drone.hub_beam.cross_section_parameters[2]
+        self.hub_web_local_moment_of_inertia = np.array([[(1/12) * self.strut_mass * (h_w ** 2 + h_h ** 2), 0, 0],
+                                                       [0, (1/12) * self.strut_mass * (h_w ** 2 + h_d ** 2), 0],
+                                                       [0, 0, (1/12) * self.strut_mass * (h_h ** 2 + h_d ** 2)]])
 
         self.arm_beam_centroids = np.zeros([self.drone.blade_num, 3])
         self.strut_beam_centroids = np.zeros([self.drone.blade_num, 3])
+        self.hub_tri_top_centroids = np.zeros([self.drone.blade_num, 3])
+        self.hub_tri_bot_centroids = np.zeros([self.drone.blade_num, 3])
+        self.hub_web_centroids = np.zeros([self.drone.blade_num, 3])
         self.battery_centroids = np.zeros([len(self.batteries), 3])
+
         self.centroid_calculation()
 
         self.centroids = np.empty([])
@@ -59,13 +71,25 @@ class DroneMass:
     def centroid_calculation(self):
         for i in range(self.drone.blade_num):
             theta = i * 2 * math.pi / self.drone.blade_num
-            self.arm_beam_centroids[i][0] = math.cos(theta) * self.drone.nominal_rad / 2
-            self.arm_beam_centroids[i][1] = math.sin(theta) * self.drone.nominal_rad / 2
+            self.arm_beam_centroids[i][0] = math.cos(theta) * (self.drone.nominal_rad + self.drone.arm_length) / 2
+            self.arm_beam_centroids[i][1] = math.sin(theta) *  (self.drone.nominal_rad + self.drone.arm_length) / 2
             self.arm_beam_centroids[i][2] = 0
 
             self.strut_beam_centroids[i][0] = (math.cos(theta) + math.cos(theta + 2 * math.pi / self.drone.blade_num)) * self.drone.strut_pos / 2
             self.strut_beam_centroids[i][1] = (math.sin(theta) + math.sin(theta + 2 * math.pi / self.drone.blade_num)) * self.drone.strut_pos / 2
             self.strut_beam_centroids[i][2] = 0
+
+            self.hub_tri_top_centroids[i][0] = math.sin(theta) * self.drone.hub_radius * (2/3)
+            self.hub_tri_top_centroids[i][1] = math.cos(theta) * self.drone.hub_radius * (2/3)
+            self.hub_tri_top_centroids[i][2] = self.hub_tri_cent_h
+
+            self.hub_tri_bot_centroids[i][0] = math.sin(theta) * self.drone.hub_radius * (2/3)
+            self.hub_tri_bot_centroids[i][1] = math.cos(theta) * self.drone.hub_radius * (2/3)
+            self.hub_tri_bot_centroids[i][2] = -self.hub_tri_cent_h
+
+            self.hub_web_centroids[i][0] = math.sin(theta) * self.drone.hub_radius / 2
+            self.hub_web_centroids[i][1] = math.cos(theta) * self.drone.hub_radius / 2
+            self.hub_web_centroids[i][2] = 0
 
         for i, battery in enumerate(self.batteries):
             self.battery_centroids[i] = battery.position

@@ -116,7 +116,7 @@ class Optimizer:
         }
 
         self.constraints_constants_defaults = {
-            "allowable_deflection": 50,
+            "allowable_deflection": 50, # 5% deflection
             "stress_FOS": 4,
             "allowable_natural_frequency_FOS":1.2,
             "allowable_amplitude_to_disp_ratio": 1.5,
@@ -192,7 +192,7 @@ class Optimizer:
             self.parameters["battery_volts"],
             2)
 
-        self.energy_calc_timesteps = np.linspace(0, self.total_mission_duration, self.simulation_settings["energy_timesteps"])
+        self.energy_calc_timesteps = np.linspace(0, self.total_mission_duration, num=self.simulation_settings["energy_timesteps"])
 
         self.completely_reversed_stress_amplitude = 1466 * (2 * 1e6) ** (-0.143)
 
@@ -216,14 +216,18 @@ class Optimizer:
         ''' calculates the mission profile for the drone '''
         m1 = MissionProfileLinearAcc("profile")
 
-        m1.add_segment(15, "Takeoff")
-        m1.add_segment(10, "Climb1")
-        m1.add_segment(10, "Climb2")
-        m1.add_segment(25, "cruise1")
-        m1.add_segment(25, "cruise2")
-        m1.add_segment(10, "decent1")
-        m1.add_segment(10, "decent2")
-        m1.add_segment(15, "land")
+        m1.add_segment(40, "Takeoff")
+
+        m1.add_segment(40, "Climb1")
+        m1.add_segment(40, "Climb2")
+
+        m1.add_segment(200, "cruise1")
+        m1.add_segment(200, "cruise2")
+
+        m1.add_segment(40, "decent1")
+        m1.add_segment(40, "decent2")
+
+        m1.add_segment(40, "land")
 
         # Takeoff
         m1.add_constraint(0, "x", 0)
@@ -234,26 +238,26 @@ class Optimizer:
         m1.add_constraint(0, "ay", 0)
 
         # Cruise
-        m1.add_constraint(550000, "x", 3)
-        m1.add_constraint(100000, "y", 3)
+        m1.add_constraint(500000, "x", 3)
+        m1.add_constraint(560000, "y", 3)
         m1.add_constraint(0, "ax", 3)
         m1.add_constraint(0, "ay", 3)
-        m1.add_constraint(1250000, "x", 4)
-        m1.add_constraint(105000, "y", 4)
-        m1.add_constraint(2000000, "x", 5)
+
+        m1.add_constraint(2800000, "x", 4)
+        m1.add_constraint(560000, "y", 4)
+
+        m1.add_constraint(5100000, "x", 5)
+        m1.add_constraint(560000, "y", 5)
         m1.add_constraint(0, "ax", 5)
-        m1.add_constraint(110000, "y", 5)
         m1.add_constraint(0, "ay", 5)
 
         # Decent
-        m1.add_constraint(2400000, "x", 8)
+        m1.add_constraint(5600000, "x", 8)
         m1.add_constraint(0, "y", 8)
         m1.add_constraint(0, "vx", 8)
         m1.add_constraint(0, "vy", 8)
         m1.add_constraint(0, "ax", 8)
         m1.add_constraint(0, "ay", 8)
-
-        m1.solve_kinematics()
 
         return m1
 
@@ -297,7 +301,7 @@ class Optimizer:
         return math.sin(dpm.freq_calc(self.parameters["propeller_max_RPM"], 16, t) * t) * self.force_transient(t, m, sa)[2] * 0.01
 
     def total_force_y(self, t, m, sa):
-        return self.force_transient(t, m, sa)[2] * 8
+        return self.force_transient(t, m, sa)[2] * self.parameters["blade_num"]
 
     def mass(self, design_variables):
         wingspan = (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
@@ -340,6 +344,48 @@ class Optimizer:
         drone_mass = DroneMass(drone_geometry).lumped_mass_frame
 
         return drone_mass
+    def moment(self, design_variables):
+        wingspan = (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
+            math.pi / self.parameters["blade_num"])
+
+        arm_inner_diameter = design_variables["arm_diameter"] - design_variables["arm_thickness"] * 2
+        strut_inner_diameter = design_variables["strut_diameter"] - design_variables["strut_thickness"] * 2
+        hub_side_length = 2 * design_variables["hub_radius"] * math.tan(math.pi / self.parameters["blade_num"])
+
+        arm_beam_properties = BeamType("annulus",
+                                       [design_variables["arm_diameter"], arm_inner_diameter],
+                                       "Carbon Fiber",
+                                       "arm_beam")
+
+        strut_beam_properties = BeamType("annulus",
+                                         [design_variables["strut_diameter"],
+                                          strut_inner_diameter],
+                                         "Carbon Fiber",
+                                         "strut_beam")
+
+        hub_beam_properties = BeamType("i_beam",
+                                       [hub_side_length * (2 / 3),
+                                        self.parameters["hub_height"] + 2 * design_variables["hub_flange_thickness"],
+                                        design_variables["hub_flange_thickness"],
+                                        design_variables["hub_web_thickness"]],
+                                       "Carbon Fiber",
+                                       "hub_beam")
+
+        drone_geometry = DroneGeometry("drone",
+                                       wingspan,
+                                       design_variables["hub_radius"],
+                                       design_variables["strut_distance"],
+                                       self.parameters["blade_num"],
+                                       arm_beam_properties,
+                                       strut_beam_properties,
+                                       hub_beam_properties,
+                                       self.simulation_settings["hub_sections"],
+                                       [self.mass_battery_1, self.mass_battery_2])
+
+        drone_moment_sum = DroneMass(drone_geometry).total_moment_of_inertia[0, 0] + DroneMass(drone_geometry).total_moment_of_inertia[1, 1] + DroneMass(drone_geometry).total_moment_of_inertia[2, 2]
+
+        return drone_moment_sum
+
     def constraint_calculations(self, design_variables, active_constraints, detailed_output=False, detailed_output_print=False):
         constraints = []
         constraint_labels = []
@@ -451,7 +497,6 @@ class Optimizer:
 
         if active_constraints["energy"]:
             energy_used = drone_power_module.milliwatt_second_capacity - drone_power_module.energy_remaining[-1]
-
             energy_total = drone_power_module.milliwatt_second_capacity
 
             # Starts at 0 ends at 1
@@ -524,6 +569,7 @@ class Optimizer:
             self.drone_geometry = drone_geometry
             self.fea = d1_fea
             self.max_amp = max_amp
+            self.drone_power_module = drone_power_module
 
 
 

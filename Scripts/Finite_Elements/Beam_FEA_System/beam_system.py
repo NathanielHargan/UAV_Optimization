@@ -505,7 +505,7 @@ class BeamSystem:
         max_failure_crit = 0
         for beam in self.beams:
             fail_crit = beam.failure_criterion()
-            max_failure_crit = max([fail_crit[0], fail_crit[1], max_failure_crit])
+            max_failure_crit = max([fail_crit, max_failure_crit])
         self.max_failure_crit = max_failure_crit
 
     def solve_failure_swt(self):

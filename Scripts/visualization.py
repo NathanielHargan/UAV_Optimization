@@ -416,13 +416,13 @@ def design_space_mass(opt, design_variable_x, design_variable_y, sample_num, des
             design_variables[design_variable_x] = x
             design_variables[design_variable_y] = y
             constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints)
-            constraints_map[x_i, y_i] = constraints_res
-            var_map[x_i, y_i] = opt.mass(design_variables) * 1000
-            
+            constraints_map[y_i, x_i] = constraints_res
+            var_map[y_i, x_i] = opt.mass(design_variables) * 1000
+    print(design_variables)
     plt.figure(figsize=(10, 10))
 
     img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
-                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[1], y_var_bounds[0]])
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[0], y_var_bounds[1]], origin='upper')
     cbar = plt.colorbar(img)
 
     # Set custom tick labels
@@ -477,14 +477,13 @@ def design_space_freq(opt, design_variable_x, design_variable_y, sample_num, des
             design_variables[design_variable_x] = x
             design_variables[design_variable_y] = y
             constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints, True)
-            constraints_map[x_i, y_i] = constraints_res
-            var_map[x_i, y_i] = opt.max_amp
+            constraints_map[y_i, x_i] = constraints_res
+            var_map[y_i,x_i] = opt.max_amp
 
     plt.figure(figsize=(10, 10))
 
     img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
-                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[1], y_var_bounds[0]],
-                     norm=mpl.colors.LogNorm(vmin=var_map.min(), vmax=var_map.max()))
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[0], y_var_bounds[1]], origin='upper')
 
     cbar = plt.colorbar(img)
 
@@ -559,13 +558,12 @@ def design_space_test_cons(opt, design_variable_x, design_variable_y, sample_num
             design_variables[design_variable_x] = x
             design_variables[design_variable_y] = y
             constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints)
-            constraints_map[x_i, y_i] = constraints_res
-            var_map[x_i, y_i] = constraints_res[0]
+            constraints_map[y_i, x_i] = constraints_res
+            var_map[y_i, x_i] = constraints_res[0]
 
     plt.figure(figsize=(10, 10))
-
     img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
-                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[1], y_var_bounds[0]])
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[0], y_var_bounds[1]], origin='upper')
     cbar = plt.colorbar(img)
 
     # Set custom tick labels

@@ -52,6 +52,9 @@ class DroneGeometry:
         self.calc_node_coords()
 
         self.strut_length = np.linalg.norm(self.strut_nodes_coords[0] - self.strut_nodes_coords[1])
+
+        self.arm_length = nominal_rad - hub_radius
+
         self.batteries = batteries
 
         self.projected_surface_area = 0

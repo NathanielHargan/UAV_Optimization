@@ -1,5 +1,5 @@
-\contentsline {chapter}{List of Figures}{v}{chapter*.2}%
-\contentsline {chapter}{List of Tables}{vi}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{vii}{chapter*.2}%
+\contentsline {chapter}{List of Tables}{viii}{chapter*.3}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}One Section}{1}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}A sub-section}{1}{subsection.1.1.1}%
@@ -8,27 +8,32 @@
 \contentsline {chapter}{\numberline {3}UAV Design}{3}{chapter.3}%
 \contentsline {section}{\numberline {3.1}UAV Geometry}{3}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Mission Profile}{4}{section.3.2}%
-\contentsline {section}{\numberline {3.3}UAV Batteries}{5}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Finite Element Analysis}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Beam Element Formulation}{13}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Solvers}{13}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Static}{14}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Dynamic}{14}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Transient}{14}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}UAV Segment Model}{14}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Optimization}{15}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Objective Function and Design Variables}{18}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Constraints}{18}{subsection.4.4.2}%
-\contentsline {subsubsection}{Displacement}{18}{section*.12}%
-\contentsline {subsubsection}{Stress}{19}{section*.13}%
-\contentsline {subsubsection}{Frequency}{19}{section*.14}%
-\contentsline {subsubsection}{Damage}{20}{section*.15}%
-\contentsline {subsubsection}{Energy}{20}{section*.16}%
-\contentsline {chapter}{\numberline {5}Results}{21}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusions}{22}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Summary}{23}{chapter.7}%
-\contentsline {chapter}{Appendices}{24}{section*.18}%
-\contentsline {chapter}{Appendix \numberline {A}First Appendix}{25}{appendix.a.A}%
-\contentsline {section}{\numberline {A.1}Section one}{25}{section.a.A.1}%
-\contentsline {section}{\numberline {A.2}Section two}{27}{section.a.A.2}%
-\contentsline {chapter}{Appendix \numberline {B}Second Appendix}{29}{appendix.a.B}%
+\contentsline {subsection}{\numberline {3.2.1}Thrust Calculation}{5}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}UAV Power}{6}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Oscillation Calculation}{8}{subsection.3.3.1}%
+\contentsline {chapter}{\numberline {4}Finite Element Analysis}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Beam Element Formulation}{16}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Beam Element Stress}{17}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}UAV Segment Model}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Solvers}{18}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Static}{18}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Dynamic}{18}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Transient}{18}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Optimization}{19}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Objective Function and Design Variables}{22}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Optimization parameters}{22}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Constraints}{22}{subsection.4.4.3}%
+\contentsline {subsubsection}{Displacement}{22}{section*.12}%
+\contentsline {subsubsection}{Stress}{23}{section*.13}%
+\contentsline {subsubsection}{Frequency}{24}{section*.14}%
+\contentsline {subsubsection}{Damage}{25}{section*.15}%
+\contentsline {subsubsection}{Energy}{25}{section*.16}%
+\contentsline {chapter}{\numberline {5}Results}{26}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusions}{27}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Summary}{28}{chapter.7}%
+\contentsline {chapter}{Bibliography}{29}{chapter*.18}%
+\contentsline {chapter}{Appendices}{30}{section*.19}%
+\contentsline {chapter}{Appendix \numberline {A}First Appendix}{31}{appendix.a.A}%
+\contentsline {section}{\numberline {A.1}Section one}{31}{section.a.A.1}%
+\contentsline {section}{\numberline {A.2}Section two}{33}{section.a.A.2}%
+\contentsline {chapter}{Appendix \numberline {B}Second Appendix}{35}{appendix.a.B}%

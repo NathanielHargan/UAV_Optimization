@@ -1,6 +1,6 @@
 # Material Properties (hopefully N, mm, MPa )
 import math
-Gravity = 9806.6499994  # mm/s^2
+Gravity = 9806.65  # mm/s^2
 
 Materials = {
     # https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d

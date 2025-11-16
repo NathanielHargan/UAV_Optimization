@@ -135,7 +135,9 @@ class BeamElement:
             self.beam_type.cross_section_properties['transverse shear deflection constant y'],
             self.beam_type.cross_section_properties['transverse shear deflection constant z']
         )
+
         self.mass_moment_matrix = self.beam_type.mass_moment(self.length)
+
         self.local_mass_matrix = FEA_3D.mass_matrix_lumped_3d(
             self.beam_type.cross_section_properties["area"],
             self.length,
@@ -462,6 +464,10 @@ class BeamElement:
         return deformation_global
 
     def failure_criterion(self):
+        max_stress = max(self.bending_stresses_0, self.bending_stresses_1)
+        return max_stress/self.beam_type.material_properties["tension yield strength"]
+
+    def failure_criterion_nu(self):
         max_shear = max(self.stress_transverse_shear_0, self.stress_transverse_shear_1)
         max_stress = max(self.bending_stresses_0, self.bending_stresses_1)
         return NU_Daniel_failure(max_stress, max_shear, self.beam_type.material_properties)

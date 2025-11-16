@@ -1,0 +1,39 @@
+% mission profile general
+		A model of the mission profile was created to describe a potential mission with continuous position, velocity, and acceleration with respect to time. The mission profile is modeled as a series of mission profile segments. Constraints are put on the position, velocity, and acceleration at the nodes between mission profile segments. The remaining values at the nodes are calculated using basic kinematic equations. At values of time between mission segment nodes, the position, velocity, and acceleration are interpolated using cubic Hermite splines. [citation needed] Acceleration changes linearly with respect to time.
+
+		% The mission profile
+		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timeesteps were set so that maximum x-velocity to be under 12m/s. [cite nick thesis? ]
+
+		The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied.
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/XvY.png}
+			\caption{Downrange Position vs. Altitude}
+			\label{fig:xvy}
+		\end{figure}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/YposvT.png}
+			\caption{Altitude vs. Time}
+			\label{fig:yvt}
+		\end{figure}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.8]{Images/MissionProfile/XposVT.png}
+			\caption{Downrange position vs. Time}
+			\label{fig:xvt}
+		\end{figure}
+
+
+		\begin{table}[htb]
+			\centering
+			\caption{Mission Profile Constraints}
+			\includegraphics[scale=0.8]{Tables/profcons.png}
+			\label{tab:profcons}
+		\end{table}
+
+		% My specific Architecture
+		Mission profiles are generated with a mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic matrix function. The MissionProfile contains a list of constraints added by the add{\_}constraint method, and a list of segment durations added by the add{\_}segment method. It also contains the solve{\_}kinematics and time{\_}solve method. The solve{\_}kinamatics method assembles matrixes generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The time{\_}solve method uses a cubic Hermite spline to find interpolate values at a given time.
