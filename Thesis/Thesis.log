@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.10.8)  16 NOV 2025 00:48
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.10.8)  18 NOV 2025 03:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1171,10 +1171,12 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
 (C:\Users\natha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-[4
+Underfull \vbox (badness 6775) has occurred while \output is active []
+
+ [4
 
 ]
-Underfull \vbox (badness 5637) has occurred while \output is active []
+Underfull \vbox (badness 3039) has occurred while \output is active []
 
  [5])
 \tf@toc=\write6
@@ -1206,63 +1208,53 @@ Chapter 2.
 
 ]
 Chapter 3.
-
-LaTeX Warning: Reference `fig:hubsec' on page 3 undefined on input line 106.
-
 File: Images/arm.png Graphic file (type bmp)
 <Images/arm.png>
-
-Overfull \hbox (10796.35051pt too wide) in paragraph at lines 110--111
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 7378.38481pt on input line 113.
-
 File: Images/strut.png Graphic file (type bmp)
 <Images/strut.png>
-
-Overfull \hbox (10796.35051pt too wide) in paragraph at lines 117--118
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 7378.38481pt on input line 120.
-
 File: Images/hub.png Graphic file (type bmp)
 <Images/hub.png>
-
-Overfull \hbox (10796.35051pt too wide) in paragraph at lines 124--125
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 7378.38481pt on input line 127.
-
 File: Images/hubtop.png Graphic file (type bmp)
 <Images/hubtop.png>
-
-Overfull \hbox (11054.7172pt too wide) in paragraph at lines 133--134
- [][] 
- []
-
 File: Images/hubsectioniso.png Graphic file (type bmp)
 <Images/hubsectioniso.png>
 
-Overfull \hbox (11054.7172pt too wide) in paragraph at lines 140--141
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 15386.76462pt on input line 146.
-
-
-Underfull \vbox (badness 7796) has occurred while \output is active []
+Underfull \vbox (badness 5091) has occurred while \output is active []
 
  [3
 
 ]
+File: Images/Dv/da.png Graphic file (type bmp)
+<Images/Dv/da.png>
+File: Images/Dv/ra.png Graphic file (type bmp)
+<Images/Dv/ra.png>
+File: Images/Dv/ds.png Graphic file (type bmp)
+<Images/Dv/ds.png>
+File: Images/Dv/ts.png Graphic file (type bmp)
+<Images/Dv/ts.png>
+File: Images/Dv/rs.png Graphic file (type bmp)
+<Images/Dv/rs.png>
+File: Images/Dv/tf.png Graphic file (type bmp)
+<Images/Dv/tf.png>
+File: Images/Dv/tw.png Graphic file (type bmp)
+<Images/Dv/tw.png>
+File: Images/Dv/rh.png Graphic file (type bmp)
+<Images/Dv/rh.png>
+
+
+LaTeX Warning: Float too large for page by 441.3505pt on input line 222.
+
 [4]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+File: Tables/Matprop.png Graphic file (type bmp)
+<Tables/Matprop.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+[7]
 File: Images/MissionProfile/XvY.png Graphic file (type bmp)
 <Images/MissionProfile/XvY.png>
 File: Images/MissionProfile/YposvT.png Graphic file (type bmp)
@@ -1271,55 +1263,34 @@ File: Images/MissionProfile/XposVT.png Graphic file (type bmp)
 <Images/MissionProfile/XposVT.png>
 File: Tables/profcons.png Graphic file (type bmp)
 <Tables/profcons.png>
- [5] [6]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.297 ...e power required for maximum throttle. P_
-                                                  {max} is 16 kW. [According...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.298 ^^I^^I
-            
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
+ [8]
+File: Images/ThrustVTime.png Graphic file (type bmp)
+<Images/ThrustVTime.png>
 
-LaTeX Warning: Reference `eq:thr' on page 8 undefined on input line 309.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.309 ...the perturbation forcing function. \omega
-                                                  _{max} is the maximum angu...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+ [9]
+File: Images/PowerVTime.png Graphic file (type bmp)
+<Images/PowerVTime.png>
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.310 ^^I^^I
-            
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[8] [9] [10] [11] [12] [13] [14]
+[10]
+File: Images/ThrottleVTime.png Graphic file (type bmp)
+<Images/ThrottleVTime.png>
+ [11]
+File: Images/PurtibationVTime.png Graphic file (type bmp)
+<Images/PurtibationVTime.png>
+ [12] [13] [14] [15] [16]
 Chapter 4.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [15
+ [17
 
 ]
-Overfull \hbox (122.44183pt too wide) in paragraph at lines 359--360
+Overfull \hbox (122.44183pt too wide) in paragraph at lines 504--505
 []\TU/lmr/m/n/12 Intrmediate values for displacments are found using the return
 _shape_functions, return_shape_functions_dynamic,
  []
@@ -1327,8 +1298,8 @@ _shape_functions, return_shape_functions_dynamic,
 
 Underfull \vbox (badness 1377) has occurred while \output is active []
 
- [16]
-Overfull \hbox (84.21385pt too wide) in paragraph at lines 367--368
+ [18]
+Overfull \hbox (84.21385pt too wide) in paragraph at lines 512--513
 []\TU/lmr/m/n/12 Stresses and strains are calculated with the find_stresses, fi
 nd_stresses_dynamic and find_stresses_transient
  []
@@ -1336,36 +1307,36 @@ nd_stresses_dynamic and find_stresses_transient
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17]
-[18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 479--481
+ [19]
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 624--626
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--483
+Underfull \hbox (badness 10000) in paragraph at lines 627--628
 
  []
 
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 485--486
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 489--490
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 630--631
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 493--494
+Underfull \hbox (badness 10000) in paragraph at lines 634--635
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 638--639
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21]
+ [23]
 Missing character: There is no ≤ in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ≤ in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ≤ in font [lmroman12-regular]:mapping=tex-text;!
@@ -1379,98 +1350,103 @@ Missing character: There is no ≤ in font [lmroman12-regular]:mapping=tex-text;
 
 Underfull \vbox (badness 1215) has occurred while \output is active []
 
- [22]
+ [24]
+[25]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [26]
+[27] [28]
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.531 ...straint is shown in \ref{eq:opt_disp}. d_
-                                                  {max} is th maximum displa...
+l.735 ...sed for Newmark-beta integation are \beta
+                                                   = 0.25 and \gamma = 0.5. ...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.532 ^^I
-         
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (579.89273pt too wide) in paragraph at lines 531--532
-[]\TU/lmr/m/n/14.4 The formula for the constraint is shown in [][]4.4.3[][]. d$
-[]\OML/cmm/m/it/14.4 isthmaximumdisplacementoftheUAVframewiththedescribedloadin
-g:d[]isthemaximumallowabledisplacement;$ 
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.542 ^^I^^I\sigma
-                  _{max} is the maximum nodal bending stress in the FEA beam...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.543 ^^I^^I
+l.736 ^^I^^I
             
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (630.90538pt too wide) in paragraph at lines 542--543
-[]$\OML/cmm/m/it/14.4 ^^[[]isthemaximumnodalbendingstressintheFEAbeamsystemasca
-lculatedbythe:^^[[]isthetensionyieldstrengthofthematerial:[]istheFOSassociatedw
-iththestressconstraint:$ 
+Overfull \hbox (48.64276pt too wide) in paragraph at lines 735--736
+[]\TU/lmr/m/n/14.4 The mission duration is divided into equal time-steps accord
+ing to the $\OML/cmm/m/it/14.4 N[]$
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (12.46677pt too wide) in paragraph at lines 735--736
+\TU/lmr/m/n/14.4 parameter. The number of time-steps for the transient solver i
+s $\OML/cmm/m/it/14.4 N[]$\TU/lmr/m/n/14.4 .
+ []
 
- [23]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [24]
-[25]
+Overfull \hbox (878.02882pt too wide) in paragraph at lines 735--736
+\TU/lmr/m/n/14.4 The constants used for Newmark-beta integation are $\OML/cmm/m
+/it/14.4 ^^L \OT1/cmr/m/n/14.4 = 0\OML/cmm/m/it/14.4 :\OT1/cmr/m/n/14.4 25\OML/
+cmm/m/it/14.4 and^^M \OT1/cmr/m/n/14.4 = 0\OML/cmm/m/it/14.4 :\OT1/cmr/m/n/14.4
+ 5\OML/cmm/m/it/14.4 :Theresultsforthemaximumbendingstressovertimefrominthebeam
+saretaken:TheRainflowmoduleinthePyLifelibraryisusedanditusesthefour \OMS/cmsy/m
+/n/14.4 ^^@
+ []
+
+
+Overfull \hbox (1198.24153pt too wide) in paragraph at lines 735--736
+\OML/cmm/m/it/14.4 pointRainflow \OMS/cmsy/m/n/14.4 ^^@ \OML/cmm/m/it/14.4 coun
+tingalgorithmtotransferthetime \OMS/cmsy/m/n/14.4 ^^@ \OML/cmm/m/it/14.4 varyin
+gloadintosetsofconstantamplitudestressreversals:ThisisusedwiththeWoehlercurveda
+tatocalculatethetotaldamageaccumulatedoverthemission:ThisisdoneusingtheLoadColl
+ectiveclassinthePyLifelibrary:$ 
+ []
+
+[29] [30]
 Chapter 5.
-[26
+[31
 
 ]
 Chapter 6.
-[27
+[32
 
 ]
 Chapter 7.
-(Thesis.bbl [28
+(Thesis.bbl [33
 
 ]
+Overfull \hbox (385.02507pt too wide) in paragraph at lines 12--14
+[]\TU/lmr/m/n/14.4 URL [][]$[][][][][] [] [] [] [][][][][][][][][] [] [][][] []
+ [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][][][][][][][] []
+ []
 
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
 
-) [29
+Underfull \hbox (badness 10000) in paragraph at lines 12--14
+[][][][][][][][] [] [][][][][][][][][][][][][][][][][][][][] [] [][][][][][][][
+][][][][][][][][][][][][][][][][][] []
+ []
 
-] [30
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--18
+[]\TU/lmr/m/n/14.4 URL [][]$[][][][][] [] [] [] [][][][][][] [] [][][] [] [][][
+][][][] [] [][][][][][][][][] [] [][][][] [] [][][][][][][] []
+ []
+
+) [34
+
+] [35
 
 
 ]
 Appendix A.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [31
+[36
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [32]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [33]
-[34]
 Appendix B.
-[35
+[37
 
 ] (Thesis.aux)
  ***********
@@ -1479,27 +1455,18 @@ L3 programming layer <2024-01-04>
  ***********
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Package rerunfilecheck Warning: File `Thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Thesis.out':
-(rerunfilecheck)             Before: A7CE3E38D31E692A1D7CEDD41BB9666C;4770
-(rerunfilecheck)             After:  61BA1B1C8E2FFF095191176EA23B7FB5;4770.
+Package rerunfilecheck Info: File `Thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 5727CC3798C1BC4DF00FCF1F25DF118A;6170.
  ) 
 Here is how much of TeX's memory you used:
- 35364 strings out of 409616
- 762118 string characters out of 5773996
- 1928191 words of memory out of 5000000
- 56957 multiletter control sequences out of 15000+600000
- 565883 words of font info for 80 fonts, out of 8000000 for 9000
+ 35542 strings out of 409616
+ 765718 string characters out of 5773996
+ 1929191 words of memory out of 5000000
+ 57120 multiletter control sequences out of 15000+600000
+ 565891 words of font info for 81 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 125i,7n,131p,814b,1103s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,7n,131p,950b,1051s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Thesis.pdf (43 pages).
+Output written on Thesis.pdf (45 pages).

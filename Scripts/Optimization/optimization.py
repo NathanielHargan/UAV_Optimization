@@ -92,7 +92,7 @@ class Optimizer:
             "strut_diameter": 50.0,
             "strut_thickness": False,
             "strut_distance": False,
-            "hub_radius": 100.0,
+            "hub_radius": 250,
             "hub_flange_thickness": 0.7,
             "hub_web_thickness": 0.7
         }
@@ -129,10 +129,10 @@ class Optimizer:
             "arm_thickness": (0.254, 3.175),
             "strut_diameter": (9, 50),
             "strut_thickness": (0.254, 3.175),
-            "strut_distance": (400, 1127.3),
-            "hub_radius": (100, 400),
+            "strut_distance": (197.5, 1127.3),
+            "hub_radius": (197.5, 1127.3),
             "hub_flange_thickness": (0.7, 12.7),
-            "hub_web_thickness": (0.7, 3.175)
+            "hub_web_thickness": (0.7, 12.7)
         }
         '''
         self.design_variables_multipliers = {
@@ -163,7 +163,7 @@ class Optimizer:
             "strut_diameter": 29,
             "strut_thickness": 2,
             "strut_distance": 500,
-            "hub_radius": 200,
+            "hub_radius": 280,
             "hub_flange_thickness": 2,
             "hub_web_thickness": 2
         }
@@ -183,7 +183,7 @@ class Optimizer:
 
     def independent_properties_calc(self):
 
-        self.mission_profile = self.mission_profile_calc()
+        self.mission_profile_calc()
 
         self.total_mission_duration = self.mission_profile.duration + self.parameters["rev_up_time"] + self.parameters["rev_down_time"]
 
@@ -203,64 +203,62 @@ class Optimizer:
         }) # Data soon
 
         self.mass_battery_1 = Battery(self.parameters["battery_mass"],
-                                      np.array([0, 86.75, -50]),
+                                      np.array([0, 86.75, 0]),
                                       self.parameters["battery_dimensions"])
 
         self.mass_battery_2 = Battery(self.parameters["battery_mass"],
-                                      np.array([0, -86.75, -50]),
+                                      np.array([0, -86.75, 0]),
                                       self.parameters["battery_dimensions"])
 
 
 
     def mission_profile_calc(self):
         ''' calculates the mission profile for the drone '''
-        m1 = MissionProfileLinearAcc("profile")
+        self.mission_profile = MissionProfileLinearAcc("profile")
 
-        m1.add_segment(40, "Takeoff")
+        self.mission_profile.add_segment(40, "Takeoff")
 
-        m1.add_segment(40, "Climb1")
-        m1.add_segment(40, "Climb2")
+        self.mission_profile.add_segment(40, "Climb1")
+        self.mission_profile.add_segment(40, "Climb2")
 
-        m1.add_segment(200, "cruise1")
-        m1.add_segment(200, "cruise2")
+        self.mission_profile.add_segment(200, "cruise1")
+        self.mission_profile.add_segment(200, "cruise2")
 
-        m1.add_segment(40, "decent1")
-        m1.add_segment(40, "decent2")
+        self.mission_profile.add_segment(40, "decent1")
+        self.mission_profile.add_segment(40, "decent2")
 
-        m1.add_segment(40, "land")
+        self.mission_profile.add_segment(40, "land")
 
         # Takeoff
-        m1.add_constraint(0, "x", 0)
-        m1.add_constraint(0, "y", 0)
-        m1.add_constraint(0, "vx", 0)
-        m1.add_constraint(0, "vy", 0)
-        m1.add_constraint(0, "ax", 0)
-        m1.add_constraint(0, "ay", 0)
+        self.mission_profile.add_constraint(0, "x", 0)
+        self.mission_profile.add_constraint(0, "y", 0)
+        self.mission_profile.add_constraint(0, "vx", 0)
+        self.mission_profile.add_constraint(0, "vy", 0)
+        self.mission_profile.add_constraint(0, "ax", 0)
+        self.mission_profile.add_constraint(0, "ay", 0)
 
         # Cruise
-        m1.add_constraint(500000, "x", 3)
-        m1.add_constraint(560000, "y", 3)
-        m1.add_constraint(0, "ax", 3)
-        m1.add_constraint(0, "ay", 3)
+        self.mission_profile.add_constraint(500000, "x", 3)
+        self.mission_profile.add_constraint(560000, "y", 3)
+        self.mission_profile.add_constraint(0, "ax", 3)
+        self.mission_profile.add_constraint(0, "ay", 3)
 
-        m1.add_constraint(2800000, "x", 4)
-        m1.add_constraint(560000, "y", 4)
+        self.mission_profile.add_constraint(2800000, "x", 4)
+        self.mission_profile.add_constraint(560000, "y", 4)
 
-        m1.add_constraint(5100000, "x", 5)
-        m1.add_constraint(560000, "y", 5)
-        m1.add_constraint(0, "ax", 5)
-        m1.add_constraint(0, "ay", 5)
+        self.mission_profile.add_constraint(5100000, "x", 5)
+        self.mission_profile.add_constraint(560000, "y", 5)
+        self.mission_profile.add_constraint(0, "ax", 5)
+        self.mission_profile.add_constraint(0, "ay", 5)
 
         # Decent
-        m1.add_constraint(5600000, "x", 8)
-        m1.add_constraint(0, "y", 8)
-        m1.add_constraint(0, "vx", 8)
-        m1.add_constraint(0, "vy", 8)
-        m1.add_constraint(0, "ax", 8)
-        m1.add_constraint(0, "ay", 8)
-
-        return m1
-
+        self.mission_profile.add_constraint(5600000, "x", 8)
+        self.mission_profile.add_constraint(0, "y", 8)
+        self.mission_profile.add_constraint(0, "vx", 8)
+        self.mission_profile.add_constraint(0, "vy", 8)
+        self.mission_profile.add_constraint(0, "ax", 8)
+        self.mission_profile.add_constraint(0, "ay", 8)
+        self.mission_profile.solve_kinematics()
 
 
     def force_transient(self, t, m, sa):
@@ -275,7 +273,7 @@ class Optimizer:
                 a numpy array describing force [x, y, z, mxx, myy, mzz] (N / N*mm)
         '''
         # sa = surface_area
-        lift_thrust = m / self.parameters["blade_num"]
+        lift_thrust = self.parameters["gravity"] * m / self.parameters["blade_num"]
         rev_time = self.parameters["rev_up_time"]
         if t < rev_time:
             return np.array([0, 0, (t / rev_time) * lift_thrust, 0, 0, 0])
@@ -570,6 +568,8 @@ class Optimizer:
             self.fea = d1_fea
             self.max_amp = max_amp
             self.drone_power_module = drone_power_module
+            self.drone_mass = drone_mass
+            self.surface_area = surface_area
 
 
 

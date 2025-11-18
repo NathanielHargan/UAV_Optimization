@@ -1,28 +1,235 @@
-% mission profile general
+	\section{UAV Geometry} \label{se:uav_geo}
+
+		% General design
+		The UAV is modeled as a simplified octocopter frame. The UAV geometry is shown in figure \ref{fig:arm} - figure \ref{fig:hub} with the UAV frame components highlighted. The frame model contains 3 components: the arms, the struts, and the hubs. The arms and struts are both beams with annular cross sections. The hub is two octagonal plates connected with a fanning, radially symmetric web shown in figure \ref{sfig:hubseciso}.
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.1]{Images/arm.png}
+			\caption{Optimized UAV Model with Highlighted Arm}
+			\label{fig:arm}
+		\end{figure}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.1]{Images/strut.png}
+			\caption{Optimized UAV Model with Highlighted Strut}
+			\label{fig:strut}
+		\end{figure}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.1]{Images/hub.png}
+			\caption{Optimized UAV Model with Highlighted Strut}
+			\label{fig:hub}
+		\end{figure}
+
+		\begin{figure}[htb]
+			\centering
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.1]{Images/hubtop.png}
+				\caption{Top View}
+				\label{sfig:hubsectop}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.1]{Images/hubsectioniso.png}
+				\caption{Isometric View}
+				\label{sfig:hubseciso}
+			\end{subfigure}
+			\caption{Optimized UAV Model Hub Cross-section View}
+			\label{fig:main_figure}
+		\end{figure}
+
+
+	\subsection{Design Variables} \label{ss:design_variables}
+
+
+		% Dimensions and Design variables
+		There are 8 design variables that were selected for this analysis. Each design variable is shown in Figure \ref{fig:dv_vis}. The two design variables associated with the 8 arms of the UAV frame arm outer diameter ($d_a$) and arm wall thickness ($t_a$). The design variables associated with the eight struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($r_h$), the hub web thickness ($t_w$), and the hub radius ($r_h$).
+
+		\begin{figure}[htb]
+			\centering
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/da.png}
+				\caption{Arm Diameter}
+				\label{fig:dv_da}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/ra.png}
+				\caption{Arm Thickness}
+				\label{fig:dv_ta}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/ds.png}
+				\caption{Strut Diameter}
+				\label{fig:dv_ds}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/ts.png}
+				\caption{Strut Thickness}
+				\label{fig:dv_ts}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/rs.png}
+				\caption{Strut Distance from center}
+				\label{fig:dv_rs}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/tf.png}
+				\caption{Hub Flange Thickness}
+				\label{fig:dv_tf}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/tw.png}
+				\caption{Hub Web Thickness}
+				\label{fig:dv_tw}
+			\end{subfigure}
+
+			\begin{subfigure}[h]{0.45\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{Images/Dv/rh.png}
+				\caption{Hub Radius}
+				\label{fig:dv_th}
+			\end{subfigure}
+
+			\caption{Design Variable Visualizations on UAV model}
+			\label{fig:dv_vis}
+		\end{figure}
+
+		% # https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoqN5rYTguPKErrR2RGJXuesTt9UqwIoJ9aieuGaF-ipxM2Kz1VW
+	\subsection{Design Parameters}
+
+		% Geometric Deesign Variablees
+
+		There are two other parameters related to the UAV frame geometry dimensions that were not selected as variables. The wingspan and the hub height.
+
+		The inner hub height is a parameter set to 64mm, which is the near the minimum height required to fit the UAV battery between the to plates. The actual batteies would not fit on this frame model, because the hub web ould intersect the battery. Further work could be done refining the mesh to allo for more realistic battery storage.
+
+		The distance from the center of the uav to the propeller is calculated to be 1127.3mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm.
+
+
+		The UAV carries a payload of 45kg.
+
+
+			% My architecture
+		The DroneGeometry class within the UAV{\_}Geometry module stores relevant design variables for a drone geometry. The relevant coordinates for hub, arm, and struts are calculated. The projected surface area for drag calculation a drone geometry is calculated using the calc{\_}projected{\_}surface{\_}area method. [talk about this in detail later]
+
+		% (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
+		% math.pi / self.parameters["blade_num"])
+	\subsection{Material Properties}
+		% Material Propeeties
+
+		Thee material selected for all UAV frame components (struts, arms, and hub) is braided carbon fiber composites. Due to the lack of available data, carbon fiber is treated as isotropic. Further work could be done to acquire more accurate data for the material. The carbon fiber data in Table \ref{tab:matprop} is for braided round tubes sourced from ALLRed corperation.
+
+
+		\begin{table}[htb]
+			\centering
+			\caption{Material Properties for Braided Round Tubes from ALLRed Corporation \cite{dragonplate:private}}
+			\includegraphics[scale=1]{Tables/Matprop.png}
+			\label{tab:matprop}
+		\end{table}
+
+		The shear strength is calculated from the relationship tensile strength and poisons ratio between the shear strength.
+
+		Due to lack of fatigue information for the specific carbon fiber composites, material data is taken from Aluminum7075-T6. \cite{MatWeb} The fatigue strength coefficient ($f'$) for Aluminum7075-T6 is 1466 MPa. The fatigue strength exponent ($b$) is -0.143. The fatigue strength cycles is 1e6 ($N$). The completely reversed stress amplitude was calculated from the equation $\sigma_{rev} = f'(2N)^b$
+
+		All data for materials is stored within the Material dictionary within the material{\_}properties module.
+
+		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as SD, the fatigue strength cycles for 'ND', and the 'k_1'. This was used for the WoehlerCurve class.
+
+		\section{Propellers and motors} \label{se:uav_props}
+			% https://store.tmotor.com/product/mf3218-polymer-folding-prop.html
+			%
+
+
+		\section{Power} \label{se:uav_power}
+			Thee battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are in series.
+			The batteriees have 40000mAh and supply 22.8V. The total voltage of the power system is 45.6V.The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the voltage of the entire system by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module.
+
+			The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at 0, 86.75, 0 and 0, -86.75, 0 for the mass analysis. The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
+
+		\begin{comment}
+		- The UAV is modeled as a simplified version of a UAV frame
+
+
+		[Talk about the briefly original UAV design (I do not know where to find this)
+
+		- Frame designed from 3 components
+			- Arms
+				- Annulus
+				- Design variables are radius, thickness
+				- Arm length runs from the end of the hub to the wingspan
+				- the wingspan is the minimum required to fit all propellers with 25 mm of spacing
+			- Struts
+				- Annulus
+				- Design variables are radius, thickness, and distance from center
+			- Hub
+				- Two octagonal plates with sides perpendicular to the arm
+				- the web runs in between each
+
+				- Flange thickness, web thickness, and Hub radius are design variables.
+
+		- They are assumed to be welded together
+
+		- Payload of the UAV is 45 kg
+
+		- Material Properties
+			- Table of the relevant material properties of dragon plate.
+
+		- Cross Section Properties
+			- Table of the relevant cross section properties
+
+			- Arm length is assumed to be the minimum allowable length that allows for 50mm of spacing between propellers.
+
+
+		- Hub height is determined to be 64mm to allow for clearance of the battery. [battery source]
+
+		\end{comment}
+
+
+
+	\section{Mission Profile} \label{se:mission_profile}
+		% mission profile general
 		A model of the mission profile was created to describe a potential mission with continuous position, velocity, and acceleration with respect to time. The mission profile is modeled as a series of mission profile segments. Constraints are put on the position, velocity, and acceleration at the nodes between mission profile segments. The remaining values at the nodes are calculated using basic kinematic equations. At values of time between mission segment nodes, the position, velocity, and acceleration are interpolated using cubic Hermite splines. [citation needed] Acceleration changes linearly with respect to time.
 
 		% The mission profile
-		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timeesteps were set so that maximum x-velocity to be under 12m/s. [cite nick thesis? ]
+		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timeesteps were set so that maximum x-velocity to be under 12m/s. [cite nick thesis?]
 
 		The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied.
 
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/XvY.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/XvY.png}
 			\caption{Downrange Position vs. Altitude}
 			\label{fig:xvy}
 		\end{figure}
 
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/YposvT.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/YposvT.png}
 			\caption{Altitude vs. Time}
 			\label{fig:yvt}
 		\end{figure}
 
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8]{Images/MissionProfile/XposVT.png}
+			\includegraphics[scale=0.5]{Images/MissionProfile/XposVT.png}
 			\caption{Downrange position vs. Time}
 			\label{fig:xvt}
 		\end{figure}
@@ -31,9 +238,397 @@
 		\begin{table}[htb]
 			\centering
 			\caption{Mission Profile Constraints}
-			\includegraphics[scale=0.8]{Tables/profcons.png}
+			\includegraphics[scale=1]{Tables/profcons.png}
 			\label{tab:profcons}
 		\end{table}
 
 		% My specific Architecture
 		Mission profiles are generated with a mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic matrix function. The MissionProfile contains a list of constraints added by the add{\_}constraint method, and a list of segment durations added by the add{\_}segment method. It also contains the solve{\_}kinematics and time{\_}solve method. The solve{\_}kinamatics method assembles matrixes generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The time{\_}solve method uses a cubic Hermite spline to find interpolate values at a given time.
+
+	\subsection{Thrust Calculation}\label{ss:thrust}
+
+		A calculation of the thrust profile is required in order to preform the power and fatigue analysis.
+
+		The thrust equation over the duration of the mission profile is shown below. Both the acceleration and drag forces are considered.
+
+		$$ F_\text{thrust}(t)= +-v(t)^2 * s_a * \rho * c_d + (a(t) + g) * m $$ \label{eq:thrust}
+
+		The v(t) and a(t) represent the velocity and acceleration of the mission profile at given point in time.
+
+		$s_a$ is an estimate of the surface area of UAV. This is obtained by summing the projected surface of every beam and hub segment with the projected surface area of the two batteries. It is a function of thee design variables.
+
+		$\rho = 1.2250\unit{\kilogram\per\meter\cubed}$ is the air density. $c_d = 0.256$ is the drag coefficient. [How to justify?] $g = 9.8066\unit{\meter\second\squared}$ was used for the gravity constant.
+
+		The mass is estimated as the sum of 45kg payload, the mass of the frame, and the mass of the two batteries.
+
+		To simulate the pre-liftoff, and post-landing period, a rev up and rev down period were added to the thrust forcing function. This was modeled as a linear increasing force with respect to time up until the force required for take off for the rev up period. The rev down period was modeled as a linearly decreasing force until no force is applied. A duration of 5 seconds was selected for both periods.
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.5]{Images/ThrustVTime.png}
+			\caption{Thrust vs. Time Plot}
+			\label{fig:thrust}
+		\end{figure}
+
+
+
+	\section{UAV Power} \label{se:batteeries}
+
+
+
+
+		The batteries in the design are two "Tattu 40000mAh 6S 10C 22.8V High Voltage UAV Lipo Battery Pack with AS150+AS150 Plug" [I don't know how to format this]
+		They have 40000mah and supply 22.8 volts of power.
+
+		% Archetecture.
+		Power calculations are done with the DronePower class within the drone{\_}power module. The class takes battery data, the thrust profile, and a timestep as inputs to calculate the consumed energy and power consumption over the duration of the mission.
+		% https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoo89wjweOS5x2-_3PrUxTjnsa3qDuCLy9eYPu2Dz_ErwfbAG77_
+		% "battery_mass": 4.292e-3,
+
+		% "battery_dimensions": np.array([260.5, 123.5, 63.5]),
+
+		% "battery_volts": 22.8,
+
+		% "battery_mah": 40000
+		\subsection{Power Calculation} \label{ss:power_calc}
+
+		A model of the drone power system was developed to describe the power demand of the vehicle throughout the mission. The trust at a given time is converted to power based on experimental data. [CITE] This is interpolated as a quadratic function. This allows the power draw to be calculated at any point during the mission.
+
+		Equation \ref{eq:t_to_p} shows the resulting thrust to power requirement.
+
+
+		$$  P(t) = 0.01238T(t) ^ 2 + 0.03214T(t) + 0.06548  $$ \label{eq:t_to_p}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.5]{Images/PowerVTime.png}
+			\caption{Power Vs. Time Chart for Optimized UAV}
+			\label{fig:power}
+		\end{figure}
+
+
+		\subsection{Energy Consumption Calculation} \label{ss:energy_consumption_calc}
+
+		The energy consumed over the entire mission duration was taken by subtracting the integral of the power draw with respect to time from the batteries overall energy capacity. Equation \ref{eq:p_to_e} describes the relationship between the energy remaining in the battery and the power consumed. $E_{Remaining}(t)$ is the total energy remaining between both batteries as a function of time. $E_{Capacity}$ is the energy stored by a fully charged battery. $t$ is the time since the start of the mission.
+
+
+		$$  E_{Remaining}(t) = E_{Capacity} - \int_{0}^{t} P(t)  $$ \label{eq:p_to_e}
+
+
+		The integral of the power is calculated using scipy.integrate.cumulative{\_}trapezoid to find the energy consumed. The number of timesteps was set to a finite number and is a varibale set when running the optimization function.
+
+
+		\subsection{Percent Throttle Calculation} \label{ss:throttle_calc}
+
+		The percent throttle function is calculated as a power required divided by the power required for maximum throttle. $P_{max}$ is the power required for max throttle. [According to what? Cite paper? Justification pleas?]
+
+		$$ T_{percent}(t)=P(t)/P_{max}  $$ \label{eq:Percent_throttle}
+
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.5]{Images/ThrottleVTime.png}
+			\caption{Throttle Vs. Time Chart for Optimized UAV}
+			\label{fig:throttle}
+		\end{figure}
+
+
+
+	\subsection{Perturbation Calculation} \label{ss:purtibation}
+
+		For the transient damage analysis a model of oscillations caused by propeller perturbations was also required. This as modeled as a force over time. The desired function is a sinusoidal wave with a frequency matching the propeller frequency. The amplitude was estimated to be 1\% of the thrust. Equation \ref{eq:thr} shows the completed equation for the perturbation forcing function. $\omega_{max}$ is the maximum angular velocity of the propeller.
+
+		$$F_\text{perturbation}(t)=0.01sin(\omega_{max}T_{percent}(t)t)F_\text{thrust}(t)$$ \label{eq:thr}
+
+		Figure \ref{fig:purt} shows the perturbation force over time for the optimized UAV model.
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=0.5]{Images/PurtibationVTime.png}
+			\caption{Perturbation Vs. Time Chart for Optimized UAV}
+			\label{fig:purt}
+		\end{figure}
+
+
+
+	\chapter{Finite Element Analysis} \label{ch:fea}
+
+		% Description
+		A finite element model was created to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easiy adapted for different frame models
+
+		- Describe the matrix assembly process? (mass a stiffneess)
+
+		% Archetecture - All modules
+		The finite element model is divided into several different modules. The beam{\_}system module contains the BeamSystem class. The beam{\_}type module contains BeamType class which stores beam cross section and material definitions. The beam{\_}element module contains information about each beam element in the BeamElement class. The node module contains the Node class.
+
+		A material property dictionary is stored in matrial{\_}properties module. Cross section properties are calculated using functions in the cross{\_}section{\_}properties module.
+
+		% Archetecture - The Heirachy
+		The BeamSystem class contains list of BeamElement objects and a list of Node objects. The BeamElement object. Each BeamElement object references a BeamType object. The BeamType object stores the material properties retrieved from the material{\_}module. The cross section porperties are calculated for a given cross section using functions within the cross{\_}section{\_}properties module.
+
+		% Archetecture - BeamSystem class
+		Nodes are added using the add{\_}node method in the BeamSystem class. The nodes contain a single position in the global coordinate system.
+
+		Beam elements are added to the BeamSystem class using the add{\_}beam method. The add{\_}beam method requires a refrence to a start and an end node, a BeamType object and a k node to determine the orientation of the beam's cross-section.
+
+		The boundary conditions are added with the add{\_}boundary{\_}condition method. The method requires the value of the boundary condition, the boundary condition type (x, y z, x rotation, ect.), and node reference here the boundary condition is applied.
+
+		The solve{\_}FEA method solves the stiffness and mass matrixes for the given system. The solve{\_}static, solve{\_}dynamic{\_}harmonic, and solve{\_}transient methods find the solution for given forces.
+
+
+	\section{Beam Element Formulation} \label{se:beam_element_form}
+
+		% Description
+
+		Beams are modeled as timeshenko beams elements with 12 degrees of freedom [citation needed?]. This beam model takes shear deformation effects into account. The mass for each beam is modeled as a 3D lumped mass matrix.
+
+		- More detail on mass matrix (it includes rotations)
+
+		 Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts.
+
+		Stresses and strains are calculated using the formula ??? [cite presentation]
+
+		% Archetecture - BeamElement class
+		Each beam element within the beam system is associated with a BeamElement object. The local stiffness and mass matrices are calculated with the solve{\_}stiffness{\_}matrix method.
+
+		% Archetecture - BeamElement class
+		 Intrmediate values for displacments are found using the return{\_}shape{\_}functions, return{\_}shape{\_}functions{\_}dynamic, and return{\_}shape{\_}functions{\_}dynamic method. Intermediate values of stress and strain are found using the stress{\_}strain{\_}shape{\_}function method.
+
+		\subsection{Beam Element Stress} \label{ss:seg_model}
+
+		[Discuss the strss shape function meethod?] [Cite the lecture idk]
+
+		Beam element failure is calculated for each element. The stress shape function for the beam is calculated and the maximum stress state between the starting node and the ending node of each element is found. Then the maximum between the two nodes is the maximum stress.
+
+		Stresses and strains are calculated with the find{\_}stresses, find{\_}stresses{\_}dynamic and find{\_}stresses{\_}transient methods.The failure criterion is calculated in the calc{\_}failure{\_}criterion{\_}swt method within the BeamElement class.
+
+
+	\section{UAV Segment Model} \label{se:seg_model}
+
+		% Description
+		A FEA model of single slice of the UAV frame was created. There are symmetric constraints at the midpoints of the strut beams. The center of the UAV is fixed in all 6 degrees of freedom. This assumes that the modes of frequency are symmetric. [maybe write about an asymmetric frequency model if I do that analysis] The arm and struts have an annular cross section. The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the FEA model is the width at the centroid of the corresponding trapezoidal area of the hub.
+
+		\section{Solvers} \label{se:solvers}
+
+		An FEA model was created with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force.
+
+
+
+	\subsection{Static} \label{ss:static}
+
+
+		The static solver uses point loads calculate
+		- Outputs
+			- Stress
+				- Explain how stress caclualtion is obtained
+				- calculated from the local displacment in each element
+			- Strain
+				- Explain how strain calculation is obtained
+				- calculated from the local displacment in each elemen
+			- Natural Frequency
+
+
+	\subsection{Dynamic} \label{ss:dynamic}
+		- Inputs
+			- Point Loads
+			- Frequency [Cite source]
+		- Outputs
+			- Stress Amplitude
+			- calculated from the local displacment in each element
+		- Strain Amplitude
+			- calculated from the local displacment in each element
+			- Natural Frequency
+
+	\subsection{Transient} \label{ss:transient}
+		- Inputs
+			Function describing a force at a given time
+		- Uses Newmark integration to calculate resulting transient displacements and reactions
+		- The transient stress is obtained from the transient displacements and reactions
+
+
+
+
+
+	\begin{comment}
+
+		- The FEA model is a single slice of the UAV.
+		-
+		- This means that only symmetric frequncy modes are considered.
+		- Asymmetric modes can be considered in a seperate analysis by crating asymmetrical boundary conditions.
+		- Each beam is defined as an annular cross section.
+		-
+		- The width of the cross section is calculate to be the centroid of the trapezoidal section of the octogonal hub being modeeled by the I beam
+
+
+
+
+		[include figure]
+	\end{comment}
+
+	% Archetcture
+	The UAV segment model is generated in the DroneFEA class within the drone{\_}fea module. This module requires a DroneGeometry object as input. A BeamSystem object is generated to perform the FEA analysis. The nodes are generated using the create{\_}drone{\_}slice{\_}node method which adds nodes to the BeamSystem object. The  create{\_}drone{\_}slice{\_}beams method calculates the hub section parameters and adds the beams to the BeamSystem object. The boundary{\_}conditions{\_}slice method applies the boundary conditions to the beam model.
+
+	\section{Optimization} \label{se:optimization}
+
+
+		The problem is formulated as follows:
+
+		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
+
+		subject to:
+
+		$$g_j(x) \le 0; j = 0, 1, 2, ..., J$$
+		$$x_i^L \le x_i \le x_i^U$$
+
+		design variables:
+
+		\begin{itemize}
+			\item $d_a$: arm diameter,
+			\item $t_a$: arm thickness,
+			\item $d_s$: strut diameter,
+			\item $t_s$: strut thickness,
+			\item $r_s$: strut distance from center,
+			\item $t_f$: hub flange thickness,
+			\item $t_w$: hub web thickness
+			\item $h_r$: hub radius
+		\end{itemize}
+
+		derived variables:
+		\begin{itemize}
+			\item $d_{tip}$: Deflection at tip
+			\item $\sigma_{max}$: Maximum stress from bending
+			\item $f_{amp}$: Amplitude of displacement at the tip of the uav arm
+			\item $D$: Damage per mission
+			\item $ E_{used}$: Energy used over th duration of the mission
+			\item $ E_{total}$: Energy used over th duration of the mission
+
+		\end{itemize}
+
+		design parameters:
+		\begin{itemize}
+			\item $d_{allowable}$: Deflection allowable
+			\item $\sigma_{allowable}$: Stress allowable from bending
+			\item $R_{allowable}$: Allowable amplitude displacement ratio
+			\item $n_{missions} $: number of missions before damage
+		\end{itemize}
+
+		Constraints: \\
+		\large
+
+		Limit on deflection from bending by force required to lift the UAV. \\
+		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = d_{tip} \le d_{allowable} $$
+
+		Limit on stress from bending by force required to lift the UAV. \\
+		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = \sigma_{max} \le \sigma_{allowable} $$
+
+
+		Limit on amplitude of displacement given a forcing function based on the propeller speed of the UAV. \\
+		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = \frac{f_{amp}}{d_{tip}} \le R_{allowable} $$
+
+
+		Limit on the damage the UAV during a mission. \\
+		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = D * n_{missions} \le 1 $$
+
+		Energy
+		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = E_{used} / E_{total} \le 0.8 $$
+
+		The bounds on design variable were determined by limits on commercially available carbon fiber based on the dragon plate website.
+
+		$$ 9\text{mm} \le r_a \le 50.0\text{mm} $$
+		$$ 0.254\text{mm} ≤ t_a ≤ 3.175\text{mm} $$
+		$$ 9\text{mm} ≤ r_s ≤ 50.0\text{mm} $$
+		$$ 0.254\text{mm} ≤ t_s ≤ 3.175\text{mm} $$
+		$$ 400\text{mm} ≤ d_s ≤ 1127.3\text{mm} $$
+		$$ 100\text{mm} ≤ h_l ≤ 1127.3\text{mm} $$
+
+		% "arm_diameter": (9, 50),
+		% "arm_thickness": (0.254, 3.175),
+		% "strut_diameter": (9, 50),
+		% "strut_thickness": (0.254, 3.175),
+		% "strut_distance": (400, 1127.3),
+		% "hub_radius": (100, 400),
+		% "hub_flange_thickness": (0.7, 12.7),
+		% "hub_web_thickness": (0.7, 3.175)
+
+		- Optimization algorithm used is SLSQP method using scipi's minimization function.
+
+
+	\subsection{Objective Function and Design Variables} \label{ss:desvar}
+
+
+	\subsection{Optimization parameters} \label{ss:optpara}
+
+
+	\subsection{Constraints} \label{ss:consts}
+
+
+	\subsubsection{Boundaries} \label{sss:Boundss}
+
+		Each design variable has a boundary condition applied to it. Arm diameter
+		Equations \ref{eq:bound_da} - \ref{eq:bound_hr} describe each boundary condition. The arm diameter ($d_a$), arm thickness ($t_a$), strut diameter ($s_d$), strut thickness ($t_s$) boundary conditions were obtained through the minimum and maximum pipe diameter and thickness for braided carbon fiber found on AllRED's Dragonplate Website. \cite{DragonPlate}. The hub flange thickness ($t_f$) and hub web thickness ($t_w$) boundary conditions were taken from the minimum and maximum thickness of carbon fiber sheets. The maximum boundary conditions on hub radius ($h_r$) and strut distance from the center ($r_s$) are the distance from the center of the UAV to the propellers so the struts and hub stay within the frame. The minimum constraint of 197.5mm for hub radius ($h_r$) and strut distance ($r_s$) is the minimum hub radius for a circle to circumscribe both batteries with their given positions and dimensions.
+
+		\begin{itemize}
+			\item $d_a$: arm diameter,
+			\item $t_a$: arm thickness,
+			\item $d_s$: strut diameter,
+			\item $t_s$: strut thickness,
+			\item $r_s$: strut distance from center,
+			\item $t_f$: hub flange thickness,
+			\item $t_w$: hub web thickness
+			\item $h_r$: hub radius
+		\end{itemize}
+
+		$$ 9\text{mm} \le d_a \le 50.0\text{mm} $$ \label{eq:bound_da}
+		$$ 0.254\text{mm} \le t_a \le 3.175\text{mm} $$ \label{eq:bound_ta}
+		$$ 9\text{mm} \le d_s \le 50.0\text{mm} $$ \label{eq:bound_ds}
+		$$ 0.254\text{mm} \le t_s \le 3.175\text{mm} $$ \label{eq:bound_ts}
+		$$ 197.5\text{mm} \le r_s \le 1127.3\text{mm} $$ \label{eq:bound_rs}
+		$$ 0.7\text{mm} \le t_f \le 12.7\text{mm} $$ \label{eq:bound_tf}
+		$$ 0.7\text{mm} \le t_w \le 12.7\text{mm} $$ \label{eq:bound_tw}
+		$$ 197.5\text{mm} \le h_r \le 1127.3\text{mm} $$ \label{eq:bound_hr}
+
+	\subsubsection{Displacement} \label{sss:displacement}
+
+		The static FEA solver was used to calculate the maximum displacement magnitude. To simulate the loading at hover, the loading is located at the end of the UAV arm pointing upward while the center of the UAV is fixed in displacement and rotation. The load is a point load and is equivalent to the mass of the payload multiplied by gravity divided by the number of blades.
+
+		The formula for the constraint is shown in \ref{eq:opt_disp}. $d_{max}$ is th maximum displacement of the UAV frame with the described loading. $d_{allowable}$ is the maximum allowable displacement,
+
+		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{max} \le d_{allowable} $$ \label{eq:opt_disp}
+
+
+	\subsubsection{Stress} \label{sss:stress}
+
+		The loading described for the displacement constraint was also used for the stress constraint. The static FEA solver was used. The allowable stress is determined by the maximum stress of the material and a factor of safety.
+
+		$\sigma_{max}$ is the maximum nodal bending stress in the FEA beam system as calculated by the . $\sigma_{yeild}$ is the tension yield strength of the material. $\text{FOS}$ is the Factor of Safety associated with the stress constraint.
+
+		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{max} \le \sigma_{yield} * \text{FOS} $$
+
+	\subsubsection{Frequency} \label{sss:frquency}
+
+		The objective of the frequency constraint is to ensure that the frequency experienced by the propeller is not near the natural frequency of the vehicle.
+
+		Two analyses were done. The static analysis and the frequency analysis. The static analysis is equivalent to the on displacement constraint. A frequency analysis was done with a amplitude equivalent to the magnitude of the force in the static analysis. Formula \ref{eq:opt_freq} describes the ratio o f the amplitude of displacement ($d_{amplitude}$) in the dynamic analysis to the resulting displacement of static analysis $(d_{static}$). The should be less than the allowable ratio ($R_{allowable}$). The magnitude of these force could be any number, the payload was chosen so the static analysis could be reused, saving computation time. [Justify??? Source??? ]
+
+		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \frac{d_{amplitude}}{d_{static}} \le R_{allowable} $$ \label{eq:opt_freq}
+
+
+		The frequency of the oscillating loading function is described as two times the maximum rad/s of the propeller times the maximum percent throttle experienced during the mission profile. The forcing function is assumed to be twice propeller speed due to the propeller having two blades.
+
+		This is used for the frequency of the oscillating force for the dynamic solver. The location of the force and boundary conditions are the same as the static analysis.
+
+
+	\subsubsection{Damage} \label{sss:damage}
+
+
+		- Sum of oscillating and thrust force profiles
+		- Uses solver
+		- Raincounting
+
+	 	% - "mission_count_damage":10000,
+		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = D * n_{missions} \le 1 $$
+	\subsubsection{Energy} \label{sss:energy}
+
+		The objeective of this constraint is to keep battery energy above desired levels for the duration of the mission. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. $E_{used}$ is equal to $E_{Capacity} - E_{Remaining}(t)$ where t is the full duration of the power mission profile. $E_{Capacity}$ is the total storage of the battery. $E_{\%remaining}$ is a parameter which is equal to the amount of percent energy remaining desired after landing.
+
+		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{Capacity} \le E_{\%remaining} $$

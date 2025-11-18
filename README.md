@@ -213,3 +213,5 @@ Refine outline
 - Discuss Stress Failure Criterion: Smith Watson Tepper? Nu-Daniel?
   
 
+- Change the damage calculation to actually takee the maximum bending streess
+- 
