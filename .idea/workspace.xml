@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlotProfiles.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PlotProfiles.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.bbl" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.bbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.blg" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.blg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lof" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lof" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lot" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.out" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.out" afterDir="false" />
@@ -21,8 +15,6 @@
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.toc" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis_refs.bib" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis_refs.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tst.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,8 +317,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>214</line>
-          <option name="timeStamp" value="26" />
+          <line>579</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

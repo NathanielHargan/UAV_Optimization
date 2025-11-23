@@ -228,7 +228,7 @@
 	
 		There are two other parameters related to the UAV frame geometry dimensions that were not selected as variables. The wingspan and the hub height. 
 			
-		The inner hub height is a parameter set to 64mm, which is the near the minimum height required to fit the UAV battery between the to plates. The actual batteies would not fit on this frame model, because the hub web ould intersect the battery. Further work could be done refining the mesh to allo for more realistic battery storage. 
+		The inner hub height is a parameter set to 64mm, which is the near the minimum height required to fit the UAV battery between the to plates. The actual batteies would not fit on this frame model, because the hub web ould intersect the battery. Further work could be done refining the mesh to allow for more realistic battery storage. 
 		
 		The distance from the center of the uav to the propeller is calculated to be 1127.3mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm. 
 		
@@ -465,7 +465,7 @@
 		% Description
 		A finite element model was created to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easiy adapted for different frame models
 		
-		- Describe the matrix assembly process? (mass a stiffneess)
+		[Describe the matrix assembly process? (mass a stiffneess)]
 		
 		% Archetecture - All modules
 		The finite element model is divided into several different modules. The beam{\_}system module contains the BeamSystem class. The beam{\_}type module contains BeamType class which stores beam cross section and material definitions. The beam{\_}element module contains information about each beam element in the BeamElement class. The node module contains the Node class. 
@@ -505,7 +505,7 @@
 	
 		\subsection{Beam Element Stress} \label{ss:seg_model}
 		
-		[Discuss the strss shape function meethod?] [Cite the lecture idk]
+		[Discuss the stress shape function meethod?] [Cite the lecture idk]
 		
 		Beam element failure is calculated for each element. The stress shape function for the beam is calculated and the maximum stress state between the starting node and the ending node of each element is found. Then the maximum between the two nodes is the maximum stress.   
 		
@@ -517,45 +517,47 @@
 		% Description
 		A FEA model of single slice of the UAV frame was created. There are symmetric constraints at the midpoints of the strut beams. The center of the UAV is fixed in all 6 degrees of freedom. This assumes that the modes of frequency are symmetric. [maybe write about an asymmetric frequency model if I do that analysis] The arm and struts have an annular cross section. The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the FEA model is the width at the centroid of the corresponding trapezoidal area of the hub.
 			
+		% Archetcture
+		The UAV segment model is generated in the DroneFEA class within the drone{\_}fea module. This module requires a DroneGeometry object as input. A BeamSystem object is generated to perform the FEA analysis. The nodes are generated using the create{\_}drone{\_}slice{\_}node method which adds nodes to the BeamSystem object. The  create{\_}drone{\_}slice{\_}beams method calculates the hub section parameters and adds the beams to the BeamSystem object. The boundary{\_}conditions{\_}slice method applies the boundary conditions to the beam model. 
+		
 		\section{Solvers} \label{se:solvers}
 			
 		An FEA model was created with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
 		
-	
 		
-	\subsection{Static} \label{ss:static}
-		
-		
-		The static solver uses point loads calculate
-		- Outputs 
-			- Stress 
-				- Explain how stress caclualtion is obtained
-				- calculated from the local displacment in each element
-			- Strain
-				- Explain how strain calculation is obtained
-				- calculated from the local displacment in each elemen
-			- Natural Frequency
-				
-		
-	\subsection{Dynamic} \label{ss:dynamic}
-		- Inputs
-			- Point Loads
-			- Frequency [Cite source]
-		- Outputs 
-			- Stress Amplitude
-			- calculated from the local displacment in each element
-		- Strain Amplitude
-			- calculated from the local displacment in each element
-			- Natural Frequency
+		\subsection{Static} \label{ss:static}
 			
-	\subsection{Transient} \label{ss:transient}
-		- Inputs
-			Function describing a force at a given time
-		- Uses Newmark integration to calculate resulting transient displacements and reactions
-		- The transient stress is obtained from the transient displacements and reactions
-	
-	
-	
+			
+			The static solver uses point loads calculate
+			- Outputs 
+				- Stress 
+					- Explain how stress caclualtion is obtained
+					- calculated from the local displacment in each element
+				- Strain
+					- Explain how strain calculation is obtained
+					- calculated from the local displacment in each elemen
+				- Natural Frequency
+					
+			
+		\subsection{Dynamic} \label{ss:dynamic}
+			- Inputs
+				- Point Loads
+				- Frequency [Cite source]
+			- Outputs 
+				- Stress Amplitude
+				- calculated from the local displacment in each element
+			- Strain Amplitude
+				- calculated from the local displacment in each element
+				- Natural Frequency
+				
+		\subsection{Transient} \label{ss:transient}
+			- Inputs
+				Function describing a force at a given time
+			- Uses Newmark-Beta integration to calculate resulting transient displacements and reactions
+			- The transient stress is obtained from the transient displacements and reactions
+		
+		
+		
 
 	
 	\begin{comment}
@@ -573,22 +575,13 @@
 		
 		[include figure]
 	\end{comment}
-	
-	% Archetcture
-	The UAV segment model is generated in the DroneFEA class within the drone{\_}fea module. This module requires a DroneGeometry object as input. A BeamSystem object is generated to perform the FEA analysis. The nodes are generated using the create{\_}drone{\_}slice{\_}node method which adds nodes to the BeamSystem object. The  create{\_}drone{\_}slice{\_}beams method calculates the hub section parameters and adds the beams to the BeamSystem object. The boundary{\_}conditions{\_}slice method applies the boundary conditions to the beam model.  
+	 
 	
 	\section{Optimization} \label{se:optimization}
 	
-	
-		The problem is formulated as follows:
 		
-		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
 		
-		subject to:
-		
-		$$g_j(x) \le 0; j = 0, 1, 2, ..., J$$
-		$$x_i^L \le x_i \le x_i^U$$
-		
+		\begin{comment}
 		design variables: 
 		
 		\begin{itemize}
@@ -621,52 +614,21 @@
 			\item $n_{missions} $: number of missions before damage
 		\end{itemize}
 		
-		Constraints: \\
-		\large
-		
-		Limit on deflection from bending by force required to lift the UAV. \\
-		$$ g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = d_{tip} \le d_{allowable} $$
-		
-		Limit on stress from bending by force required to lift the UAV. \\
-		$$ g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = \sigma_{max} \le \sigma_{allowable} $$
-		
-		
-		Limit on amplitude of displacement given a forcing function based on the propeller speed of the UAV. \\
-		$$ g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = \frac{f_{amp}}{d_{tip}} \le R_{allowable} $$
-		
-		
-		Limit on the damage the UAV during a mission. \\
-		$$ g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = D * n_{missions} \le 1 $$
-		
-		Energy
-		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w,h_l) = E_{used} / E_{total} \le 0.8 $$
-		
-		The bounds on design variable were determined by limits on commercially available carbon fiber based on the dragon plate website.  
-		
-		$$ 9\text{mm} \le r_a \le 50.0\text{mm} $$
-		$$ 0.254\text{mm} ≤ t_a ≤ 3.175\text{mm} $$
-		$$ 9\text{mm} ≤ r_s ≤ 50.0\text{mm} $$
-		$$ 0.254\text{mm} ≤ t_s ≤ 3.175\text{mm} $$
-		$$ 400\text{mm} ≤ d_s ≤ 1127.3\text{mm} $$
-		$$ 100\text{mm} ≤ h_l ≤ 1127.3\text{mm} $$
-		
-		% "arm_diameter": (9, 50),
-		% "arm_thickness": (0.254, 3.175),
-		% "strut_diameter": (9, 50),
-		% "strut_thickness": (0.254, 3.175),
-		% "strut_distance": (400, 1127.3),
-		% "hub_radius": (100, 400),
-		% "hub_flange_thickness": (0.7, 12.7),
-		% "hub_web_thickness": (0.7, 3.175)
-		
 		- Optimization algorithm used is SLSQP method using scipi's minimization function.
-		   
+		 \end{comment}
 		
-	\subsection{Objective Function and Design Variables} \label{ss:desvar}
+	\subsection{Objective Functions} \label{ss:desvar}
 	
-	
-	\subsection{Optimization parameters} \label{ss:optpara}
-	
+		The problem is formulated as follows:
+		
+		$$ \min \textnormal{mass}(d_a,t_a,d_s,t_s,r_s,t_f,t_w) $$
+		
+		subject to constraints:
+		
+		$$g_j(x) \le 0; j = 0, 1, 2, ..., J$$
+		$$x_i^L \le x_i \le x_i^U$$
+		
+		The objective function is to minimize the mass of the vehicle. The mass is calculated in the DroneMass class within the drone{\_}mass module. The DroneMass class takes a DroneGeometry object as an input. It uses the material information, cross-section properties, and Beam and hub coordinates within the DroneGeometry object to calculate the mass of the UAV frame. 
 	
 	\subsection{Constraints} \label{ss:consts}
 	
@@ -732,7 +694,7 @@
 		The damage constraint is imposed in order to limit damage caused by the vibrations in the vehicle. The finite element transient solver is used for this constraint. The force is applied to the propeller of the sector model. The boundary conditions are the same in this constraint. The thrust required to achieve the mission profile ($F_\text{thrust}(t)$) discussed in subsection \ref{ss:thrust} is added to the perturbation function ($F_\text{perturbation}(t)$) described in subsection \ref{ss:purtibation}.
 		This function is divided in eight because it is applied to the sector model.
 		
-		The mission duration is divided into equal time-steps according to the $N_{transient_timesteps}$ parameter. The number of time-steps for the transient solver is $N_{transient_timesteps}$. The constants used for Newmark-beta integation are \beta = 0.25 and \gamma = 0.5. The results for the maximum bending stress over time from in the beams are taken. The Rainflow module in the PyLife library is used and it uses the four-point Rainflow-counting algorithm to transfer the time-varying load into sets of constant amplitude stress reversals. This is used with the Woehler curve data to calculate the total damage accumulated over the mission. This is done using the LoadCollective class in the PyLife library. 
+		The mission duration is divided into equal time-steps according to the $N_{transient_timesteps}$ parameter. The number of time-steps for the transient solver is $N_{transient_timesteps}$. The constants used for Newmark-beta integation are $\beta = 0.25$ and $\gamma = 0.5$. The results for the maximum bending stress over time from in the beams are taken. The Rainflow module in the PyLife library is used and it uses the four-point Rainflow-counting algorithm to transfer the time-varying load into sets of constant amplitude stress reversals. This is used with the Woehler curve data to calculate the total damage accumulated over the mission. This is done using the LoadCollective class in the PyLife library. 
 		
 		One limitation of this analysis is that material data is fatigue material data is limited to aluminum as fatigue data for the carbon fiber composite has not been obtained as that is outside thee scope of this thesis. 
 	
@@ -741,10 +703,40 @@
 		
 	\subsubsection{Energy} \label{sss:energy}
 	
-		The objeective of this constraint is to keep battery energy above desired levels for the duration of the mission. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. $E_{used}$ is equal to $E_{Capacity} - E_{Remaining}(t)$ where t is the full duration of the power mission profile. $E_{Capacity}$ is the total storage of the battery. $E_{\%remaining}$ is a parameter which is equal to the amount of percent energy remaining desired after landing. 
+		The objective of this constraint is to keep battery energy above desired levels for the duration of the mission. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. $E_{used}$ is equal to $E_{Capacity} - E_{Remaining}(t)$ where t is the full duration of the power mission profile. $E_{Capacity}$ is the total storage of the battery. $E_{\%remaining}$ is a parameter which is equal to the amount of percent energy remaining desired after landing. 
 		
 		$$ g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = E_{used} / E_{Capacity} \le E_{\%remaining} $$
 	
+	\subsection{Optimization parameters} \label{ss:optpara}
+	
+	\subsection{Optimization Architecture}
+		\begin{comment}
+		self.active_constraints = self.parameters_defaults.copy()
+		self.parameters = self.parameters_defaults.copy()
+		self.design_variables_initial_guess = self.design_variables_initial_guess_defaults.copy()
+		self.constraints_constants = self.constraints_constants_defaults.copy()
+		self.simulation_settings = self.simulation_settings_defaults.copy()
+		self.boundaries = self.boundaries_defaults.copy()
+		self.drone_geometry = 0
+		self.fixed_design_variables = self.fixed_design_variables_defaults.copy()
+		\end{comment}
+		The optimization module contains the Optimizer class. This class runs code related to the optimization algorithm. The primary inputs are a dictionary of active constraints, parameters, an initial guess, parameters related to the fidelity of the simulation, boundary conditions, and a dictionary of design variables that are fixed. 
+		
+		The active{\_}constraints dictionary has a boolean associated with each constraint. These allow the user to turn off constraints if they are inactive to save on computation time. The parameters dictionary contains design parameters. This includes number of blades, propeller radius, propeller spacing, payload, air density, drag coefficient, maximum propeller rotations per minute, battery mass, battery dimensions, battery volts, battery milliamp hours, rev up time, rev down time, gravity, and hub height. These can all be changed easily to test various UAV designs and flight conditions.
+		
+		The parameters related to the fidelity of the simulation are the number of I-beams describing the hub, the number of time-steps in the transient load simulation, and the number of time-steps for integration for the energy usage calculation. The boundary conditions are a dictionary with each constraint associated with a touple expressing the range of acceptable values. 
+		
+		Thee dictionary of fixed design variables has each constraint either associated with a number, or is set to false. If set to a number the design variable is fixed and is not analyzed by the optimizer. This is done after it is determined that the boundary condition is the active constraint so the design variable does not need to be considered. Fixing the design variables saves on computation time. 
+		
+		First the independent{\_}properties{\_}calc method is run in order to preform necessary calculations not associated with any design varaibles. This includes the creating the mission profile, BatterySystem, and Battery objects. 
+		
+		The mass method calculates the mass of the UAV given a set of design variables. The constraint{\_}calculation method runs a set of constraints given a set of design variables and active constraints. The formulation of eeach constraint is set up so that if the result of the constraint is above 1, the constraint is violated.
+		  
+		The run_opt method runs the optimizer. The Scypi library's scipy.optimize.minimize is used with the the 'SLSQP' method. Max iterations are set to 10000 and the error tolerance is set to 1e-18. The function outputs the resulting design variables as well as the result of thee objective function.
+		
+		Test_results method runs all constraints to ensure that an optimized result does not violate any constraints that were set to inactive. 
+		
+		
 	\chapter{Results} \label{ch:results}
 		- The initial guess	were based off of measurements from the original UAV design. 
 		- arm diameter, strut diameter, hub radius, flange thickness, and web thickness were all found to converge to boundary conditions
@@ -781,7 +773,7 @@
 		\end{comment}
 		
 		-Sensitivity analysis 
-			- The value of the design variables which did not converge to the boundary conditions were varied by +-0.1\% of thier values to test the optimal solution.   
+			- The value of the design variables which did not converge to the boundary conditions were varied by +-0.1\% of their values to test the optimal solution.   
 			\begin{table}[htb]
 								\centering
 								\caption{}

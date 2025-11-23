@@ -114,7 +114,7 @@ class DronePower:
 
     def throttle_ratio_calc(self, max_power_full_battery_kw, t):
         max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
-        return self.power_at_time(t) / (max_throttle_power)
+        return self.power_at_time(t) / (max_throttle_power) #t-motor KV-95
 
     def freq_trans_calc(self, rpm_max):
         frequency = np.zeros(len(self.timesteps))
