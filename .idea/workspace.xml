@@ -7,7 +7,7 @@
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,8 +317,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py</url>
-          <line>156</line>
-          <option name="timeStamp" value="33" />
+          <line>87</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

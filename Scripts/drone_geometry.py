@@ -30,18 +30,15 @@ class DroneGeometry:
         self.hub_nodes_coords = np.zeros([blade_num, hub_sections+1, 3])
 
         self.beam_widths = np.zeros([hub_sections])
-        h = math.cos(math.pi/blade_num) * hub_radius
-        bh_ratio = self.hub_edge_length / h
-        h_seg = h/hub_sections
+        h = hub_radius / hub_sections
+        b_max = 2 * math.tan(math.pi/blade_num) * hub_radius
         for i in range(hub_sections):
-            h_i = h * (i/hub_sections)
-            h_ip1 = h * ((i+1)/hub_sections)
-            w_i = h_i * bh_ratio
-            w_ip1 = h_ip1 * bh_ratio
-            # dist from h_i+1
-            centroid_dist = (h_seg /3) * (w_ip1 + 2 * w_i) / (w_ip1 + w_i)
-            width_at_centroid = bh_ratio * (h_ip1 - centroid_dist)
-            self.beam_widths[i] = width_at_centroid
+            a = b_max * (i)/hub_sections
+            b = b_max * (i + 1)/hub_sections
+            centroid_dist = (h /3) * (a * 2 + b) / (a + b)
+            trap_end_loc = hub_radius * (i+1)/hub_sections
+            centroid_global = trap_end_loc - centroid_dist
+            self.beam_widths[i] = b_max * centroid_global/hub_radius
 
 
 
