@@ -144,7 +144,7 @@ class BeamElement:
             self.beam_type.material_properties["mass density"],
             self.mass_moment_matrix
         )
-
+        self.transformation_matrix_pos = FEA_3D.transformation_matrix(self.direction, self.k_node)
         self.transformation_matrix = FEA_3D.transformation_matrix_element(self.direction, self.k_node)
         self.transformation_matrix_node = FEA_3D.transformation_matrix_node(self.direction, self.k_node)
         self.transformation_matrix_node_inv = np.linalg.inv(self.transformation_matrix_node)

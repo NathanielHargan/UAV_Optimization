@@ -214,4 +214,9 @@ Refine outline
   
 
 - Change the damage calculation to actually takee the maximum bending streess
-- 
+
+
+
+
+12/3
+- Fix Drone 8 symm modl so mass momnt works 
