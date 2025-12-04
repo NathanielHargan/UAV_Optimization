@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_element.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_element.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,29 +46,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.executor": "Run",
-    "Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints.executor": "Run",
-    "Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer.executor": "Run",
-    "Python tests.Python tests for beam_system_tests.MyTestCase.executor": "Run",
-    "Python tests.Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus.executor": "Run",
-    "Python tests.Python tests for beam_system_tests.MyTestCase.test_center_multidim.executor": "Run",
-    "Python tests.Python tests in beam_mass_test.py.executor": "Run",
-    "Python tests.Python tests in beam_system_tests.py.executor": "Run",
-    "Python tests.Python tests in optimization_tests.py.executor": "Run",
-    "Python.beams.executor": "Run",
-    "Python.drone_mass.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Desktop/UAV_Mission/Thesis/Tables",
-    "settings.editor.selected.configurable": "ml.llm.LLMConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.test_cantilever_annulus.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for beam_system_tests.MyTestCase.test_center_multidim.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in beam_mass_test.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in beam_system_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in optimization_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.beams.executor&quot;: &quot;Run&quot;,
+    &quot;Python.drone_mass.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Desktop/UAV_Mission/Thesis/Tables&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Desktop\UAV_Mission\Thesis\Tables" />
@@ -319,13 +317,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py</url>
-          <line>55</line>
+          <line>156</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py</url>
-          <line>56</line>
-          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

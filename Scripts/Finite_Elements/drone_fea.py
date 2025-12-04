@@ -122,14 +122,16 @@ class DroneFEA:
                 arm_beam,
                 f'strut_node_{i}',
                 f'outer_node_{i}',
-                [0, 0, 1])
+                [0, 0, 1],
+                f'outer_arm_beam_{i}')
 
             # Strut to Hub
             self.beam_system.add_beam(
                 arm_beam,
                 "strut_node_" + str(i),
                 'hub_node_' + str(self.hub_sections) + '_' + str(i),
-                [0, 0, 1])
+                [0, 0, 1],
+                f'inner_arm_beam_{i}')
 
             parameters = self.hub_beam.cross_section_parameters
             parameters[0] = self.geometry.beam_widths[0]
@@ -140,7 +142,8 @@ class DroneFEA:
                 hub_beam_type,
                 "origin",
                 'hub_node_1_' + str(i),
-                [0, 0, 1])
+                [0, 0, 1],
+            f'hub_beam_0_{i}')
 
             for j in range(self.hub_sections-1):
                 parameters = self.hub_beam.cross_section_parameters
@@ -151,7 +154,8 @@ class DroneFEA:
                     hub_beam_type,
                     'hub_node_' + str(j+1) + '_' + str(i),
                     'hub_node_' + str(j+2) + '_' + str(i),
-                    [0, 0, 1])
+                    [0, 0, 1],
+                f'hub_beam_{j+1}_{i}')
 
 
         # Final to 0
@@ -159,7 +163,8 @@ class DroneFEA:
             strut_beam,
             "strut_node_" + str(self.geometry.blade_num-1),
             "strut_node_0",
-            [0, 0, 1])
+            [0, 0, 1],
+            f'strut_beam_{self.geometry.blade_num-1}')
 
         for i in range(0,  self.geometry.blade_num-1):
             # Strut to Strut
@@ -167,7 +172,8 @@ class DroneFEA:
                 strut_beam,
                 f'strut_node_{i}',
                 f'strut_node_{i+1}',
-                [0, 0, 1])
+                [0, 0, 1],
+            f'strut_beam_{i}')
 
     def rotate_drone_nodes(self, x, y, z):
         self.beam_system.rotate_beam_system(x, y, z)
