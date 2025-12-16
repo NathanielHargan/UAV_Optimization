@@ -219,4 +219,7 @@ Refine outline
 
 
 12/3
-- Fix Drone 8 symm modl so mass momnt works 
+- Fix Drone 8 symm model so mass moment works 
+
+
+- Test more initial guesses

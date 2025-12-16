@@ -1,8 +1,10 @@
 import unittest
 import numpy as np
 from Scripts.Optimization.optimization import Optimizer
-from Scripts.Finite_Elements.beam_mass import BeamMass
+from Scripts.Mass_Analysis.beam_mass import BeamMass
 from Scripts.Finite_Elements.drone_fea import DroneFEA
+from Scripts.Finite_Elements.Beam_FEA_System.beam_system import BeamSystem
+from Scripts.Finite_Elements.Beam_FEA_System.beam_type import BeamType
 from Scripts.drone_geometry import DroneGeometry
 
 class MyTestCase(unittest.TestCase):
@@ -55,16 +57,18 @@ class MyTestCase(unittest.TestCase):
         print(res.x)
 
         geo = opt.drone_geometry
+        print(geo.nominal_rad)
+        print(geo.arm_beam.cross_section_properties["area"])
         sec = 50
-        geo_update = DroneGeometry( geo.name + "_update", geo.nominal_rad, geo.hub_radius, geo.strut_pos, geo.blade_num, geo.arm_beam, geo.strut_beam, geo.hub_beam, sec, geo.batteries)
+        geo_update = DroneGeometry(geo.name + "_update", geo.nominal_rad, geo.hub_radius, geo.strut_pos, geo.blade_num, geo.arm_beam, geo.strut_beam, geo.hub_beam, sec, geo.batteries)
         geo_update.calc_node_coords()
 
         d1_fea = DroneFEA(geo_update)
         d1_fea.create_drone_nodes()
         d1_fea.create_drone_beams()
         d1_fea.boundary_conditions()
-        print("beam witdhs (mm): ", geo_update.beam_widths)
 
+        print("beam widths (mm): ", geo_update.beam_widths)
 
         mass_analysis = BeamMass(d1_fea.beam_system)
         print("Beam Count: ", len(d1_fea.beam_system.beams))
@@ -84,6 +88,41 @@ class MyTestCase(unittest.TestCase):
         print("hub segment length (mm):",  d1_fea.beam_system.beams[d1_fea.beam_system.select_element(f'hub_beam_0_0')].length)
         print("hub segment length * seg (mm):",  d1_fea.beam_system.beams[d1_fea.beam_system.select_element(f'hub_beam_0_0')].length * sec)
         print("hub segment 0 area (mm^2):",  d1_fea.beam_system.beams[d1_fea.beam_system.select_element(f'hub_beam_0_0')].beam_type.cross_section_properties["area"])
+
+        # C:\Users\Nathan\anaconda3\condabin\conda
+        # create enviroment to add pip (add pip to conda)
+        # install pylife
+
+        mass_initial = 1
+        moment_initial = 1
+
+        print(mass_analysis.total_moment_of_inertia_ev)
+
+        c1 = 1/mass_initial # normalize with respect to previous design
+        c2 = 1/moment_initial
+        # minimize trace of a matrix
+        objective = c1 * mass_analysis.total_mass + c2 * (1/3) * (mass_analysis.total_moment_of_inertia_principal)
+
+    def test_simple_beam(self):
+        I_Beam =  BeamType("i_beam",
+                                       [138.07,
+                                        65.4,
+                                        0.7,
+                                        0.7],
+                                       "Carbon Fiber",
+                                       "hub_beam")
+        beam_system = BeamSystem("beam")
+        beam_system.add_node( np.array([0, -125, 0]), "n1")
+        beam_system.add_node( np.array([0, 125, 0]), "n2")
+        beam_system.add_beam(I_Beam, "n1", "n2", np.array([0, 0, 1]), "beam")
+        mass_analysis = BeamMass(beam_system)
+        print(mass_analysis.total_moment_of_inertia * 1000)
+        '''
+        onshape results: 
+        443.82836
+        159.748
+        471.075
+        '''
 
 if __name__ == '__main__':
     unittest.main()

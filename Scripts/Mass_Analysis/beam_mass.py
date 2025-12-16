@@ -10,7 +10,7 @@ class BeamMass:
         self.beam_centroids = np.zeros([beam_num, 3])
         self.total_mass = 0
         self.center_of_mass = np.zeros(3)
-        self.beam_moment_of_inertia = np.zeros([beam_num,3, 3])
+        self.beam_moment_of_inertia = np.zeros([beam_num, 3, 3])
         self.total_moment_of_inertia = np.zeros([3, 3])
 
         for i, beam in enumerate(self.beams):
@@ -36,7 +36,13 @@ class BeamMass:
 
         for i, beam_cent in enumerate(self.beam_centroids):
             displacement = beam_cent - self.center_of_mass
-            translation = self.beam_mass[i] * ((np.dot(displacement, displacement) * np.identity(3)) - np.outer(displacement, displacement))
+            translation = self.beam_mass[i] * ((np.dot(displacement, displacement) * np.identity(3)) - np.outer(displacement, displacement)) #  Find source
             self.beam_moment_of_inertia[i] = self.beam_moment[i] + translation
             self.total_moment_of_inertia += self.beam_moment_of_inertia[i]
+
+        eigenvalues, eigenvectors = np.linalg.eig(self.total_moment_of_inertia)
+        self.total_moment_of_inertia_ev = eigenvalues
+        self.total_moment_of_inertia_principal = np.sum(eigenvalues) * (1/3)
+
+
 

@@ -102,7 +102,6 @@ class DroneFEA:
             0,
             0]),
             'origin')
-
         for i in range(self.geometry.blade_num):
             for j in range(1, self.hub_sections+1):
                 hub_node_name = 'hub_node_' + str(j) + '_' + str(i)

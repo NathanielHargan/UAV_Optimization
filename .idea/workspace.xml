@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="8/20">
+      <change beforePath="$PROJECT_DIR$/.idea/UAV_Mission.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UAV_Mission.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/beam_mass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/beam_mass_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/drone_fea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mass_Analysis/mass_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/visualization.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,9 +25,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Unit Test" />
         <option value="Jupyter Notebook" />
         <option value="Python Script" />
-        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -35,7 +43,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/NathanielHargan/UAV_Mission.git&quot;,
-    &quot;accountId&quot;: &quot;cc3df61b-fba2-477f-9928-bfe9a4e6975c&quot;
+    &quot;accountId&quot;: &quot;1dc7228f-2117-43a8-a0af-d36e4843f885&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -49,6 +57,8 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for Scripts.Finite_Elements.beam_mass_test.MyTestCase.test_mass_moment_opt.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for Scripts.Finite_Elements.beam_mass_test.MyTestCase.test_simple_beam.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_optimizer.executor&quot;: &quot;Run&quot;,
@@ -58,6 +68,7 @@
     &quot;Python tests.Python tests in beam_mass_test.py.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests in beam_system_tests.py.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests in optimization_tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.beam_mass_test.executor&quot;: &quot;Run&quot;,
     &quot;Python.beams.executor&quot;: &quot;Run&quot;,
     &quot;Python.drone_mass.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -66,7 +77,7 @@
     &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Desktop/UAV_Mission/Thesis/Tables&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMConfigurable&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -74,14 +85,36 @@
       <recent name="C:\Desktop\UAV_Mission\Thesis\Tables" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Desktop\UAV_Mission\Scripts\Finite_Elements" />
+      <recent name="C:\Users\Nathan\Desktop\UAV\Scripts\Mass_Analysis" />
+      <recent name="C:\Users\Nathan\Desktop\UAV\Scripts\Finite_Elements" />
       <recent name="C:\Desktop\UAV_Mission\Scripts" />
       <recent name="C:\Desktop\UAV_Mission" />
       <recent name="C:\Desktop\UAV_Mission\Scripts\Optimization" />
-      <recent name="C:\Desktop\UAV_Mission\Scripts\Mission_Profile" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in beam_mass_test.py">
+  <component name="RunManager" selected="Python.beam_mass_test">
+    <configuration name="beam_mass_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="UAV_Mission" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\Nathan\Desktop\UAV\Scripts\Mass_Analysis\beam_mass_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="drone_mass" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
@@ -104,7 +137,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_mass_moment_opt" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,11 +148,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase&quot;" />
+      <option name="_new_target" value="&quot;Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_mass_moment_opt&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_simple_beam" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="UAV_Mission" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -130,22 +163,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase.test_constraints&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="UAV_Mission" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;Scripts.Optimization.optimization_tests.MyTestCase.test_constraints&quot;" />
+      <option name="_new_target" value="&quot;Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_simple_beam&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -160,22 +178,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests in optimization_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="UAV_Mission" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Optimization/optimization_tests.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Scripts/Mass_Analysis/beam_mass_test.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -196,18 +199,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_mass_moment_opt" />
         <item itemvalue="Python tests.Python tests in beam_mass_test.py" />
+        <item itemvalue="Python tests.Python tests for Scripts.Mass_Analysis.beam_mass_test.MyTestCase.test_simple_beam" />
+        <item itemvalue="Python.beam_mass_test" />
         <item itemvalue="Python.drone_mass" />
-        <item itemvalue="Python tests.Python tests in optimization_tests.py" />
-        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase" />
-        <item itemvalue="Python tests.Python tests for Scripts.Optimization.optimization_tests.MyTestCase.test_constraints" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-21f4d9598332-a636b6f4477c-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-252.23892.514" />
+        <option value="bundled-python-sdk-cdd6ef0374f0-c13f99f12e27-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-252.27397.129" />
       </set>
     </attachedChunks>
   </component>
@@ -292,33 +295,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
-          <line>579</line>
+          <line>585</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py</url>
-          <line>13</line>
+          <url>file://$PROJECT_DIR$/Scripts/Mass_Analysis/beam_mass.py</url>
+          <line>21</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_system_tests.py</url>
-          <line>279</line>
+          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
+          <line>264</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_type.py</url>
-          <line>38</line>
+          <url>file://$PROJECT_DIR$/Scripts/Optimization/optimization.py</url>
+          <line>304</line>
           <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scripts/Finite_Elements/beam_mass_test.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
