@@ -223,3 +223,54 @@ Refine outline
 
 
 - Test more initial guesses
+
+
+- 1/8
+
+Go over architecture diagrams? 
+
+What to include in results? 
+- Optimization Results
+- Design Space Diagrams
+- Sensitivity Analysis
+
+
+- Stress state of results? 
+- Deflection 
+- explore the optimal solution
+- Natural freuency anaysis of optiized results?  
+- full model analysis 
+- Does the result make sense??? From an engineering standpoint. Does it lead to a detailed design. 
+- How much battery left? How much payload? Flight time estimate. Ect. ect. ect. 
+- started 5%, tightened the constraint, demonstrate that talk about it
+- draw.io
+
+- Chapter 3 send to DR West by monday 
+Find a book. ASME Journal paper. Metric paper. In the notes I sent you. ME Department formatting.
+
+
+Show early results Next week
+SET UP RESULTS Next week 
+
+- Febrary 20th
+feburary 8th
+
+january 28th
+
+
+To Do:
+- Finish BeamElement Formulation 
+- Stress calculation 
+- Create Achitecture diagrams 
+- Picture of segment model
+- (Precicely define it (label nodes))
+- Results
+- Design Space Diagrams
+- Optimization Results
+- Sensitivity Analysis
+- 
+- Free body Diagram
+- Show 
+- Lit Review
+- Appendicies
+- Introduction

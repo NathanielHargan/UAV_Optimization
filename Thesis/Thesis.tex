@@ -12,6 +12,39 @@
 %
 %In addition to the standard formatting options, the following options are defined for the VTthesis class: proposal, prelim, doublespace, draft. 
 
+% Today: 
+% Solvers
+% Tommoroq: 
+
+
+% Sections Remaining: 
+
+% Introduction
+
+% Literature Review
+
+% Nomenclature
+
+% Nick Newton citation
+
+
+
+% Overall Archeture Description 
+
+% Mass analysis FEA 
+
+% Stress and shape functions
+
+% Solvers (Done ish)
+
+% Results
+
+%	% Main Solution
+	% Sensitivity Analysis
+	% Design Space Plots 
+	
+
+
 \documentclass[doublespace,nopageskip]{VTthesis} % nopageskip - Removes arbitrary blank pages.
 %Remove "draft" from \documentclass to remove draft watermark and to display figures you've created.
 
@@ -67,6 +100,7 @@
 % The general audience abstract is required. There are currently no word limits.
 \abstractgenaud{You are also required as of Spring 2016 to include a general audience abstract. This should be geared towards individuals outside of your field that may be reading seeking information about your work. You should avoid language that is particular to your field and clearly define any terms that may have special meaning in your discipline.}
 
+
 \begin{document}
 	% The following lines set up the front matter of your thesis or dissertation and are required to ensure proper formatting per the VT ETD standards. 
 	\frontmatter
@@ -101,13 +135,15 @@
 	\chapter{Review of Literature} \label{ch:lit_review}
 	
 	\chapter{UAV Design} \label{ch:uav_design}
-	
-	% Orginial 
-	The UAV design being optimized is based from the UAV deisgn in Nick James Newton's Master's Thesis "Development of Tools for Conceptual Design of a Wildland Firefighting UAV" 
-
+		
 	
 	
 	\section{UAV Geometry} \label{se:uav_geo}
+		
+		
+		% Orginial 
+		The UAV design being optimized is based from the UAV deisgn in Nick James Newton's Master's Thesis "Development of Tools for Conceptual Design of a Wildland Firefighting UAV" 
+	
 	
 		% General design
 		The UAV is modeled as a simplified octocopter frame. The UAV geometry is shown in figure \ref{fig:arm} - figure \ref{fig:hub} with the UAV frame components highlighted. The frame model contains 3 components: the arms, the struts, and the hubs. The arms and struts are both beams with annular cross sections. The hub is two octagonal plates connected with a fanning, radially symmetric web shown in figure \ref{sfig:hubseciso}. 
@@ -157,7 +193,7 @@
 	
 	
 		% Dimensions and Design variables
-		There are 8 design variables that were selected for this analysis. Each design variable is shown in Figure \ref{fig:dv_vis}. The two design variables associated with the 8 arms of the UAV frame arm outer diameter ($d_a$) and arm wall thickness ($t_a$). The design variables associated with the eight struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($r_h$), the hub web thickness ($t_w$), and the hub radius ($r_h$).  
+		There are 8 design variables that were selected for this analysis. Each design variable is shown in Figure \ref{fig:dv_vis}. The two design variables associated with the 8 arms of the UAV frame are the arm outer diameter ($d_a$) and arm wall thickness ($t_a$). The design variables associated with the eight struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($r_h$), the hub web thickness ($t_w$), and the hub radius ($r_h$).  
 		
 		\begin{figure}[htb]
 			\centering
@@ -222,29 +258,31 @@
 		\end{figure}
 		
 		% # https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoqN5rYTguPKErrR2RGJXuesTt9UqwIoJ9aieuGaF-ipxM2Kz1VW
-	\subsection{Design Parameters}	
+	\subsection{Design Parameters}	\label{ss:des_para}
 		
-		% Geometric Deesign Variablees
+		% Geometric Design Variablees
 	
-		There are two other parameters related to the UAV frame geometry dimensions that were not selected as variables. The wingspan and the hub height. 
+		The wingspan and the hub height are two parameters related to the UAV frame dimensions that were not selected as variables. 
 			
-		The inner hub height is a parameter set to 64mm, which is the near the minimum height required to fit the UAV battery between the to plates. The actual batteies would not fit on this frame model, because the hub web ould intersect the battery. Further work could be done refining the mesh to allow for more realistic battery storage. 
+		The inner hub height is a parameter set to 64mm, which is the minimum height required to fit the UAV battery between the two plates. It should be noted that the actual batteries would not fit on this frame model, because the hub web would intersect the battery. Further work could be done refining the mesh to allow for more realistic battery storage. 
 		
-		The distance from the center of the uav to the propeller is calculated to be 1127.3mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm. 
+		The distance from the center of the UAV to the propeller is calculated to be 1127.3mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm. 
 		
 		
-		The UAV carries a payload of 45kg.
-				
+		The UAV carries a payload of 45kg. % Payload Justification
+	
+	\subsection{Drone Geometry Module} \label{ss:drone_geo_module}
 		
-			% My architecture
-		The DroneGeometry class within the UAV{\_}Geometry module stores relevant design variables for a drone geometry. The relevant coordinates for hub, arm, and struts are calculated. The projected surface area for drag calculation a drone geometry is calculated using the calc{\_}projected{\_}surface{\_}area method. [talk about this in detail later]
+		% My architecture
+		The DroneGeometry class within the UAV{\_}Geometry module stores relevant design variables for a drone geometry. The relevant coordinates for the design of FEA model are calculated using the calc\_node\_coords method. The projected surface area for drag calculation a drone geometry is calculated using the calc{\_}projected{\_}surface{\_}area method. % [talk about this in detail later] 
+	
 		
 		% (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
 		% math.pi / self.parameters["blade_num"])
 	\subsection{Material Properties}	
 		% Material Propeeties
 		
-		Thee material selected for all UAV frame components (struts, arms, and hub) is braided carbon fiber composites. Due to the lack of available data, carbon fiber is treated as isotropic. Further work could be done to acquire more accurate data for the material. The carbon fiber data in Table \ref{tab:matprop} is for braided round tubes sourced from ALLRed corperation. 
+		The material selected for all UAV frame components (struts, arms, and hub beams) is a braided carbon fiber composite. The carbon fiber is treated as isotropic. Further work could be done to acquire more accurate data for the material in order to more precicely model it as anisotropic. The carbon fiber data in Table \ref{tab:matprop} is for braided round tubes sourced from ALLRed corperation. 
 		
 		
 		\begin{table}[htb]
@@ -256,11 +294,11 @@
 		
 		The shear strength is calculated from the relationship tensile strength and poisons ratio between the shear strength. 
 		
-		Due to lack of fatigue information for the specific carbon fiber composites, material data is taken from Aluminum7075-T6. \cite{MatWeb} The fatigue strength coefficient ($f'$) for Aluminum7075-T6 is 1466 MPa. The fatigue strength exponent ($b$) is -0.143. The fatigue strength cycles is 1e6 ($N$). The completely reversed stress amplitude was calculated from the equation $\sigma_{rev} = f'(2N)^b$
+		Due to lack of fatigue information for the specific carbon fiber composites, fatigue material data is taken from Aluminum7075-T6. \cite{MatWeb} The fatigue strength coefficient ($f'$) for Aluminum7075-T6 is 1466 MPa. The fatigue strength exponent ($b$) is -0.143. The fatigue strength cycles is 1e6 ($N$). The completely reversed stress amplitude was calculated from the equation $\sigma_{rev} = f'(2N)^b$
 		
 		All data for materials is stored within the Material dictionary within the material{\_}properties module. 
 		
-		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as 'SD', the fatigue strength cycles for 'ND', and the fatigue strength esponent for 'k{\_}1'. This was used for the WoehlerCurve class. 
+		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as 'SD', the fatigue strength cycles for 'ND', and the fatigue strength exponent for 'k{\_}1'. This was used for the WoehlerCurve class. 
 		
 		\section{Propellers and motors} \label{se:uav_props}
 			% https://store.tmotor.com/product/mf3218-polymer-folding-prop.html
@@ -269,9 +307,9 @@
 	
 		\section{Power} \label{se:uav_power}
 			Thee battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are in series. 
-			The batteriees have 40000mAh and supply 22.8V. The total voltage of the power system is 45.6V.The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the voltage of the entire system by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module.  
+			The batteries have 40000mAh and supply 22.8V. The total voltage of the power system is 45.6V.The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the voltage of the entire system by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module.  
 			
-			The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at 0, 86.75, 0 and 0, -86.75, 0 for the mass analysis. The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
+			The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at 0, 86.75, 0 and 0, -86.75, 0 in the x,y,z global coordinate system for the mass analysis. The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
 				
 		\begin{comment}
 		- The UAV is modeled as a simplified version of a UAV frame 
@@ -318,7 +356,7 @@
 		A model of the mission profile was created to describe a potential mission with continuous position, velocity, and acceleration with respect to time. The mission profile is modeled as a series of mission profile segments. Constraints are put on the position, velocity, and acceleration at the nodes between mission profile segments. The remaining values at the nodes are calculated using basic kinematic equations. At values of time between mission segment nodes, the position, velocity, and acceleration are interpolated using cubic Hermite splines. [citation needed] Acceleration changes linearly with respect to time. 
 		
 		% The mission profile 
-		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timeesteps were set so that maximum x-velocity to be under 12m/s. [cite nick thesis?]
+		The mission profile is based on a potential mission during the 2025 Palisades wildfire. The distance for the mission profile is estimated to be 5600m, the distance from the north edge of the active fire area to south edge of the wildfire. Using elevation maps of the surrounding area, the height required to transverse this mission path is 460m. [cite map] Timesteps were set so that maximum x-velocity to be under 12m/s. 
 	
 		The climb, cruise, and descent periods are each described using two separate cubic Hermite spline intervals to prevent over-defining the mission profile. Figure \ref{fig:xvy} shows the altitude for the mission profile against the down range position. Figure \ref{fig:yvt} shows the altitude over time. Figure \ref{fig:xvt} shows the downrange position with respect to time. Table \ref{tab:profcons} shows the constraints on the mission profile. The duration shows the time between spline intervals. Blank entries are where no constraint was applied. 
 		
@@ -463,8 +501,10 @@
 	\chapter{Finite Element Analysis} \label{ch:fea}
 		
 		% Description
-		A finite element model was created to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easiy adapted for different frame models
+		A finite element model was created to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easily adapted for different frame models
 		
+		
+		Mass matrices are calculated for each finite beam element for use in the transient and dynamic solvers. Lumped mass matrices are used. 
 		[Describe the matrix assembly process? (mass a stiffneess)]
 		
 		% Archetecture - All modules
@@ -483,7 +523,7 @@
 		The boundary conditions are added with the add{\_}boundary{\_}condition method. The method requires the value of the boundary condition, the boundary condition type (x, y z, x rotation, ect.), and node reference here the boundary condition is applied. 
 		
 		The solve{\_}FEA method solves the stiffness and mass matrixes for the given system. The solve{\_}static, solve{\_}dynamic{\_}harmonic, and solve{\_}transient methods find the solution for given forces.   
-		
+	
 		
 	\section{Beam Element Formulation} \label{se:beam_element_form}
 	
@@ -503,9 +543,12 @@
 		% Archetecture - BeamElement class
 		 Intrmediate values for displacments are found using the return{\_}shape{\_}functions, return{\_}shape{\_}functions{\_}dynamic, and return{\_}shape{\_}functions{\_}dynamic method. Intermediate values of stress and strain are found using the stress{\_}strain{\_}shape{\_}function method.  
 	
-		\subsection{Beam Element Stress} \label{ss:seg_model}
+		\subsection{Beam Element Stress} \label{ss:stress}
 		
-		[Discuss the stress shape function meethod?] [Cite the lecture idk]
+		[Discuss the stress shape function method?] [Cite the lecture idk]
+		
+		% The shape function calculation should be discussed. Discuss the archiecture in more detail 
+		
 		
 		Beam element failure is calculated for each element. The stress shape function for the beam is calculated and the maximum stress state between the starting node and the ending node of each element is found. Then the maximum between the two nodes is the maximum stress.   
 		
@@ -522,43 +565,45 @@
 		
 		\section{Solvers} \label{se:solvers}
 			
-		An FEA model was created with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate thee response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
+		A FEA model was created with three separate solvers. 
 		
+		The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate the response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
 		
 		\subsection{Static} \label{ss:static}
 			
 			
-			The static solver uses point loads calculate
-			- Outputs 
-				- Stress 
-					- Explain how stress caclualtion is obtained
-					- calculated from the local displacment in each element
-				- Strain
-					- Explain how strain calculation is obtained
-					- calculated from the local displacment in each elemen
-				- Natural Frequency
+			The static solver calculates the reactions, displacements, and rotations given a specific set of point loads and moments in static equilibrium. The static solve uses the partitioned stiffness matrix, known static forces and moments, known static displacements to solve for the unknown reaction forces, moments, displacements, and rotations. The scipy.linalg.solve function is used to solve for unknown displacements. The displacements, rotations, forces,and moments are used to calculate shape functions and stresses for each beam in the state of static stress is calculated using the formulation discussed in section \ref{ss:seg_model}.
+			
+			
+			The static solver is the solve\_static method within the BeamSystem class. The method solves the global and local displacements of each beam. The local displacements for each BeamElement object within the BeamSystem object are solved by running the solve\_local method within each Beam object. This method applies the transformation matrix to the results. The solve\_shape\_functions method and find\_stresses methods are used to find the state of stress at stable equilibrium within each beam. 
 					
 			
 		\subsection{Dynamic} \label{ss:dynamic}
-			- Inputs
-				- Point Loads
-				- Frequency [Cite source]
-			- Outputs 
-				- Stress Amplitude
-				- calculated from the local displacment in each element
-			- Strain Amplitude
-				- calculated from the local displacment in each element
-				- Natural Frequency
-				
+			
+			The dynamic solver solves the amplitude of reactions, displacements, and rotations give a set of oscillating loads and moments.  The boundary conditions are static. Each force and moment applied is assumed to have the same frequency and phase for the given solver. The dynamic stiffness matrix is calculated from the stiffness and mass matrices using the formula $[K_d] = [K] - \omega^2 * [M]$. Damping is assumed to be 0. $[K_d]$ is the dynamic stiffness matrix.  $[K]$ is the static stiffness matrix and $[M]$ is the mass matrix. $\omega$ is the frequency of the loads and moments. The scipy.linalg.solve function is used to solve for unknown displacement amplitudes. Three amplitudes are stored for each direction in three-dimensional space. The oscillating stress amplitude is calculated for each element by substituting the assumed displacements in the stress solver and instead solving for the stress for the stress amplitude. [make this more precise]
+			
+			% self.kuu - (ang_vel ** 2) * self.muu - ang_vel * (self.muu * alpha + self.kuu * beta)
+			  % As described in page 385 of concepts and applications of finite element analysis. 
+			  
+			The dynamic solver is the solve\_dynamic\_harmonic method within the BeamSystem class. This method solves for the global and local amplitude for each beam. The local displacements for each beam object within the beam system are solved by running the solve\_local method within each Beam object. The solve\_shape\_functions\_dynamic method and find\_stresses\_dynamic methods are used to find the state of stress at stable equilibrium within each beam. 
+			
 		\subsection{Transient} \label{ss:transient}
-			- Inputs
-				Function describing a force at a given time
-			- Uses Newmark-Beta integration to calculate resulting transient displacements and reactions
-			- The transient stress is obtained from the transient displacements and reactions
+			
+			The transient solver finds the reactions, displacements, and rotations over time given a user defined time-varying force and moment. The inputs are a timestep interval (${\delta}T$), the timestep count ($T_n$), and $\alpha$ and $\delta$ as constants for Newmark integrastion. Each force added to the system is described as a function of time. The newmark integration method is used to estimate the displacement, rotations, and reactions at each timestep. There is a constant duraiton between each timestep which is determined by the timestep interval. The stresses are calcaulated for each timestep. 
+			
+			The transient solver is initiated with the initialize_dynamic_transient method within the BeamSystem class. The solve_dynamic_transient method within the BeamSystem class solves for the global and local reactions, displacements, and rotations for each timestep. Within the BeamElement class, the solve_shape_functions_transient and find_stresses_transient methods are used to find the stresses and strains for each beam at each timestep. 
 		
+	\section{Mass Analysis} \label{se:mass}
 		
+		The total frame mass ($m_{frame}$) of the UAV was calculated geometrically, by calculating the volume of each beam and multiplying it by the density of the associated material. The mass of each battery and the payload was added to obtain the total mass of the vehicle. Calculation were completed within the drone\_mass module. The DroneMass class accepts a DroneGeometry object. Geometric data is used to calculate the mass values. 
 		
-
+		\subsection{Mass Moment of Inertia} \label{ss:m_moment}
+		
+		The mass moment of inertia tensor for the UAV frame was calculated. This is used in the objective function of the optimization problem. The calculation only takes into account the mass moment of the UAV frame, and not the mass moment of the batteries or the payload. % Ask about this?? 
+		The mass moment of the system is calculated by summing the mass moment of each beam in the finite element model. The calculation for mass moment has the hub subdivided into individual I-beams. The principal moments of inertia are calculated by by taking the eigenvalues of the tensor.  
+		% Source these maybe 
+		
+		The mass moment calculation was done in the BeamMass class. The BeamMass class takes a BeamSystem object as the only input. It takes the centroids of the beams and the mass moment of inertia for each beam from this BeamSystem object. The eigenvalues are solved using np.linalg.eig. 
 	
 	\begin{comment}
 		
@@ -732,9 +777,11 @@
 		
 		The mass method calculates the mass of the UAV given a set of design variables. The constraint{\_}calculation method runs a set of constraints given a set of design variables and active constraints. The formulation of eeach constraint is set up so that if the result of the constraint is above 1, the constraint is violated.
 		  
-		The run_opt method runs the optimizer. The Scypi library's scipy.optimize.minimize is used with the the 'SLSQP' method. Max iterations are set to 10000 and the error tolerance is set to 1e-18. The function outputs the resulting design variables as well as the result of thee objective function.
+		The run\_opt method runs the optimizer. The Scypi library's scipy.optimize.minimize is used with the the 'SLSQP' method. Max iterations are set to 10000 and the error tolerance is set to 1e-18. The function outputs the resulting design variables as well as the result of thee objective function.
 		
-		Test_results method runs all constraints to ensure that an optimized result does not violate any constraints that were set to inactive. 
+		Test\_results method runs all constraints to ensure that an optimized result does not violate any constraints that were set to inactive. 
+		
+	\section{Overall Code Architecture} \label{se:code_arch}
 		
 		
 	\chapter{Results} \label{ch:results}
@@ -1008,7 +1055,7 @@
 %
 % A. The following packages are provided by the VTthesis class:
 %      amsmath, amsthm, amssymb, enumerate, natbib, hyperref, graphicx, 
-%      tikz (with shapes and arrows libraries), caption, subcaption,
+%      tikz (with es and arrows libraries), caption, subcaption,
 %      listings, verbatim
 %
 % B. The following theorem environments are defined by VTthesis:
