@@ -5,8 +5,8 @@ import math
 mm_to_m = 1000
 
 # Mass
-kg_to_Mg = 1000
-g_to_Mg = 10 ** 6
+kg_to_Mg = 10 ** -3
+g_to_Mg = 10 ** -6
 Mg_to_lb = 2.20462*1000
 
 

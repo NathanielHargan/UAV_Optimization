@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -6,21 +6,44 @@
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
 \bibitem[Dra()]{DragonPlate}
-URL \url{https://dragonplate.com/}.
+Dragonplate carbon fiber composites.
+\newblock \url{https://dragonplate.com/}.
 
 \bibitem[Gen()]{GensTattu}
-URL
-  \url{https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/?srsltid=AfmBOoo89wjweOS5x2-_3PrUxTjnsa3qDuCLy9eYPu2Dz_ErwfbAG77_}.
+Tattu 40000mah 6s uav lipo battery.
+\newblock
+  \url{https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/}.
+
+\bibitem[Map()]{MapViewer}
+Arcgis map viewer.
+\newblock
+  \url{https://www.arcgis.com/apps/mapviewer/index.html?layers=ba0631e5417f4c5f8c02a834d121bd81}.
 
 \bibitem[Mat()]{MatWeb}
-URL
-  \url{https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d&ckck=1}.
+Matweb aluminum 7075-t6 and 7075-t651.
+\newblock
+  \url{https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d}.
 
 \bibitem[pyL()]{pyLife}
-URL \url{https://pylife.readthedocs.io/en/latest/README.html}.
+pylife.
+\newblock \url{https://pylife.readthedocs.io/en/latest/README.html}.
 
-\bibitem[Taylor()]{dragonplate:private}
-BJ~Taylor.
-\newblock Dragonplate enquiry.
+\bibitem[Arun et~al.(2023)Arun, Drosdick, Morchid, Dyke, Nam, Grace, Bond, and
+  Bob]{seniors}
+Roshen Arun, James Drosdick, Reda Morchid, Renee~Van Dyke, Kieun Nam, Evan
+  Grace, Livingstone Bond, and West Bob.
+\newblock Forest fire uav platform, May 2023.
+
+\bibitem[Newton(2023)]{nick}
+Nicholas~James Newton.
+\newblock Development of tools for conceptual design of a wildland firefighting
+  uav.
+\newblock Master's thesis, Virginia Polytechnic Institute and State University,
+  Falls Church, Virginia, 2023.
+
+\bibitem[Taylor(2024)]{dragonplate:private}
+B.~J. Taylor.
+\newblock Dragonplate enquiry, 2024.
+\newblock Private communication, bjtaylor@allredcorp.com.
 
 \end{thebibliography}

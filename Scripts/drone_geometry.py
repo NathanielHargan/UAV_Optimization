@@ -88,7 +88,7 @@ class DroneGeometry:
         arm_sa = self.blade_num * (self.arm_beam.cross_section_parameters[0]) * (self.nominal_rad - self.hub_radius)
         hub_sa = self.blade_num * self.hub_edge_length * self.hub_radius * math.cos(math.pi/self.blade_num)
 
-        total_sa = arm_sa + strut_sa + battery_sa + hub_sa
+        total_sa = arm_sa + strut_sa + hub_sa
         self.projected_surface_area = total_sa
 
 

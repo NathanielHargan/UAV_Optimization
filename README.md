@@ -261,7 +261,7 @@ january 28th
 To Do:
 - Finish BeamElement Formulation 
 - Stress calculation 
-- Create Achitecture diagrams 
+- Create Achitecture diagrams (Done)
 - Picture of segment model
 - (Precicely define it (label nodes))
 - Results
@@ -274,3 +274,10 @@ To Do:
 - Lit Review
 - Appendicies
 - Introduction
+
+Notes 
+- Specify what the unkown values are in mission profile DFD
+- Vehicle state (define this in paper: it means x y ,ect)
+- Processes are verb-object thrust requirement caclulation -> estimate required thrust
+- Separate the creation of the stick model from the rest of the FEA elements
+- 

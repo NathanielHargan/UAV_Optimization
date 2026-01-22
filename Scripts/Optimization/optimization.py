@@ -84,7 +84,9 @@ class Optimizer:
             "hub_sections_moment":25,
             "transient_timesteps": 1000,
             "energy_timesteps": 1000,
-            "obj_multiplier": 1
+            "obj_multiplier": 1,
+            "sample_frequencies":np.array([]),
+            "sample_count": 5,
         }
 
         self.fixed_design_variables_defaults = {
@@ -281,8 +283,8 @@ class Optimizer:
         elif t < rev_time + self.mission_profile.duration:
             # Calculate force per propeller
             p, v, a = self.mission_profile.time_solve(t - rev_time)
-            return np.array([0, 0, np.sign(v[1]) * (v[1] ** 2) * sa * self.parameters["air_density"] * self.parameters["drag_coeff"] + (
-                        a[1] + self.parameters["gravity"]) * m / self.parameters["blade_num"], 0, 0, 0])
+            return np.array([0, 0, ((np.sign(v[1]) * (v[1] ** 2) * sa * self.parameters["air_density"] * self.parameters["drag_coeff"]) / self.parameters["blade_num"]) + (
+                    (a[1] + self.parameters["gravity"]) * m / self.parameters["blade_num"]), 0, 0, 0])
         else:
             return np.array([0, 0, lift_thrust - ((t - rev_time - self.mission_profile.duration) / rev_time) * (lift_thrust), 0, 0, 0])
 
@@ -297,7 +299,7 @@ class Optimizer:
                 a scalar force (N)
 
         '''
-        return math.sin(dpm.freq_calc(self.parameters["propeller_max_RPM"], 16, t) * t) * self.force_transient(t, m, sa)[2] * 0.01
+        return math.sin(dpm.freq_calc(t) * t) * self.force_transient(t, m, sa)[2] * 0.01
 
     def total_force_y(self, t, m, sa):
         return self.force_transient(t, m, sa)[2] * self.parameters["blade_num"]
@@ -469,14 +471,13 @@ class Optimizer:
                                             t_y, self.energy_calc_timesteps)
             drone_power_module.energy_consumption_calc()
             drone_power_module.throttle_ratio_trans_calc(16)
+            drone_power_module.RPM_trans_calc()
 
-        freq_forcing_function = 0
-        if active_constraints["natural frequency"] or active_constraints["frequency"]:
-            propeller_RPM = self.parameters["propeller_max_RPM"] * max(drone_power_module.percent_throttle)
-            freq_forcing_function = propeller_RPM * uc.rpm_to_rad_per_s * 2
 
         # Natural frequency constraint
         if active_constraints["natural frequency"]:
+            propeller_RPM = self.parameters["propeller_max_RPM"] * max(drone_power_module.percent_throttle)
+            freq_forcing_function = propeller_RPM * uc.rpm_to_rad_per_s * 2
             d1_fea.solve_natural_frequencies()
             first_nf = d1_fea.beam_system.natural_frequencies[0]
             print("Propeller Freq",freq_forcing_function)
@@ -489,11 +490,30 @@ class Optimizer:
 
 
         if active_constraints["frequency"]:
+            # Finds the maximum stress for the static case
             max_disp = max(d1_fea.beam_system.mag_displacements)
-            d1_fea.beam_system.init_dynamic_forces(freq_forcing_function)
-            d1_fea.beam_system.add_dynamic_harmonic_force(np.array([0,0,static_force,0,0,0]),"outer_node")
-            d1_fea.solve_dynamic_harmonic(0,0)
-            max_amp = max(d1_fea.beam_system.mag_displacements_amplitude)
+
+
+            rev_up_cut = math.ceil(self.simulation_settings["transient_timesteps"] * self.parameters["rev_up_time"] / self.total_mission_duration)
+
+            rev_down_cut = math.ceil(self.simulation_settings["transient_timesteps"] * self.parameters["rev_down_time"] / self.total_mission_duration)
+            relevant_sec = drone_power_module.percent_throttle[rev_up_cut:-rev_down_cut]
+            max_prop_freq = self.parameters["propeller_max_RPM"] * np.max(relevant_sec) * uc.rpm_to_rad_per_s * 2
+            min_prop_freq = self.parameters["propeller_max_RPM"] * np.min(relevant_sec) * uc.rpm_to_rad_per_s * 2
+
+            samples = np.concatenate([
+                np.linspace(min_prop_freq, max_prop_freq, self.simulation_settings["sample_count"]),
+                self.simulation_settings["sample_frequencies"]])
+            samples.sort()
+
+            d1_fea.beam_system.add_dynamic_harmonic_force(np.array([0, 0, static_force, 0, 0, 0]), "outer_node")
+            max_amps = np.zeros(len(samples))
+            for i in range(len(max_amps)):
+                d1_fea.beam_system.init_dynamic_forces(samples[i])
+                d1_fea.solve_dynamic_harmonic(0,0)
+                max_amps[i] = max(d1_fea.beam_system.mag_displacements_amplitude)
+
+            max_amp = np.max(max_amps)
             amp_disp_rat = max_amp / max_disp
             freq_constraint = amp_disp_rat / self.constraints_constants["allowable_amplitude_to_disp_ratio"]
             constraints.append(freq_constraint)
@@ -575,7 +595,6 @@ class Optimizer:
             self.max_amp = max_amp
             self.drone_power_module = drone_power_module
             self.drone_mass = drone_mass
-            self.surface_area = surface_area
 
 
 
@@ -626,7 +645,7 @@ class Optimizer:
                                           constraints=consts,
                                           bounds=boundaries,
                                           method='SLSQP',
-                                          tol=1e-18,
+                                          tol=1e-6,
                                           options={'maxiter': 10000})
         print(results.message)
         # scipy.optimize.show_options(solver='minimize',method='SLSQP')

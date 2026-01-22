@@ -21,6 +21,8 @@ def drone_geometry(drone):
                 [beam.start_node.location[2], beam.end_node.location[2]])
 
 
+
+
 def drone_geometry_deformation(drone, m, q):
     # m: deformation multiplier
     # q: quality of image

@@ -118,11 +118,11 @@ class BeamElement:
         self.a_inv_y_shape_vector_dynamic_harmonic = np.empty(4)
         self.a_inv_z_shape_vector_dynamic_harmonic = np.empty(4)
 
-        self.solve_stiffness_matrix()
+        self.solve_matricies()
 
         self.stresses_axial = np.empty(2)
 
-    def solve_stiffness_matrix(self):
+    def solve_matricies(self):
         # a, e, l, g, i_y, i_z, k, k_y, k_z
         self.local_stiffness_matrix = FEA_3D.local_stiffness_3d(
             self.beam_type.cross_section_properties["area"],

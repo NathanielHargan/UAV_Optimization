@@ -27,10 +27,13 @@ class DronePower:
     def thrust_to_power(self, thrust):
         # (thrust,power): (10kg,1kW)/8 , (50kg, 6kW)/8 , (80kg, 13kW)/8
         # Cite this from project
+        t_g = 10**3 * uc.N_to_kgf * thrust / self.blade_num
+        # thrust_mass_per_blade_kg = uc.N_to_kgf * thrust / self.blade_num  # N => (N / (mm/s^2)) * (1000 mm/m) = kg
+        # power_kilowatts_per_blade = (0.01238 * thrust_mass_per_blade_kg ** 2 + 0.03214 * thrust_mass_per_blade_kg + 0.06548)
+        # power_milliwatts_per_blade = power_watts_per_blade * uc.kW_to_mW
 
-        thrust_mass_per_blade_kg = uc.N_to_kgf * thrust / self.blade_num  # N => (N / (mm/s^2)) * (1000 mm/m) = kg
-        power_kilowatts_per_blade = (0.01238 * thrust_mass_per_blade_kg ** 2 + 0.03214 * thrust_mass_per_blade_kg + 0.06548)
-        power_milliwatts_per_blade = power_kilowatts_per_blade * uc.kW_to_mW
+        power_watts = (1.1743 * 10 ** -5 * t_g ** 2) + (4.2302 * 10 ** -2 * t_g) + 1.5871 * 10
+        power_milliwatts_per_blade = power_watts * 1000
 
         return power_milliwatts_per_blade * self.blade_num
 
@@ -116,13 +119,23 @@ class DronePower:
         max_throttle_power = (max_power_full_battery_kw * uc.kW_to_mW)
         return self.power_at_time(t) / (max_throttle_power) #t-motor KV-95
 
-    def freq_trans_calc(self, rpm_max):
+    def thrust_to_RPM(self, thrust):
+        t_g = 10**3 * uc.N_to_kgf * thrust / self.blade_num
+        rpm = (-9.3523 * 10 ** -6) * t_g ** 2 + 3.1211 * 10 ** -1 * t_g + 8.0573 * 10 ** 2
+        return rpm
+
+    def RPM_trans_calc(self):
+        self.rpm = np.zeros(len(self.timesteps))
+        for i, t in enumerate(self.timesteps):
+            self.rpm[i] = self.thrust_to_RPM(self.drone_forces(t))
+
+    def freq_trans_calc(self):
         frequency = np.zeros(len(self.timesteps))
         for i, t in enumerate(self.timesteps):
-            frequency[i] = uc.Hz_to_rad_per_s * rpm_max * self.percent_throttle[i] / 30
+            frequency[i] = uc.Hz_to_rad_per_s * self.rpm[i] / 30
         self.frequency = frequency
 
-    def freq_calc(self, rpm_max, max_power_full_battery_kw, t):
-        return uc.Hz_to_rad_per_s * rpm_max * self.throttle_ratio_calc(max_power_full_battery_kw, t) / 30
+    def freq_calc(self, t):
+        return uc.Hz_to_rad_per_s * self.thrust_to_RPM(self.drone_forces(t)) / 30
 
 #%%
