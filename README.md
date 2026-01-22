@@ -280,4 +280,34 @@ Notes
 - Vehicle state (define this in paper: it means x y ,ect)
 - Processes are verb-object thrust requirement caclulation -> estimate required thrust
 - Separate the creation of the stick model from the rest of the FEA elements
-- 
+
+
+Notes
+- Check torque * angular freq to make sure it is consistent with power
+- Explain surface area once	
+- Explain how I made the trendlines + equations
+- cite excel 
+- paste table as metafile 
+- paste only data you used
+- https://store.tmotor.com/product/g32x11prop-2pcs-1pair-glossy-carbon-fiber.html?srsltid=AfmBOorkmsRXlJLycIJWOVmH3tGWQ2TBA4hdBGJgK0dBDeLlczCSp5tV
+- brief discussion on units
+- Change objective function so that local minima can be found
+- Grammar check 
+- Figure is uppercase 
+- Do not start with prepositional phrase
+- in thesis packet
+- Do not start sentence with variable. 
+- Tables and Figures and Equations.
+- Where drag coefficent ()
+- Cite all values
+- Gravity
+- Table of constants
+- Figure out where to get drag coefficient
+
+- Literature Review
+  - Nasa group
+  - Palisades
+  - Summarize others work
+ - FAST-UAV OPEMN MDMAO
+
+- Specificity 

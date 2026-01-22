@@ -5,31 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="704d256d-5459-4978-bff2-97bbc2480f5a" name="Changes" comment="1/11">
-      <change afterPath="$PROJECT_DIR$/Opt_Iterations_1per.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Optimization_Experiments.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Optimization_Experiments_1percent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Optimization_Experiments_1percent.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_element.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Finite_Elements/Beam_FEA_System/beam_element.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Mission_Profile/drone_power.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Optimization/optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/drone_geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/drone_geometry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/unit_conversions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/visualization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tables/Sensitivity_Testing_Ver_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Tables/Sensitivity_Testing_Ver_2.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.bbl" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.bbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.blg" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.blg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lof" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lof" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.log" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.lot" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.lot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.nlo" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.nlo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.out" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.synctex(busy)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.synctex.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Thesis/Thesis.toc" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis/Thesis_refs.bib" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis/Thesis_refs.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Transient.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Transient.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UAV_Optimize.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/UAV_Optimize.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

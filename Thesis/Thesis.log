@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.1.7)  22 JAN 2026 06:28
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.1.7)  22 JAN 2026 07:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1170,4 +1170,538 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--107
  []
 
 
-Underfull \hbox
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+
+ []
+
+[3] (Thesis.toc
+LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
+
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
+
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \vbox (badness 6775) has occurred while \output is active []
+
+ [4
+
+]
+Underfull \vbox (badness 3039) has occurred while \output is active []
+
+ [5]
+Underfull \vbox (badness 5637) has occurred while \output is active []
+
+ [6])
+\tf@toc=\write6
+\openout6 = `Thesis.toc'.
+
+
+[7] (Thesis.lof
+
+Package natbib Warning: Citation `Motor' on page viii undefined on input line 1
+6.
+
+
+Package natbib Warning: Citation `Motor' on page viii undefined on input line 1
+7.
+
+
+Package natbib Warning: Citation `Motor' on page viii undefined on input line 1
+8.
+
+
+Underfull \vbox (badness 1019) has occurred while \output is active []
+
+ [8
+
+])
+\tf@lof=\write7
+\openout7 = `Thesis.lof'.
+
+
+[9] (Thesis.lot)
+\tf@lot=\write8
+\openout8 = `Thesis.lot'.
+
+
+No file Thesis.nls.
+[10
+
+]
+Chapter 1.
+[1
+
+
+]
+Chapter 2.
+[2
+
+]
+Chapter 3.
+File: Images/arm.png Graphic file (type bmp)
+<Images/arm.png>
+File: Images/strut.png Graphic file (type bmp)
+<Images/strut.png>
+File: Images/hub.png Graphic file (type bmp)
+<Images/hub.png>
+File: Images/hubtop.png Graphic file (type bmp)
+<Images/hubtop.png>
+File: Images/hubsectioniso.png Graphic file (type bmp)
+<Images/hubsectioniso.png>
+[3
+
+]
+File: Images/Dv/da.png Graphic file (type bmp)
+<Images/Dv/da.png>
+File: Images/Dv/ra.png Graphic file (type bmp)
+<Images/Dv/ra.png>
+File: Images/Dv/ds.png Graphic file (type bmp)
+<Images/Dv/ds.png>
+File: Images/Dv/ts.png Graphic file (type bmp)
+<Images/Dv/ts.png>
+File: Images/Dv/rs.png Graphic file (type bmp)
+<Images/Dv/rs.png>
+File: Images/Dv/tf.png Graphic file (type bmp)
+<Images/Dv/tf.png>
+File: Images/Dv/tw.png Graphic file (type bmp)
+<Images/Dv/tw.png>
+File: Images/Dv/rh.png Graphic file (type bmp)
+<Images/Dv/rh.png>
+
+
+LaTeX Warning: Float too large for page by 7.92966pt on input line 260.
+
+[4]
+Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+[6]
+File: Images/FBDMotion.png Graphic file (type bmp)
+<Images/FBDMotion.png>
+File: Images/FBDStatic.png Graphic file (type bmp)
+<Images/FBDStatic.png>
+ [7]
+File: Tables/Matprop.png Graphic file (type bmp)
+<Tables/Matprop.png>
+ [8]
+File: Images/MissionProfile/XvY.png Graphic file (type bmp)
+<Images/MissionProfile/XvY.png>
+File: Images/MissionProfile/YposvT.png Graphic file (type bmp)
+<Images/MissionProfile/YposvT.png>
+File: Images/MissionProfile/XposVT.png Graphic file (type bmp)
+<Images/MissionProfile/XposVT.png>
+File: Tables/profcons.png Graphic file (type bmp)
+<Tables/profcons.png>
+ [9]
+File: Images/DFDs/DFDMissionProfile.png Graphic file (type bmp)
+<Images/DFDs/DFDMissionProfile.png>
+
+
+LaTeX Warning: Reference `e:thrust' on page 10 undefined on input line 417.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10]
+Underfull \vbox (badness 1810) has occurred while \output is active []
+
+ [11]
+File: Images/ThrustVTime.png Graphic file (type bmp)
+<Images/ThrustVTime.png>
+
+Underfull \vbox (badness 2884) has occurred while \output is active []
+
+ [12]
+File: Images/DFDs/DFDEnergy.png Graphic file (type bmp)
+<Images/DFDs/DFDEnergy.png>
+
+
+Package natbib Warning: Citation `Motor' on page 13 undefined on input line 464
+.
+
+
+Package natbib Warning: Citation `Propeller' on page 13 undefined on input line
+ 464.
+
+[13]
+File: Tables/motortab.png Graphic file (type bmp)
+<Tables/motortab.png>
+
+
+Package natbib Warning: Citation `Motor' on page 14 undefined on input line 470
+.
+
+
+Package natbib Warning: Citation `Motor' on page 14 undefined on input line 470
+.
+
+File: Images/ThrustVPower.png Graphic file (type bmp)
+<Images/ThrustVPower.png>
+
+Package natbib Warning: Citation `Motor' on page 14 undefined on input line 485
+.
+
+
+Package natbib Warning: Citation `Motor' on page 14 undefined on input line 485
+.
+
+[14]
+File: Images/ThrustVRPM.png Graphic file (type bmp)
+<Images/ThrustVRPM.png>
+
+
+Package natbib Warning: Citation `Motor' on page 15 undefined on input line 502
+.
+
+
+Package natbib Warning: Citation `Motor' on page 15 undefined on input line 502
+.
+
+
+Underfull \vbox (badness 3919) has occurred while \output is active []
+
+ [15]
+Overfull \hbox (7.00504pt too wide) in paragraph at lines 518--519
+[]\TU/lmr/m/n/12 The integral of the power is calculated numerically using scip
+y.integrate.cumulative_trapezoid.
+ []
+
+File: Images/PurtibationVTime.png Graphic file (type bmp)
+<Images/PurtibationVTime.png>
+[16] [17]
+Chapter 4.
+File: Images/DFDs/DFDBeamModel.png Graphic file (type bmp)
+<Images/DFDs/DFDBeamModel.png>
+
+Package natbib Warning: Citation `StructXannulus' on page 18 undefined on input
+ line 562.
+
+
+Package natbib Warning: Citation `StructXibeam' on page 18 undefined on input l
+ine 562.
+
+
+Package natbib Warning: Citation `transshear' on page 18 undefined on input lin
+e 564.
+
+[18
+
+]
+Underfull \vbox (badness 1112) has occurred while \output is active []
+
+ [19]
+
+Package natbib Warning: Citation `MassMoment' on page 20 undefined on input lin
+e 575.
+
+
+Package natbib Warning: Citation `MassMoment' on page 20 undefined on input lin
+e 575.
+
+
+Underfull \vbox (badness 1430) has occurred while \output is active []
+
+ [20]
+File: Images/stickmodel.png Graphic file (type bmp)
+<Images/stickmodel.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21]
+Underfull \vbox (badness 1152) has occurred while \output is active []
+
+ [22]
+File: Images/DFDs/DFDStatic.png Graphic file (type bmp)
+<Images/DFDs/DFDStatic.png>
+
+[23]
+File: Images/DFDs/DFDDynamic.png Graphic file (type bmp)
+<Images/DFDs/DFDDynamic.png>
+
+
+LaTeX Warning: Reference `fig:dfd_transient' on page 24 undefined on input line
+ 690.
+
+File: Images/DFDs/DFDTransient.png Graphic file (type bmp)
+<Images/DFDs/DFDTransient.png>
+
+Package natbib Warning: Citation `feabook' on page 24 undefined on input line 7
+06.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [24]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [25]
+[26]
+Chapter 5.
+
+Overfull \hbox (8.28508pt too wide) in paragraph at lines 783--784
+[]\TU/lmr/m/n/12 The optimization function uses the SLSQP algorithm. This is ru
+n with scipy.optimize.minimize
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27
+
+]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 785.
+
+
+LaTeX Warning: Reference `dfd_objective' on page 28 undefined on input line 797
+.
+
+File: Images/DFDs/DFDObjective.png Graphic file (type bmp)
+<Images/DFDs/DFDObjective.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28]
+[29]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30]
+File: Images/DFDs/DFDDisp.png Graphic file (type bmp)
+<Images/DFDs/DFDDisp.png>
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.870 ^^I^^I^^I
+               
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Display math should end with $$.
+<to be read again> 
+                   \tex_par:D 
+l.870 ^^I^^I^^I
+               
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.872 ^^I^^I\end{equation}
+                          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! You can't use `\eqno' in vertical mode.
+\veqno ->\@kernel@eqno 
+                       \aftergroup \ignorespaces 
+l.872 ^^I^^I\end{equation}
+                          
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.872 ^^I^^I\end{equation}
+                          
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.872 ^^I^^I\end{equation}
+                          
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+[31] [32]
+File: Images/DFDs/DFDFrequency.png Graphic file (type bmp)
+<Images/DFDs/DFDFrequency.png>
+
+Overfull \hbox (47.6081pt too wide) in paragraph at lines 893--894
+ [][] 
+ []
+
+[33]
+File: Images/DFDs/DFDDamage.png Graphic file (type bmp)
+<Images/DFDs/DFDDamage.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [34]
+File: Images/DFDs/DFDEnergy.png Graphic file (type bmp)
+<Images/DFDs/DFDEnergy.png>
+
+[35] [36]
+Chapter 6.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.982 ^^I^^I^^I^^Iopt.design_
+                             variables_initial_guess = {
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.992 ^^I^^I^^I
+               
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (642.41185pt too wide) in paragraph at lines 982--992
+\TU/lmr/m/n/12 opt.design$[]\OML/cmm/m/it/12 ariables[]nitial[]uess \OT1/cmr/m/
+n/12 = []$ 
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.995 ^^I^^I^^I^^Iarm_
+                      diameter: 50.0
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1003 ^^I^^I^^I^^I
+                   
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (103.31726pt too wide) in paragraph at lines 994--1003
+\OT1/cmr/m/n/12 50\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 strut[]hi
+ckness \OT1/cmr/m/n/12 : 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 2540000000000002\OM
+L/cmm/m/it/12 strut[]istance \OT1/cmr/m/n/12 : 454\OML/cmm/m/it/12 :\OT1/cmr/m/
+n/12 2624850257739\OML/cmm/m/it/12 hub[]adius \OT1/cmr/m/n/12 : 250\OML/cmm/m/i
+t/12 hub[]lange[]hickness \OT1/cmr/m/n/12 :
+ []
+
+[37
+
+]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1006 ...t of inertia: 0.34047109121624436  kg*m^
+                                                  2
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1012 ^^I^^I^^I^^I
+                   
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (53.41704pt too wide) in paragraph at lines 1004--1012
+[]\TU/lmr/m/n/12 Initial Guess Frame mass: 1.7057551016244064 kg Frame mass mom
+ent of inertia: 0.34047109121624436
+ []
+
+
+Overfull \hbox (128.28311pt too wide) in paragraph at lines 1004--1012
+\TU/lmr/m/n/12 kg*m$[]\OML/cmm/m/it/12 Objective \OT1/cmr/m/n/12 : 0\OML/cmm/m/
+it/12 :\OT1/cmr/m/n/12 9384796481845028\OML/cmm/m/it/12 OptimizedFramemass \OT1
+/cmr/m/n/12 : 1\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 053752071416452\OML/cmm/m/it/1
+2 kgFramemassmomentofinertia \OT1/cmr/m/n/12 :
+ []
+
+
+Overfull \hbox (72.22505pt too wide) in paragraph at lines 1021--1026
+\TU/lmr/m/n/12 deflection: 1.0000000000000078 stress: 0.8763661383057956 displa
+cement amplitude: 0.19538100852334553
+ []
+
+[38] [39]
+Chapter 7.
+[40
+
+]
+Chapter 8.
+(Thesis.bbl [41
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 13--16
+[]\TU/lmr/m/n/12 Tattu 40000mah 6s uav lipo battery.  [][]$[][][][][] [] [] [] 
+[][][][][][][][][] [] [][][] []
+ []
+
+
+Overfull \hbox (84.7044pt too wide) in paragraph at lines 13--16
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/12 . 
+ []
+
+
+Underfull \hbox (badness 3525) in paragraph at lines 45--48
+[]\TU/lmr/m/n/12 B. J. Taylor.  Dragonplate enquiry, 2024.  Private communicati
+on, bjtay-
+ []
+
+) [42
+
+] [43
+
+
+]
+Appendix A.
+[44
+
+]
+Appendix B.
+
+Package natbib Warning: There were undefined citations.
+
+[45
+
+] (Thesis.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `Thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 5B17A8CCE323CA8378831657359AAC81;7158.
+ ) 
+Here is how much of TeX's memory you used:
+ 35707 strings out of 409617
+ 770349 string characters out of 5773811
+ 1931191 words of memory out of 5000000
+ 57268 multiletter control sequences out of 15000+600000
+ 563300 words of font info for 71 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 125i,10n,131p,1180b,1033s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on Thesis.pdf (55 pages).

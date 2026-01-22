@@ -135,7 +135,6 @@
 	\chapter{Review of Literature} \label{ch:lit_review}
 	
 	\chapter{UAV Design} \label{ch:uav_design}
-	
 		This chapter describes the UAV geometry, design variables, material properties, and design parameters used in the project. The mission profile and the thrust, power, and energy formulations used to evaluate vehicle performance are also described. 
 	
 	\section{UAV Geometry} \label{se:uav_geo}
@@ -312,9 +311,9 @@
 		\end{table}
 		
 		The shear strength is calculated from the relationship tensile strength and poisons ratio between the shear strength. Due to lack of fatigue information for the specific carbon fiber composites, fatigue material data is taken from Aluminum7075-T6. \cite{MatWeb} The fatigue strength coefficient ($f'$) for Aluminum7075-T6 is 1466 MPa. The fatigue strength exponent ($b$) is -0.143. The fatigue strength cycles is 1e6 ($N$). The completely reversed stress amplitude was calculated from the equation $\sigma_{rev} = f'(2N)^b$.	
-		% All data for materials is stored within the Material dictionary within the material{\_}properties module. 
+		All data for materials is stored within the Material dictionary within the material{\_}properties module. 
 		
-		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as 'SD', the fatigue strength cycles for 'ND', and the fatigue strength exponent for 'k{\_}1'. % This was used for the WoehlerCurve class. 
+		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as 'SD', the fatigue strength cycles for 'ND', and the fatigue strength exponent for 'k{\_}1'. This was used for the WoehlerCurve class. 
 		
 			% https://store.tmotor.com/product/mf3218-polymer-folding-prop.html
 			% [Please Ask Dr. West to Send Motor Link] (I lost it)
@@ -361,7 +360,6 @@
 		
 	
 	\section{Mission Profile} \label{se:mission_profile}
-	
 		A model of the mission profile was created to represent a potential mission with continuous position, velocity, and acceleration as functions of time. The mission is defined as a series of connected profile segments, with constraints imposed on position, velocity, and acceleration at the nodes between segments. Any unconstrained nodal values are calculated using basic kinematic relationships. Between segment nodes, position, velocity, and acceleration are interpolated using cubic Hermite splines, resulting in acceleration that varies linearly with respect to time.
 		
 		The mission profile is based on a potential operation during the 2025 Palisades wildfire. The total mission distance is estimated to be 5600m, corresponding to the distance from the northern edge to the southern edge of the active fire area. Using elevation maps of the surrounding terrain, the required altitude change to traverse this path is estimated to be 460m \cite{MapViewer}. Timesteps were selected such that the maximum downrange velocity remained below 12m/s.
@@ -401,9 +399,7 @@
 		
 	
 		% My specific Architecture
-		% The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. Mission profiles are generated in the mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic{\_}matrix function. The list of nodes is added by the add{\_}segment method within the MissionProfile class. The MissionProfile contains a list of constraints added by the add{\_}constraint method. The add{\_}constraint requires the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), the value of the constraint. To solve for the unknown node values, the solve{\_}kinamatics method within the MissionProfile class assembles matrices generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The solution at the nodes are applied with the time{\_}solve method which uses a cubic Hermite spline to find interpolate values at a given time. 
-		
-		The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. The constraints require the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), and the value of the constraint. The constraints are then assembled into a kinematic matrix for the entire mission profile. Each node refers to a specific time set by the user. The values at the nodes are solved using the numpy.linalg.lstsq function. The values between nodes are interpolated with a cubic Hermite spline.		
+		The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. Mission profiles are generated in the mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic{\_}matrix function. The list of nodes is added by the add{\_}segment method within the MissionProfile class. The MissionProfile contains a list of constraints added by the add{\_}constraint method. The add{\_}constraint requires the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), the value of the constraint. To solve for the unknown node values, the solve{\_}kinamatics method within the MissionProfile class assembles matrices generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The solution at the nodes are applied with the time{\_}solve method which uses a cubic Hermite spline to find interpolate values at a given time. 
 		
 		\begin{figure}[htb]
 			\centering
@@ -440,9 +436,8 @@
 	
 	
 	\section{Energy Consumption} \label{se:energy_consumpt}
-		% 	The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The design flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Within the DronePower class, the thrust to power conversion and energy consumption calculations are performed. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power conversion model described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
 		
-		The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The design flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power conversion model described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
+		The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The design flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Within the DronePower class, the thrust to power conversion and energy consumption calculations are performed. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power conversion model described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
 		
 		\begin{figure}[htb]
 			\centering
@@ -454,9 +449,9 @@
 		
 		\subsection{Batteries} \label{ss:batteries}
 		
-		% The battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module. The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. % The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
+		The battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module.  
 		
-		The battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. 
+		The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
 		
 		\subsection{Power Calculation} \label{ss:power_calc}
 		
