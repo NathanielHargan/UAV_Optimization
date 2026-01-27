@@ -492,10 +492,10 @@ def design_space_freq(opt, design_variable_x, design_variable_y, sample_num, des
     # Set custom tick labels
     cbar.set_ticks(np.logspace(np.log10(var_map.min()), np.log10(var_map.max()), num=5))
 
-    cbar.set_label('Amplitude (mm)')
+    cbar.set_label('Amplitude per Force (mm/N)')
 
     colors = ['y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
-    lvls = np.array([0.95, 1, 1.05])
+    lvls = np.array([0.9, 1, 1.1])
     contours = []
     for i in range(cons_num):
         contours.append(plt.contour(x_space, y_space, constraints_map[:, :, i], levels=lvls, colors=colors[i]))
@@ -590,12 +590,14 @@ def design_space_test_cons(opt, design_variable_x, design_variable_y, sample_num
     # Add the legend to the plot
     plt.legend(handles=legend_elements, loc='upper right')
 
-def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, design_variables=None, x_var_bounds=None, y_var_bounds=None, active_constraints=None):
+
+def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, design_variables=None, x_var_bounds=None,
+                     y_var_bounds=None, active_constraints=None):
     # opt is opt object
     # constraints is an array of booleans
     if x_var_bounds is None:
         x_var_bounds = opt.boundaries[design_variable_x]
-    if  y_var_bounds is None:
+    if y_var_bounds is None:
         y_var_bounds = opt.boundaries[design_variable_y]
 
     x_space = np.linspace(x_var_bounds[0], x_var_bounds[1], sample_num)
@@ -624,16 +626,16 @@ def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, desi
     plt.figure(figsize=(10, 10))
 
     img = plt.imshow(var_map, cmap='turbo', interpolation='nearest',
-                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[0], y_var_bounds[1]], origin='upper')
+                     extent=[x_var_bounds[0], x_var_bounds[1], y_var_bounds[0], y_var_bounds[1]], origin='lower')
     cbar = plt.colorbar(img)
 
     # Set custom tick labels
     cbar.set_ticks(np.linspace(np.min(var_map), np.max(var_map), num=5))
 
-    cbar.set_label('Optimization Function')
+    cbar.set_label('Objective Function')
 
     colors = ['r', 'g', 'b', 'y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
-    lvls = np.array([0.95, 1, 1.05])
+    lvls = np.array([0.9, 1, 1.1])
     contours = []
     for i in range(cons_num):
         contours.append(plt.contour(x_space, y_space, constraints_map[:, :, i], levels=lvls, colors=colors[i]))
@@ -648,4 +650,3 @@ def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, desi
 
     # Add the legend to the plot
     plt.legend(handles=legend_elements, loc='upper right')
-

@@ -125,6 +125,10 @@ class Optimizer:
             "allowable_amplitude_to_disp_ratio": 1.5,
             "energy_remaining":0.2,
             "mission_count_damage":10000,
+            "scaling_mass":10**-3,
+            "scaling_mass_moment":10**3,
+            "weight_mass":2/3,
+            "weight_mass_moment":1/3
         }
 
         self.boundaries_defaults = {
@@ -388,8 +392,8 @@ class Optimizer:
         return Mass_Model.total_moment_of_inertia_principal
 
     def objective(self, design_variables):
-        c1 = 1 / self.mass_inital
-        c2 = 1 / self.moment_inital
+        c1 = self.constraints_constants["weight_mass"] / self.constraints_constants["scaling_mass"]
+        c2 = self.constraints_constants["weight_mass_moment"] / self.constraints_constants["scaling_mass_moment"]
 
         objective = c1 * self.mass(design_variables) + c2 * self.moment(design_variables)
         return objective
