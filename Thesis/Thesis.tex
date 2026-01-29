@@ -52,11 +52,10 @@
 %\documentclass[doublespace,draft]{VTthesis}
 
 % The lipsum package is just included to put dummy text in the document in order to demonstrate page headers and table of contents behavior. You should remove it once you begin writing your actual thesis or dissertation.
-\usepackage{lipsum}
+
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{siunitx}
-
 % Title of your thesis
 \title{Optimization of a UAV for Wildfire Management}
 
@@ -73,7 +72,7 @@
 \degree{Master of Science} 
 
 % This should be your defense date:
-\submitdate{December XYZ, 2025} 
+\submitdate{February 26th, 2025} 
 
 % Committee members. Only have five readers and one chair available.
 % Only use the ones you need and don't include the ones you don't need.
@@ -126,12 +125,7 @@
 	
 	%now go ahead and start writing your thesis
 	\chapter{Introduction} \label{ch:introduction}
-	
-	%Copy/paste the code below to add sections and subsections to each chapter. Add your own text to the chapter and (sub)section labels to create custom headings.          
-	\section{One Section} \label{se:one_section}
-	\subsection{A sub-section} \label{ss:this_subsection}
-	\section{Another Section} \label{se:another_section}
-	
+		
 	\chapter{Review of Literature} \label{ch:lit_review}
 	
 	\chapter{UAV Design} \label{ch:uav_design}
@@ -188,7 +182,16 @@
 	
 	
 		% Dimensions and Design variables
-		Eight design variables were selected for this analysis and are shown in Figure \ref{fig:dv_vis}. The eight arms of the UAV frame are defined by the arm outer diameter ($d_a$) and arm wall thickness ($t_a$) design variables. The design variables associated with the struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($t_f$), the hub web thickness ($t_w$), and the hub radius ($r_h$).  
+		Eight design variables were selected for this analysis and are displayed in Table \ref{tab:dvs}. Figure \ref{fig:dv_vis} shows dimensions for each design variable.   
+		
+		% The eight arms of the UAV frame are defined by the arm outer diameter ($d_a$) and arm wall thickness ($t_a$) design variables. The design variables associated with the struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($t_f$), the hub web thickness ($t_w$), and the hub radius ($r_h$).  
+		
+		\begin{table}[htb]
+			\centering
+			\caption{Design Variable Descriptions} 
+			\includegraphics[scale=6]{Tables/dvs.pdf}
+			\label{tab:dvs}
+		\end{table}
 		
 		\begin{figure}[!htbp]
 			\centering
@@ -358,7 +361,15 @@
 		
 		\end{comment}
 	
+	\section{Units}
+		Processes within the project operate with the consistent unit system specified in Table \ref{tab:units} unless otherwise specified. 
 		
+		\begin{table}[htb]
+			\centering
+			\caption{Mission Profile Constraints} 
+			\includegraphics[6]{Tables/units.pdf}
+			\label{tab:units}
+		\end{table}
 	
 	\section{Mission Profile} \label{se:mission_profile}
 	
@@ -403,7 +414,7 @@
 		% My specific Architecture
 		% The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. Mission profiles are generated in the mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic{\_}matrix function. The list of nodes is added by the add{\_}segment method within the MissionProfile class. The MissionProfile contains a list of constraints added by the add{\_}constraint method. The add{\_}constraint requires the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), the value of the constraint. To solve for the unknown node values, the solve{\_}kinamatics method within the MissionProfile class assembles matrices generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The solution at the nodes are applied with the time{\_}solve method which uses a cubic Hermite spline to find interpolate values at a given time. 
 		
-		The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. The constraints require the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), and the value of the constraint. The constraints are then assembled into a kinematic matrix for the entire mission profile. Each node refers to a specific time set by the user. The values at the nodes are solved using the numpy.linalg.lstsq function. The values between nodes are interpolated with a cubic Hermite spline.		
+		The design flow diagram for the mission profile generation process is shown in Figure \ref{fig:dfd_mission}. The constraints require the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), and the value of the constraint. The constraints are then assembled into a kinematic matrix for the entire mission profile. Each node refers to a specific time set by the user. The values at the nodes are solved using the numpy.linalg.lstsq function. The values between nodes are interpolated with a cubic Hermite spline.		
 		
 		\begin{figure}[htb]
 			\centering
@@ -414,7 +425,7 @@
 		
 	\subsection{Thrust Calculation}\label{ss:thrust}
 		
-		A calculation of the thrust profile is required in order to preform the power and fatigue analysis. This is the stress-equivalent force over the duration of the mission profile with drag and acceleration taken into account. The thrust equation over the duration of the mission profile is shown in equation \ref{e:thrust}. 
+		A calculation of the thrust profile is required in order to preform the power and fatigue analysis. This is the stress-equivalent force over the duration of the mission profile with drag and acceleration taken into account. The thrust equation over the duration of the mission profile is shown in Equation \ref{e:thrust}. 
 		
 		\begin{equation}
 			F_{\text{thrust}}(t)
@@ -461,15 +472,15 @@
 		\subsection{Power Calculation} \label{ss:power_calc}
 		
 	
-		The motor used for vehicle propulsion is the U8 Lite L Efficiency Multirotor UAV Motor KV95 \cite{Motor}. The propeller used was the MF3218 \cite{Propeller}. Test data from the supplier shown in Table \ref{tab:power}for the thrust against the power, and RPM for the pair of motor and propeller was used to generate Equation \ref{eq:t_to_p} and Equation \ref{eq:ang}. 
+		The motor used for vehicle propulsion is the U8 Lite L Efficiency Multirotor UAV Motor KV95 \cite{Motor}. The propeller used is the G32*11\cite{Propeller}. Test data from the supplier is shown in Table \ref{tab:power} for the thrust, power, and RPM for the pair of motor and propeller.  was used to generate Equation \ref{eq:t_to_p} and Equation \ref{eq:ang}. 
 		
 	
-		\begin{figure}[htb]
+		\begin{table}[htb]
 			\centering
-			\includegraphics[scale=0.7]{Tables/motortab.png}
-			\caption{Test Data for 8 Lite L Efficiency Multirotor UAV Motor KV95 with MF3218 Propeller \cite{Motor}} 
+			\includegraphics[scale=6]{Tables/rpm.pdf}
+			\caption{Test Data for 8 Lite L Efficiency Multirotor UAV Motor KV95 with G32*11 Propeller \cite{Motor}} 
 			\label{tab:power}
-		\end{figure}
+		\end{table}
 		
 		So that the power can be found at any point along the curve, the quadratic function of best fit was found for thrust vs power data. Equation \ref{eq:t_to_p} shows the resulting thrust to power relationship. Figure \ref{fig:power} is a plot of this data relevant to the equation. $P(t)$ is the power over time in units of watts. $T(t)$ is thrust in units of grams. 
 		
@@ -482,7 +493,7 @@
 		\begin{figure}[htb]
 			\centering
 			\includegraphics[scale=0.7]{Images/ThrustVPower.png}
-			\caption{Thrust Vs. Power curve for the 8 Lite L Efficiency Multirotor UAV Motor KV95 with MF3218 Propeller \cite{Motor}} 
+			\caption{Thrust Vs. Power curve for the 8 Lite L Efficiency Multirotor UAV Motor KV95 with G32*11 Propeller \cite{Motor}} 
 			\label{fig:power}
 		\end{figure}
 		
@@ -620,7 +631,8 @@
 			
 			
 			Once the slice model is complete, the individual local stiffness and mass matrices are transformed into the global coordinate system then assembled into a global mass matrix and stiffness matrix for the entire system. 
-			
+		
+	
 			
 		
 		\begin{comment}
@@ -764,8 +776,13 @@
 		 The optimization problem is formulated as follows:
 		 
 		 \begin{equation}
-		 	\min J(d_a,t_a,d_s,t_s,r_s,t_f,t_w)
+		 	\min J(X)
 		 	\label{eq:opt_objective}
+		 \end{equation}
+		
+		 \begin{equation}
+		 	X = (d_a,t_a,d_s,t_s,r_s,t_f,t_w)
+		 	\label{eq:opt_dvs}
 		 \end{equation}
 		 
 		 subject to constraints:
@@ -784,13 +801,13 @@
 		
 	\subsection{Objective Function} \label{ss:desvar}
 		
-		The objective function is formulated in order to both minimize the mass and mass moment of inertia of the UAV frame. The objective function is described in Equation \ref{eq:objective_function}. $M_{\text{frame}}$ is the mass of the frame given a set of design variables. $I_{\text{frame}}$ is the mass moment of inertia of the frame for a given set of design variables. $M_i$ is a constant which is equal the mass of the frame at the initial guess. $I_i$ is a constant which is equal the mass of the frame at the initial guess. 
+		The objective function is formulated in order to both minimize the mass and mass moment of inertia of the UAV frame. The objective function is described in Equation \ref{eq:objective_function}. $M_{\text{frame}}$ is the mass of the frame given a set of design variables. $I_{\text{frame}}$ is the mass moment of inertia of the frame for a given set of design variables. Scaling factors $S_i$ and $S_m$ were added to keep both mass and mass moment on the same order of magnitude. The scaling factor for mass ($S_m$) is set to $10^3$ and the scaling factor for mass moment of inertia $10^-3$. The weighting factor ($W_m$) for mass is 2/3 and the weighting factor for mass moment of inertia ($W_i$) is 1/3.
 		
 		\begin{equation}
-			J(d_a,t_a,d_s,t_s,r_s,t_f,t_w) =
-			\frac{M_{\text{frame}}(d_a,t_a,d_s,t_s,r_s,t_f,t_w)}{M_i}
+			J(X) =
+			\frac{W_mM_{\text{frame}}(X)}{S_m}
 			+
-			\frac{I_{\text{frame}}(d_a,t_a,d_s,t_s,r_s,t_f,t_w)}{I_i}
+			\frac{W_iI_{\text{frame}}(X)}{S_i}
 			\label{eq:objective_function}
 		\end{equation}
 		
@@ -811,12 +828,11 @@
 	
 	This section describes all the constraints applied to the UAV model. There are boundary conditions on all the design variables, a displacement constraint to limit the maximum displacement while the UAV is in hover, a constraint to ensure the stress is below yield strength, a frequency constraint to prevent vibration, an energy constraint to ensure that the UAV has enough energy to complete the mission, and a fatigue constraint to prevent long-term damage to the vehicle. 
 	
-	\subsubsection{Boundaries} \label{sss:Boundss}
+	\subsubsection{Boundaries} \label{sss:Bounds}
 		
-		Each design variable has lower and upper limit applied to it. Arm diameter
-		Equations \ref{eq:bound_da} - \ref{eq:bound_hr} describe each boundary condition. The arm diameter ($d_a$), arm thickness ($t_a$), strut diameter ($d_s$), strut thickness ($t_s$) boundary conditions were obtained through the minimum and maximum pipe diameter and thickness for braided carbon fiber found on AllRED's Dragonplate Website. \cite{DragonPlate}. The hub flange thickness ($t_f$) and hub web thickness ($t_w$) boundary conditions were taken from the minimum and maximum thickness of carbon fiber sheets. The maximum boundary conditions on hub radius ($h_r$) and strut distance from the center ($r_s$) are the distance from the center of the UAV to the propellers so the struts and hub stay within the frame. The minimum constraint of 197.5mm for hub radius ($h_r$) and strut distance ($r_s$) is the minimum hub radius for a circle to circumscribe both batteries with their given positions and dimensions.  
+		Each design variable has lower and upper limit applied to it. Table \ref{tab:bcs} describe each boundary condition. The arm diameter ($d_a$), arm thickness ($t_a$), strut diameter ($d_s$), strut thickness ($t_s$) boundary conditions were obtained through the minimum and maximum pipe diameter and thickness for braided carbon fiber found on AllRED's Dragonplate Website. \cite{DragonPlate}. The hub flange thickness ($t_f$) and hub web thickness ($t_w$) boundary conditions were taken from the minimum and maximum thickness of carbon fiber sheets. The maximum boundary conditions on hub radius ($h_r$) and strut distance from the center ($r_s$) are the distance from the center of the UAV to the propellers so the struts and hub stay within the frame. The minimum constraint of 197.5mm for hub radius ($h_r$) and strut distance ($r_s$) is the minimum hub radius for a circle to circumscribe both batteries with their given positions and dimensions.  
 		
-		Each design variable is bounded by a lower and upper limit. The bounds for the arm and strut diameters and thicknesses are taken from the minimum and maximum available sizes for braided carbon fiber pipe on AllRED’s DragonPlate website \cite{DragonPlate}. The hub flange and web thickness bounds are based on the minimum and maximum thicknesses available for carbon fiber sheets. The maximum bounds for the hub radius ($h_r$) and strut distance ($r_s$) correspond to the distance from the UAV center to the propellers so that the frame remains within the propeller circle. The minimum constraint of $197.5\,$mm for $h_r$ and $r_s$ is the minimum radius required for a circle to circumscribe both batteries with their given dimensions and positions.
+		% Each design variable is bounded by a lower and upper limit. The bounds for the arm and strut diameters and thicknesses are taken from the minimum and maximum available sizes for braided carbon fiber pipe on AllRED’s DragonPlate website \cite{DragonPlate}. The hub flange and web thickness bounds are based on the minimum and maximum thicknesses available for carbon fiber sheets. The maximum bounds for the hub radius ($h_r$) and strut distance ($r_s$) correspond to the distance from the UAV center to the propellers so that the frame remains within the propeller circle. The minimum constraint of $197.5\,$mm for $h_r$ and $r_s$ is the minimum radius required for a circle to circumscribe both batteries with their given dimensions and positions.
 		
 		\begin{comment}
 			\item $d_a$: arm diameter,
@@ -829,7 +845,7 @@
 			\item $h_r$: hub radius
 		\end{comment}
 		
-		\begin{align}
+		\begin{comment}
 			9\,\text{mm} &\le d_a \le 50.0\,\text{mm} \label{eq:bound_da}\\
 			0.254\,\text{mm} &\le t_a \le 3.175\,\text{mm} \label{eq:bound_ta}\\
 			9\,\text{mm} &\le d_s \le 50.0\,\text{mm} \label{eq:bound_ds}\\
@@ -838,7 +854,14 @@
 			0.7\,\text{mm} &\le t_f \le 12.7\,\text{mm} \label{eq:bound_tf}\\
 			0.7\,\text{mm} &\le t_w \le 12.7\,\text{mm} \label{eq:bound_tw}\\
 			197.5\,\text{mm} &\le h_r \le 1127.3\,\text{mm} \label{eq:bound_hr}
-		\end{align}
+		\end{comment}
+		
+		\begin{table}[htb]
+			\centering
+			\includegraphics[scale=0.7]{Tables/bcs.pdf}
+			\caption{Boundary Conditions Upper and Lower Limits} 
+			\label{tab:bcs}
+		\end{table}
 	
 	\subsubsection{Displacement and Stress} \label{sss:displacement}
 	
@@ -855,10 +878,10 @@
 		\end{figure}
 		 
 		
-		The formula for the constraint is shown in \ref{eq:opt_disp}. $d_{allowable}$ is the maximum allowable displacement.
+		The formula for the displacement constraint is shown in Equation \ref{eq:opt_disp}. $d_{allowable}$ is the maximum allowable displacement.
 		
 		 \begin{equation}
-			g_1(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = d_{\max} - d_{\text{allowable}} \le 0
+			g_1(X) = d_{\max} - d_{\text{allowable}} \le 0
 			\label{eq:opt_disp}
 		\end{equation}
 		
@@ -866,8 +889,7 @@
 	 	$\sigma_{yeild}$ is the tension yield strength of the material. $\text{FOS}$ is the factor of safety associated with the stress constraint. Factor of safety is a parameter of the analysis. 
 		
 		\begin{equation}
-			g_2(d_a,t_a,d_s,t_s,r_s,t_f,t_w) = \sigma_{\max} - \frac{\sigma_{\text{yield}}}{\text{FOS}} \le 0
-			
+			g_2(X) = \sigma_{\max} - \frac{\sigma_{\text{yield}}}{\text{FOS}} \le 0
 			\label{eq:opt_stress}
 		\end{equation}
 		
@@ -879,11 +901,12 @@
 		The design flow diagram for the frequency is shown in Figure \ref{fig:dfd_freq}. First, the beam model of the UAV slice discussed in Subsection \ref{ss:seg_model} is created. This beam model is used for both the dynamic and static solvers. The same force is applied to the static model which has a magnitude equal to the amplitude of the force on dynamic model. 
 		
 		The dynamic model is run repeatedly with frequencies over a range of values. This range is calculated by from converting finding the maximum and minimum values for thrust on the thrust curve calculated in Subsection \ref{ss:thrust}, then converting those values to minimum and maximum frequency using Equation \ref{eq:ang}.
-		The rev-up and rev-down sections are not considered for the thrust analysis. The maximum displacement amplitude between all run dynamic models ($d_amplitude$) is found. The maximum displacement in the static model was also found ($d_{static}$). Equation \ref{eq:opt_freq} is the formulation of the constraint.
+		
+		The rev-up and rev-down sections are not considered for the thrust analysis. The maximum displacement amplitude between all run dynamic models ($d_amplitude$) is found. The maximum displacement in the static model was also found ($d_{static}$). Equation \ref{eq:opt_freq} is the formulation of the constraint. The allowable admittence is represented $Y_{\text{allowable}}$.
 		
 		\begin{equation}
-			g_3(d_a,t_a,d_s,t_s,r_s,t_f,t_w)
-			= \frac{d_{\text{amplitude}}}{d_{\text{static}}} - R_{\text{allowable}}
+			g_3(X)
+			= \frac{d_{\text{amplitude}}}{d_{\text{static}}} - Y_{\text{allowable}}
 			\le 0
 			\label{eq:opt_freq}
 		\end{equation}
@@ -898,6 +921,8 @@
 			
 	\subsubsection{Damage} \label{sss:damage}
 	
+		% Explain surface area once	
+		
 		The damage constraint is imposed in order to limit damage caused by the vibrations in the vehicle. The design flow diagram of the is shown in Figure \ref{fig:dfd_damage}. The mass of the drone is calculated geometrically using model discussed in Section \ref{se:uav_geo}. The mass of the batteries and payload are taken to find the total mass ($m_total$). The projected surface area of the UAV is calculated. This is the sum of the area of the top surface of the UAV hub and the projected surface area of the UAV arms and struts. The mission profile, total mass, and surface area are used to calculate the thrust function shown in Equation \ref{eq:thrust}. The thrust function is transferred to a angular frequency function by applying Equation \ref{eq:ang}. The thrust function is then used to calculate the perturbation force described by Equation \ref{eq:thr}. The beam model used is the slice model discussed in Subsection \ref{ss:seg_model}. Both the perturbation and thrust are upward forces and are applied to the outer node of the slice model. Both forces are divided by eight due to only applying to one slice of the model. 
 		
 		The number of time-steps for the transient solver is set by a constant set by the user. The constants used for Newmark-beta interrogation are $\beta = 0.25$ and $\gamma = 0.5$. The results for the bending stress are taken for each timestep at the point of maximum bending stress. 
@@ -907,7 +932,7 @@
 		One limitation of this analysis is that material data is fatigue material data is limited to aluminum as fatigue data for the carbon fiber composite has not been obtained as that is outside the scope of this thesis. Equation \ref{eq:opt_damage} describes the constraint. $D$ is the damage taken in a single mission. $n_\text{missions}$ is the number of missions the UAV should run before failure.
 		
 		\begin{equation}
-			g_4(d_a,t_a,d_s,t_s,r_s,t_f,t_w)
+			g_4(X)
 			= D \, n_{\text{missions}} - 1
 			\le 0
 			\label{eq:opt_damage}
@@ -925,7 +950,7 @@
 		The objective of this constraint is to keep battery energy above desired levels for the duration of the mission. The design flow diagram for the energy constraint is shown in Figure \ref{fig:dfd_energy}. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. $E_{used}$ is the total energy used during the mission, it is equal to $E_{Capacity} - E_{Remaining}(t)$ where t is the full duration of the power mission profile. $E_{Capacity}$ is the total storage of the battery. $E_{\%remaining}$ is a parameter which is equal to the amount of percent energy remaining desired after landing. 
 		
 		\begin{equation}
-			g_5(d_a,t_a,d_s,t_s,r_s,t_f,t_w)
+			g_5(X)
 			= \frac{E_{\text{used}}}{E_{\text{capacity}}} + E_{\%\text{remaining}} - 1 
 			\le 0
 			\label{eq:opt_energy}
@@ -951,9 +976,9 @@
 		
 		The optimization module contains the Optimizer class. This class runs code related to the optimization algorithm. The primary inputs are a dictionary of active constraints, parameters, an initial guess, parameters related to the fidelity of the simulation, boundary conditions, and a dictionary of design variables that are fixed. 
 		
-		The active{\_}constraints dictionary has a boolean associated with each constraint. These allow the user to turn off constraints if they are inactive to save on computation time. The parameters dictionary contains design parameters. This includes number of blades, propeller radius, propeller spacing, payload, air density, drag coefficient, maximum propeller rotations per minute, battery mass, battery dimensions, battery volts, battery milliamp hours, rev up time, rev down time, gravity, and hub height. These can all be changed easily to test various UAV designs and flight conditions.
+		The active{\_}constraints dictionary has a boolean associated with each constraint. These allow the user to turn off constraints if they are inactive to save on computation time. The parameters dictionary contains design parameters. This includes number of blades, propeller radius, propeller spacing, payload, air density,   coefficient, maximum propeller rotations per minute, battery mass, battery dimensions, battery volts, battery milliamp hours, rev up time, rev down time, gravity, and hub height. These can all be changed easily to test various UAV designs and flight conditions.
 		
-		The parameters related to the fidelity of the simulation are the number of I-beams describing the hub, the number of time-steps in the transient load simulation, and the number of time-steps for integration for the energy usage calculation. The boundary conditions are a dictionary with each constraint associated with a touple expressing the range of acceptable values. 
+		The parameters related to the fidelity of the simulation are the number of I-beams describing the hub, the number of time-steps in the transient load simulation, and the number of time-steps for integration for the energy usage calculation. The boundary conditions are a dictionary with each constraint associated with a touple expressing the range of accep  values. 
 		
 		The dictionary of fixed design variables has each constraint either associated with a number, or is set to false. If set to a number the design variable is fixed and is not analyzed by the optimizer. This is done after it is determined that the boundary condition is the active constraint so the design variable does not need to be considered. Fixing the design variables saves on computation time. 
 		
@@ -965,119 +990,152 @@
 		
 		Test\_results method runs all constraints to ensure that an optimized result does not violate any constraints that were set to inactive. 
 		\end{comment}
+		
 	\chapter{Results} \label{ch:results}
-		\section{Something}
-			- My thing is very flexible and practical. Rapid design testing etc. etc. 
-			- I will show how practical it is by showing how easy it is to modify base on results 
-			- Initially started with a deflection constraint of 5\% deflection per span. 
-			- Determined it was too low (based on transient results)
-			- Moved to 1\% Deflection per space
-			- Energy constraint is based on mass so this shows the mass deflection tradeoff.
-			- This was determined to be too high because the transient analysis 
-				- The deflection was higher than the static analysis
-				- This is expected. 
-			 
-		\section{Initial Design}
-			\subsection{Initial Guess}
-				opt.design_variables_initial_guess = {
-					"arm_diameter": 50.0,
-					"arm_thickness": 0.6,
-					"strut_diameter": 50.0,
-					"strut_thickness": 0.6,
-					"strut_distance": 475,
-					"hub_radius": 250,
-					"hub_flange_thickness": 0.7,
-					"hub_web_thickness": 0.7
-				}
 			
-			\subsection{resulting DVS}
-				design variables
-				arm_diameter: 50.0
-				arm_thickness: 0.2540000000000008
-				strut_diameter: 50.0
-				strut_thickness: 0.2540000000000002
-				strut_distance: 454.2624850257739
-				hub_radius: 250
-				hub_flange_thickness: 0.7
-				hub_web_thickness: 0.7
+		This chapter shows the results generated. The tool designed in this thesis is flexible and allows the user to rapidly test various design configurations. The study initially applied a constraint on deflection of 50mm or approximately 4.43\% deflection per span. The results for this constraint are shown in Section \ref{se:50mm}.
+		
+		This constraint was determined to be overly constrictive, due to the high deflection peaks during the transient analysis and the excessively thin UAV arms. The design was iterated to have 10mm deflection per span based on this analysis. The results for the 10mm section are shown in Section \ref{se:10mm}.
+		
+		
+		\section{Initial Guess} \label{se:ig}
+			The initial guess used for optimization analysis is shown in Table \ref{tab:ig}. The same initial guess was used for both the 50mm deflection and 10mm deflection designs.  
+			
+			\begin{table}[htb]
+				\centering
+				\includegraphics[scale=6]{Tables/ig.pdf}
+				\caption{Design Variables of the Initial Guess} 
+				\label{tab:ig}
+			\end{table}
+		
+		\section{50mm Deflection Design} \label{se:50mm}
+			
+			Table \ref{tab:ccs1} shows what the constraint parameters described in Subsection \ref{ss:consts} were set to for the 50mm design. 
+			% Justify 20%
+			
+			\begin{table}[htb]
+				\centering
+				\includegraphics[scale=6]{Tables/ccs1.pdf}
+				\caption{Constraint Constants for 50mm Design}  
+				\label{tab:ccs1}
+			\end{table}
+			
+			
+			Table \ref{tab:res1} shows the resulting design variables for the 50mm deflection design. All design variables except arm wall thickness ($t_a$) are constrained by the boundary conditions. 
+			
+			\begin{table}[htb]
+				\centering
+				\includegraphics[scale=6]{Tables/res1.pdf}
+				\caption{Resulting Design Variables for 50mm Deflection Design} 
+				\label{tab:res1}
+			\end{table}
+			
+			
+			Table \ref{tab:obj1} shows the improvement between the initial guess and the 50mm deflection design. 
+			
+			\begin{table}[htb]
+				\centering
+				\includegraphics[scale=6]{Tables/res1.pdf}
+				\caption{Objective Function Comparison for 50mm Deflection Design} 
+				\label{tab:obj1}
+			\end{table}
+			
+			
+			Table \ref{tab:cons1} shows the violation for each constraint. The table shows that the only active constraint for the 50mm design is the displacement constraint. 
+			
+			\begin{table}[htb]
+				\centering
+				\includegraphics[scale=6]{Tables/cons1.pdf}
+				\caption{Constraint Violation for 50mm Deflection Design}  
+				\label{tab:cons1}
+			\end{table}
+			
+			The plot of the design space is shown in Figure \ref{fig:designspacearm1}.The heatmap is the value of the objective function. Each contour represents a constrain. The contours above one represent the region where the constraint is not met. The white point is the resulting design variables from the optimization. All design variables not on the axes are set to the resulting design variables from optimization. 
+		
+			\begin{figure}[htb]
+				\centering
+				\includegraphics[scale=1]{Images/Results50/spacearm.png}
+				\caption{Design Space of the Arm Diameter vs Arm Thickness} 
+				\label{fig:designspacearm1}
+			\end{figure}
+			
+			The static analysis resulted in a displacement of 50mm as the displacement constraint is active. However the transient analysis yielded a maximum displacement of 88.34mm. The design has thin walls for the struts and arms which would be unlikely to support a practical design. This led to the decision to reduce reduce the value of the static constraint to 10mm. 
 				
-				Initial Guess
-				Frame mass: 1.7057551016244064 kg
-				Frame mass moment of inertia: 0.34047109121624436  kg*m^2
-				Objective: 0.9384796481845028
-				Optimized
-				Frame mass: 1.053752071416452 kg
-				Frame mass moment of inertia: 0.14823664329358247 kg*m^2
-				Objective: 0.4850405167872752
+		\section{10mm Deflection Design} \label{se:10mm}
+			\subsection{Optimization} \label{se:opt_10}
+				Table \ref{tab:ccs2} shows what the constraint parameters described in Subsection \ref{ss:consts} were set to for the 10mm design. The only value changed from the 50mm design is the  
+				% Justify 20%
 				
-				
-				-Sensitivity analysis 
-				- The value of the design variables which did not converge to the boundary conditions were varied by +-0.1\% of their values to test the optimal solution.   
 				\begin{table}[htb]
-					
+					\centering
+					\includegraphics[scale=6]{Tables/ccs2.pdf}
+					\caption{Constraint Constants for 10mm Design}  
+					\label{tab:ccs2}
 				\end{table}
 				
-			\subsection{Constraints}
-				deflection: 1.0000000000000078
-				stress: 0.8763661383057956
-				displacement amplitude: 0.19538100852334553
-				energy: 0.8892813083366702
-				damage: 0.0
 				
-				Damage is 0 because the fatigue is minor and it uses data for aluminum which is stronger than the carbon fiber composites. 
+				Table \ref{tab:res2} shows the resulting design variables for the 10mm deflection design. Arm radius and strut radius are set by the boundary conditions and all other design variables are set by the constraints. 
 				
-				Deflection is the active constraint.
+				\begin{table}[htb]
+					\centering
+					\includegraphics[scale=6]{Tables/res2.pdf}
+					\caption{Resulting Design Variables for 10mm Deflection Design} 
+					\label{tab:res2}
+				\end{table}
+				
+				
+				Table \ref{tab:obj2} shows the improvement between the initial guess and the 10mm deflection design. 
+				
+				\begin{table}[htb]
+					\centering
+					\includegraphics[scale=6]{Tables/res2.pdf}
+					\caption{Objective Function Comparison for 10mm Deflection Design} 
+					\label{tab:obj2}
+				\end{table}
+				
+				
+				Table \ref{tab:cons2} shows the violation for each constraint. The active constraints are the frequency constraint and the displacement constraint. 
+				
+				\begin{table}[htb]
+					\centering
+					\includegraphics[scale=6]{Tables/cons2.pdf}
+					\caption{Constraint Violation for 50mm Deflection Design}  
+					\label{tab:cons2}
+				\end{table}
+				
+				The plot of the design space is shown in Figure \ref{fig:designspacearm2}.The heatmap is the value of the objective function. Each contour represents a constrain. The contours above one represent the region where the constraint is not met. The white point is the resulting design variables from the optimization. All design variables not on the axes are set to the resulting design variables from optimization. 
+				
+			\subsection{Design Space} \label{ss:globmin}
 			
+				The SLSQP solver does not ensure that the global minima is found. In attempt to find local minima, the design space was searched. 
+				\begin{figure}[htb]
+					\centering
+					\includegraphics[scale=1]{Images/Results10/spacearm.png}
+					\caption{Design Space of the Arm Diameter vs Arm Thickness} 
+					\label{fig:designspacearm2}
+				\end{figure}
+			
+			\subsection{Displacement and Stress}
+			
+			
+			\begin{figure}[htb]
+				\centering
+				\includegraphics[scale=1]{Images/Results10/spacearm.png}
+				\caption{Design Space of the Arm Diameter vs Arm Thickness} 
+				\label{fig:designspacearm2}
+			\end{figure}
+			
+			\subsection{Natural Frequency}
+			
+			\subsection{Energy}
+			
+			\subsection{Fatigue}
+				
 	
-			
-			- The initiales guess	were based off of measurements from the original UAV design. 
-			- arm diameter, strut diameter, hub radius, flange thickness, and web thickness were all found to converge to boundary conditions
-		\section{Revised Design }
-			\section{Why}
-				- 50 too high. 
-				
-				- Initially started with a deflection constraint of 5\% deflection per span. 
-				- Moved to 1\% Deflection per space
-				- Energy constraint is based on mass so this shows the mass deflection tradeoff.
-				- This was determined to be too high because the transient analysis 
-				- The deflection was higher than the static analysis
-				- This is expected. 
-				
-			\section{dvs}
-				
-		% initial_guess = {
-		%	"arm_diameter": 50.0,
-		%	"arm_thickness": 0.6,
-		%	"strut_diameter": 50.0,
-		%	"strut_thickness": 0.6,
-		%	"strut_distance": 425,
-		%	"hub_radius": 100.0,
-		%	"hub_flange_thickness": 0.7,
-		%	"hub_web_thickness": 0.7
-		% }	
-		\begin{comment}
-		design variables
-		arm_diameter: 50.0
-		arm_thickness: 0.30233957405287726
-		strut_diameter: 50.0
-		strut_thickness: 0.3609053941590715
-		strut_distance: 556.4454900912388
-		hub_radius: 100.0
-		hub_flange_thickness: 0.7
-		hub_web_thickness: 0.7
-		constraints
-		deflection: 0.9999999999999993
-		stress: 0.977859849282712
-		displacement amplitude: 0.29064885956701497
-		energy: 0.3260612162830091
-		damage: 0.0
-		mass w/ payload: 0.8250115057269486 kg
-		
-		\end{comment}
 		
 	% \chapter{Discussion} \label{ch:discussion}
 	\chapter{Conclusions} \label{ch:conclusions}
-		- The design couldbe improved. 
+		- The design could be improved. 
 		- Work can be done. 
 		
 	\section{Further Work} \label{se:further_work}

@@ -29,8 +29,6 @@ def drone_geometry_deformation(drone, m, q):
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
 
-    plt.title("UAV Slice Deformation")
-
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
     ax.set_zlim([-500, 500])
@@ -89,7 +87,7 @@ def drone_geometry_deformation(drone, m, q):
     # Add colorbar
     sm = mpl.cm.ScalarMappable(cmap=mpl.cm.plasma, norm=mpl.colors.Normalize(vmin=0, vmax=mag_max))
     cbar = fig.colorbar(sm, ax=ax, pad=0.1)
-    cbar.set_label("Deformation Magnitude (mm)")
+    cbar.set_label("Displacement Magnitude (mm)")
 
     plt.show()
 
@@ -99,8 +97,6 @@ def drone_geometry_stress(drone, m, q):
     # q: quality of image
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
-
-    plt.title("UAV Slice Bending Stress")
 
     ax.set_xlim([0, 1000])
     ax.set_ylim([-500, 500])
@@ -620,7 +616,7 @@ def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, desi
             design_variables[design_variable_x] = x
             design_variables[design_variable_y] = y
             constraints_res, labels = opt.constraint_calculations(design_variables, active_constraints)
-            constraints_map[y_i, x_i] = constraints_res
+            constraints_map[y_i, x_i] = constraints_res - 1
             var_map[y_i, x_i] = opt.objective(design_variables)
     print(design_variables)
     plt.figure(figsize=(10, 10))
@@ -635,7 +631,7 @@ def design_space_obj(opt, design_variable_x, design_variable_y, sample_num, desi
     cbar.set_label('Objective Function')
 
     colors = ['r', 'g', 'b', 'y', 'm', 'c', 'k', 'orange', 'purple', 'brown', 'pink', 'gray']
-    lvls = np.array([0.9, 1, 1.1])
+    lvls = np.array([-0.1,0,0.1])
     contours = []
     for i in range(cons_num):
         contours.append(plt.contour(x_space, y_space, constraints_map[:, :, i], levels=lvls, colors=colors[i]))

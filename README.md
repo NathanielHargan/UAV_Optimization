@@ -289,11 +289,12 @@ Notes
 - cite excel 
 - paste table as metafile 
 - paste only data you used
-- https://store.tmotor.com/product/g32x11prop-2pcs-1pair-glossy-carbon-fiber.html?srsltid=AfmBOorkmsRXlJLycIJWOVmH3tGWQ2TBA4hdBGJgK0dBDeLlczCSp5tV
-- brief discussion on units
-- Change objective function so that local minima can be found
+
+- https://store.tmotor.com/product/g32x11prop-2pcs-1pair-glossy-carbon-fiber.html?srsltid=AfmBOorkmsRXlJLycIJWOVmH3tGWQ2TBA4hdBGJgK0dBDeLlczCSp5tV (Done)
+- brief discussion on units (Done)
+- Change objective function so that local minima can be found (Done)
 - Grammar check 
-- Figure is uppercase 
+- Figure is uppercase (Done)
 - Do not start with prepositional phrase
 - in thesis packet
 - Do not start sentence with variable. 

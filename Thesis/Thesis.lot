@@ -1,11 +1,24 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Material Properties for Braided Round Tubes from ALLRed Corporation \cite {dragonplate:private}}}{8}{table.caption.10}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Mission Profile Constraints}}{10}{table.caption.14}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Design Variable Descriptions}}{7}{table.caption.8}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Material Properties for Braided Round Tubes from ALLRed Corporation \cite {dragonplate:private}}}{8}{table.caption.11}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Mission Profile Constraints}}{9}{table.caption.12}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Mission Profile Constraints}}{10}{table.caption.16}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Test Data for 8 Lite L Efficiency Multirotor UAV Motor KV95 with G32*11 Propeller \cite {Motor}}}{15}{table.caption.20}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Boundary Conditions Upper and Lower Limits}}{30}{table.caption.31}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Design Variables of the Initial Guess}}{37}{table.caption.40}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Constraint Constants for 50mm Design}}{37}{table.caption.41}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Resulting Design Variables for 50mm Deflection Design}}{38}{table.caption.42}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Objective Function Comparison for 50mm Deflection Design}}{38}{table.caption.43}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Constraint Violation for 50mm Deflection Design}}{39}{table.caption.44}%
+\contentsline {table}{\numberline {6.6}{\ignorespaces Constraint Constants for 10mm Design}}{39}{table.caption.46}%
+\contentsline {table}{\numberline {6.7}{\ignorespaces Resulting Design Variables for 10mm Deflection Design}}{40}{table.caption.47}%
+\contentsline {table}{\numberline {6.8}{\ignorespaces Objective Function Comparison for 10mm Deflection Design}}{40}{table.caption.48}%
+\contentsline {table}{\numberline {6.9}{\ignorespaces Constraint Violation for 50mm Deflection Design}}{41}{table.caption.49}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
