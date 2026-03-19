@@ -1,52 +1,71 @@
-\contentsline {chapter}{List of Figures}{vii}{chapter*.2}%
-\contentsline {chapter}{List of Tables}{ix}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{viii}{chapter*.2}%
+\contentsline {chapter}{List of Tables}{xi}{chapter*.3}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Review of Literature}{2}{chapter.2}%
-\contentsline {chapter}{\numberline {3}UAV Design}{3}{chapter.3}%
-\contentsline {section}{\numberline {3.1}UAV Geometry}{3}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Design Variables}{3}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Design Parameters}{4}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Mass and Payload}{5}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Material Properties}{8}{subsection.3.1.4}%
-\contentsline {section}{\numberline {3.2}Units}{8}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Mission Profile}{9}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Thrust Calculation}{11}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Energy Consumption}{12}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Batteries}{13}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Power Calculation}{13}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Angular Velocity Calculation}{15}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Energy Consumption Calculation}{15}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Perturbation Calculation}{16}{subsection.3.4.5}%
-\contentsline {chapter}{\numberline {4}Finite Element Analysis}{18}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Beam Model}{18}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Beam Element Formulation}{19}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Boundary Conditions}{20}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}UAV Slice Model}{21}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Solvers}{22}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Static}{22}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Dynamic}{23}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Transient}{24}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Beam Stresses}{25}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Mass Analysis}{26}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Optimization}{27}{chapter.5}%
-\contentsline {subsection}{\numberline {5.0.1}Objective Function}{28}{subsection.5.0.1}%
-\contentsline {subsection}{\numberline {5.0.2}Constraints}{29}{subsection.5.0.2}%
-\contentsline {subsubsection}{Boundaries}{29}{section*.30}%
-\contentsline {subsubsection}{Displacement and Stress}{30}{section*.32}%
-\contentsline {subsubsection}{Frequency}{31}{section*.34}%
-\contentsline {subsubsection}{Damage}{33}{section*.36}%
-\contentsline {subsubsection}{Energy}{34}{section*.38}%
-\contentsline {chapter}{\numberline {6}Results}{36}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Initial Guess}{36}{section.6.1}%
-\contentsline {section}{\numberline {6.2}50mm Deflection Design}{36}{section.6.2}%
-\contentsline {section}{\numberline {6.3}10mm Deflection Design}{39}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Optimization}{39}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Design Space}{40}{subsection.6.3.2}%
-\contentsline {chapter}{\numberline {7}Conclusions}{44}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Further Work}{44}{section.7.1}%
-\contentsline {chapter}{\numberline {8}Summary}{45}{chapter.8}%
-\contentsline {chapter}{Appendices}{46}{section*.51}%
-\contentsline {chapter}{Appendix \numberline {A}First Appendix}{47}{appendix.a.A}%
-\contentsline {section}{\numberline {A.1}Section one}{47}{section.a.A.1}%
-\contentsline {section}{\numberline {A.2}Section two}{47}{section.a.A.2}%
-\contentsline {chapter}{Appendix \numberline {B}Second Appendix}{48}{appendix.a.B}%
+\contentsline {section}{\numberline {1.1}Statement of Need}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Hypothesis Statement}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objective}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Scope}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Outline}{4}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Review of Literature}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Multidisciplinary Design Optimization for UAVs}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Mission Profile Design}{6}{section.2.2}%
+\contentsline {chapter}{\numberline {3}UAV Design}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}UAV Geometry}{7}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Design Variables}{9}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Design Parameters}{11}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Mass and Payload}{11}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Material Properties}{12}{subsection.3.1.4}%
+\contentsline {chapter}{\numberline {4}Mission Profile}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Units}{14}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Mission Profile Generation}{15}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Forces}{19}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Energy Consumption}{22}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batteries}{23}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Power Calculation}{23}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Angular Velocity Calculation}{25}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Energy Consumption Calculation}{26}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Perturbation Calculation}{27}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Finite Element Analysis}{28}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Beam Model}{28}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Beam Element Formulation}{30}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}UAV Slice Model}{33}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Constraints}{35}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Beam Stresses}{36}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Solvers}{38}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Static}{38}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Dynamic}{39}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Transient}{40}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Mass Analysis}{41}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Optimization}{43}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Objective Function}{44}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Constraints}{45}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Boundaries}{45}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Displacement}{46}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Stress}{47}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Frequency}{49}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Damage}{50}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}Energy}{51}{subsection.6.2.6}%
+\contentsline {chapter}{\numberline {7}Results}{53}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Initial Guess}{53}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Constants}{54}{section.7.2}%
+\contentsline {section}{\numberline {7.3}50mm Deflection Design}{56}{section.7.3}%
+\contentsline {section}{\numberline {7.4}10mm Deflection Design}{59}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Displacement and Stress}{62}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Frequency}{64}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Energy}{66}{subsection.7.4.3}%
+\contentsline {subsection}{\numberline {7.4.4}Damage}{69}{subsection.7.4.4}%
+\contentsline {subsection}{\numberline {7.4.5}Design Space}{69}{subsection.7.4.5}%
+\contentsline {subsection}{\numberline {7.4.6}Sensitivity Analysis}{71}{subsection.7.4.6}%
+\contentsline {chapter}{\numberline {8}Conclusions, Summary, and Recommendations}{73}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Summary}{73}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Conclusions}{74}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Recommendations}{76}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Finite Element Model Refinement}{77}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Mission Profile Refinement}{77}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Frequency Constraint}{77}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}Material and Fatigue Modeling}{78}{subsection.8.3.4}%
+\contentsline {subsection}{\numberline {8.3.5}Preventing High Surface Area Solutions}{78}{subsection.8.3.5}%
+\contentsline {chapter}{Bibliography}{79}{chapter*.69}%
+\contentsline {chapter}{Appendices}{82}{section*.70}%
+\contentsline {chapter}{Appendix \numberline {A}Design Space Plots}{83}{appendix.a.A}%
+\contentsline {chapter}{Appendix \numberline {B}Code Architecture}{89}{appendix.a.B}%

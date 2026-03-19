@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.1.7)  29 JAN 2026 02:02
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.1.7)  8 MAR 2026 04:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1031,105 +1031,131 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \backup@length=\skip84
 \ar@cellbox=\box101
 ))
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/csvsimple\csvsimple.st
+y
+Package: csvsimple 2024/09/27 v2.7.0 LaTeX CSV file processing
+)
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/csvsimple\csvsimple-le
+gacy.sty
+Package: csvsimple-legacy 2024/09/27 version 2.7.0 LaTeX2e CSV file processing
+
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/tools\shellesc.sty
+Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
+Package shellesc Info: Restricted shell escape enabled on input line 77.
+)
+\csv@file=\read4
+\c@csvinputline=\count368
+\c@csvrow=\count369
+\c@csvcol=\count370
+\csv@out=\write5
+)
+(C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count371
+\float@exts=\toks51
+\float@box=\box102
+\@float@everytoks=\toks52
+\@floatcapt=\box103
+)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 103.
+h' as default language. on input line 48.
 
 (Thesis.aux)
 \openout1 = `Thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 103.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-03.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 4
+8.
 
 (C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 103.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 103.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 103.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 103.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 103.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 103.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 103.
-LaTeX Font Info:    Redeclaring math accent \check on input line 103.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 103.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 103.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 103.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 103.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 48.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 48.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 48.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 48.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 48.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 48.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 48.
+LaTeX Font Info:    Redeclaring math accent \check on input line 48.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 48.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 48.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 48.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 48.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 48.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 103.
-
+(Font)              `operators' in the math version `normal' on input line 48.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 103.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 48.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 103.
+(Font)              `operators' in the math version `bold' on input line 48.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 103.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 48.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 103.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 103.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 103.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 103.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 103.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 48.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 103.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 103.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 103.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 48.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 103.
-Package hyperref Info: Link coloring ON on input line 103.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 48.
+Package hyperref Info: Link coloring ON on input line 48.
 
 (Thesis.out) (Thesis.out)
-\@outlinefile=\write5
-\openout5 = `Thesis.out'.
+\@outlinefile=\write6
+\openout6 = `Thesis.out'.
 
-\c@lstlisting=\count368
+\c@lstlisting=\count372
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 (C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\tra
@@ -1138,38 +1164,38 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 103.
+or `english'. on input line 48.
  [0
 
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
 
  []
 
 [3] (Thesis.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
 
 (C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
 
 (C:\Users\Nathan\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1179,61 +1205,71 @@ Underfull \vbox (badness 6775) has occurred while \output is active []
  [4
 
 ]
-[5])
-\tf@toc=\write6
-\openout6 = `Thesis.toc'.
+Underfull \vbox (badness 3039) has occurred while \output is active []
 
- [6] (Thesis.lof
+ [5]
+Underfull \vbox (badness 3039) has occurred while \output is active []
 
-Package natbib Warning: Citation `Motor' on page vii undefined on input line 16
-.
+ [6])
+\tf@toc=\write7
+\openout7 = `Thesis.toc'.
 
 
-Package natbib Warning: Citation `Motor' on page vii undefined on input line 17
-.
+[7] (Thesis.lof
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [8
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9])
+\tf@lof=\write8
+\openout8 = `Thesis.lof'.
+
+
+[10] (Thesis.lot
+Underfull \vbox (badness 1173) has occurred while \output is active []
+
+ [11
+
+])
+\tf@lot=\write9
+\openout9 = `Thesis.lot'.
+
+
+No file Thesis.nls.
+[12]
+Chapter 1.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
+
+
+]
+[2]
+Underfull \vbox (badness 3240) has occurred while \output is active []
+
+ [3]
+[4]
+Chapter 2.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5
+
+]
+[6]
+Chapter 3.
+File: Images/arm.png Graphic file (type bmp)
+<Images/arm.png>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [7
 
-])
-\tf@lof=\write7
-\openout7 = `Thesis.lof'.
-
-
-[8] (Thesis.lot
-
-Package natbib Warning: Citation `dragonplate:private' on page ix undefined on 
-input line 5.
-
-
-Package natbib Warning: Citation `Motor' on page ix undefined on input line 8.
-
-)
-\tf@lot=\write8
-\openout8 = `Thesis.lot'.
-
-
-No file Thesis.nls.
-[9
-
 ]
-Chapter 1.
-[1
-
-
-]
-Chapter 2.
-[2
-
-]
-Chapter 3.
-
-Package natbib Warning: Citation `nick' on page 3 undefined on input line 138.
-
-File: Images/arm.png Graphic file (type bmp)
-<Images/arm.png>
 File: Images/strut.png Graphic file (type bmp)
 <Images/strut.png>
 File: Images/hub.png Graphic file (type bmp)
@@ -1242,8 +1278,10 @@ File: Images/hubtop.png Graphic file (type bmp)
 <Images/hubtop.png>
 File: Images/hubsectioniso.png Graphic file (type bmp)
 <Images/hubsectioniso.png>
-File: Tables/dvs.pdf Graphic file (type pdf)
-<use Tables/dvs.pdf>
+
+Underfull \vbox (badness 1009) has occurred while \output is active []
+
+ [8]
 File: Images/Dv/da.png Graphic file (type bmp)
 <Images/Dv/da.png>
 File: Images/Dv/ra.png Graphic file (type bmp)
@@ -1261,396 +1299,508 @@ File: Images/Dv/tw.png Graphic file (type bmp)
 File: Images/Dv/rh.png Graphic file (type bmp)
 <Images/Dv/rh.png>
 
-LaTeX Warning: Float too large for page by 7.92966pt on input line 263.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[3
+ [9]
+Overfull \vbox (7.92966pt too high) has occurred while \output is active []
 
-] [4]
+
+[10]
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
-[5] [6]
-File: Images/FBDMotion.png Graphic file (type bmp)
-<Images/FBDMotion.png>
-File: Images/FBDStatic.png Graphic file (type bmp)
-<Images/FBDStatic.png>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
-
-Package natbib Warning: Citation `dragonplate:private' on page 8 undefined on i
-nput line 312.
-
-
-Package natbib Warning: Citation `dragonplate:private' on page 8 undefined on i
-nput line 312.
-
-File: Tables/Matprop.png Graphic file (type bmp)
-<Tables/Matprop.png>
-
-Package natbib Warning: Citation `MatWeb' on page 8 undefined on input line 317
-.
-
-
-Package natbib Warning: Citation `pyLife' on page 8 undefined on input line 320
-.
-
-
-! Package xkeyval Error: `6' undefined in families `Gin'.
-
-See the xkeyval package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
+ [11]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.419 ...^I\csvautobooktabular{Tables/matprop.csv}
                                                   
-l.370 ...I^^I\includegraphics[6]{Tables/units.pdf}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.419 ...^I\csvautobooktabular{Tables/matprop.csv}
                                                   
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-File: Tables/units.pdf Graphic file (type pdf)
-<use Tables/units.pdf>
-[8]
 
-Package natbib Warning: Citation `MapViewer' on page 9 undefined on input line 
-378.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [12]
+[13]
+Chapter 4.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15]
 File: Images/MissionProfile/XvY.png Graphic file (type bmp)
 <Images/MissionProfile/XvY.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
 File: Images/MissionProfile/YposvT.png Graphic file (type bmp)
 <Images/MissionProfile/YposvT.png>
 File: Images/MissionProfile/XposVT.png Graphic file (type bmp)
 <Images/MissionProfile/XposVT.png>
-File: Tables/profcons.png Graphic file (type bmp)
-<Tables/profcons.png>
-[9]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
 File: Images/DFDs/DFDMissionProfile.png Graphic file (type bmp)
 <Images/DFDs/DFDMissionProfile.png>
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `e:thrust' on page 10 undefined on input line 428.
-
+ [18]
+File: Images/UAVFBD.png Graphic file (type bmp)
+<Images/UAVFBD.png>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [10]
-Underfull \vbox (badness 1810) has occurred while \output is active []
-
- [11]
+ [19]
+[20]
 File: Images/ThrustVTime.png Graphic file (type bmp)
 <Images/ThrustVTime.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21]
 File: Images/DFDs/DFDEnergy.png Graphic file (type bmp)
 <Images/DFDs/DFDEnergy.png>
 
+Underfull \vbox (badness 6063) has occurred while \output is active []
 
-Package natbib Warning: Citation `GensTattu' on page 12 undefined on input line
- 470.
+ [22]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[12]
-
-Package natbib Warning: Citation `Motor' on page 13 undefined on input line 475
-.
-
-
-Package natbib Warning: Citation `Propeller' on page 13 undefined on input line
- 475.
-
-File: Tables/rpm.pdf Graphic file (type pdf)
-<use Tables/rpm.pdf>
-
-Package natbib Warning: Citation `Motor' on page 13 undefined on input line 481
-.
-
-
-Package natbib Warning: Citation `Motor' on page 13 undefined on input line 481
-.
-
-[13]
+ [23]
 File: Images/ThrustVPower.png Graphic file (type bmp)
 <Images/ThrustVPower.png>
 
-
-Package natbib Warning: Citation `Motor' on page 14 undefined on input line 496
-.
-
-
-Package natbib Warning: Citation `Motor' on page 14 undefined on input line 496
-.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [14]
+ [24]
 File: Images/ThrustVRPM.png Graphic file (type bmp)
 <Images/ThrustVRPM.png>
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Package natbib Warning: Citation `Motor' on page 15 undefined on input line 513
-.
-
-
-Package natbib Warning: Citation `Motor' on page 15 undefined on input line 513
-.
-
-[15]
-Overfull \hbox (7.00504pt too wide) in paragraph at lines 529--530
+ [25]
+Overfull \hbox (7.00504pt too wide) in paragraph at lines 734--735
 []\TU/lmr/m/n/12 The integral of the power is calculated numerically using scip
 y.integrate.cumulative_trapezoid.
  []
 
 
-Underfull \vbox (badness 1189) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16]
-File: Images/PurtibationVTime.png Graphic file (type bmp)
-<Images/PurtibationVTime.png>
-
-[17]
-Chapter 4.
+ [26]
+[27]
+Chapter 5.
 File: Images/DFDs/DFDBeamModel.png Graphic file (type bmp)
 <Images/DFDs/DFDBeamModel.png>
 
-Package natbib Warning: Citation `StructXannulus' on page 18 undefined on input
- line 573.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-Package natbib Warning: Citation `StructXibeam' on page 18 undefined on input l
-ine 573.
-
-
-Package natbib Warning: Citation `transshear' on page 18 undefined on input lin
-e 575.
-
-[18
+ [28
 
 ]
-Underfull \vbox (badness 1112) has occurred while \output is active []
-
- [19]
-
-Package natbib Warning: Citation `MassMoment' on page 20 undefined on input lin
-e 586.
-
-
-Package natbib Warning: Citation `MassMoment' on page 20 undefined on input lin
-e 586.
-
-
-Underfull \vbox (badness 1430) has occurred while \output is active []
-
- [20]
-File: Images/stickmodel.png Graphic file (type bmp)
-<Images/stickmodel.png>
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21]
-Underfull \vbox (badness 1152) has occurred while \output is active []
-
- [22]
-File: Images/DFDs/DFDStatic.png Graphic file (type bmp)
-<Images/DFDs/DFDStatic.png>
-
-[23]
-File: Images/DFDs/DFDDynamic.png Graphic file (type bmp)
-<Images/DFDs/DFDDynamic.png>
-
-
-LaTeX Warning: Reference `fig:dfd_transient' on page 24 undefined on input line
- 702.
-
-File: Images/DFDs/DFDTransient.png Graphic file (type bmp)
-<Images/DFDs/DFDTransient.png>
-
-Package natbib Warning: Citation `feabook' on page 24 undefined on input line 7
-18.
-
-
+ [29]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [24]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [25]
-[26]
-Chapter 5.
-
-Overfull \hbox (8.28508pt too wide) in paragraph at lines 800--801
-[]\TU/lmr/m/n/12 The optimization function uses the SLSQP algorithm. This is ru
-n with scipy.optimize.minimize
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [27
-
-]
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 802.
-
-
-LaTeX Warning: Reference `dfd_objective' on page 28 undefined on input line 814
-.
-
-File: Images/DFDs/DFDObjective.png Graphic file (type bmp)
-<Images/DFDs/DFDObjective.png>
-
-Underfull \vbox (badness 3919) has occurred while \output is active []
-
- [28]
-
-Package natbib Warning: Citation `DragonPlate' on page 29 undefined on input li
-ne 833.
-
-[29]
-File: Tables/bcs.pdf Graphic file (type pdf)
-<use Tables/bcs.pdf>
-File: Images/DFDs/DFDDisp.png Graphic file (type bmp)
-<Images/DFDs/DFDDisp.png>
  [30]
-Underfull \vbox (badness 2503) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [31]
-File: Images/DFDs/DFDFrequency.png Graphic file (type bmp)
-<Images/DFDs/DFDFrequency.png>
-
-Overfull \hbox (47.6081pt too wide) in paragraph at lines 916--917
- [][] 
- []
-
-[32]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [33]
-File: Images/DFDs/DFDDamage.png Graphic file (type bmp)
-<Images/DFDs/DFDDamage.png>
+ [32]
+File: Images/8beammodel.png Graphic file (type bmp)
+<Images/8beammodel.png>
 
-[34]
-File: Images/DFDs/DFDEnergy.png Graphic file (type bmp)
-<Images/DFDs/DFDEnergy.png>
+[33]
+File: Images/stickmodel.png Graphic file (type bmp)
+<Images/stickmodel.png>
+File: Images/triseg.png Graphic file (type bmp)
+<Images/triseg.png>
+ [34]
+Underfull \vbox (badness 1430) has occurred while \output is active []
+
  [35]
-Chapter 6.
-File: Tables/ig.pdf Graphic file (type pdf)
-<use Tables/ig.pdf>
-File: Tables/ccs1.pdf Graphic file (type pdf)
-<use Tables/ccs1.pdf>
-[36
+File: Images/triseg.png Graphic file (type bmp)
+<Images/triseg.png>
 
-]
-File: Tables/res1.pdf Graphic file (type pdf)
-<use Tables/res1.pdf>
-File: Tables/res1.pdf Graphic file (type pdf)
-<use Tables/res1.pdf>
-File: Tables/cons1.pdf Graphic file (type pdf)
-<use Tables/cons1.pdf>
-File: Images/Results50/spacearm.png Graphic file (type bmp)
-<Images/Results50/spacearm.png>
-
-Overfull \hbox (370.3817pt too wide) in paragraph at lines 1057--1058
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 268.40913pt on input line 1060.
-
-
+[36]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [37]
-
-LaTeX Warning: Reference `tab:ccs2' on page 38 undefined on input line 1066.
-
-File: Tables/ccs2.pdf Graphic file (type pdf)
-<use Tables/ccs2.pdf>
+File: Images/DFDs/DFDStatic.png Graphic file (type bmp)
+<Images/DFDs/DFDStatic.png>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
+File: Images/DFDs/DFDDynamic.png Graphic file (type bmp)
+<Images/DFDs/DFDDynamic.png>
 
-LaTeX Warning: Reference `tab:res2' on page 39 undefined on input line 1077.
+Underfull \vbox (badness 1466) has occurred while \output is active []
 
-File: Tables/res2.pdf Graphic file (type pdf)
-<use Tables/res2.pdf>
+ [39]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `tab:obj2' on page 39 undefined on input line 1087.
+ [40]
+File: Images/DFDs/DFDTransient.png Graphic file (type bmp)
+<Images/DFDs/DFDTransient.png>
 
-File: Tables/res2.pdf Graphic file (type pdf)
-<use Tables/res2.pdf>
+[41] [42]
+Chapter 6.
 
-LaTeX Warning: Reference `tab:cons2' on page 39 undefined on input line 1097.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-File: Tables/cons2.pdf Graphic file (type pdf)
-<use Tables/cons2.pdf>
-
-LaTeX Warning: Reference `fig:designspacearm2' on page 39 undefined on input li
-ne 1106.
-
-[39]
-
-LaTeX Warning: File `Images/Results10/spacearm.png' not found on input line 111
-3.
-
-! Unable to load picture or PDF file 'Images/Results10/spacearm.png'.
-<to be read again> 
-                   }
-l.1113 ...[scale=1]{Images/Results10/spacearm.png}
-                                                  
-The requested image couldn't be read because
-it was not a recognized image format.
-
-File: Images/Results10/spacearm.png Graphic file (type bmp)
-<Images/Results10/spacearm.png>
-[40] [41] [42] [43]
-Chapter 7.
-[44
+ [43
 
 ]
-Chapter 8.
-(Thesis.bbl) [45
+[44]
+File: Images/DFDs/DFDObjective.png Graphic file (type bmp)
+<Images/DFDs/DFDObjective.png>
+ [45]
+Overfull \hbox (20.2411pt too wide) in paragraph at lines 1173--1188
+ [][] 
+ []
 
-] [46
+[46]
+File: Images/DFDs/DFDDisplacement.png Graphic file (type bmp)
+<Images/DFDs/DFDDisplacement.png>
+
+! Missing { inserted.
+<to be read again> 
+                   _
+l.1214 ... used to calculate the stress ($\sigma__
+                                                  {center}$) at the hub node...
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.1214 ...calculate the stress ($\sigma__{center}$
+                                                  ) at the hub node 0 of the...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+[47]
+File: Images/DFDs/DFDStress.png Graphic file (type bmp)
+<Images/DFDs/DFDStress.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [48]
+! Missing } inserted.
+<inserted text> 
+                }
+l.1243 ... function is $d_{\text{amplitude,outer}$
+                                                  .
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+File: Images/DFDs/DFDFrequency.png Graphic file (type bmp)
+<Images/DFDs/DFDFrequency.png>
+
+Overfull \hbox (47.6081pt too wide) in paragraph at lines 1253--1254
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [49]
+[50]
+File: Images/DFDs/DFDDamage.png Graphic file (type bmp)
+<Images/DFDs/DFDDamage.png>
+ [51]
+File: Images/DFDs/DFDEnergy.png Graphic file (type bmp)
+<Images/DFDs/DFDEnergy.png>
+ [52]
+Chapter 7.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [53
+
+]
+[54]
+Underfull \vbox (badness 2035) has occurred while \output is active []
+
+ [55]
+File: Res/50beammodel.png Graphic file (type bmp)
+<Res/50beammodel.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [56]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [57]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1428 ...^^I\csvautobooktabular{Res/50mm_res.csv}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1428 ...^^I\csvautobooktabular{Res/50mm_res.csv}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \vbox (badness 5862) has occurred while \output is active []
+
+ [58]
+File: Res/10beammodel.png Graphic file (type bmp)
+<Res/10beammodel.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [59]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [60]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1468 ...^^I\csvautobooktabular{Res/10mm_obj.csv}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1468 ...^^I\csvautobooktabular{Res/10mm_obj.csv}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [61]
+File: Res/deformation.png Graphic file (type bmp)
+<Res/deformation.png>
+
+[62]
+File: Res/stress.png Graphic file (type bmp)
+<Res/stress.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [63]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [64]
+File: Images/FRF.png Graphic file (type bmp)
+<Images/FRF.png>
+File: Res/admittence.png Graphic file (type bmp)
+<Res/admittence.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [65]
+Underfull \vbox (badness 1509) has occurred while \output is active []
+
+ [66]
+File: Res/energycap.png Graphic file (type bmp)
+<Res/energycap.png>
+File: Res/w_power.png Graphic file (type bmp)
+<Res/w_power.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [67]
+File: Res/rpm.png Graphic file (type bmp)
+<Res/rpm.png>
+File: Res/thrust_full.png Graphic file (type bmp)
+<Res/thrust_full.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [68]
+[69]
+File: Res/dv12.png Graphic file (type bmp)
+<Res/dv12.png>
+File: Res/dv12z.png Graphic file (type bmp)
+<Res/dv12z.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [70]
+File: Tables/sens.png Graphic file (type bmp)
+<Tables/sens.png>
+
+Underfull \vbox (badness 3977) has occurred while \output is active []
+
+ [71]
+[72]
+Chapter 8.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [73
+
+]
+[74]
+File: Res/10beammodel.png Graphic file (type bmp)
+<Res/10beammodel.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [75]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1674 ...^^I\csvautobooktabular{Res/10mm_obj.csv}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1674 ...^^I\csvautobooktabular{Res/10mm_obj.csv}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \vbox (badness 3108) has occurred while \output is active []
+
+ [76]
+[77] (Thesis.bbl [78]
+Underfull \hbox (badness 10000) in paragraph at lines 13--16
+[]\TU/lmr/m/n/12 Tattu 40000mah 6s uav lipo battery.  [][]$[][][][][] [] [] [] 
+[][][][][][][][][] [] [][][] []
+ []
+
+
+Overfull \hbox (90.5844pt too wide) in paragraph at lines 13--16
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/12 . 
+ []
+
+[79
+
+] [80]
+Underfull \hbox (badness 10000) in paragraph at lines 136--141
+[]\TU/lmr/m/n/12 T-Motor.  G32*11 prop-2pcs/pair.  [][]$[][][][][] [] [] [] [][
+][][][] [] [][][][][][] [] [][][] [] [][][][][][][] []
+ []
+
+
+Underfull \hbox (badness 2799) in paragraph at lines 143--146
+[]\TU/lmr/m/n/12 B. J. Taylor.  Dragonplate enquiry, 2024.  Private communicati
+on, bjtay-
+ []
+
+) [81] [82
 
 
 ]
 Appendix A.
-[47
+File: Res/dv34.png Graphic file (type bmp)
+<Res/dv34.png>
+File: Res/d34z.png Graphic file (type bmp)
+<Res/d34z.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [83
 
 ]
+File: Res/d56.png Graphic file (type bmp)
+<Res/d56.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [84]
+File: Res/d56z.png Graphic file (type bmp)
+<Res/d56z.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [85]
+File: Res/d56.png Graphic file (type bmp)
+<Res/d56.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [86]
+File: Res/d56z.png Graphic file (type bmp)
+<Res/d56z.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [87]
+[88]
 Appendix B.
+[89
 
-Package natbib Warning: There were undefined citations.
-
-[48
-
-] (Thesis.aux)
+] [90] (Thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Package rerunfilecheck Warning: File `Thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Thesis.out':
-(rerunfilecheck)             Before: D8D6EAA8E726E3915CAE60173FBD0877;6887
-(rerunfilecheck)             After:  5AE7BD8E4DCD5A5E44B513588B51C596;6587.
+Package rerunfilecheck Info: File `Thesis.out' has not changed.
+(rerunfilecheck)             Checksum: BB35E5561E2E097AC384E8649BDE597E;10184.
  ) 
 Here is how much of TeX's memory you used:
- 35422 strings out of 409617
- 764214 string characters out of 5773811
- 1929191 words of memory out of 5000000
- 56981 multiletter control sequences out of 15000+600000
- 563292 words of font info for 70 fonts, out of 8000000 for 9000
+ 36243 strings out of 409617
+ 782990 string characters out of 5773811
+ 1939191 words of memory out of 5000000
+ 57766 multiletter control sequences out of 15000+600000
+ 564872 words of font info for 80 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 125i,7n,131p,1180b,1035s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,13n,131p,1368b,1140s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Error 1 (driver return code) generating output;
-file Thesis.pdf may not be valid.
+Output written on Thesis.pdf (102 pages).

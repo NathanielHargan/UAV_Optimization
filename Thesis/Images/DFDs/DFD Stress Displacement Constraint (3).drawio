@@ -1,17 +1,17 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.2">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.5.1">
   <diagram name="Page-1" id="Prn4cj9Ji23cD33iOL5H">
-    <mxGraphModel dx="1491" dy="660" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="350" pageHeight="200" math="0" shadow="0">
+    <mxGraphModel dx="1211" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="150" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Solve Drone Geometry" vertex="1">
-          <mxGeometry height="100" width="100" x="310" y="120" as="geometry" />
+          <mxGeometry height="100" width="100" x="150" y="30" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-2" edge="1" parent="1" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-1" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points" />
-            <mxPoint x="160" y="170" as="sourcePoint" />
-            <mxPoint x="310.0046609406728" y="164.99533905932708" as="targetPoint" />
+            <mxPoint y="80" as="sourcePoint" />
+            <mxPoint x="150.0046609406728" y="74.99533905932708" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-3" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Design Variables" vertex="1">
@@ -21,34 +21,34 @@
         </mxCell>
         <mxCell id="Ghjm8zdx1JJTrlYnQbPF-2" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="440" y="170" as="targetPoint" />
+            <mxPoint x="280" y="80" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Calculate Mass" vertex="1">
-          <mxGeometry height="100" width="100" x="530" y="120" as="geometry" />
+          <mxGeometry height="100" width="100" x="370" y="30" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-5" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-4" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="410" y="169.6" as="sourcePoint" />
-            <mxPoint x="510" y="170" as="targetPoint" />
+            <mxPoint x="250" y="79.6" as="sourcePoint" />
+            <mxPoint x="350" y="80" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-6" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-5" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" value="Drone Geometry" vertex="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Calculate Force" vertex="1">
-          <mxGeometry height="100" width="100" x="690" y="120" as="geometry" />
+          <mxGeometry height="100" width="100" x="530" y="30" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Create Beam Model" vertex="1">
-          <mxGeometry height="100" width="100" x="310" y="280" as="geometry" />
+          <mxGeometry height="100" width="100" x="150" y="190" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-17" edge="1" parent="1" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-1" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="250" y="90" />
+              <mxPoint x="90" />
             </Array>
-            <mxPoint x="160" y="90" as="sourcePoint" />
-            <mxPoint x="300" y="90" as="targetPoint" />
+            <mxPoint as="sourcePoint" />
+            <mxPoint x="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-18" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Material Properties" vertex="1">
@@ -59,10 +59,10 @@
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-19" edge="1" parent="1" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-1" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="260" y="240" />
+              <mxPoint x="100" y="150" />
             </Array>
-            <mxPoint x="160" y="240" as="sourcePoint" />
-            <mxPoint x="305" y="275" as="targetPoint" />
+            <mxPoint y="150" as="sourcePoint" />
+            <mxPoint x="145" y="185" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-20" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Geometry Parameters" vertex="1">
@@ -72,20 +72,20 @@
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-43" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-7" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="169.58" as="sourcePoint" />
-            <mxPoint x="670" y="170" as="targetPoint" />
+            <mxPoint x="470" y="79.58000000000001" as="sourcePoint" />
+            <mxPoint x="510" y="80" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-44" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-43" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" value="Mass" vertex="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-50" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Solve Static Analysis" vertex="1">
-          <mxGeometry height="100" width="100" x="530" y="280" as="geometry" />
+          <mxGeometry height="100" width="100" x="370" y="190" as="geometry" />
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-51" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-10" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="9Xq22hV-l4zJOSVH_NaV-50" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="410" y="335" as="sourcePoint" />
-            <mxPoint x="460" y="285" as="targetPoint" />
+            <mxPoint x="250" y="245" as="sourcePoint" />
+            <mxPoint x="300" y="195" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-52" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-51" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="FEA Model" vertex="1">
@@ -96,10 +96,10 @@
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-53" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-7" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="9Xq22hV-l4zJOSVH_NaV-50" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="680" y="270" />
+              <mxPoint x="520" y="180" />
             </Array>
-            <mxPoint x="740" y="220" as="sourcePoint" />
-            <mxPoint x="790" y="170" as="targetPoint" />
+            <mxPoint x="580" y="130" as="sourcePoint" />
+            <mxPoint x="630" y="80" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-54" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-53" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Force" vertex="1">
@@ -107,61 +107,39 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-55" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-50" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-58" value="Stress">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="630" y="329.58" as="sourcePoint" />
-            <mxPoint x="690" y="329.58" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-58" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Calculate Stress Constraint" vertex="1">
-          <mxGeometry height="100" width="100" x="690" y="280" as="geometry" />
-        </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-61" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Calculate Displacement Constraint" vertex="1">
-          <mxGeometry height="100" width="100" x="690" y="410" as="geometry" />
+          <mxGeometry height="100" width="100" x="570" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-62" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-50" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-61" value="">
+        <mxCell id="9Xq22hV-l4zJOSVH_NaV-62" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-50" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-61" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <Array as="points">
-              <mxPoint x="630" y="430" />
-            </Array>
-            <mxPoint x="510" y="270" as="sourcePoint" />
-            <mxPoint x="560" y="220" as="targetPoint" />
+            <Array as="points" />
+            <mxPoint x="350" y="180" as="sourcePoint" />
+            <mxPoint x="400" y="130" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-63" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-62" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Displacement" vertex="1">
           <mxGeometry relative="1" x="-0.1089" y="10" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="10" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-64" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+        <mxCell id="9Xq22hV-l4zJOSVH_NaV-67" edge="1" parent="1" source="9Xq22hV-l4zJOSVH_NaV-61" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="790" y="330" as="sourcePoint" />
-            <mxPoint x="890" y="330" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-66" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-64" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Stress&amp;nbsp;&lt;div&gt;Constraint&lt;/div&gt;" vertex="1">
-          <mxGeometry relative="1" x="-0.06" y="-3" as="geometry">
-            <mxPoint x="3" y="-3" as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="9Xq22hV-l4zJOSVH_NaV-67" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="790" y="459.58000000000004" as="sourcePoint" />
-            <mxPoint x="890" y="459.58000000000004" as="targetPoint" />
+            <mxPoint x="630" y="369.58000000000004" as="sourcePoint" />
+            <mxPoint x="760" y="240" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="9Xq22hV-l4zJOSVH_NaV-68" connectable="0" parent="9Xq22hV-l4zJOSVH_NaV-67" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Displacement&amp;nbsp;&lt;div&gt;Constraint&lt;/div&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.06" y="-3" as="geometry">
-            <mxPoint x="3" y="-3" as="offset" />
+            <mxPoint x="-2" y="-3" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Ghjm8zdx1JJTrlYnQbPF-3" edge="1" parent="1" style="curved=1;endArrow=classic;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" target="9Xq22hV-l4zJOSVH_NaV-10" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <Array as="points">
-              <mxPoint x="450" y="230" />
+              <mxPoint x="290" y="140" />
             </Array>
-            <mxPoint x="410" y="170" as="sourcePoint" />
-            <mxPoint x="575" y="215" as="targetPoint" />
+            <mxPoint x="250" y="80" as="sourcePoint" />
+            <mxPoint x="415" y="125" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>

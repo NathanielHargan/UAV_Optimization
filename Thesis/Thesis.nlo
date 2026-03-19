@@ -1,2 +1,73 @@
-\nomenclatureentry{aNLP@[{NLP}]\begingroup Natural Language Processing\nomeqref {0}|nompageref}{ix}
-\nomenclatureentry{a$\sigma$@[{$\sigma$}]\begingroup The total mass of angels per unit area\nomeqref {0}|nompageref}{ix}
+\nomenclatureentry{a$d_a$@[{$d_a$}]\begingroup Arm outer diameter\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$t_a$@[{$t_a$}]\begingroup Arm wall thickness\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$d_s$@[{$d_s$}]\begingroup Strut outer diameter\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$t_s$@[{$t_s$}]\begingroup Strut wall thickness\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$r_s$@[{$r_s$}]\begingroup Strut distance from hub center\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$t_f$@[{$t_f$}]\begingroup Hub flange thickness\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$t_w$@[{$t_w$}]\begingroup Hub web thickness\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$r_h$@[{$r_h$}]\begingroup Hub radius\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{aSLSQP@[{SLSQP}]\begingroup Sequential Least Squares Programming\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{aDFD@[{DFD}]\begingroup Data flow diagram\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{aFBD@[{FBD}]\begingroup Free-body diagram\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{aUAV@[{UAV}]\begingroup Unmanned Aerial Vehicle\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$m_{\text{total}}$@[{$m_{\text{total}}$}]\begingroup Total mass of the UAV\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$m_{\text{frame}}$@[{$m_{\text{frame}}$}]\begingroup Mass of the beam model\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$m_{\text{payload}}$@[{$m_{\text{payload}}$}]\begingroup Mass of the payload\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$m_{\text{batteries}}$@[{$m_{\text{batteries}}$}]\begingroup Mass of the batteries\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$g$@[{$g$}]\begingroup Gravity\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$G$@[{$G$}]\begingroup Shear modulus\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$E$@[{$E$}]\begingroup Young's modulus\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\nu$@[{$\nu$}]\begingroup Poisson's ratio\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\sigma_{ar}$@[{$\sigma_{ar}$}]\begingroup Completely reversed stress amplitude\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\sigma_f'$@[{$\sigma_f'$}]\begingroup Fatigue strength coefficient\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$N$@[{$N$}]\begingroup Number of cycles\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$b$@[{$b$}]\begingroup Fatigue strength exponent\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{x}_u$@[{$\mathbf{x}_u$}]\begingroup Constrained kinematic quantities\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{x}_p$@[{$\mathbf{x}_p$}]\begingroup Unknown kinematic quantities\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{A}_k$@[{$\mathbf{A}_k$}]\begingroup Unconstrained kinematic equations matrix\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{B}_k$@[{$\mathbf{B}_k$}]\begingroup Constrained kinematic equations matrix\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$F_\text{equivalent}$@[{$F_\text{equivalent}$}]\begingroup Stress-equivalent force in each propeller in hover\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$t$@[{$t$}]\begingroup Time since mission start\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$F_{\text{thrust}}$@[{$F_{\text{thrust}}$}]\begingroup Thrust\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$v(t)$@[{$v(t)$}]\begingroup Velocity over mission profile\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$a(t)$@[{$a(t)$}]\begingroup Acceleration over mission profile\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$s_a$@[{$s_a$}]\begingroup Projected surface area of top of UAV\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\rho$@[{$\rho$}]\begingroup Mass density\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$c_d$@[{$c_d$}]\begingroup Drag coefficient\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$E_{\text{capacity}}$@[{$E_{\text{capacity}}$}]\begingroup Battery energy capacity\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$E_{\text{remaining}}$@[{$E_{\text{remaining}}$}]\begingroup Remaining energy\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$P$@[{$P$}]\begingroup Power\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\omega$@[{$\omega$}]\begingroup Propeller frequency\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$I$@[{$I$}]\begingroup Second moment of area\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$K$@[{$K$}]\begingroup Torsional constant\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{K}$@[{$\mathbf{K}$}]\begingroup Stiffness matrix\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$K_z$@[{$K_z$}]\begingroup Transverse shear deflection constant in z-direction\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$K_y$@[{$K_y$}]\begingroup Transverse shear deflection constant in y-direction\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\phi$@[{$\phi$}]\begingroup Shear factor\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$A$@[{$A$}]\begingroup Cross-sectional area\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{M}$@[{$\mathbf{M}$}]\begingroup Mass matrix\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\sigma_{\max}$@[{$\sigma_{\max}$}]\begingroup Maximum stress within the beam system\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$r_\text{top}$@[{$r_\text{top}$}]\begingroup Vector from the strut node to the top strut node\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$r_\text{bot}$@[{$r_\text{bot}$}]\begingroup Vector from the strut node to the bottom strut node\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$u$@[{$u$}]\begingroup Displacement\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\theta$@[{$\theta$}]\begingroup Beam rotation\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$F$@[{$F$}]\begingroup Force\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$M$@[{$M$}]\begingroup Moment\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\mathbf{K_d}$@[{$\mathbf{K_d}$}]\begingroup Dynamic stiffness matrix\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\alpha$@[{$\alpha$}]\begingroup Newmark integration constant\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\delta$@[{$\delta$}]\begingroup Newmark integration constant\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$X$@[{$X$}]\begingroup Set of design variables\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$g$@[{$g$}]\begingroup Constraint function\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$J$@[{$J$}]\begingroup Objective function\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$W_m$@[{$W_m$}]\begingroup Weighting factor for mass\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$W_i$@[{$W_i$}]\begingroup Weighting factor for mass moment of inertia\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$S_m$@[{$S_m$}]\begingroup Scaling factor for mass\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$S_i$@[{$S_i$}]\begingroup Scaling factor for mass moment of inertia\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$d_{\max}$@[{$d_{\max}$}]\begingroup Maximum displacement within the beam system\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$d_{\text{allowable}}$@[{$d_{\text{allowable}}$}]\begingroup Allowable displacement\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$\sigma_{\text{yield}}$@[{$\sigma_{\text{yield}}$}]\begingroup Yield strength\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{aFOS@[{FOS}]\begingroup Factor of safety\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$d_{\text{amplitude}}$@[{$d_{\text{amplitude}}$}]\begingroup Displacement amplitude\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$Y_{\text{allowable}}$@[{$Y_{\text{allowable}}$}]\begingroup Allowable admittance\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$D$@[{$D$}]\begingroup Damage\nomeqref {0}|nompageref}{xii}
+\nomenclatureentry{a$n_{\text{missions}}$@[{$n_{\text{missions}}$}]\begingroup Number of missions\nomeqref {0}|nompageref}{xii}

@@ -1,66 +1,17 @@
-%       File: VTthesis_template.tex
-%     Created: Thu Mar 24 11:00 AM 2016 EDT
-%     Last Change: August 15, 2024
-%     Author: Alan M. Lattimer, VT
-%	  With modifications by Carrie Cross, Robert Browder, and LianTze Lim. 
-%
-% This template is designed to operate with XeLaTeX.
-%
-% All elements in the Title, Abstract, and Keywords MUST be formatted as text and NOT as math.
-%
-%Further instructions for using this template are embedded in the document. Additionally, there are comments at the end of the file that give suggestions on writing your thesis.  
-%
-%In addition to the standard formatting options, the following options are defined for the VTthesis class: proposal, prelim, doublespace, draft. 
-
-% Today: 
-% Solvers
-% Tommoroq: 
-
-
-% Sections Remaining: 
-
-% Introduction
-
-% Literature Review
-
-% Nomenclature
-
-% Nick Newton citation
-
-
-
-% Overall Archeture Description 
-
-% Mass analysis FEA 
-
-% Stress and shape functions
-
-% Solvers (Done ish)
-
-% Results
-
-%	% Main Solution
-	% Sensitivity Analysis
-	% Design Space Plots 
-	
-
-
-\documentclass[doublespace,nopageskip]{VTthesis} % nopageskip - Removes arbitrary blank pages.
-%Remove "draft" from \documentclass to remove draft watermark and to display figures you've created.
-
-% Using the following header instead will create a draft copy of your thesis
-%\documentclass[doublespace,draft]{VTthesis}
-
-% The lipsum package is just included to put dummy text in the document in order to demonstrate page headers and table of contents behavior. You should remove it once you begin writing your actual thesis or dissertation.
+\documentclass[doublespace,nopageskip]{VTthesis}
 
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{csvsimple}
+\usepackage{float}
+
 % Title of your thesis
 \title{Optimization of a UAV for Wildfire Management}
 
 % You should include 3-5 keywords, separated by commas
-\keywords{Some Keywords, Subject matter, etc.}
+\keywords{UAV Design, Multidisciplinary Design Optimization, Finite Element Modeling, Wildfire Management}
 
 % Your name, including middle initial(s)
 \author{Nathaniel S. Hargan}
@@ -72,17 +23,11 @@
 \degree{Master of Science} 
 
 % This should be your defense date:
-\submitdate{February 26th, 2025} 
+\submitdate{February 26th, 2026} 
 
-% Committee members. Only have five readers and one chair available.
-% Only use the ones you need and don't include the ones you don't need.
-% You can also declare a Co-advisor. Per the VT ETD standards, 
-% you should not include titles such as Dr. or Professor, but can list educational 
-% qualifications after the name (i.e., John Doe, MFA or Jane Smith, PhD)
-% Names should appear as they do in ESS/Banner/HokieSpa, including middle initials.
 \principaladvisor{Robert L. West Jr., Ph.D.}
 %\coadvisor{Vicente Esparza}
-\firstreader{Michael Philen}
+\firstreader{Michael Philen, Ph.D}
 \secondreader{Pınar Acar, Ph.D}
 % \thirdreader{XYZ}
 %\fourthreader{Fourth Committee Member}
@@ -93,16 +38,16 @@
 % \acknowledge{This is where you put your acknowledgments.}
 
 % The abstract is required.
-\abstract{Give a brief description of your thesis here.}
+\abstract{Wildfires pose a significant environmental risk, cause substantial economic damage, and are a danger to human life. Unmanned aerial vehicles (UAVs) have the potential to support hotshot crews to combat wildfires more effectively. UAVs are valuable due to their low cost and high maneuverability. UAVs with the ability to carry large payloads can effectively transport fire retardant or fuel to create controlled burns remotely, to mitigate the risk of uncontrolled wildfires. A UAV designed for this application should be able to carry a large payload, have enough battery capacity to remain in flight for the extent of a mission, and be rigid enough to resist vibration. The UAV must be large enough to house the propellers and electrical components needed to lift the payload. The goal of this project is to design a conceptual model of an octocopter UAV and to examine the design space to find an optimal solution. The UAV has a 2-meter wheelbase and is designed to carry a 45kg payload. The UAV model is an 1/8-symmetric sector model of the full UAV, represented as a finite element model, and is used to estimate the deflection, stress, fatigue life, frequency response, and damage. The UAV is modeled as a 3D Timoshenko beam finite element model. The mass and mass moment of the UAV are minimized using non-linear programming. }
 %\abstract{\lipsum [1-4]}
 
 % The general audience abstract is required. There are currently no word limits.
-\abstractgenaud{You are also required as of Spring 2016 to include a general audience abstract. This should be geared towards individuals outside of your field that may be reading seeking information about your work. You should avoid language that is particular to your field and clearly define any terms that may have special meaning in your discipline.}
+\abstractgenaud{Wildfires pose a significant environmental risk, cause substantial economic damage, and are a danger to human life. Drones have the potential to support hotshot crews to combat wildfires more effectively. The goal of this project is to create a tool that assists in designing drones by optimizing their designs. This was done computationally, by virtually creating a model of a drone to optimize. The program analyzed the structure of the drone as well as its power system to find a more optimal model.}
 
 
 \begin{document}
 	% The following lines set up the front matter of your thesis or dissertation and are required to ensure proper formatting per the VT ETD standards. 
-	\frontmatter
+	\frontmatter 
 	\maketitle
 	\tableofcontents
 	
@@ -111,54 +56,193 @@
 	\listoftables
 	\printnomenclature %Creates a list of abbreviations. Comment out to remove it. 
 	
-	% sample text for abbreviations:
-	NLP is a field of computer science, artificial intelligence, and linguistics concerned with the interactions between computers and human (natural) languages.
-	 
-	\nomenclature{NLP}{Natural Language Processing}
-	
-	$\sigma$ is the eighteenth letter of the Greek alphabet, and carries the 's' sound. In the system of Greek numerals, it has a value of 200. 
-	
-	\nomenclature{$\sigma$}{The total mass of angels per unit area}
-	
-	% The following sets up the document for the main part of the thesis or dissertation. Do not comment out or remove this line.
+	\nomenclature{$d_a$}{Arm outer diameter}
+	\nomenclature{$t_a$}{Arm wall thickness}
+	\nomenclature{$d_s$}{Strut outer diameter}
+	\nomenclature{$t_s$}{Strut wall thickness}
+	\nomenclature{$r_s$}{Strut distance from hub center}
+	\nomenclature{$t_f$}{Hub flange thickness}
+	\nomenclature{$t_w$}{Hub web thickness}
+	\nomenclature{$r_h$}{Hub radius}
+	\nomenclature{SLSQP}{Sequential Least Squares Programming}
+	\nomenclature{DFD}{Data flow diagram}
+	\nomenclature{FBD}{Free-body diagram}
+	\nomenclature{UAV}{Unmanned Aerial Vehicle}
+	\nomenclature{$m_{\text{total}}$}{Total mass of the UAV}
+	\nomenclature{$m_{\text{frame}}$}{Mass of the beam model}
+	\nomenclature{$m_{\text{payload}}$}{Mass of the payload}
+	\nomenclature{$m_{\text{batteries}}$}{Mass of the batteries}
+	\nomenclature{$g$}{Gravity}
+	\nomenclature{$G$}{Shear modulus}
+	\nomenclature{$E$}{Young's modulus}
+	\nomenclature{$\nu$}{Poisson's ratio}
+	\nomenclature{$\sigma_{ar}$}{Completely reversed stress amplitude}
+	\nomenclature{$\sigma_f'$}{Fatigue strength coefficient}
+	\nomenclature{$N$}{Number of cycles}
+	\nomenclature{$b$}{Fatigue strength exponent}
+	\nomenclature{$\mathbf{x}_u$}{Constrained kinematic quantities}
+	\nomenclature{$\mathbf{x}_p$}{Unknown kinematic quantities}
+	\nomenclature{$\mathbf{A}_k$}{Unconstrained kinematic equations matrix}
+	\nomenclature{$\mathbf{B}_k$}{Constrained kinematic equations matrix}
+	\nomenclature{$F_\text{equivalent}$}{Stress-equivalent force in each propeller in hover}
+	\nomenclature{$t$}{Time since mission start}
+	\nomenclature{$F_{\text{thrust}}$}{Thrust}
+	\nomenclature{$v(t)$}{Velocity over mission profile}
+	\nomenclature{$a(t)$}{Acceleration over mission profile}
+	\nomenclature{$s_a$}{Projected surface area of top of UAV}
+	\nomenclature{$\rho$}{Mass density}
+	\nomenclature{$c_d$}{Drag coefficient}
+	\nomenclature{$E_{\text{capacity}}$}{Battery energy capacity}
+	\nomenclature{$E_{\text{remaining}}$}{Remaining energy}
+	\nomenclature{$P$}{Power}
+	\nomenclature{$\omega$}{Propeller frequency}
+	\nomenclature{$I$}{Second moment of area}
+	\nomenclature{$K$}{Torsional constant}
+	\nomenclature{$\mathbf{K}$}{Stiffness matrix}
+	\nomenclature{$K_z$}{Transverse shear deflection constant in z-direction}
+	\nomenclature{$K_y$}{Transverse shear deflection constant in y-direction}
+	\nomenclature{$\phi$}{Shear factor}
+	\nomenclature{$A$}{Cross-sectional area}
+	\nomenclature{$\mathbf{M}$}{Mass matrix}
+	\nomenclature{$\sigma_{\max}$}{Maximum stress within the beam system}
+	\nomenclature{$r_\text{top}$}{Vector from the strut node to the top strut node}
+	\nomenclature{$r_\text{bot}$}{Vector from the strut node to the bottom strut node}
+	\nomenclature{$u$}{Displacement}
+	\nomenclature{$\theta$}{Beam rotation}
+	\nomenclature{$F$}{Force}
+	\nomenclature{$M$}{Moment}
+	\nomenclature{$\mathbf{K_d}$}{Dynamic stiffness matrix}
+	\nomenclature{$\alpha$}{Newmark integration constant}
+	\nomenclature{$\delta$}{Newmark integration constant}
+	\nomenclature{$X$}{Set of design variables}
+	\nomenclature{$g$}{Constraint function}
+	\nomenclature{$J$}{Objective function}
+	\nomenclature{$W_m$}{Weighting factor for mass}
+	\nomenclature{$W_i$}{Weighting factor for mass moment of inertia}
+	\nomenclature{$S_m$}{Scaling factor for mass}
+	\nomenclature{$S_i$}{Scaling factor for mass moment of inertia}
+	\nomenclature{$d_{\max}$}{Maximum displacement within the beam system}
+	\nomenclature{$d_{\text{allowable}}$}{Allowable displacement}
+	\nomenclature{$\sigma_{\text{yield}}$}{Yield strength}
+	\nomenclature{FOS}{Factor of safety}
+	\nomenclature{$d_{\text{amplitude}}$}{Displacement amplitude}
+	\nomenclature{$Y_{\text{allowable}}$}{Allowable admittance}
+	\nomenclature{$D$}{Damage}
+	\nomenclature{$n_{\text{missions}}$}{Number of missions}
+
 	\mainmatter
 	
-	%now go ahead and start writing your thesis
-	\chapter{Introduction} \label{ch:introduction}
-		
-	\chapter{Review of Literature} \label{ch:lit_review}
+	%
+	%Nathaniel, I would like to see more here:
+	%1. Do you have any other literature sources that describe wildland fires as a problem that needs to
+	%be addressed, and potentially support crews with UAVs? Why not use off-the-shelf UAVs or Agri
+	%Drones, that's what they are doing now? Why do we neede to design a new UAV for this?
 	
+	
+	%2. State your concept for solution - your hypothesis statement for conceptual designand
+	%optimization of the wildland fore uav.
+	
+	
+	%3. State your goal, what do you expect to achieve by doing this work?
+	%4.you objectives, what tasks that need to be completed for you to realize your goal State 
+	%
+	%
+	
+	\chapter{Introduction} \label{ch:introduction}
+		\section{Statement of Need}
+		
+			In 2025, the Palisades wildlands fire caused significant loss of life and property, killing over 25 people, burning 23,000 acres of land, and forcing thousands to evacuate. Thousands of buildings were destroyed in the fire \cite{nyt_fire}. The scale of this disaster highlighted the need for tools for hotshot crews to support firefighting operations. 
+		 
+			Unmanned aerial vehicles (UAVs) have the potential to provide critical assistance in wildfire management. Currently, the most common use of UAVs in wildfire management is scouting. Another application is the deployment of “dragon eggs,” incendiary devices used by hotshot crews to start controlled burns, which can help reduce the risk of more dangerous wildfires. Dragon eggs are golf ball-sized, fire-starting payloads \cite{Education}.  UAVs that are capable of carrying large payloads could allow hotshot crews to start controlled burns while remaining at a safe distance. 
+			
+		 	Current UAVs often fail to provide sufficient flight times for these missions \cite{drones5010015}. This highlights the need for a computational framework to optimize UAV design in order to achieve extended flight times.
+		 	
+		 	
+		 \section{Hypothesis Statement}
+
+		 	
+		 	A computational framework can be created that utilizes multidisciplinary design optimization in order to improve the design of an octocopter UAV. The mission profile defines the kinematics and energy requirements for a potential mission. The internal forces in the UAV and power consumption calculations can be derived from the mission profile. A beam model of the UAV is created using Timoshenko beam theory and is used in conjunction with the internal forces to derive constraints for the optimization model, such as displacement, stress, frequency, damage, and energy. This framework can be used to rapidly test different UAV design concepts to test their viability for stated mission profiles, while satisfying design constraints. 
+		 
+		 	
+		\section{Objective}
+			
+				The primary goal of this project is to develop a framework to optimize the conceptual design of a UAV capable of supporting wildfire operations. The UAV must be able to carry a 45kg payload, so that the UAV can transport dragon eggs across a wildfire zone. The mission profile for this project is based on a potential operation during the 2025 Palisades wildfire. The UAV must traverse a total distance of approximately 5,600 meters, corresponding to the span from the northern to the southern edge of the active fire area.
+				
+				In order to accomplish this goal, a tool to model the mission profile will be created. Using the mission profile tool, forces from the propellers can be estimated, as well as the energy required to accomplish the mission profile. The drone geometry will be modeled from a set of design variables. A finite element model will be created to calculate stresses within the vehicle using forces derived from the mission profile.  
+				
+				The UAV conceptual design is subject to five constraints to ensure structural stability and mission viability. These constraints include structural deflection, stress, energy, frequency response, and fatigue. Subject to these constraints, the design of the UAV is optimized to minimize the mass and mass moment of inertia. 
+				
+				This should create a framework to enable the user to rapidly evaluate the validity of UAV designs for the application of supporting wildfire operations. 
+							
+		\section{Scope}
+		
+			This thesis investigates the structural optimization of a conceptual octocopter UAV frame intended for wildfire management missions. The UAV is modeled as a radially symmetric eight-arm multirotor configuration. Structural behavior is represented using a finite element formulation derived from Timoshenko beam theory. To reduce computational cost, a 1/8-symmetric slice model of the full UAV is used. The imposed boundary conditions restrict the solution to symmetric vibration modes. The frame consists of arms, struts, and a segmented hub modeled using annular and I-beam cross-sections. The carbon fiber material is modeled as homogeneous and quasi-isotropic. Fatigue material properties are limited to aluminum. 
+			
+			Loading is derived from a predefined mission profile. Thrust is calculated from mission profile kinematics. The mass response, force from gravity, and drag are all modeled as lumped at the center of mass. All forces are modeled as vertical, and UAV tilt is not considered. 
+			
+			The optimization problem minimizes a weighted combination of frame mass and mass moment of inertia subject to constraints on displacement, stress, frequency response, fatigue, and mission energy consumption. Optimization is performed using SLSQP and differential evolution algorithms.
+			
+		\section{Outline} 
+			\begin{itemize}
+				\item Chapter \ref{ch:introduction} introduces the project, gives the motivation behind it, and specifies the scope of the project.
+				\item Chapter \ref{ch:lit_review} covers the existing literature around UAV optimization and mission profile modeling.
+				\item Chapter \ref{ch:uav_design} describes the design of the UAV.
+				\item Chapter \ref{ch:missionprofile} describes the mission profile and derived force and energy calculations.
+				\item Chapter \ref{ch:fea} explains the finite element tool that was designed for the project.
+				\item Chapter \ref{ch:optimization} covers the optimization tool as well as the formulation of each of the constraints. 
+				\item Chapter \ref{ch:results} describes the resulting optimized design for two different configurations of the optimization problem. 
+				\item Chapter \ref{ch:fin} concludes the project, summarizes it, and gives recommendations on where to move forward with the project. 
+			\end{itemize}
+			
+	\chapter{Review of Literature} \label{ch:lit_review}
+		\section{Multidisciplinary Design Optimization for UAVs}
+						
+			Multidisciplinary design optimization (MDO) addresses engineering design problems that involve multiple interacting disciplines which must be considered simultaneously. Rather than optimizing subsystems in isolation, MDO seeks a system-level optimum that accounts for interdisciplinary coupling and trade-offs, making it a central approach in the design of complex engineering systems.
+			
+			A range of computational frameworks has been developed to support MDO. OpenMDAO is an open-source Python framework for multidisciplinary design, analysis, and optimization developed by NASA. It is primarily intended for gradient-based optimization problems. \cite{Gray2019a}. 
+			
+			UAV design is inherently multidisciplinary, including structures, aerodynamics, propulsion, power, and controls. These interactions motivate the use of MDO methods. Several tools for UAV design have been built on top of OpenMDAO. OpenAeroStruct provides a multidisciplinary model for UAV analysis and optimization. Jasa et al. applied OpenAeroStruct to optimize the design of a UAV with 5 design variables and subject to constraints on lift and yield strength \cite{Jasa_Hwang_Martins_2018}. OpenAeroStruct uses the SNOPT algorithm for optimization, a sequential quadratic programming method to solve nonlinear constrained problems. 
+			
+			FAST-UAV by Pollet et al.\cite{pollet_design_2024} has been developed as a Python-based tool for MDO of UAV designs. It is built on the FAST-OAD and OpenMDAO frameworks. FAST-UAV was applied to optimize the design of octocopters, hexacopters, and quadcopters. Four possible objective functions were used: total mass of the UAV, energy consumption of the UAV, flight endurance, and flight range. Several constraints were imposed on the vehicle, including maximum bending stress, power requirements, and limitations on its geometric properties. Twelve different sizing coefficients are used as design variables for the multirotor design. FAST-UAV uses the SLSQP algorithm for optimization. These methods only have linear constraints and no constraints related to the frequency of the vehicle. 
+			
+			
+		\section{Mission Profile Design}
+			
+			The mission profile describes the kinematics of an aerial vehicle over the course of a mission. This is crucial to model a mission profile to optimize the design of a UAV so that it can be determined whether the mission is feasible. 
+			
+			The Mission Planning Tool is developed by NASA \cite{schnulo} and is designed to model mission profiles. The Mission Profile Tool optimizes the design of a user-specified mission profile using OpenMDAO to minimize the total power used. The mission profile is used to calculate battery state of charge, electrical component temperatures, thrust, and power usage at all phases of flight. The mission profile is divided into six phases:  taxi, motor runup, takeoff, climb, cruise, and descent. The dynamics of the UAV are calculated in each phase. 
+		
 	\chapter{UAV Design} \label{ch:uav_design}
 	
-		This chapter describes the UAV geometry, design variables, material properties, and design parameters used in the project. The mission profile and the thrust, power, and energy formulations used to evaluate vehicle performance are also described. 
+		This chapter describes the UAV geometry, design variables, material properties, and design parameters used in the project.
 	
 	\section{UAV Geometry} \label{se:uav_geo}
 		
 		
-		The baseline UAV configuration used in this study follows a previously developed firefighting UAV design \cite{nick}. The UAV is modeled as a simplified octocopter frame, as shown in Figures \ref{fig:arm}–\ref{fig:hub}, with individual frame components highlighted. The frame consists of three primary components: arms, struts, and a central hub. The arms and struts are modeled as beam elements with annular cross sections. The hub is composed of two octagonal plates connected by a radially symmetric web, shown in Figure \ref{fig:hubsec}, consisting of eight web sections spanning from the center to the edges of the plates. All connections between arms, struts, and hub are modeled as fully rigid.
+		The baseline UAV configuration used in this study follows a previously developed firefighting UAV design \cite{nick}. The UAV is modeled as a simplified octocopter frame, as shown in Figures \ref{fig:arm}–\ref{fig:hub}, with individual frame components highlighted. The frame consists of three primary components: arms, struts, and a central hub. The arms and struts are modeled as beam elements with annular cross-sections. The hub is composed of two octagonal plates connected by a radially symmetric web, shown in Figure \ref{fig:hubsec}, consisting of eight web sections spanning from the center to the edges of the plates. All connections between arms, struts, and hub are modeled as rigid.
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.015]{Images/arm.png}
 			\caption{Optimized UAV Model with Highlighted Arm}
 			\label{fig:arm}
 		\end{figure}
 			
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.015]{Images/strut.png}
 			\caption{Optimized UAV Model with Highlighted Strut} 
 			\label{fig:strut}
 		\end{figure}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.015]{Images/hub.png}
-			\caption{Optimized UAV Model with Highlighted Strut} 
+			\caption{Optimized UAV Model with Highlighted Hub} 
 			\label{fig:hub}
 		\end{figure}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\begin{subfigure}[h]{0.45\textwidth}
 				\centering
@@ -186,27 +270,40 @@
 		
 		% The eight arms of the UAV frame are defined by the arm outer diameter ($d_a$) and arm wall thickness ($t_a$) design variables. The design variables associated with the struts are the strut outer diameter ($d_s$), strut wall thickness ($t_s$), and the distance from the center of the UAV to the ends of the struts ($r_s$). The design variables associated with the hub are the flange thickness ($t_f$), the hub web thickness ($t_w$), and the hub radius ($r_h$).  
 		
-		\begin{table}[htb]
+		\begin{table}[H]
 			\centering
-			\caption{Design Variable Descriptions} 
-			\includegraphics[scale=6]{Tables/dvs.pdf}
+			\caption{Design Variable Descriptions}
+			\begin{tabular}{ll}
+				\toprule
+				\textbf{Variable} & \textbf{Symbol} \\
+				\midrule
+				Arm outer diameter & $d_a$ \\
+				Arm wall thickness & $t_a$ \\
+				Strut outer diameter & $d_s$ \\
+				Strut wall thickness & $t_s$ \\
+				Strut distance from hub center & $r_s$ \\
+				Hub flange thickness & $t_f$ \\
+				Hub web thickness & $t_w$ \\
+				Hub radius & $r_h$ \\
+				\bottomrule
+			\end{tabular}
 			\label{tab:dvs}
 		\end{table}
 		
-		\begin{figure}[!htbp]
+		\begin{figure}[H]
 			\centering
 			
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/da.png}
-				\caption{Arm Diameter}
+				\caption{Arm Outer Diameter ($d_a$)}
 				\label{fig:dv_da}
 			\end{subfigure}
 			\hfill
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/ra.png}
-				\caption{Arm Thickness}
+				\caption{Arm Thickness ($t_a$)}
 				\label{fig:dv_ta}
 			\end{subfigure}
 			
@@ -215,14 +312,14 @@
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/ds.png}
-				\caption{Strut Diameter}
+				\caption{Strut Outer Diameter ($d_s$)}
 				\label{fig:dv_ds}
 			\end{subfigure}
 			\hfill
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/ts.png}
-				\caption{Strut Thickness}
+				\caption{Strut Thickness ($t_s$)}
 				\label{fig:dv_ts}
 			\end{subfigure}
 			
@@ -231,14 +328,14 @@
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/rs.png}
-				\caption{Strut Distance from Center}
+				\caption{Strut Distance from Center ($r_s$)}
 				\label{fig:dv_rs}
 			\end{subfigure}
 			\hfill
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/tf.png}
-				\caption{Hub Flange Thickness}
+				\caption{Hub Flange Thickness ($t_f$)}
 				\label{fig:dv_tf}
 			\end{subfigure}
 			
@@ -247,14 +344,14 @@
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/tw.png}
-				\caption{Hub Web Thickness}
+				\caption{Hub Web Thickness ($t_w$)}
 				\label{fig:dv_tw}
 			\end{subfigure}
 			\hfill
 			\begin{subfigure}{0.48\textwidth}
 				\centering
 				\includegraphics[width=\linewidth,height=0.85\linewidth,keepaspectratio]{Images/Dv/rh.png}
-				\caption{Hub Radius}
+				\caption{Hub Radius ($r_h$)}
 				\label{fig:dv_th}
 			\end{subfigure}
 			
@@ -267,27 +364,37 @@
 		
 		% Geometric Design Variablees
 	
-		The wingspan and hub height are two parameters of the UAV frame that were not selected as design variables. The inner hub height is set to 64mm, which represents the minimum height required to fit the proposed battery between the two plates. It should be noted that the actual batteries would not fit on this frame model, because the hub web would intersect the battery. Further work could be done to refine the mesh, allowing for more realistic battery storage. 
+		The wheelbase and hub height are two parameters of the UAV frame that were not selected as design variables. The inner hub height is set to 64mm, which represents the minimum height required to fit the proposed battery between the hub top and bottom plates. It should be noted that the actual batteries would not fit within this frame model, because the hub web would intersect the battery. Further work could be done to refine the mesh, allowing for more realistic battery storage. 
 		
-		The wingspan was set as a parameter due to the fact that increasing beyond the minimum will not increase the objective function, as increasing the wingspan increases mass and the mass moment of inertia while also causing more stress on the vehicle. The distance from the center of the UAV to the propeller is calculated to be 1127.3mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm. 
+		The wheelbase was set as a parameter since increasing beyond the minimum will not increase the objective function, as increasing the wheelbase increases mass and the mass moment of inertia while also causing more stress on the vehicle. The distance from the center of the UAV to the propeller is calculated to be 2254.6mm. This is calculated by finding the minimum distance required to fit all 8 propellers with a radius of 406.4mm with a propeller spacing of 25mm. 
 	
 		% (self.parameters["propeller_spacing"] + self.parameters["propeller_radius"]) / math.sin(
 		% math.pi / self.parameters["blade_num"])
 		
 	\subsection{Mass and Payload}	\label{ss:payload}
 	
-		The UAV carries a payload of 45 kg, which is located at the center of the vehicle. Figure \ref{fig:fbs} shows free-body diagrams (FBDs) of the UAV system. Figure \ref{sfig:fbdmot} illustrates the FBD of the UAV during acceleration. 
+		The UAV carries a payload of 45 kg, which is located at the center of the vehicle. The mass of the frame ($m_{\text{frame}}$) is the mass of the beam model calculated from the UAV geometry and the mass density of the carbon fiber. It is shown in Equation \ref{eq:total_mass}. The mass of the payload is 45kg. The mass of the two batteries ($m_{\text{batteries}}$) is 8.26kg total.
 		
-		For the finite element analysis system presented in later chapters, a static system is required, so a stress-equivalent system was constructed, as shown in Figure \ref{sfig:fbdstat}. This model assumes that the entire mass of the frame is concentrated at the vehicle’s center. This method overestimates the stress in the frame due to all the mass being modeled at a single point. However, the mass of the frame is minimal compared to the mass of the payload so this should have little effect.
+		\begin{equation}
+			m_{\text{total}} = m_{\text{frame}} + m_{\text{payload}} + m_{\text{batteries}}
+			\label{eq:total_mass}
+		\end{equation}
 		
-		The stress-equivalent force ($F_\text{equivalent}$) in each propeller for the UAV in hover is $m_\text{total}g/8$ where $m_\text{total}$ is the total mass of the UAV, $g$ is gravity. The stress-equivalent force for the UAV with drag and acceleration considered over the duration is discussed in Subsection \ref{ss:thrust}.
+		\begin{comment}
+		The stress-equivalent force ($F_\text{equivalent}$) in each propeller for the UAV in hover is described by Equation \ref{eq:force_eq}. where $m_\text{total}$ is the total mass of the UAV, $g$ is gravity. The stress-equivalent force for the UAV with drag and acceleration considered over the duration of the mission is discussed in Subsection \ref{ss:thrust}.
 		
-		\begin{figure}[htb]
+		\begin{equation}
+			F_\text{equivalent} = m_\text{total}g/8
+			\label{eq:force_eq}
+		\end{equation}
+		
+		  
+		\begin{figure}[H]
 			\centering
 			\begin{subfigure}[h]{0.45\textwidth}
 				\centering
 				\includegraphics[scale=0.1]{Images/FBDMotion.png}
-				\caption{Accelerating UAV} 
+				\caption{Hovering UAV} 
 				\label{sfig:fbdmot}
 			\end{subfigure}
 			\hfill
@@ -297,27 +404,33 @@
 				\caption{Static Stress-Equivalent} 
 				\label{sfig:fbdstat}
 			\end{subfigure}
-			\caption{Free-Body Diagrams of Simplified 2D UAV Representation}
+			\caption{Simplified 2D UAV Representation of Free-Body Diagrams}
 			\label{fig:fbs}
 		\end{figure}
-		
-	
+		\end{comment}
 
 	\subsection{Material Properties}	
 		% Material Propeeties
-		The material selected for all UAV frame components (struts, arms, and hub beams) is a braided carbon fiber composite. For the purposes of this project, the carbon fiber is modeled as isotropic. Future work could include obtaining more accurate material data to model the carbon fiber as anisotropic. The properties listed in Table \ref{tab:matprop} correspond to data obtained from ALLRed Corporation for carbon fiber braided round tubes.		
+		The material selected for all UAV frame components (struts, arms, and hub beams) is a braided carbon fiber composite. For the purposes of this project, the carbon fiber is modeled as homogeneous and isotropic. Future work could include obtaining experimental data for the Young’s moduli, Poisson’s ratios, and shear moduli along the three principal material directions in order to more accurately model the carbon fiber as an orthotropic material. The properties listed in Table \ref{tab:matprop} correspond to data obtained from ALLRed Corporation for carbon fiber braided round tubes.		
 		
-		\begin{table}[htb]
+		\begin{table}[H]
 			\centering
-			\caption{Material Properties for Braided Round Tubes from ALLRed Corporation \cite{dragonplate:private}} 
-			\includegraphics[scale=1]{Tables/Matprop.png}
+			\caption{Material Properties \cite{dragonplate:private}} 
+			\csvautobooktabular{Tables/matprop.csv}
 			\label{tab:matprop}
 		\end{table}
 		
-		The shear strength is calculated from the relationship tensile strength and poisons ratio between the shear strength. Due to lack of fatigue information for the specific carbon fiber composites, fatigue material data is taken from Aluminum7075-T6. \cite{MatWeb} The fatigue strength coefficient ($f'$) for Aluminum7075-T6 is 1466 MPa. The fatigue strength exponent ($b$) is -0.143. The fatigue strength cycles is 1e6 ($N$). The completely reversed stress amplitude was calculated from the equation $\sigma_{rev} = f'(2N)^b$.	
+		The shear modulus is calculated from the relationship between tensile strength and Poisson's ratio and the shear modulus, $G=\frac{E}{2(1+\nu)}$. Due to a lack of fatigue information for the specific carbon fiber composites, fatigue material data is taken from Aluminum7075-T6\cite{MatWeb}. The data used is shown in Table \ref{tab:wcprops}. The completely reversed stress amplitude was calculated from the equation $\sigma_{ar} = \sigma_f'(2N)^b$.	
 		% All data for materials is stored within the Material dictionary within the material{\_}properties module. 
 		
-		A Woehler curve for the fatigue analysis as created using the Pylife Library. \cite{pyLife} The completely reversed stress amplitude is input as 'SD', the fatigue strength cycles for 'ND', and the fatigue strength exponent for 'k{\_}1'. % This was used for the WoehlerCurve class. 
+		\begin{table}[H]
+			\centering
+			\caption{Material Properties for Fatigue}
+			\csvautobooktabular{Tables/wcprops.csv}
+			\label{tab:wcprops}
+		\end{table}
+		
+		A Woehler curve for the fatigue analysis was created using the Pylife Library \cite{pyLife}. The completely reversed stress amplitude is the load level at the endurance limit for the Woehler curve. The fatigue strength cycles is the cycle number at the endurance limit for the Woehler curve. The fatigue strength exponent is used for the slope of the Woehler curve. % This was used for the WoehlerCurve class. 
 		
 			% https://store.tmotor.com/product/mf3218-polymer-folding-prop.html
 			% [Please Ask Dr. West to Send Motor Link] (I lost it)
@@ -351,8 +464,8 @@
 		- Material Properties
 			- Table of the relevant material properties of dragon plate. 
 		
-		- Cross Section Properties
-			- Table of the relevant cross section properties
+		- Cross-section Properties
+			- Table of the relevant cross-section properties
 		
 			- Arm length is assumed to be the minimum allowable length that allows for 50mm of spacing between propellers.
 		 	 
@@ -361,87 +474,182 @@
 		
 		\end{comment}
 	
-	\section{Units}
-		Processes within the project operate with the consistent unit system specified in Table \ref{tab:units} unless otherwise specified. 
+
 		
-		\begin{table}[htb]
+	
+	\chapter{Mission Profile} \label{ch:missionprofile}
+		This Chapter describes the mission profile generation. The calculation of energy and power over the duration of the mission are also described. 
+		
+		\section{Units} \label{se:units}
+			The finite element model described in Chapter \ref{ch:fea} and the mission profile generation described in Chapter \ref{ch:missionprofile} have no units. Therefore, inputs into and outputs out of the FEA model and mission profile generation system require a consistent unit system. Processes within the project operate with the unit system specified in Table \ref{tab:unit_system} unless otherwise specified. 
+			
+			\begin{table}[H]
+				\centering
+				\caption{Unit System}
+				\begin{tabular}{ll}
+					\hline
+					\textbf{Quantity} & \textbf{Unit} \\
+					\hline
+					Mass & $N \cdot s^{2}/mm$ \\
+					Pressure / Stress & MPa $(N/mm^{2})$ \\
+					Length & mm \\
+					Velocity & mm/s \\
+					Acceleration & mm/s$^{2}$ \\
+					Force & N \\
+					Time & s \\
+					Power & mW \\
+					Current & mA \\
+					Mass Moment of Inertia & $N \cdot s^{2} \cdot mm$ \\
+					Frequency & rad/s \\
+					Angle & rad \\
+					\hline
+				\end{tabular}
+				\label{tab:unit_system}
+			\end{table}
+		
+		\section{Mission Profile Generation} \label{se:mission_profile}
+	
+		A model of the mission profile was created to represent a potential mission with continuous position, velocity, and acceleration as functions of time. The mission is defined as a series of connected mission profile segments, with constraints imposed on position, velocity, and acceleration at the nodes between segments. Unconstrained nodal values are calculated using basic kinematic relationships. Between segment nodes, values are interpolated using kinematic equations for projectile motion, assuming that acceleration varies linearly with time.
+		
+		The mission profile is based on a potential operation during the 2025 Palisades wildfire. The total mission distance is estimated to be 5600m, corresponding to the distance from the northern edge to the southern edge of the active fire area. Using elevation maps of the surrounding terrain, the required altitude change to traverse this path is estimated to be 460m \cite{MapViewer}. Time steps were selected such that the maximum downrange velocity remained below 12m/s.
+		
+		The climb, cruise, and descent phases are each described in two intervals to avoid over-constraining the mission profile. Figure \ref{fig:xvy} shows altitude as a function of downrange position, Figure \ref{fig:yvt} shows altitude versus time, and Figure \ref{fig:xvt} shows downrange position with respect to time. The constraints applied to the mission profile are summarized in Table \ref{tab:mission_profile}, where the duration represents the time between spline intervals. Blank entries indicate that no constraint was applied.
+		
+			\begin{table}[H]
 			\centering
-			\caption{Mission Profile Constraints} 
-			\includegraphics[6]{Tables/units.pdf}
-			\label{tab:units}
+			\caption{UAV Mission Profile Constraints}
+			\resizebox{\textwidth}{!}{
+				\begin{tabular}{lccccccccc}
+					\hline
+					\textbf{Segment} 
+					& \textbf{Initial} 
+					& \textbf{Takeoff} 
+					& \textbf{Climb 1} 
+					& \textbf{Climb 2} 
+					& \textbf{Cruise 1} 
+					& \textbf{Cruise 2} 
+					& \textbf{Descent 1} 
+					& \textbf{Descent 2} 
+					& \textbf{Land} \\
+					\hline
+					Duration (s) 
+					& N/A & 12 & 10 & 10 & 25 & 25 & 10 & 10 & 15 \\
+					
+					Position X (m) 
+					& 0 & -- & -- & 500 & 2800 & 5100 & -- & -- & 5600 \\
+					
+					Position Y (m) 
+					& 0 & -- & -- & 560 & 560 & 560 & -- & -- & 0 \\
+					
+					Velocity X (m/s) 
+					& 0 & -- & -- & -- & -- & -- & -- & -- & 0 \\
+					
+					Velocity Y (m/s) 
+					& 0 & -- & -- & -- & -- & -- & -- & -- & 0 \\
+					
+					Acceleration X (m/s$^{2}$) 
+					& 0 & -- & -- & 0 & -- & 0 & -- & -- & 0 \\
+					
+					Acceleration Y (m/s$^{2}$) 
+					& 0 & -- & -- & 0 & -- & 0 & -- & -- & 0 \\
+					\hline
+				\end{tabular}
+			}
+			\label{tab:mission_profile}
 		\end{table}
-	
-	\section{Mission Profile} \label{se:mission_profile}
-	
-		A model of the mission profile was created to represent a potential mission with continuous position, velocity, and acceleration as functions of time. The mission is defined as a series of connected profile segments, with constraints imposed on position, velocity, and acceleration at the nodes between segments. Any unconstrained nodal values are calculated using basic kinematic relationships. Between segment nodes, position, velocity, and acceleration are interpolated using cubic Hermite splines, resulting in acceleration that varies linearly with respect to time.
 		
-		The mission profile is based on a potential operation during the 2025 Palisades wildfire. The total mission distance is estimated to be 5600m, corresponding to the distance from the northern edge to the southern edge of the active fire area. Using elevation maps of the surrounding terrain, the required altitude change to traverse this path is estimated to be 460m \cite{MapViewer}. Timesteps were selected such that the maximum downrange velocity remained below 12m/s.
-		
-		The climb, cruise, and descent phases are each described using two cubic Hermite spline intervals to avoid over-constraining the mission profile. Figure \ref{fig:xvy} shows altitude as a function of downrange position, Figure \ref{fig:yvt} shows altitude versus time, and Figure \ref{fig:xvt} shows downrange position with respect to time. The constraints applied to the mission profile are summarized in Table \ref{tab:profcons}, where the duration represents the time between spline intervals. Blank entries indicate that no constraint was applied.
-		
-		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Images/MissionProfile/XvY.png}
 			\caption{Downrange Position vs. Altitude}
 			\label{fig:xvy}
 		\end{figure}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Images/MissionProfile/YposvT.png}
 			\caption{Altitude vs. Time} 
 			\label{fig:yvt}
 		\end{figure}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Images/MissionProfile/XposVT.png}
-			\caption{Downrange position vs. Time} 
+			\caption{Downrange Position vs. Time} 
 			\label{fig:xvt}
 		\end{figure}
 		
 
-		\begin{table}[htb]
-			\centering
-			\caption{Mission Profile Constraints} 
-			\includegraphics[scale=0.7]{Tables/profcons.png}
-			\label{tab:profcons}
-		\end{table}
-		
-		
 	
-		% My specific Architecture
-		% The design flow diagram for the mission profile generation process is shown in figure \ref{fig:dfd_mission}. Mission profiles are generated in the mission{\_}profile module. This module contains a MissionProfile class, MissionProfileSegment class, and the kinematic{\_}matrix function. The list of nodes is added by the add{\_}segment method within the MissionProfile class. The MissionProfile contains a list of constraints added by the add{\_}constraint method. The add{\_}constraint requires the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), the value of the constraint. To solve for the unknown node values, the solve{\_}kinamatics method within the MissionProfile class assembles matrices generated from the kinematic{\_}matrix function into a kinematic matrix for the entire mission profile. The remaining position, velocity, and acceleration values at the nodes are then calculated using the numpy.linalg.lstsq function. The solution at the nodes are applied with the time{\_}solve method which uses a cubic Hermite spline to find interpolate values at a given time. 
 		
-		The design flow diagram for the mission profile generation process is shown in Figure \ref{fig:dfd_mission}. The constraints require the node at which the constraint will be applied, the type of constraint (x, y, x-velocity, y-velocity, x-acceleration, y-acceleration), and the value of the constraint. The constraints are then assembled into a kinematic matrix for the entire mission profile. Each node refers to a specific time set by the user. The values at the nodes are solved using the numpy.linalg.lstsq function. The values between nodes are interpolated with a cubic Hermite spline.		
+		The data flow diagram for the mission profile generation process is shown in Figure \ref{fig:dfd_mission}. The constraints require the node at which the constraint will be applied, the value of the constraint, and the type of constraint. The type of constraint describes the axis the constraint is on and the kinematic quantity that is being constrained. The constraints are then assembled into a kinematic matrix for the entire mission profile. Each node refers to a specific time set by the user. Equation \ref{eq:kinematic} describes the relationship between the constrained kinematic quantities ($\mathbf{x}_u$) and the unknown kinematic quantities ($\mathbf{x}_p$). The kinematic matrix is split into two parts: the unconstrained kinematic equations matrix ($\mathbf{A}_k$) and the constrained kinematic equations matrix ($\mathbf{B}_k$).
 		
-		\begin{figure}[htb]
+		
+		\begin{equation} \label{eq:kinematic}
+			\mathbf{A}_k \mathbf{x}_p + \mathbf{B}_k \mathbf{x}_u = \mathbf{0},
+		\end{equation}
+		
+		The solution of the unknown kinematic quantities is found using the numpy.linalg.lstsq function. 
+		
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.05]{Images/DFDs/DFDMissionProfile.png}
 			\caption{DFD of the Mission Profile Generation Process} 
 			\label{fig:dfd_mission}
 		\end{figure}
 		
-	\subsection{Thrust Calculation}\label{ss:thrust}
+	\subsection{Forces}\label{ss:thrust}
 		
-		A calculation of the thrust profile is required in order to preform the power and fatigue analysis. This is the stress-equivalent force over the duration of the mission profile with drag and acceleration taken into account. The thrust equation over the duration of the mission profile is shown in Equation \ref{e:thrust}. 
+		This section describes the forces modeled on the vehicle. Figure \ref{fig:UAVFBD} shows the free-body diagram of the UAV. The force applied by a single propeller is $F_\text{thrust}$. The force from drag is $F_\text{drag}$. All force from gravity ($W$) is assumed to be at the center of gravity. The weight is described with the equation $W=m_\text{total}g$. Where $m_\text{total}$ is the combined weight of the batteries, frame, and payload. The acceleration due to gravity is $g = 9.8066\unit{\meter\per\second\squared}$.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.1]{Images/UAVFBD.png}
+			\caption{Free Body Diagram of the UAV} 
+			\label{fig:UAVFBD}
+		\end{figure}
+		
+		Equations \ref{eq:moment_equilibrium} and \ref{eq:force_equilibrium_xy} describe the moment and force balances. The sum of all moments is assumed to be zero. The sum of all forces in the x and y directions is also zero. The z-direction is upward. 
 		
 		\begin{equation}
-			F_{\text{thrust}}(t)
-			=
-			\pm v(t)^2 \, s_a \, \rho \, c_d
-			+
-			m\bigl(a(t)+g\bigr)
-			\label{eq:thrust}
+			\sum \mathbf{M} = I\alpha = \mathbf{0}
+			\label{eq:moment_equilibrium}
 		\end{equation}
 		
-		The v(t) and a(t) represent the velocity and acceleration of the mission profile at given point in time. $s_a$ is an estimate of the surface area of UAV. This is obtained by summing the projected surface of every beam and hub segment with the projected surface area of the two batteries. The surface area is a function of the design variables. $\rho = 1.2250\unit{\kilogram\per\meter\cubed}$ is the air density. $c_d = 0.256$ is the drag coefficient. $g = 9.8066\unit{\meter\second\squared}$ was used for the gravity constant. The mass is estimated as the sum of 45kg payload, the mass of the frame, and the mass of the two batteries.
+		\begin{equation}
+			\sum F_x = 0, \quad \sum F_y = 0
+			\label{eq:force_equilibrium_xy}
+		\end{equation}
 		
-		To simulate the pre-liftoff and post-landing conditions, a rev-up and rev-down period were added to the thrust forcing function. The ramp-up phase is modeled as a linear, increasing thrust from zero to the thrust required for takeoff, while the ramp-down phase is modeled as a linear decrease in thrust to zero. The rev down period was modeled as a linearly decreasing force until no force is applied. A duration of five seconds is used for both periods.  
+		Force from drag is calculated with Equation \ref{eq:drag}. The velocity of the mission profile at a given point in time is $v(t)$. The direction of the velocity is $\operatorname{sgn}(v(t))$. $s_a$ is an estimate of the projected surface area of the top of the UAV. This is obtained by summing the projected surface of every beam and hub segment. The surface area is a function of the design variables. $\rho = 1.2250\unit{\kilogram\per\meter\cubed}$ is the air density. The drag coefficient used is $c_d = 0.512$.
 		
+		\begin{equation}
+			F_{\text{drag}}(t) = -\frac{1}{2}\operatorname{sgn}(v(t))\, v(t)^2 \, s_a \, \rho \, c_d
+			\label{eq:drag}
+		\end{equation}
 		
-		\begin{figure}[htb]
+		The formula for the forces in the z-direction is shown in Equation \ref{eq:f_z}. The acceleration in the mission profile is $a(t)$. The force from thrust over the duration of the mission profile is given as $F_{\text{thrust,dynamic}}(t)$. 
+		
+		\begin{equation}
+			\sum F_z = m_\text{total} *a(t) = -W + F_{\text{drag}}(t) + 8F_{\text{thrust,dynamic}}(t)
+			\label{eq:f_z}
+		\end{equation}
+		
+		 The equation for thrust over the duration of the mission profile is shown in Equation \ref{eq:thrust_dy}. This equation is derived from Equation \ref{eq:f_z}. In the case where the UAV is in hover, $a(t)$ and $v(t)$ are equal to zero, and this is described as $F_{\text{thrust,hover}}(t)$. This is shown in Equation \ref{eq:thrust_hv}. 
+		
+		\begin{equation}
+			F_{\text{thrust,dynamic}}(t) = \frac{m_\text{total} *a(t) + W - F_{\text{drag}}(t)}{8}
+			\label{eq:thrust_dy}
+		\end{equation}
+		
+		\begin{equation}
+			F_{\text{thrust,hover}}(t) = \frac{W}{8} 
+			\label{eq:thrust_hv}
+		\end{equation}
+		
+		To simulate the pre-liftoff and post-landing conditions, a rev-up and rev-down period were added to the thrust forcing function. The ramp-up phase is modeled as a linear, increasing thrust from zero to the thrust required for takeoff, while the ramp-down phase is modeled as a linear decrease in thrust to zero. The rev-down period was modeled as a linearly decreasing force until no force is applied. A duration of five seconds is used for both periods.  
+		
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.6]{Images/ThrustVTime.png}
 			\caption{Thrust vs. Time Plot} 
@@ -451,11 +659,10 @@
 	
 	
 	\section{Energy Consumption} \label{se:energy_consumpt}
-		% 	The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The design flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Within the DronePower class, the thrust to power conversion and energy consumption calculations are performed. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power conversion model described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
 		
-		The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The design flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power conversion model described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
+		The energy consumption of the UAV over the mission profile is calculated for the energy constraint. The data flow diagram for this energy consumption algorithm is shown in Figure \ref{fig:dfd_mission}. Once the thrust function is obtained, as described in Subsection \ref{ss:thrust}, it is passed to the thrust to power calculation described in Subsection \ref{ss:power_calc}. This model computes the power at each time step. The resulting power profile is then integrated to determine the total energy consumption, as discussed in Subsection \ref{ss:energy_consumption_calc}. This calculation requires the total energy capacity of the battery system.
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.1]{Images/DFDs/DFDEnergy.png}
 			\caption{DFD of the Energy Consumption Calculation} 
@@ -465,52 +672,50 @@
 		
 		\subsection{Batteries} \label{ss:batteries}
 		
-		% The battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. Battery power data and related calculation are stored within the BatterySystem class within the drone{\_}power module. The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. % The mass and position data for the batteries are stored within the Battery class within the drone{\_}battery module.
-		
-		The battery used is the Tattu HV 40000mAh 10C 6S1P 22.8V High Voltage UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{Capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. The batteries have the dimensions of 263x122x64mm. The centroid of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. 
+		The battery used is the UAV Lipo Battery Pack \cite{GensTattu}. Two of these batteries are connected in series, resulting in a total system voltage of 45.6 V. The energy capacity ($E_{capacity}$) of the battery system is calculated by multiplying the total system voltage by the amp-hours of the battery. The batteries have the dimensions of 263x122x64mm. The centroids of the batteries are positioned at (0, 86.75, 0) and (0, -86.75, 0) in the global coordinate system. 
 		
 		\subsection{Power Calculation} \label{ss:power_calc}
 		
 	
-		The motor used for vehicle propulsion is the U8 Lite L Efficiency Multirotor UAV Motor KV95 \cite{Motor}. The propeller used is the G32*11\cite{Propeller}. Test data from the supplier is shown in Table \ref{tab:power} for the thrust, power, and RPM for the pair of motor and propeller.  was used to generate Equation \ref{eq:t_to_p} and Equation \ref{eq:ang}. 
+		The motor used for vehicle propulsion is the U8 Lite L Efficiency Multirotor UAV Motor KV95 \cite{Motor}. The propeller used is the G32*11 \cite{Propeller}. Test data from the supplier is shown in Table \ref{tab:power} for the thrust, power, and RPM for the pair of motor and propeller. This data was used to generate Equation \ref{eq:t_to_p} and Equation \ref{eq:ang}. 
 		
 	
-		\begin{table}[htb]
+		\begin{table}[H]
 			\centering
-			\includegraphics[scale=6]{Tables/rpm.pdf}
-			\caption{Test Data for 8 Lite L Efficiency Multirotor UAV Motor KV95 with G32*11 Propeller \cite{Motor}} 
+			\csvautobooktabular{Tables/rpm.csv}
+			\caption{Published Data} 
 			\label{tab:power}
 		\end{table}
 		
-		So that the power can be found at any point along the curve, the quadratic function of best fit was found for thrust vs power data. Equation \ref{eq:t_to_p} shows the resulting thrust to power relationship. Figure \ref{fig:power} is a plot of this data relevant to the equation. $P(t)$ is the power over time in units of watts. $T(t)$ is thrust in units of grams. 
+		To find the power at any point along the curve, the quadratic function of best fit was found for thrust vs power data using the second-order polynomial trend line in Excel. Equation \ref{eq:t_to_p} shows the resulting thrust to power relationship.  $P(t)$ is the power over time in units of watts. $T(t)$ is thrust in units of kilograms force. Figure \ref{fig:power} is a plot of the published data and the resulting trend line.
 		
 		\begin{equation} \label{eq:t_to_p}
-			P(t) = 1.1743 \times 10^{-5}\, T(t)^2
-			+ 4.2302 \times 10^{-2}\, T(t)
-			+ 1.5871 \times 10
+			P(t) = 11.743\, T(t)^2
+			+ 42.302\, T(t)
+			+ 15.871
 		\end{equation}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.7]{Images/ThrustVPower.png}
-			\caption{Thrust Vs. Power curve for the 8 Lite L Efficiency Multirotor UAV Motor KV95 with G32*11 Propeller \cite{Motor}} 
+			\caption{Power Vs. Thrust Curve} 
 			\label{fig:power}
 		\end{figure}
 		
 		\subsection{Angular Velocity Calculation} \label{ss:ang_calculation}
 		
-		For the perturbation model and frequency constraint, the angular speed of the propeller over the duration of the mission ($\omega(t)$) was calculated. Equation \ref{eq:ang} was created by finding the quadratic function of best fit of the RPM vs Thrust data from the supplier's test data. This equation converts the thrust ($T(t)$) in units of grams into angular velocity in units of rotations per minute. Table \ref{tab:angu} contains the line of best fit as well as the motor data. 
+		For the perturbation model and frequency constraint, the angular speed of the propeller over the duration of the mission ($\omega(t)$) was calculated. Equation \ref{eq:ang} was created by finding the quadratic function of best fit of the RPM vs Thrust data from the supplier's test data. This equation converts the thrust ($T(t)$) in units of kilograms force into angular velocity with the units of RPM. Table \ref{tab:angu} contains the line of best fit. 
 		
 		\begin{equation} \label{eq:ang}
 			\omega(t) = -9.3523 \times 10^{-6}\, T(t)^2
-			+ 3.1211 \times 10^{-1}\, T(t)
-			+ 8.0573 \times 10^{2}
+			+ 312.11\, T(t)
+			+ 805.73
 		\end{equation}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.7]{Images/ThrustVRPM.png}
-			\caption{Thrust Vs. Angular Velocity Curve for the 8 Lite L Efficiency Multirotor UAV Motor KV95 with MF3218 Propeller \cite{Motor}} 
+			\caption{Angular Velocity vs. Thrust Curve} 
 			\label{tab:angu}
 		\end{figure}
 		
@@ -518,94 +723,189 @@
 		
 		\subsection{Energy Consumption Calculation} \label{ss:energy_consumption_calc}
 		
-		The energy consumed over the mission duration is computed by subtracting the time integral of the power draw from the total energy capacity of the battery system. Equation \ref{eq:p_to_e} describes the relationship between the energy remaining in the battery and the power consumed. $E_{Remaining}(t)$ is the total energy remaining between both batteries as a function of time. $E_{Capacity}$ is the energy stored by a fully charged battery. $t$ is the time since the start of the mission.  
+		The energy consumed over the mission duration is computed by subtracting the time integral of the power draw from the initial energy capacity of the battery system. Equation \ref{eq:p_to_e} describes the relationship between the energy remaining in the battery and the power consumed.  The total energy remaining between both batteries as a function of time is $E_{remaining}(t)$. The energy stored by a fully charged battery is $E_{capacity}$. The time since the start of the mission is $t$.   
 		
 		
 		\begin{equation} \label{eq:p_to_e}
-			E_{\text{Remaining}}(t) = E_{\text{Capacity}} - \int_{0}^{t} P(t) \, dt
+			E_{\text{remaining}}(t) = E_{\text{capacity}} - \int_{0}^{t} P(t) \, dt
 		\end{equation}
 		
 		
-		The integral of the power is calculated numerically using scipy.integrate.cumulative{\_}trapezoid. The number of time steps was is a number set when running the optimization function. The total span of time calculated is the duration of the mission.  
+		The integral of the power is calculated numerically using scipy.integrate.cumulative{\_}trapezoid. The number of time steps is a number set when running the optimization function. The total span of time calculated is the duration of the mission.  
 		
 	
 	\subsection{Perturbation Calculation} \label{ss:purtibation}
 	
-		For the transient damage analysis a model of oscillations caused by propeller perturbations was also required. This as modeled as a force over time. The desired function is a sinusoidal wave with a frequency matching the propeller frequency. The amplitude was estimated to be 1\% of the thrust. Equation \ref{eq:thr} shows the completed equation for the perturbation forcing function. $\omega_{max}$ is the maximum angular velocity of the propeller.
+		A forcing function modeling the oscillations caused by propeller perturbations was also required for the transient analysis in Subsection \ref{ss:transient}. The desired function is a sinusoidal wave with a frequency matching double the propeller frequency, as the propeller has two blades. The amplitude of the sinusoidal forcing function is modeled as 1\% of the magnitude of the thrust. Equation \ref{eq:thr} shows the completed equation for the perturbation forcing function.
 		
 		\begin{equation} \label{eq:thr}
-			F_{\text{perturbation}}(t) = 0.01 \, \sin\big(\omega_{\text{max}} \, T_{\text{percent}}(t) \, t \big) \, F_{\text{thrust}}(t)
+			F_{\text{perturbation}}(t) = 0.01 \, \sin\big(2\omega(t) \, t \big) \, F_{\text{thrust}}(t)
 		\end{equation}
 		
-		Figure \ref{fig:purt} shows the perturbation force over time for the optimized UAV model. 
-		
-		\begin{figure}[htb]
-			\centering
-			\includegraphics[scale=0.5]{Images/PurtibationVTime.png}
-			\caption{Perturbation Vs. Time Chart for Optimized UAV} 
-			\label{fig:purt}
-		\end{figure}
 
 	
 
 	\chapter{Finite Element Analysis} \label{ch:fea}
 	
 		% Description
-		This chapter discusses the architecture of the FEA model designed to be run repeatedly by the optimization algorithm. The finite element model is designed so that it can be easily adapted for different frame models and design variables.
+		This chapter discusses the architecture of the FEA model designed to be run by the optimization algorithm. The finite element model is designed so that it can be easily adapted for different frame models and design variables.
 	
 		\section{Beam Model}
 			
 			% Describe DFD
-			A beam model contains the coordinates of the nodes and the element definitions for the beam system. Figure \ref{fig:dfd_beam} shows a design flow of the process of making the beam model. Nodes each are given a name as well as a set of three-dimensional coordinates within the global coordinate system. Each element is created with these three nodes: the start node, the end node and the k-node. The start and end nodes define the span of the beam. The K-node describes the orientation of the cross section, which is described with a vector. 
+			A beam model contains the coordinates of the nodes and the element definitions for the beam system. Figure \ref{fig:dfd_beam} shows a data flow diagram of the process of generating the beam model. Each node is given a name as well as a set of three-dimensional coordinates within the global coordinate system. Each element is created with these three nodes: the \textit{i-node}, the \textit{j-node} and the \textit{k-node}. The \textit{i-node} is the start of the beam, the \textit{j-node} is the end of the beam, and the \textit{k-node} describes the orientation of the cross-section. The \textit{i-node} and \textit{j-node} are defined as points within the global coordinate system, while the \textit{k-node} is defined with a vector within the global coordinate system which determines the direction of the top face of the beam element. 
 			
-			% Nodes -> elements 
-			% K-nodes 
-			% Section properties 
-			% Material Properties (where do they come from)
-			
-			\begin{figure}[htb]
+			\begin{figure}[H]
 				\centering
 				\includegraphics[scale=0.1]{Images/DFDs/DFDBeamModel.png}
 				\caption{DFD of the Creation of the Beam Model} 
 				\label{fig:dfd_beam}
 			\end{figure}
 			
-			A set of material properties and cross section properties is associated with each element in the model. The section properties include the type of cross section of the beam element and the dimensions of that cross-section. The two cross-section types used in this thesis are annular and I-beam sections. From these cross section dimensions, the relevant properties are calculated \cite{StructXannulus}\cite{StructXibeam} such as: cross-sectional area, second moment of area in all 3 axes, torsional constant, transverse shear deflection constant in both direction on the cross section plane, and the circumscribed radius of the cross section. 
+			A set of material property data and cross-section properties data is assigned to each element in the model. The section properties include the type of cross-section of the beam element and the dimensions of that cross-section. The two cross-section types used in this thesis are annular and I-beam sections. From these cross-section dimensions, the relevant properties are calculated such as: cross-sectional area, second moment of area in both planar directions, second polar moment of area, torsional constant, transverse shear deflection constant in both directions on the cross-section plane, and the circumscribed radius of the cross-section  \cite{StructXannulus}\cite{StructXibeam}. 
 			
-			The transverse shear deflection constants are calculated assuming a Poisson's ratio is zero. The equations used for the transverse shear deflection constants are obtained from work by  by Shames and Dym \cite{transshear}. 
+			The transverse shear deflection constants are calculated assuming Poisson's ratio is zero. The equations used for the transverse shear deflection constants are obtained from work by Shames and Dym \cite{transshear}. 
 			
-			The material properties required for the beam material are the mass density, elastic modulus, Poisson's ratio, tension yield strength. The fatigue strength coefficient, exponent and cycles are required for fatigue analysis. The shear modulus is calculated from the relationship between Poisson's ratio and the elastic modulus. 
+			The material properties required for the beam model are the mass density, elastic modulus, Poisson's ratio, tension yield strength. The values are retrieved from the supplier's data in Table \ref{tab:matprop}. The fatigue strength coefficient, exponent, and cycles are required for fatigue analysis. 
+			The shear modulus ($G$) is calculated from the elastic modulus ($E$) and Poisson's ratio ($\nu$) using the relationship shown in Equation \ref{eq:shear_modulus}.
 			
-			
+			\begin{equation}
+				G = \frac{E}{2(1+\nu)}.
+				\label{eq:shear_modulus}
+			\end{equation}
 			
 		\subsection{Beam Element Formulation} \label{se:beam_element_form}
 		
 			% Description	
-			For each beam element a stiffness and mass matrix within the local coordinate system must be created. The stiffness matrix uses Timoshenko beam theory so shear deformation effects are taken into account. This creates a more accurate model than Euler–Bernoulli beam which is desired for the use in the transient and dynamic analysis. The local stiffness matrix has 12 degrees of freedom. It has two nodes, each with three displacement and three rotational degrees of freedom. Timoshenko beam theory was selected to account for transverse shear deformation, which allows for more accuracy than Euler–Bernoulli beam theory for the dynamic and transient analyses performed in this study. The stiffness matrix requires the length of the beam. It also requires cross section properties such as area, second moments of area, the torsional constant, and the transverse shear deflection constant. The material properties required are the elastic modulus and shear modulus. 
+		 	For each beam element, a stiffness and mass matrix within the local coordinate system must be created. The stiffness matrix is developed from Timoshenko beam theory so shear deformation effects are taken into account. Timoshenko beam theory is more accurate than Euler–Bernoulli beam theory, which is desired for the use in transient and dynamic analysis. Each beam element has two nodes, each with three displacement and three rotational degrees of freedom. The stiffness matrix ($\mathbf{K}$) is described in Equations \ref{eq:K_timoshenko} - \ref{eq:k22}. It requires the length of the beam ($L$), second moments of area ($I_y$ and $I_z$), the torsional constant ($K$), and the transverse shear deflection constants ($K_y$ and $K_z$). The material properties required are the elastic modulus ($E$) and shear modulus ($G$). The shear factor calculations used in Equation \ref{eq:k11}-\ref{eq:k22}  are described in Equation \ref{eq:shear_factors}.
 			
-			The mass matrix is a three-dimensional lumped mass matrix. This requires the total mass of the beam, which is calculated by multiplying the length, the density, and the cross section area. The mass matrix also requires the mass moment of inertia tensor in the local coordinate system. The annulus cross section uses the mass moment of inertia tensor for a thick-walled cylindrical tube \cite{MassMoment}. The I-beam uses mass moment of inertia tensors of three rectangular cuboids \cite{MassMoment} assembled with parallel-axis theorem. 
+			% Shear factors remain separate
+			\begin{equation}
+				\phi_y = \frac{12 E I_z}{G A K_y L^2}, \qquad
+				\phi_z = \frac{12 E I_y}{G A K_z L^2}
+				\label{eq:shear_factors}
+			\end{equation}
 			
-		\subsection{Boundary Conditions}
+			% 12x12 Timoshenko beam stiffness in block form
+			\begin{equation}
+				\mathbf{K} =
+				\begin{bmatrix}
+					k_{11} & k_{12} \\
+					k_{21} & k_{22}
+				\end{bmatrix}
+				\label{eq:K_timoshenko}
+			\end{equation}
 			
-			Each solver requires boundary conditions to be applied to solve create the vector of known displacements. Each boundary condition references a node where the boundary condition is applied. The boundary condition requires a boundary condition type, a boundary condition value. The boundary condition type refers to which direction or rotation the node should be constrained in. The boundary condition value is the direction or rotation is set to. 
+			% 6x6 blocks
+			\begin{equation}
+				k_{11} =
+				\begin{bmatrix}
+					\frac{AE}{L} & 0 & 0 & 0 & 0 & 0 \\
+					0 & \frac{12 E I_z}{(1+\phi_y)L^3} & 0 & 0 & 0 & \frac{6 E I_z}{(1+\phi_y)L^2} \\
+					0 & 0 & \frac{12 E I_y}{(1+\phi_z)L^3} & 0 & -\frac{6 E I_y}{(1+\phi_z)L^2} & 0 \\
+					0 & 0 & 0 & \frac{G K L}{L} & 0 & 0 \\
+					0 & 0 & -\frac{6 E I_y}{(1+\phi_z)L^2} & 0 & \frac{(4+\phi_z) E I_y}{(1+\phi_z)L} & 0 \\
+					0 & \frac{6 E I_z}{(1+\phi_y)L^2} & 0 & 0 & 0 & \frac{(4+\phi_y) E I_z}{(1+\phi_y)L}
+				\end{bmatrix}
+				\label{eq:k11}
+			\end{equation}
 			
-			There is also an option to set a local coordinate system to apply the boundary condition. This requires a vector in the global coordinate system where the x-direction of the boundary condition should be placed in and a k-node vector which determines the y-direction. The directions of the resulting coordinate system is the transformation matrix. If the boundary condition is applied in the global coordinate system, the transformation matrix is set to the identity matrix. 
+			\begin{equation}
+				k_{12} =
+				\begin{bmatrix}
+					-\frac{AE}{L} & 0 & 0 & 0 & 0 & 0 \\
+					0 & -\frac{12 E I_z}{(1+\phi_y)L^3} & 0 & 0 & 0 & \frac{6 E I_z}{(1+\phi_y)L^2} \\
+					0 & 0 & -\frac{12 E I_y}{(1+\phi_z)L^3} & 0 & -\frac{6 E I_y}{(1+\phi_z)L^2} & 0 \\
+					0 & 0 & 0 & -\frac{G K L}{L} & 0 & 0 \\
+					0 & 0 & \frac{6 E I_y}{(1+\phi_z)L^2} & 0 & \frac{(2-\phi_z) E I_y}{(1+\phi_z)L} & 0 \\
+					0 & -\frac{6 E I_z}{(1+\phi_y)L^2} & 0 & 0 & 0 & \frac{(2-\phi_y) E I_z}{(1+\phi_y)L}
+				\end{bmatrix}
+				\label{eq:k12}
+			\end{equation}
 			
-			\begin{comment}
-			model takes shear deformation effects into account. The mass for each beam is modeled as a 3D lumped mass matrix.
+			\begin{equation}
+				k_{21} = k_{12}^T
+				\label{eq:k21}
+			\end{equation}
 			
-			- More detail on mass matrix (it includes rotations)
+			\begin{equation}
+				k_{22} =
+				\begin{bmatrix}
+					\frac{AE}{L} & 0 & 0 & 0 & 0 & 0 \\
+					0 & \frac{12 E I_z}{(1+\phi_y)L^3} & 0 & 0 & 0 & -\frac{6 E I_z}{(1+\phi_y)L^2} \\
+					0 & 0 & \frac{12 E I_y}{(1+\phi_z)L^3} & 0 & \frac{6 E I_y}{(1+\phi_z)L^2} & 0 \\
+					0 & 0 & 0 & \frac{G K L}{L} & 0 & 0 \\
+					0 & 0 & \frac{6 E I_y}{(1+\phi_z)L^2} & 0 & \frac{(4+\phi_z) E I_y}{(1+\phi_z)L} & 0 \\
+					0 & -\frac{6 E I_z}{(1+\phi_y)L^2} & 0 & 0 & 0 & \frac{(4+\phi_y) E I_z}{(1+\phi_y)L}
+				\end{bmatrix}
+				\label{eq:k22}
+			\end{equation}
 			
-			Boundary conditions are set relative to a local coordinate system so that the symmetric boundary conditions at the endpoints of the struts. 
 			
-			Stresses and strains are calculated using the formula ??? [cite presentation]
+			The mass matrix ($\mathbf{M}$) is a three-dimensional lumped mass matrix described in Equation \ref{eq:lumped_mass_centered}. This requires the total mass of the beam ($m$), which is described by the equation $m = \rho l A$ where $\rho$ is the mass density of the material, $l$ is the length of the beam, and $A$ is the cross-sectional area of the beam. The mass moment of inertia tensor in the local coordinate system contains the principal moments of inertia $I_{xx}$, $I_{yy}$, and $I_{zz}$.
 			
-			% Archetecture - BeamElement class
-			Each beam element within the beam system is associated with a BeamElement object. The local stiffness and mass matrices are calculated with the solve{\_}stiffness{\_}matrix method. 
+			\begin{equation} \label{eq:lumped_mass_centered}
+				\mathbf{M} = \frac{1}{2}
+				\begin{bmatrix}
+					M_{11} & 0 \\
+					0 & M_{22}
+				\end{bmatrix}, \quad
+				M_{11} = M_{22}
+				\begin{bmatrix}
+					m & 0 & 0 & 0 & 0 & 0 \\
+					0 & m & 0 & 0 & 0 & 0 \\
+					0 & 0 & m & 0 & 0 & 0 \\
+					0 & 0 & 0 & I_{xx} & 0 & 0 \\
+					0 & 0 & 0 & 0 & I_{yy} & 0 \\
+					0 & 0 & 0 & 0 & 0 & I_{zz}
+				\end{bmatrix}
+			\end{equation}
 			
-			% Archetecture - BeamElement class
-			Intrmediate values for displacments are found using the return{\_}shape{\_}functions, return{\_}shape{\_}functions{\_}dynamic, and return{\_}shape{\_}functions{\_}dynamic method. Intermediate values of stress and strain are found using the stress{\_}strain{\_}shape{\_}function method.  
-			\end{comment}
+			 The annulus cross-section uses the mass moment of inertia tensor for a thick-walled cylindrical tube.  The equation for the mass moment of inertia tensor for the annulus is shown in Equation \ref{eq:inertia_tensor_annulus}. The mass of the beam ($m$), inner radius ($r_1$), and outer radius ($r_2$) are the required parameters. 
+			
+			% Mass moment of inertia tensor with principal moments
+			\begin{equation}
+				\mathbf{I} =
+				\begin{bmatrix}
+					\frac{1}{2} m (r_2^2 + r_1^2) & 0 & 0 \\
+					0 & \frac{1}{12} m \big(3 (r_2^2 + r_1^2) + L^2\big) & 0 \\
+					0 & 0 & \frac{1}{12} m \big(3 (r_2^2 + r_1^2) + L^2\big)
+				\end{bmatrix}
+				\label{eq:inertia_tensor_annulus}
+			\end{equation}
+			
+			The I-beam element uses mass moment of inertia tensors of three rectangular cuboids assembled using the parallel-axis theorem. The equation for the mass moment of inertia tensor of a rectangular prism is shown in Equation \ref{eq:inertia_tensor_rectangle} \cite{MassMoment}.  The mass of the beam ($m$), length ($l$), height ($h$), and width ($b$) are the required parameters. Equation \ref{eq:ibeam_parallel_axis} describes how the parallel axis theorem is used to find the mass moment of inertia of the I-beam. Mass moments of inertia are calculated for the bottom flange ($I_\text{bottom}$), web ($I_\text{web}$) and top flange ($I_\text{top}$). The vector from the center of the beam cross-section to the center of the top rectangular prism cross-section is given by $d_\textbf{top}$. The vector from the center of the beam cross-section to the center of the bottom rectangular prism cross-section is given by $d_\textbf{bottom}$. The identity matrix is $I_3$.
+			
+			
+				% Mass moment of inertia tensor with principal moments
+			\begin{equation}
+				\mathbf{I} =
+				\begin{bmatrix}
+					\frac{1}{12} m (h^2 + b^2) & 0 & 0 \\
+					0 & \frac{1}{12} m (h^2 + L^2) & 0 \\
+					0 & 0 & \frac{1}{12} m (L^2 + b^2)
+				\end{bmatrix}
+				\label{eq:inertia_tensor_rectangle}
+			\end{equation}
+			
+			\begin{equation}
+				\mathbf{I}
+				=
+				\mathbf{I}_{\text{top}}
+				+
+				\mathbf{I}_{\text{web}}
+				+
+				\mathbf{I}_{\text{bot}}
+				+
+				m_t \left( (\mathbf{d}_{\text{top}} \cdot \mathbf{d}_{\text{top}})\mathbf{I}_3
+				- \mathbf{d}_{\text{top}}\mathbf{d}_{\text{top}}^T \right)
+				+
+				m_t \left( (\mathbf{d}_{\text{bot}} \cdot \mathbf{d}_{\text{bot}})\mathbf{I}_3
+				- \mathbf{d}_{\text{bot}}\mathbf{d}_{\text{bot}}^T \right)
+				\label{eq:ibeam_parallel_axis}
+			\end{equation}
+			
+		
 		
 		
 		\subsection{UAV Slice Model} \label{ss:seg_model}
@@ -614,174 +914,205 @@
 			% Describe BCs 
 			% Describe Hub segmentation
 			% Description
-			A FEA model of single slice of the UAV frame was created. A representation of this model is shown in Figure \ref{fig:stickmodel}.  The model is 1/8th of the UAV split along the struts. Dimensional data is taken from the geometry of the UAV described in Section \ref{se:uav_geo}. All forces applied for the optimization algorithm are applied to the outer node. 
+			The UAV slice model is the beam model of a 1/8-symmetry model of the octocopter used for finite element analysis. The slice model is shown in Figure \ref{fig:8beammodel}. 
 			
-			The hub is represented as a series of repeated I-beam cross sections. The width of each I-beam cross-section in the slice model is the width at the centroid of the corresponding trapezoidal area of the hub's top plate. The number of hub segments is input by the user.
-			
-			The center of the UAV hub is fixed in all 6 degrees of freedom. For the constraints at the struts, the local transformation was used to create a symmetric constraint about the plane perpendicular to the struts. Therefore, the only frequency modes analyzed with the slice model are the symmetric modes. However, the symmetric constraint could be changed to asymmetric to take into account asymmetric modes. 
-			
-			To generate the beam model of the UAV, the design variables, material properties associated with all the components, and the wingspan and hub height calculations are required.  
-			
-			\begin{figure}[htb]
+			\begin{figure}[H]
 				\centering
-				\includegraphics[scale=0.5]{Images/stickmodel.png}
+				\includegraphics[scale=0.02]{Images/8beammodel.png}
 				\caption{UAV Slice Beam Model Visualization} 
+				\label{fig:8beammodel}
+			\end{figure}
+			
+			The finite element model is evaluated repeatedly by the optimization algorithm, so the slice model was created to reduce computation time. A representation of the nodes and elements of this model is shown in Figure \ref{fig:stickmodel}. The model is 1/8th of the model of the entire UAV described in Section \ref{se:uav_geo}, split along the struts. All forces applied for the optimization algorithm are applied to the outer node, as that is the location of the propeller. 
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.4]{Images/stickmodel.png}
+				\caption{UAV Slice Node Visualization} 
 				\label{fig:stickmodel}
 			\end{figure}
 			
+			The hub segment is represented as a series of repeated I-beam cross-sections. The process of splitting the hub into sections is demonstrated in Figure \ref{fig:triseg}. The width of each I-beam cross-section in the slice model is the width at the centroid of the corresponding trapezoidal area of the hub's top plate. The number of hub segments is input by the user.
 			
-			Once the slice model is complete, the individual local stiffness and mass matrices are transformed into the global coordinate system then assembled into a global mass matrix and stiffness matrix for the entire system. 
+			\begin{figure}[H]
+				\centering
+				\includegraphics[scale=0.1]{Images/triseg.png}
+				\caption{Hub Segmentation Example} 
+				\label{fig:triseg}
+			\end{figure}
+			
+			The 1/8th-symmetric beam model of the UAV is generated automatically by Python code from the design variables, material properties associated with all the components, the wheelbase calculation, and hub height parameter.  		
+
+		\subsection{Constraints}
 		
+	  	The beam system requires constraints to be applied to solve the vector of known displacements. Each constraint references a node where the constraint is applied. A type and a value are required for each constraint. The constraint type refers to which direction or rotation the node should be constrained in. The constraint value is the value to which the direction or rotation is set to. 
 	
-			
+		There is also an option to set a local coordinate system to orient the constraint. This requires a vector in the global coordinate system, which determines the x-direction of the constraint, and a vector that determines the y-direction. The direction vectors of the resulting coordinate system are the transformation matrix. If the constraint is applied in the global coordinate system, the transformation matrix is set to the identity matrix. 
+		
+		The center of the slice model is fixed in all 6 degrees of freedom. For the constraints at the struts, the constraint transformation was used to create a symmetric constraint about the vector along the struts. Each symmetric constraint is at the end of the strut. Therefore, the only modes analyzed with the slice model are the symmetric modes. However, the 1/8-symmetric constraints could be changed to asymmetric to resolve the asymmetric modes. Each of the nodes in the hub are constrained symmetrically about the y-plane. Table \ref{tab:bcsfea} shows each constraint in the UAV slice model from Figure \ref{fig:stickmodel}. The x-direction of the coordinate system of the bottom strut constraint is $r_\text{bot}$, which is equal to the vector from the strut node to the bottom strut node. The x-direction of the coordinate system of the top strut constraint is $r_\text{top}$, which is equal to the vector from the strut node to the top strut node. The parameters $r_\text{bot}$ and $r_\text{top}$ are shown in Figure \ref{fig:ibeam}.
+		
+		\begin{table}[H]
+			\centering
+			\caption{Constraints in the UAV Slice Model}
+			\csvautobooktabular{Tables/bcsfea.csv}
+			\label{tab:bcsfea}
+		\end{table} 
+		
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.1]{Images/triseg.png}
+			\caption{I-Beam Cross-section} 
+			\label{fig:ibeam}
+		\end{figure}
+
+		
+	\section{Beam Stresses} \label{se:beamstress}
+	
+	Once the global displacement vector is calculated, the vector is subdivided into sections corresponding to the different elements that are then transformed back into the local coordinate space so that the $C^1$ continuous hermitian interpolation functions can be calculated \cite{feabook}. Equations \ref{eq:hermite_interpolation} - \ref{eq:hermite_N4} describe the interpolation functions. The length is $L$, the position along the beam is $x$, and the displacement at a given point on the beam is $u(x)$. The displacement and rotation at $x=0$ are $u_1$ and $\theta_1$.  The displacement and rotation at $x=L$ are $u_2$ and $\theta_2$.  
+	
+	% Interpolation equation
+	\begin{equation}
+		u(x) = N_1(x) \, u_1 + N_2(x) \, \theta_1 + N_3(x) \, u_2 + N_4(x) \, \theta_2
+		\label{eq:hermite_interpolation}
+	\end{equation}
+	
+	% Hermitian shape functions
+	\begin{equation}
+		N_1(x) = 1 - 3\frac{x^2}{L^2} + 2\frac{x^3}{L^3}
+		\label{eq:hermite_N1}
+	\end{equation}
+	
+	\begin{equation}
+		N_2(x) = x \left( 1 - 2\frac{x}{L} + \frac{x^2}{L^2} \right)
+		\label{eq:hermite_N2}
+	\end{equation}
+	
+	\begin{equation}
+		N_3(x) = 3 \frac{x^2}{L^2} - 2\frac{x^3}{L^3}
+		\label{eq:hermite_N3}
+	\end{equation}
+	
+	\begin{equation}
+		N_4(x) = x \left( -\frac{x^2}{L^2} + \frac{x}{L} \right)
+		\label{eq:hermite_N4}
+	\end{equation}
+		
+ 	Two different shape functions are generated, one representing the displacement in the y-direction and another representing the displacement in the z-direction. The shape functions allow for displacement and rotations to be interpolated at any point within the beam. 
+
+	Using the shape functions, the bending stress can be calculated at any point along the beam. The formula used to calculate stress is shown in Equation \ref{eq:max_stress}. The maximum bending stress in the beam in a given bending axis is $\sigma_b(x)$. The derivative of rotation along the beam axis is $\frac{d\theta(x)}{dx}$ and is obtained from the shape functions. $E$ is the Young's Modulus. $h$ is the radius of the circumscribed cross-section. This causes an overestimation of the stress and was selected to simplify the calculation. This causes the estimated stress in the I-beams to be higher than reality. The bending stress is calculated for both bending axes, and the resulting maximum stress is taken by taking the Euclidean norm of both vectors.   
+
+	\begin{equation}
+		\sigma_b(x)=-hE\frac{d\theta(x)}{dx}
+		\label{eq:max_stress}
+	\end{equation}
+	
+		
+\section{Solvers} \label{se:solvers}
+
+	The FEA model was created with three separate solvers. The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculates the dynamic response of the UAV slice model's nodes with a force at a given frequency, and the transient solver, which calculates the transient dynamic response given a time-changing force. 
+
+	\subsection{Static} \label{ss:static}
+	
+		The static solver calculates the reactions, displacements, and rotations given a specific set of point loads and moments in static equilibrium. The scipy.linalg.solve function is used to solve for unknown displacements. The displacements ($U_x$, $U_y$, and $U_z$), rotations ($\theta_x$, $\theta_y$, and $\theta_z$), forces ($F_x$, $F_y$, and $F_z$), and moments ($M_x$, $M_y$, and $M_z$) for the entire beam system are calculated from the stiffness matrix, constraints, and known forces. 
+		
+		
+		The shape functions and stresses for each beam in the state of static stress are calculated using the formulation discussed in Section \ref{se:beamstress}. Figure \ref{fig:dfd_static} shows the data flow diagram for the static solver. 
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.06]{Images/DFDs/DFDStatic.png}
+			\caption{DFD of the Static Solver} 
+			\label{fig:dfd_static}
+		\end{figure}
 		
 		\begin{comment}
-		% Archetecture - All modules
-		The finite element model is divided into several different modules. The beam{\_}system module contains the BeamSystem class. The beam{\_}type module contains BeamType class which stores beam cross section and material definitions. The beam{\_}element module contains information about each beam element in the BeamElement class. The node module contains the Node class. 
-		
-		A material property dictionary is stored in matrial{\_}properties module. Cross section properties are calculated using functions in the cross{\_}section{\_}properties module.
-		
-		% Archetecture - The Heirachy 
-		The BeamSystem class contains list of BeamElement objects and a list of Node objects. The BeamElement object. Each BeamElement object references a BeamType object. The BeamType object stores the material properties retrieved from the material{\_}module. The cross section porperties are calculated for a given cross section using functions within the cross{\_}section{\_}properties module.
-		
-		% Archetecture - BeamSystem class
-		Nodes are added using the add{\_}node method in the BeamSystem class. The nodes contain a single position in the global coordinate system. 
-		
-		Beam elements are added to the BeamSystem class using the add{\_}beam method. The add{\_}beam method requires a refrence to a start and an end node, a BeamType object and a k node to determine the orientation of the beam's cross-section. 
-		
-		The boundary conditions are added with the add{\_}boundary{\_}condition method. The method requires the value of the boundary condition, the boundary condition type (x, y z, x rotation, ect.), and node reference here the boundary condition is applied. 
-		
-		The solve{\_}FEA method solves the stiffness and mass matrixes for the given system. The solve{\_}static, solve{\_}dynamic{\_}harmonic, and solve{\_}transient methods find the solution for given forces.   
-		\end{comment}
-		
-		
-	\section{Solvers} \label{se:solvers}
-	
-		A FEA model was created with three separate solvers. 
-		
-		The static solver, which is used to calculate the response given a static loading, the dynamic solver, which calculate the response given a force of an oscillating force at a given frequency, and the transient solver which calculates the response given a time-changing force. 
-		
-		\subsection{Static} \label{ss:static}
-			
-			
-			The static solver calculates the reactions, displacements, and rotations given a specific set of point loads and moments in static equilibrium. The scipy.linalg.solve function is used to solve for unknown displacements. The displacements, rotations, forces, and moments are used to calculate shape functions and stresses for each beam in the state of static stress is calculated using the formulation discussed in section \ref{ss:seg_model}. Figure \ref{fig:dfd_static} shows the design flow diagram for the static solver. 
-			
-			\begin{figure}[htb]
-				\centering
-				\includegraphics[scale=0.06]{Images/DFDs/DFDStatic.png}
-				\caption{DFD of the Static Solver} 
-				\label{fig:dfd_static}
-			\end{figure}
-			
-			\begin{comment}
 			The static solver is the solve\_static method within the BeamSystem class. The method solves the global and local displacements of each beam. The local displacements for each BeamElement object within the BeamSystem object are solved by running the solve\_local method within each Beam object. This method applies the transformation matrix to the results. The solve\_shape\_functions method and find\_stresses methods are used to find the state of stress at stable equilibrium within each beam. 
-			\end{comment}
-					
-			
-		\subsection{Dynamic} \label{ss:dynamic}
-		
-		
-			The dynamic solver solves the amplitude of reactions, displacements, and rotations given a set of oscillating loads and moments.  The boundary conditions are static. Each force and moment applied is assumed to have the same frequency and phase for the given solver. The dynamic stiffness matrix is calculated from the stiffness and mass matrices using the formula $[K_d] = [K] - \omega^2[M]$. Damping is assumed to be 0. $[K_d]$ is the dynamic stiffness matrix.  $[K]$ is the static stiffness matrix and $[M]$ is the mass matrix. $\omega$ is the frequency of the loads and moments. The scipy.linalg.solve function is used with the dynamic stiffness matrix to solve for unknown displacement amplitudes. Three amplitudes are stored for each direction in three-dimensional space and three amplitudes are stored for each axis of rotation. The oscillating stress amplitude is calculated for each element by substituting the assumed displacements in the stress solver and instead solving for the stress solve for the stress amplitude. Figure \ref{fig:dfd_dynamic} showes the design flow diagram for the dynamic solver. 
-			
-			\begin{figure}[htb]
-				\centering
-				\includegraphics[scale=0.06]{Images/DFDs/DFDDynamic.png}
-				\caption{DFD of the Dynamic Solver} 
-				\label{fig:dfd_dynamic}
-			\end{figure}
-			
-			
-			% self.kuu - (ang_vel ** 2) * self.muu - ang_vel * (self.muu * alpha + self.kuu * beta)
-			  % As described in page 385 of concepts and applications of finite element analysis. 
-			  
-			% The dynamic solver is the solve\_dynamic\_harmonic method within the BeamSystem class. This method solves for the global and local amplitude for each beam. The local displacements for each beam object within the beam system are solved by running the solve\_local method within each Beam object. The solve\_shape\_functions\_dynamic method and find\_stresses\_dynamic methods are used to find the state of stress at stable equilibrium within each beam. 
-			
-		\subsection{Transient} \label{ss:transient}
-			
-		
-			The transient solver finds the reactions, displacements, and rotations over time given a user defined time-varying force and moment. The inputs are a timestep interval (${\delta}T$), the timestep count ($T_n$), and $\alpha$ and $\delta$ as constants for Newmark integration. Each force added to the system is described as a vector of displacements and rotations as function of time. The Newmark integration method is used to estimate the displacement, rotations, and reactions at each timestep. There is a constant duration between each timestep which is determined by the timestep interval. The stresses are calculated for each individual timestep.  Figure \ref{fig:dfd_transient} shows the design flow diagram for the transient solver. 
-	
-			\begin{figure}[htb]
-				\centering
-				\includegraphics[scale=0.06]{Images/DFDs/DFDTransient.png}
-				\caption{DFD of the Transient Solver} 
-				\label{fig:dfd_trans}
-			\end{figure}
-			
-			
-			% The transient solver is initiated with the initialize\_dynamic\_transient method within the BeamSystem class. The solve\_dynamic\_transient method within the BeamSystem class solves for the global and local reactions, displacements, and rotations for each timestep. Within the BeamElement class, the solve\_shape\_functions\_transient and find\_stresses\_transient methods are used to find the stresses and strains for each beam at each timestep. 
+		\end{comment}
 	
 	
-	\section{Beam Stresses}
+	\subsection{Dynamic} \label{ss:dynamic}
+	
+	
+		The dynamic solver solves the amplitude of reactions, displacements, and rotations given a set of harmonic loads and moments. The solver analyzes steady-state harmonic behavior to compute the frequency response of the system. The constraints are static and have a frequency of zero. Each force and moment applied is assumed to have the same frequency and phase. The dynamic stiffness matrix is calculated from the stiffness and mass matrices using Equation \ref{eq:dynamic_stiffness}. This equation assumes damping is zero. $\mathbf{K_d}$ is the dynamic stiffness matrix.  $\mathbf{K}$ is the static stiffness matrix and $\mathbf{M}$ is the mass matrix. $\omega$ is the frequency of the loads and moments.
+		
+		\begin{equation}
+			\mathbf{K_d} = \mathbf{K} - \omega^2 \mathbf{M}
+			\label{eq:dynamic_stiffness}
+		\end{equation}
 		
 		
-		Once the global stresses are calculated, they are transformed back into the local coordinate space so that the shape functions can be calculated. The shape functions used are three dimensional and $C^1$ continuous. \cite{feabook} The shape functions require a specific value of x, representing the distance along the beam in local coordinates. The shape functions allow for displacement and rotations to be interpolated at any point within the beam. 
+		The scipy.linalg.solve function is used with the dynamic stiffness matrix to solve for unknown displacement amplitudes. The harmonic stress amplitude is calculated for each element using the formulation in Section \ref{se:beamstress}. Figure \ref{fig:dfd_dynamic} shows the data flow diagram for the dynamic solver. 
 		
-		Using the shape functions, the bending stress can be calculated at any point along the beam. The formula used is $\sigma_b(x)=-hE\frac{d\theta(x)}{dx}$. $\sigma_b(x)$ is the maximum bending stress in the beam in a given principle bending axis. $\frac{d\theta(x)}{dx}$ Is the derivative of rotation along the beam axis obtained from the shape functions. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.06]{Images/DFDs/DFDDynamic.png}
+			\caption{DFD of the Dynamic Solver} 
+			\label{fig:dfd_dynamic}
+		\end{figure}
 		
-		$E$ is the Young's Modulus. $h$ is the radius of circumscribed cross section. This causes an overestimation of the stress and was selected to simplify the calculation. This causes the stress constraint to be more stringent than reality. The bending stress is calculated for both bending axes and the resulting maximum stress is taken by taking Euclidean norm of both vectors. 
+		
+		% self.kuu - (ang_vel ** 2) * self.muu - ang_vel * (self.muu * alpha + self.kuu * beta)
+		% As described in page 385 of concepts and applications of finite element analysis. 
+		
+		% The dynamic solver is the solve\_dynamic\_harmonic method within the BeamSystem class. This method solves for the global and local amplitude for each beam. The local displacements for each beam object within the beam system are solved by running the solve\_local method within each Beam object. The solve\_shape\_functions\_dynamic method and find\_stresses\_dynamic methods are used to find the state of stress at stable equilibrium within each beam. 
+	
+	\subsection{Transient} \label{ss:transient}
+	
+	
+		The transient solver finds the reactions, displacements, and rotations over time, given a user-defined time-varying force and moment vectors. The Newmark integration method is used in order to solve the dynamic stiffness matrix shown in Equation \ref{eq:dynamic_stiffness}. The Newmark integration method is a semi-implicit integration method that is used for structural dynamics.  Equation \ref{eq:newmark_displacement} and Equation \ref{eq:newmark_velocity} are the update equations for the Newmark integration method. 
+		The inputs are a time step interval (${\Delta}T$), the time step count ($T_n$), and $\alpha$ and $\delta$ as constants for Newmark integration. The time step interval is a constant. The displacement at a given time step is $u_n$.
+		
+		\begin{equation}
+			\mathbf{u}_{n+1} = \mathbf{u}_n + \Delta t \, \dot{\mathbf{u}}_n 
+			+ \Delta t^2 \left[ \left(\frac{1}{2} - \beta \right) \ddot{\mathbf{u}}_n + \beta \, \ddot{\mathbf{u}}_{n+1} \right]
+			\label{eq:newmark_displacement}
+		\end{equation}
+		
+		\begin{equation}
+			\dot{\mathbf{u}}_{n+1} = \dot{\mathbf{u}}_n + \Delta t \left[ (1 - \gamma) \ddot{\mathbf{u}}_n + \gamma \, \ddot{\mathbf{u}}_{n+1} \right]
+			\label{eq:newmark_velocity}
+		\end{equation}
+		
+		
+		Each force added to the system is described as a vector of generalized displacements and rotations at each time step. The Newmark integration method is used to estimate the displacement, rotations, and reactions at each timestep. There is a constant duration between each timestep, which is determined by the timestep interval. The stresses are calculated for each timestep.  Figure \ref{fig:dfd_trans} shows the data flow diagram for the transient solver. 
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.06]{Images/DFDs/DFDTransient.png}
+			\caption{DFD of the Transient Solver} 
+			\label{fig:dfd_trans}
+		\end{figure}		
+				
+	
+	
 	
 	
 	\section{Mass Analysis} \label{se:mass}
 		
-		The total mass of the frame ($m_{frame}$) of the UAV was calculated geometrically, by calculating the volume of each beam and multiplying it by the density of the associated material. The mass of each battery and the payload was added to obtain the total mass of the vehicle ($m_{total}$). 
+		The total mass of the frame ($m_{frame}$) of the UAV was calculated geometrically, by calculating the volume of each beam and multiplying it by the density of the associated material. The mass of each battery and the payload were added to obtain the total mass of the vehicle ($m_{total}$). 
 		
-		The mass moment of inertia tensor for the UAV frame is calculated. This is used in the objective function of the optimization problem. The calculation only takes into account the mass moment of the UAV frame, and not the mass moment of the batteries or the payload. % Ask about this?? 
+		The mass moment of inertia tensor for the UAV frame is calculated. The mass moment of inertia is used in the objective function of the optimization problem. The calculation only takes into account the mass moment of inertia of the UAV frame, and not the mass moment of inertia of the batteries or the payload. % Ask about this?? 
 		
-		The mass moment of the system is calculated by summing the mass moment of each beam in the finite element model. The calculation for mass moment has the hub subdivided into individual I-beams. The principal moments of inertia are calculated by taking the eigenvalues of the tensor. The eigenvalues are solved using np.linalg.eig.
+		The mass moment of inertia of the system is calculated by summing the mass moment of inertia of each beam in the finite element model. The calculation for mass moment of inertia uses the full UAV model and has the hub subdivided into individual I-beams. The principal moments of inertia are calculated by taking the eigenvalues of the tensor. The eigenvalues are solved using np.linalg.eig. The mean of all the principal moments is calculated for the objective function.
 	 
 	
-	\chapter{Optimization} \label{se:optimization}
+	\chapter{Optimization} \label{ch:optimization}
 	
 		
-		
-		\begin{comment}
-		design variables: 
-		
-		\begin{itemize}
-			\item $d_a$: arm diameter,
-			\item $t_a$: arm thickness,
-			\item $d_s$: strut diameter,
-			\item $t_s$: strut thickness,
-			\item $r_s$: strut distance from center,
-			\item $t_f$: hub flange thickness,
-			\item $t_w$: hub web thickness 
-			\item $h_r$: hub radius
-		\end{itemize}
-		
-		derived variables:
-		\begin{itemize}
-			\item $d_{tip}$: Deflection at tip
-			\item $\sigma_{max}$: Maximum stress from bending 
-			\item $f_{amp}$: Amplitude of displacement at the tip of the uav arm
-			\item $D$: Damage per mission
-			\item $ E_{used}$: Energy used over the duration of the mission
-			\item $ E_{total}$: Energy used over th duration of the mission
-			
-		\end{itemize}
-		
-		design parameters:
-		\begin{itemize}
-			\item $d_{allowable}$: Deflection allowable
-			\item $\sigma_{allowable}$: Stress allowable from bending 
-			\item $R_{allowable}$: Allowable amplitude displacement ratio
-			\item $n_{missions} $: number of missions before damage
-		\end{itemize}
-		
-		- Optimization algorithm used is SLSQP method using 's minimization function.
-		 \end{comment}
 		 
-		 This chapter describes how the optimization problem is formulated and how the optimization architecture was designed. It describes the boundary conditions, optimization function and constraints. 
+		 This chapter describes the optimization problem formulation and how the optimization architecture was designed. It describes the bounds, optimization function, and constraints. 
 		 		 
 		 The optimization problem is formulated as follows:
 		 
 		 \begin{equation}
-		 	\min J(X)
+		 	\min F(X)
 		 	\label{eq:opt_objective}
 		 \end{equation}
 		
 		 \begin{equation}
-		 	X = (d_a,t_a,d_s,t_s,r_s,t_f,t_w)
+		 	
+		 	X = (d_a,t_a,d_s,t_s,r_s,t_f,t_w,r_h)
 		 	\label{eq:opt_dvs}
 		 \end{equation}
 		 
@@ -797,121 +1128,128 @@
 		 	\label{eq:opt_bounds}
 		 \end{equation}
 		
-		The optimization function uses the SLSQP algorithm. This is run with scipy.optimize.minimize algorithm's SLSQP method. The tolerance is set to 1e-6. Optimization is considered complete only if the results were terminated successfully.To save on computation time, constraints can be made active or inactive by the solver, as well as setting design variables to constants if the boundaries are active. The next sections describe the formulation of the objective function, the boundary conditions, and the constraints. 
+		The SLSQP algorithm was selected for this optimization problem. Scipy.optimize.minimize algorithm's SLSQP method is used. The error tolerance is set to 1e-6. 
 		
-	\subsection{Objective Function} \label{ss:desvar}
+		If the frequency or fatigue constraints are active, SLSQP can not be used due to the nonlinear discontinuous nature of these constraints. Instead, the differential evolution algorithm is used with a tolerance of 1e-6, a population size of 15, a mutation constant between 0.5 and 1, and a recombination constant of 0.7. Scipy's scipy.optimize.differential\_evolution method is used.
 		
-		The objective function is formulated in order to both minimize the mass and mass moment of inertia of the UAV frame. The objective function is described in Equation \ref{eq:objective_function}. $M_{\text{frame}}$ is the mass of the frame given a set of design variables. $I_{\text{frame}}$ is the mass moment of inertia of the frame for a given set of design variables. Scaling factors $S_i$ and $S_m$ were added to keep both mass and mass moment on the same order of magnitude. The scaling factor for mass ($S_m$) is set to $10^3$ and the scaling factor for mass moment of inertia $10^-3$. The weighting factor ($W_m$) for mass is 2/3 and the weighting factor for mass moment of inertia ($W_i$) is 1/3.
+		To save on computation time, constraints can be made active or inactive by the solver, as well as setting design variables to constants if the boundaries are active. The next sections describe the formulation of the objective function, the bounds on design variables, and the constraints. 
+		
+		
+	\section{Objective Function} \label{se:obj}
+		
+		The objective function is formulated in order to minimize both the mass and the mass moment of inertia of the UAV frame. The objective function is described in Equation \ref{eq:objective_function}. The mass of the frame given a set of design variables is $M_{\text{frame}}$. The the mean principal moment of inertia of the frame for a given set of design variables is $I_{\text{frame,mean}}$. Scaling factors $S_i$ and $S_m$ were added to keep both mass and mass moment around the same order of magnitude. The scaling factor for mass ($S_m$) is set to $10^3$ and the scaling factor for mass moment of inertia is $10^{-3}$. The weighting factor ($W_m$) for mass is 2/3, and the weighting factor for mass moment of inertia ($W_i$) is 1/3.
 		
 		\begin{equation}
-			J(X) =
+			F(X) =
 			\frac{W_mM_{\text{frame}}(X)}{S_m}
 			+
-			\frac{W_iI_{\text{frame}}(X)}{S_i}
+			\frac{W_iI_{\text{frame,mean}}(X)}{S_i}
 			\label{eq:objective_function}
 		\end{equation}
 		
-		The design flow diagram showing how the objective function is calculated is shown in Figure \ref{dfd_objective}. The dimensions of the drone are calculated using a set of the design variables and parameters. The mass is calculated geometrically from the geometry and material properties. 
+		The data flow diagram showing how the objective function is calculated is shown in Figure \ref{fig:dfd_objective}. The dimensions of the drone are calculated using a set of design variables and parameters. The mass is calculated geometrically from the geometry and material properties. 
 		
-		The beam model of the full UAV with the segmented hub from the slice model described in Subsection \ref{ss:seg_model} is created. The moment of inertia for this beam model is calculated. The centroid and the mass moment of inertia tensor for each beam is taken. The mass moments of inertia tensors are transformed into the global coordinate system, then parallel axis theorem is applied to find the mass moment of inertia of the entire system. 
+		The beam model of the full UAV with the segmented hub from the slice model described in Subsection \ref{ss:seg_model} is created. The mean principal mass moment of inertia ($I_{\text{frame,mean}}$) for this beam model is calculated using the method discussed in Section \ref{se:mass}. 
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.1]{Images/DFDs/DFDObjective.png}
 			\caption{DFD of the Objective Function} 
 			\label{fig:dfd_objective}
 		\end{figure}
 		
-		% The mass is calculated in the DroneMass class within the drone{\_}mass module. The DroneMass class takes a DroneGeometry object as an input. It uses the material information, cross-section properties, and Beam and hub coordinates within the DroneGeometry object to calculate the mass of the UAV frame. 
 	
-	\subsection{Constraints} \label{ss:consts}
+	\section{Constraints} \label{se:consts}
 	
-	This section describes all the constraints applied to the UAV model. There are boundary conditions on all the design variables, a displacement constraint to limit the maximum displacement while the UAV is in hover, a constraint to ensure the stress is below yield strength, a frequency constraint to prevent vibration, an energy constraint to ensure that the UAV has enough energy to complete the mission, and a fatigue constraint to prevent long-term damage to the vehicle. 
+	This section describes the constraints applied to the UAV model. There are upper and lower bounds on each of the design variables, a displacement constraint to limit the maximum displacement while the UAV is in hover, a constraint to ensure the stress is below yield strength, a frequency constraint to prevent vibration, an energy constraint to ensure that the UAV has enough energy to complete the mission, and a fatigue constraint to prevent long-term damage to the vehicle. 
 	
-	\subsubsection{Boundaries} \label{sss:Bounds}
+	\subsection{Boundaries} \label{ss:Bounds}
 		
-		Each design variable has lower and upper limit applied to it. Table \ref{tab:bcs} describe each boundary condition. The arm diameter ($d_a$), arm thickness ($t_a$), strut diameter ($d_s$), strut thickness ($t_s$) boundary conditions were obtained through the minimum and maximum pipe diameter and thickness for braided carbon fiber found on AllRED's Dragonplate Website. \cite{DragonPlate}. The hub flange thickness ($t_f$) and hub web thickness ($t_w$) boundary conditions were taken from the minimum and maximum thickness of carbon fiber sheets. The maximum boundary conditions on hub radius ($h_r$) and strut distance from the center ($r_s$) are the distance from the center of the UAV to the propellers so the struts and hub stay within the frame. The minimum constraint of 197.5mm for hub radius ($h_r$) and strut distance ($r_s$) is the minimum hub radius for a circle to circumscribe both batteries with their given positions and dimensions.  
+		Each design variable has a lower and upper bound applied to it. Table \ref{tab:design_variables} describes each bound. The arm diameter ($d_a$), arm thickness ($t_a$), strut diameter ($d_s$), and strut thickness ($t_s$) bounds were obtained through the minimum and maximum pipe diameter and thickness for braided carbon fiber found on AllRED's Dragonplate Website \cite{DragonPlate}. The hub flange thickness ($t_f$) and hub web thickness ($t_w$) bounds were taken from the minimum and maximum thickness of carbon fiber sheets. The maximum bounds on hub radius ($r_h$) and strut distance from the center ($r_s$) are the distance from the center of the UAV to the propellers, so the struts and hub stay within the frame. The minimum constraint of 197.5mm for hub radius ($r_h$) and strut distance ($r_s$) is the minimum hub radius for a circle to circumscribe both batteries with their given positions and dimensions.  
 		
-		% Each design variable is bounded by a lower and upper limit. The bounds for the arm and strut diameters and thicknesses are taken from the minimum and maximum available sizes for braided carbon fiber pipe on AllRED’s DragonPlate website \cite{DragonPlate}. The hub flange and web thickness bounds are based on the minimum and maximum thicknesses available for carbon fiber sheets. The maximum bounds for the hub radius ($h_r$) and strut distance ($r_s$) correspond to the distance from the UAV center to the propellers so that the frame remains within the propeller circle. The minimum constraint of $197.5\,$mm for $h_r$ and $r_s$ is the minimum radius required for a circle to circumscribe both batteries with their given dimensions and positions.
 		
-		\begin{comment}
-			\item $d_a$: arm diameter,
-			\item $t_a$: arm thickness,
-			\item $d_s$: strut diameter,
-			\item $t_s$: strut thickness,
-			\item $r_s$: strut distance from center,
-			\item $t_f$: hub flange thickness,
-			\item $t_w$: hub web thickness 
-			\item $h_r$: hub radius
-		\end{comment}
-		
-		\begin{comment}
-			9\,\text{mm} &\le d_a \le 50.0\,\text{mm} \label{eq:bound_da}\\
-			0.254\,\text{mm} &\le t_a \le 3.175\,\text{mm} \label{eq:bound_ta}\\
-			9\,\text{mm} &\le d_s \le 50.0\,\text{mm} \label{eq:bound_ds}\\
-			0.254\,\text{mm} &\le t_s \le 3.175\,\text{mm} \label{eq:bound_ts}\\
-			197.5\,\text{mm} &\le r_s \le 1127.3\,\text{mm} \label{eq:bound_rs}\\
-			0.7\,\text{mm} &\le t_f \le 12.7\,\text{mm} \label{eq:bound_tf}\\
-			0.7\,\text{mm} &\le t_w \le 12.7\,\text{mm} \label{eq:bound_tw}\\
-			197.5\,\text{mm} &\le h_r \le 1127.3\,\text{mm} \label{eq:bound_hr}
-		\end{comment}
-		
-		\begin{table}[htb]
+		\begin{table}[H]
 			\centering
-			\includegraphics[scale=0.7]{Tables/bcs.pdf}
-			\caption{Boundary Conditions Upper and Lower Limits} 
-			\label{tab:bcs}
+			\caption{Optimization Bounds}
+			\begin{tabular}{llll}
+				\hline
+				\textbf{Variable} & \textbf{Description} & \textbf{Lower Bound (mm)} & \textbf{Upper Bound (mm)} \\
+				\hline
+				$d_a$ & Arm outer diameter & 9 & 50 \\
+				$t_a$ & Arm wall thickness & 0.254 & 3.175 \\
+				$d_s$ & Strut outer diameter & 9 & 50 \\
+				$t_s$ & Strut wall thickness & 0.254 & 3.175 \\
+				$r_s$ & Strut distance from hub center & 197.5 & 1127.3 \\
+				$t_f$ & Hub flange thickness & 0.7 & 12.7 \\
+				$t_w$ & Hub web thickness & 0.7 & 12.7 \\
+				$r_h$ & Hub radius & 197.5 & 1127.3 \\
+				\hline
+			\end{tabular}
+			\label{tab:design_variables}
 		\end{table}
-	
-	\subsubsection{Displacement and Stress} \label{sss:displacement}
-	
-	
-		Constraints on the maximum allowable displacement and stress while hovering are created. The design flow diagram of the process of creating these constraints is shown in Figure \ref{fig:dfd_disp}. The drone geometry is the set of all relevant coordinates, material properties, and cross section geometry for the UAV. From this geometry data the mass of the frame is calculated. The mass of the frame is added to the mass of both batteries and the payload to obtain the total mass. This is divided by the number of blades and multiplied by gravity to obtain the equivalent force required for hover. This force points upward and is on the outer node of the segment model. 
 		
-		The beam model is the UAV slice model discussed in Subsection \ref{ss:seg_model}. The static solver discussed in Subsection \ref{ss:static} was used to calculate the maximum displacement and the maximum stress within the beam model. The displacement used is the highest magnitude displacement within the beam model ($d_{max}$). The stress is the maximum bending stress within the beam model ($\sigma_{max}$). 
+	
+	\subsection{Displacement} \label{ss:displacement}
+	
+		The displacement constraint limits the maximum allowable displacement while the UAV is in hover. The data flow diagram of calculating the stress constraint is shown in Figure \ref{fig:dfd_disp}. The drone geometry is the set of all relevant coordinates, material properties, and cross-section geometry for the UAV. From the drone geometry, the mass of the frame is calculated.  The force used is the force on the propeller from the UAV in hover. This force points upward and is on the outer node of the segment model. 
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
-			\includegraphics[scale=0.1]{Images/DFDs/DFDDisp.png}
-			\caption{DFD of the Creation of the Displacement and Stress Constraints} 
+			\includegraphics[scale=0.1]{Images/DFDs/DFDDisplacement.png}
+			\caption{DFD for the Displacement Constraints} 
 			\label{fig:dfd_disp}
 		\end{figure}
 		 
-		
-		The formula for the displacement constraint is shown in Equation \ref{eq:opt_disp}. $d_{allowable}$ is the maximum allowable displacement.
-		
+		 The beam model is the UAV slice model discussed in Subsection \ref{ss:seg_model}. The force is applied to the outer node and points upward. This force is equal to the force necessary for the UAV to hover ($F_\text{thrust,hover}$) as described in Equation \ref{eq:thrust_hv}. The static solver discussed in Subsection \ref{ss:static} was used to calculate the displacement  ($d_{outer}$) at the outer node of the 1/8-segment model.  The formula for the displacement constraint is shown in Equation \ref{eq:opt_disp}. The maximum allowable displacement is $d_{allowable}$.
+		 
 		 \begin{equation}
-			g_1(X) = d_{\max} - d_{\text{allowable}} \le 0
-			\label{eq:opt_disp}
-		\end{equation}
+		 	g_1(X) = d_{\text{outer}} - d_{\text{allowable}} \le 0
+		 	\label{eq:opt_disp}
+		 \end{equation}
+		
+	\subsection{Stress} \label{ss:stress}
 		
 		
-	 	$\sigma_{yeild}$ is the tension yield strength of the material. $\text{FOS}$ is the factor of safety associated with the stress constraint. Factor of safety is a parameter of the analysis. 
+		The stress constraint limits the maximum allowable stress while the UAV is in hover. The data flow diagram of calculating the displacement constraint is shown in Figure \ref{fig:dfd_str}. 
+		
+		The beam model is the UAV slice model discussed in Subsection \ref{ss:seg_model}. The force is applied to the outer node and points upward. This force is equal to the force necessary for the UAV to hover ($F_\text{thrust,hover}$) as described in Equation \ref{eq:thrust_hv}. The static solver discussed in Subsection \ref{ss:static} was used to calculate the stress ($\sigma__{center}$) at the hub node 0 of the 1/8-segment model. This node is at the center of the UAV and was selected because it is likely the location of maximum stress.  
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.1]{Images/DFDs/DFDStress.png}
+			\caption{DFD for the Stress Constraints} 
+			\label{fig:dfd_str}
+		\end{figure}
+		
+			
+		Equation \ref{eq:str_allowable} shows the calculation for the allowable stress. The tension yield strength of the material is $\sigma_{yield}$. The factor of safety associated with the stress constraint is $\text{FOS}$. The factor of safety is a parameter of the analysis. Equation \ref{eq:opt_stress} shows the calculation of the constraint.
 		
 		\begin{equation}
-			g_2(X) = \sigma_{\max} - \frac{\sigma_{\text{yield}}}{\text{FOS}} \le 0
+			\sigma_{\text{allowable}} = \frac{\sigma_{\text{yield}}}{\text{FOS}}
+			\label{eq:str_allowable}
+		\end{equation}
+		
+		\begin{equation}
+			g_2(X) = \sigma_{center}- \sigma_{\text{allowable}} \le 0
 			\label{eq:opt_stress}
 		\end{equation}
 		
-	\subsubsection{Frequency} \label{sss:frquency}
+	\subsection{Frequency} \label{ss:frquency}
 	
 		
-		The objective of the frequency constraint is to ensure that the frequency experienced by the propeller is not near the natural frequency of the vehicle. This is accomplished by calculating the maximum admittance over a range of values.
+		The objective of the frequency constraint is to ensure that the frequency of excitation developed by the propeller during the mission does not result in a high displacement amplitude in the vehicle. This is accomplished by calculating the maximum admittance of the frequency response function over a range of values. The admittance is the amplitude of the displacement at the outer node per unit force.
 		
-		The design flow diagram for the frequency is shown in Figure \ref{fig:dfd_freq}. First, the beam model of the UAV slice discussed in Subsection \ref{ss:seg_model} is created. This beam model is used for both the dynamic and static solvers. The same force is applied to the static model which has a magnitude equal to the amplitude of the force on dynamic model. 
+		The data flow diagram for the frequency is shown in Figure \ref{fig:dfd_freq}. First, the beam model of the UAV slice discussed in Subsection \ref{ss:seg_model} is created. The dynamic model is run repeatedly with frequencies over a range of values. This range is calculated by from multiplying the maximum and minimum values of the angular frequency over the mission profile calculated in Equation \ref{eq:ang} by two. These are the maximum and minimum excitation frequencies of the propellers. The rev-up and rev-down sections are not considered for this calculation. A user-defined number of points is sampled across the range between the minimum and maximum excitation frequencies. The dynamic model is run at a frequency on each point along that range. The amplitude of the force is the force required to keep the UAV in hover ($F_\text{thrust,hover}$) described in Equation \ref{eq:thrust_hv}.
 		
-		The dynamic model is run repeatedly with frequencies over a range of values. This range is calculated by from converting finding the maximum and minimum values for thrust on the thrust curve calculated in Subsection \ref{ss:thrust}, then converting those values to minimum and maximum frequency using Equation \ref{eq:ang}.
-		
-		The rev-up and rev-down sections are not considered for the thrust analysis. The maximum displacement amplitude between all run dynamic models ($d_amplitude$) is found. The maximum displacement in the static model was also found ($d_{static}$). Equation \ref{eq:opt_freq} is the formulation of the constraint. The allowable admittence is represented $Y_{\text{allowable}}$.
+		The maximum displacement amplitude between all run dynamic models ($d_{amplitude}$) is found.  Equation \ref{eq:opt_freq} is the formulation of the constraint. The allowable admittance frequency response function is represented $Y_{\text{allowable}}$. The amplitude of the displacement at the outer node with the given forcing function is $d_{\text{amplitude,outer}$.
 		
 		\begin{equation}
-			g_3(X)
-			= \frac{d_{\text{amplitude}}}{d_{\text{static}}} - Y_{\text{allowable}}
+			g_3(X) = \frac{d_{\text{amplitude,outer}}}{F_\text{thrust,hover}} - Y_{\text{allowable}}
 			\le 0
 			\label{eq:opt_freq}
 		\end{equation}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.1]{Images/DFDs/DFDFrequency.png}
 			\caption{DFD of the Transient Solver} 
@@ -919,44 +1257,49 @@
 		\end{figure}
 	
 			
-	\subsubsection{Damage} \label{sss:damage}
+	\subsection{Damage} \label{ss:damage}
 	
 		% Explain surface area once	
 		
-		The damage constraint is imposed in order to limit damage caused by the vibrations in the vehicle. The design flow diagram of the is shown in Figure \ref{fig:dfd_damage}. The mass of the drone is calculated geometrically using model discussed in Section \ref{se:uav_geo}. The mass of the batteries and payload are taken to find the total mass ($m_total$). The projected surface area of the UAV is calculated. This is the sum of the area of the top surface of the UAV hub and the projected surface area of the UAV arms and struts. The mission profile, total mass, and surface area are used to calculate the thrust function shown in Equation \ref{eq:thrust}. The thrust function is transferred to a angular frequency function by applying Equation \ref{eq:ang}. The thrust function is then used to calculate the perturbation force described by Equation \ref{eq:thr}. The beam model used is the slice model discussed in Subsection \ref{ss:seg_model}. Both the perturbation and thrust are upward forces and are applied to the outer node of the slice model. Both forces are divided by eight due to only applying to one slice of the model. 
+		The damage constraint is imposed in order to limit damage caused by the vibrations in the vehicle. The data flow diagram of the damage calculation is shown in Figure \ref{fig:dfd_damage}. The mission profile, total mass, and surface area are used to calculate the thrust function ($F_\text{thrust,dynamic}$) shown in Equation \ref{eq:thrust_dy}. The angular frequency function is calculated with the thrust function by applying Equation \ref{eq:ang}. The thrust function is then used to calculate the perturbation force ($F_{\text{perturbation}}(t)$) by applying Equation \ref{eq:thr}. The beam model used is the slice model discussed in Subsection \ref{ss:seg_model}. Both the perturbation force ($	F_{\text{perturbation}}(t)$) and thrust force ($F_\text{thrust,dynamic}$) are upward forces and are applied to the outer node of the slice model.
 		
-		The number of time-steps for the transient solver is set by a constant set by the user. The constants used for Newmark-beta interrogation are $\beta = 0.25$ and $\gamma = 0.5$. The results for the bending stress are taken for each timestep at the point of maximum bending stress. 
+		The number of time-steps for the transient solver is set by the user. The constants used for Newmark-beta integration are $\beta = 0.25$ and $\gamma = 0.5$. The results for the bending stress are taken for each timestep at hub node 0.
 		
-		Once the stress function is obtained, the rainflow counting algorithm is applied to calculate the damage. The Rainflow module in the PyLife library is used and it uses the four-point Rainflow-counting algorithm to transfer the time-varying load into sets of constant amplitude stress reversals. This is used with the Woehler curve data to calculate the total damage accumulated over the mission. This is done using the LoadCollective class in the PyLife library. 
+		Once the stress function is obtained, the rainflow counting algorithm is applied to calculate the damage. The Rainflow module in the PyLife library is used and it uses the four-point Rainflow-counting algorithm to calculate constant amplitude stress reversals from a time-varying load. The total damage accumulated over the mission is calculated from the stress reversals using the Woehler curve data and the LoadCollective class in the PyLife library. 
 		
-		One limitation of this analysis is that material data is fatigue material data is limited to aluminum as fatigue data for the carbon fiber composite has not been obtained as that is outside the scope of this thesis. Equation \ref{eq:opt_damage} describes the constraint. $D$ is the damage taken in a single mission. $n_\text{missions}$ is the number of missions the UAV should run before failure.
+		One limitation of this analysis is that fatigue material data is limited to aluminum7075, as fatigue data for the carbon fiber composite would need to be obtained experimentally. Equation \ref{eq:opt_damage} describes the constraint. $D$ is the damage cumulative taken in a single mission. $B_f$ is the blocking factor. 
 		
 		\begin{equation}
 			g_4(X)
-			= D \, n_{\text{missions}} - 1
+			= D \, B_f - 1
 			\le 0
 			\label{eq:opt_damage}
 		\end{equation}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
-			\includegraphics[scale=0.06]{Images/DFDs/DFDDamage.png}
-			\caption{DFD of the Transient Solver} 
+			\includegraphics[scale=0.07]{Images/DFDs/DFDDamage.png}
+			\caption{DFD of the Damage Solver} 
 			\label{fig:dfd_damage}
 		\end{figure}
 		
-	\subsubsection{Energy} \label{sss:energy}
+	\subsection{Energy} \label{ss:energy}
 	
-		The objective of this constraint is to keep battery energy above desired levels for the duration of the mission. The design flow diagram for the energy constraint is shown in Figure \ref{fig:dfd_energy}. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. $E_{used}$ is the total energy used during the mission, it is equal to $E_{Capacity} - E_{Remaining}(t)$ where t is the full duration of the power mission profile. $E_{Capacity}$ is the total storage of the battery. $E_{\%remaining}$ is a parameter which is equal to the amount of percent energy remaining desired after landing. 
+		The objective of this constraint is to keep battery energy above desired levels for the duration of the mission. The data flow diagram for the energy constraint is shown in Figure \ref{fig:dfd_energy}. The energy constraint uses the energy consumption calculation in Subsection \ref{ss:energy_consumption_calc} to determine the total energy consumed during the mission. Equation \ref{eq:opt_energy} and Equation \ref{eq:opt_energy_frac} describe the energy constraint. The fraction of energy spent is equal to 	$E_{\text{used,fraction}}$. The total energy used during the mission ($E_{used}$) is equal to $E_{capacity} - E_{remaining}(t_{\text{final}})$. The time at the end of the mission profile is $t_{\text{final}}$. The energy capacity of the battery is $E_{capacity}$. $E_{\text{remaining,fraction}}$ is a parameter that is equal to the fraction of energy remaining that is desired after landing. 
+		
+		\begin{equation}
+			E_{\text{used,fraction}} = \frac{E_{\text{used}}}{E_{\text{capacity}}}
+			\label{eq:opt_energy_frac}
+		\end{equation}
 		
 		\begin{equation}
 			g_5(X)
-			= \frac{E_{\text{used}}}{E_{\text{capacity}}} + E_{\%\text{remaining}} - 1 
+			= E_{\text{used,fraction}} + E_{\text{remaining,fraction}} - 1 
 			\le 0
 			\label{eq:opt_energy}
 		\end{equation}
 		
-		\begin{figure}[htb]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.1]{Images/DFDs/DFDEnergy.png}
 			\caption{DFD of the Energy Constraint Calculation} 
@@ -964,194 +1307,398 @@
 		\end{figure}
 		
 	
-		\begin{comment}
-		self.active_constraints = self.parameters_defaults.copy()
-		self.parameters = self.parameters_defaults.copy()
-		self.design_variables_initial_guess = self.design_variables_initial_guess_defaults.copy()
-		self.constraints_constants = self.constraints_constants_defaults.copy()
-		self.simulation_settings = self.simulation_settings_defaults.copy()
-		self.boundaries = self.boundaries_defaults.copy()
-		self.drone_geometry = 0
-		self.fixed_design_variables = self.fixed_design_variables_defaults.copy()
-		
-		The optimization module contains the Optimizer class. This class runs code related to the optimization algorithm. The primary inputs are a dictionary of active constraints, parameters, an initial guess, parameters related to the fidelity of the simulation, boundary conditions, and a dictionary of design variables that are fixed. 
-		
-		The active{\_}constraints dictionary has a boolean associated with each constraint. These allow the user to turn off constraints if they are inactive to save on computation time. The parameters dictionary contains design parameters. This includes number of blades, propeller radius, propeller spacing, payload, air density,   coefficient, maximum propeller rotations per minute, battery mass, battery dimensions, battery volts, battery milliamp hours, rev up time, rev down time, gravity, and hub height. These can all be changed easily to test various UAV designs and flight conditions.
-		
-		The parameters related to the fidelity of the simulation are the number of I-beams describing the hub, the number of time-steps in the transient load simulation, and the number of time-steps for integration for the energy usage calculation. The boundary conditions are a dictionary with each constraint associated with a touple expressing the range of accep  values. 
-		
-		The dictionary of fixed design variables has each constraint either associated with a number, or is set to false. If set to a number the design variable is fixed and is not analyzed by the optimizer. This is done after it is determined that the boundary condition is the active constraint so the design variable does not need to be considered. Fixing the design variables saves on computation time. 
-		
-		First the independent{\_}properties{\_}calc method is run in order to perform necessary calculations not associated with any design varaibles. This includes the creating the mission profile, BatterySystem, and Battery objects. 
-		
-		The mass method calculates the mass of the UAV given a set of design variables. The constraint{\_}calculation method runs a set of constraints given a set of design variables and active constraints. The formulation of eeach constraint is set up so that if the result of the constraint is above 1, the constraint is violated.
-		  
-		The run\_opt method runs the optimizer. The Scypi library's scipy.optimize.minimize is used with the the 'SLSQP' method. Max iterations are set to 10000 and the error tolerance is set to 1e-18. The function outputs the resulting design variables as well as the result of the objective function.
-		
-		Test\_results method runs all constraints to ensure that an optimized result does not violate any constraints that were set to inactive. 
-		\end{comment}
-		
 	\chapter{Results} \label{ch:results}
-			
-		This chapter shows the results generated. The tool designed in this thesis is flexible and allows the user to rapidly test various design configurations. The study initially applied a constraint on deflection of 50mm or approximately 4.43\% deflection per span. The results for this constraint are shown in Section \ref{se:50mm}.
-		
-		This constraint was determined to be overly constrictive, due to the high deflection peaks during the transient analysis and the excessively thin UAV arms. The design was iterated to have 10mm deflection per span based on this analysis. The results for the 10mm section are shown in Section \ref{se:10mm}.
-		
-		
-		\section{Initial Guess} \label{se:ig}
-			The initial guess used for optimization analysis is shown in Table \ref{tab:ig}. The same initial guess was used for both the 50mm deflection and 10mm deflection designs.  
-			
-			\begin{table}[htb]
-				\centering
-				\includegraphics[scale=6]{Tables/ig.pdf}
-				\caption{Design Variables of the Initial Guess} 
-				\label{tab:ig}
-			\end{table}
-		
-		\section{50mm Deflection Design} \label{se:50mm}
-			
-			Table \ref{tab:ccs1} shows what the constraint parameters described in Subsection \ref{ss:consts} were set to for the 50mm design. 
-			% Justify 20%
-			
-			\begin{table}[htb]
-				\centering
-				\includegraphics[scale=6]{Tables/ccs1.pdf}
-				\caption{Constraint Constants for 50mm Design}  
-				\label{tab:ccs1}
-			\end{table}
-			
-			
-			Table \ref{tab:res1} shows the resulting design variables for the 50mm deflection design. All design variables except arm wall thickness ($t_a$) are constrained by the boundary conditions. 
-			
-			\begin{table}[htb]
-				\centering
-				\includegraphics[scale=6]{Tables/res1.pdf}
-				\caption{Resulting Design Variables for 50mm Deflection Design} 
-				\label{tab:res1}
-			\end{table}
-			
-			
-			Table \ref{tab:obj1} shows the improvement between the initial guess and the 50mm deflection design. 
-			
-			\begin{table}[htb]
-				\centering
-				\includegraphics[scale=6]{Tables/res1.pdf}
-				\caption{Objective Function Comparison for 50mm Deflection Design} 
-				\label{tab:obj1}
-			\end{table}
-			
-			
-			Table \ref{tab:cons1} shows the violation for each constraint. The table shows that the only active constraint for the 50mm design is the displacement constraint. 
-			
-			\begin{table}[htb]
-				\centering
-				\includegraphics[scale=6]{Tables/cons1.pdf}
-				\caption{Constraint Violation for 50mm Deflection Design}  
-				\label{tab:cons1}
-			\end{table}
-			
-			The plot of the design space is shown in Figure \ref{fig:designspacearm1}.The heatmap is the value of the objective function. Each contour represents a constrain. The contours above one represent the region where the constraint is not met. The white point is the resulting design variables from the optimization. All design variables not on the axes are set to the resulting design variables from optimization. 
-		
-			\begin{figure}[htb]
-				\centering
-				\includegraphics[scale=1]{Images/Results50/spacearm.png}
-				\caption{Design Space of the Arm Diameter vs Arm Thickness} 
-				\label{fig:designspacearm1}
-			\end{figure}
-			
-			The static analysis resulted in a displacement of 50mm as the displacement constraint is active. However the transient analysis yielded a maximum displacement of 88.34mm. The design has thin walls for the struts and arms which would be unlikely to support a practical design. This led to the decision to reduce reduce the value of the static constraint to 10mm. 
+	% What does this mean for the vehicle
 				
-		\section{10mm Deflection Design} \label{se:10mm}
-			\subsection{Optimization} \label{se:opt_10}
-				Table \ref{tab:ccs2} shows what the constraint parameters described in Subsection \ref{ss:consts} were set to for the 10mm design. The only value changed from the 50mm design is the  
-				% Justify 20%
-				
-				\begin{table}[htb]
-					\centering
-					\includegraphics[scale=6]{Tables/ccs2.pdf}
-					\caption{Constraint Constants for 10mm Design}  
-					\label{tab:ccs2}
-				\end{table}
-				
-				
-				Table \ref{tab:res2} shows the resulting design variables for the 10mm deflection design. Arm radius and strut radius are set by the boundary conditions and all other design variables are set by the constraints. 
-				
-				\begin{table}[htb]
-					\centering
-					\includegraphics[scale=6]{Tables/res2.pdf}
-					\caption{Resulting Design Variables for 10mm Deflection Design} 
-					\label{tab:res2}
-				\end{table}
-				
-				
-				Table \ref{tab:obj2} shows the improvement between the initial guess and the 10mm deflection design. 
-				
-				\begin{table}[htb]
-					\centering
-					\includegraphics[scale=6]{Tables/res2.pdf}
-					\caption{Objective Function Comparison for 10mm Deflection Design} 
-					\label{tab:obj2}
-				\end{table}
-				
-				
-				Table \ref{tab:cons2} shows the violation for each constraint. The active constraints are the frequency constraint and the displacement constraint. 
-				
-				\begin{table}[htb]
-					\centering
-					\includegraphics[scale=6]{Tables/cons2.pdf}
-					\caption{Constraint Violation for 50mm Deflection Design}  
-					\label{tab:cons2}
-				\end{table}
-				
-				The plot of the design space is shown in Figure \ref{fig:designspacearm2}.The heatmap is the value of the objective function. Each contour represents a constrain. The contours above one represent the region where the constraint is not met. The white point is the resulting design variables from the optimization. All design variables not on the axes are set to the resulting design variables from optimization. 
-				
-			\subsection{Design Space} \label{ss:globmin}
-			
-				The SLSQP solver does not ensure that the global minima is found. In attempt to find local minima, the design space was searched. 
-				\begin{figure}[htb]
-					\centering
-					\includegraphics[scale=1]{Images/Results10/spacearm.png}
-					\caption{Design Space of the Arm Diameter vs Arm Thickness} 
-					\label{fig:designspacearm2}
-				\end{figure}
-			
-			\subsection{Displacement and Stress}
-			
-			
-			\begin{figure}[htb]
-				\centering
-				\includegraphics[scale=1]{Images/Results10/spacearm.png}
-				\caption{Design Space of the Arm Diameter vs Arm Thickness} 
-				\label{fig:designspacearm2}
-			\end{figure}
-			
-			\subsection{Natural Frequency}
-			
-			\subsection{Energy}
-			
-			\subsection{Fatigue}
-				
+	This chapter discusses the results generated. The framework designed in this thesis is flexible and allows the user to rapidly test various design configurations. The study initially applied a constraint on deflection of 50mm or approximately 4.43\% deflection per span. The results for this constraint are shown in Section \ref{se:50mm}.
 	
-		
-	% \chapter{Discussion} \label{ch:discussion}
-	\chapter{Conclusions} \label{ch:conclusions}
-		- The design could be improved. 
-		- Work can be done. 
-		
-	\section{Further Work} \label{se:further_work}
-		Takee into account UAV tilt
-		
-		Obejective function with  momeent of inertia. 
+	The 50mm deflection constraint was determined to allow for excessive deformation, due to the high deflection peaks during the transient analysis and the excessively thin UAV arms. The design was iterated to have 10mm of deflection based on this analysis. The results for the 10mm section are shown in Section \ref{se:10mm}.
 	
-		The UAV mesh can be refined
+	
+	\section{Initial Guess} \label{se:ig}
+	The initial guess used for optimization analysis is shown in Table \ref{tab:ig}. The same initial guess was used for both the 50mm deflection and 10mm deflection designs.  
+	
+	\begin{table}[H]
+		\centering
+		\caption{Initial Design Variable Values}
+		\begin{tabular}{lll}
+			\hline
+			\textbf{Variable} & \textbf{Description} & \textbf{Initial Guess (mm)} \\
+			\hline
+			$d_a$ & Arm outer diameter & 50 \\
+			$t_a$ & Arm wall thickness & 2.5 \\
+			$d_s$ & Strut outer diameter & 40 \\
+			$t_s$ & Strut wall thickness & 0.254 \\
+			$r_s$ & Strut distance from hub center & 475 \\
+			$t_f$ & Hub flange thickness & 3 \\
+			$t_w$ & Hub web thickness & 2 \\
+			$r_h$ & Hub radius & 300 \\
+			\hline
+		\end{tabular}
+		\label{tab:ig}
+	\end{table}
+	
+	
+	\section{Constants} \label{se:constas}
+	
+	Table \ref{tab:constraint_constants} shows what the constants for the constraints discussed in Section \ref{se:consts} are set to for the 50mm deflection design. The constraint formulation that each constant is part of is shown in the first column. In the 10mm deflection case, the allowable deflection limit is changed to 10 mm. The stress factor of safety selected is 4.  
+	
+	\begin{table}[H]
+		\centering
+		\caption{Constraint Constants for 50mm deflection design}
+		\begin{tabular}{llll}
+			\hline
+			Constraint & Description & Variable & Value \\
+			\hline
+			Displacement & Allowable deflection limit & $d_{\text{allowable}}$ & 50 mm \\
+			Stress & Allowable stress & $\sigma_{\text{allowable}}$ & 86.25 MPa \\
+			Frequency & Allowable admittance & $Y_{allowable}$ & 1.5 \\
+			Energy & Remaining energy fraction & $E_{\mathrm{remaining,fraction}}$ & 0.2 \\
+			Fatigue & Blocking factor & $B_f$ & $10{,}000$ \\
+			\hline
+		\end{tabular}
+		\label{tab:constraint_constants}
+	\end{table}
+	
+	Table \ref{tab:obj_constants} shows the constants associated with the objective function discussed in Section \ref{se:obj}. The mass scaling factor and mass moment of inertia scaling factor are set so that both are on the order of magnitude of one within the consistent unit system described in Section \ref{se:units}. The weighing coefficients are set so that mass is valued more by the objective function than the mass moment of inertia. 
+	
+	\begin{table}[H]
+		\centering
+		\caption{Objective Function Constants} 
+		\begin{tabular}{lll}
+			\hline
+			Constant & Variable & Value \\
+			\hline
+			Mass scaling factor & $s_m$ & $10^{-3}$ \\
+			Mass moment scaling factor & $s_I$ & $10^{3}$ \\
+			Mass weighting coefficient & $w_m$ & $\frac{2}{3}$ \\
+			Mass moment weighting coefficient & $w_I$ & $\frac{1}{3}$ \\
+			\hline
+		\end{tabular}
+		\label{tab:obj_constants}
+	\end{table}
+	
+	Simulation parameters used during the optimization process are summarized in Table \ref{tab:simulation_settings}. The hub is subdivided into five sections for the finite element model. The hub is subdivided into twenty-five sections for mass moment calculation in the objective function. The FEA model only has five sections to be more computationally efficient.   
+	
+	1000 time steps are used in the numerical integration of power consumption to compute the total energy expenditure and resulting battery charge depletion over the mission profile.
+	
+	During frequency constraint evaluation, the admittance response is sampled at five evenly distributed frequencies the range of propeller frequencies. The range of propeller frequencies is from the minimum to the maximum frequency experienced by the motor forcing function. The number of transient timesteps is determined by taking the 640 second mission profile duration and multiplying double the maximum excitation frequency. This is so that each oscillation is represented.  
+	
+	\begin{table}[H]
+		\centering
+		\caption{Simulation Parameters}
+		\label{tab:simulation_settings}
+		\begin{tabular}{l c p{7cm}}
+			\hline
+			\textbf{Parameter} & \textbf{Value} \\
+			\hline
+			Hub sections (fea) & 5 \\
+			Hub sections (moment) & 25 \\
+			Transient timesteps & 115200 \\
+			Energy timesteps & 1000 \\
+			Frequency range sample count & 5 \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\section{50mm Deflection Design} \label{se:50mm}
 		
-		The hub model is an simplification, as it can not fit the entire battery within the bounds of hub. Further work can be done to create a more detailed model. 
+		The beam model representation of the result with the 50mm constraint is shown in Figure \ref{fig:50beammodel}. Due to the frequency and damage constraints being inactive constraints, the SLSQP optimization algorithm was used. The algorithm iterated 27 times. Only the displacement constraint was evaluated at each iteration. The time it took the optimization algorithm to run was 128 seconds. 
 		
-		Asymmetric modes should be considered. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\linewidth]{Res/50beammodel.png}
+			\caption{Visualization of 50mm Deflection Design}
+			\label{fig:50beammodel}
+		\end{figure}
+
+		Table \ref{tab:50mm_dv} shows the resulting design variables for the 50 mm deflection design. The minimum bounds for strut distance, strut thickness, hub flange thickness, and hub web thickness are active. The upper bound for the arm diameter is also active. 
+	
+		\begin{table}[H]
+			\centering
+			\caption{Resulting Design Variables for 50mm Deflection Design}
+			\csvautobooktabular{Res/50mm_dv.csv}
+			\label{tab:50mm_dv}
+		\end{table}
+	
+		Table \ref{tab:50mm_res} shows the objective function comparison between the initial guess and result for the 50mm design.
 		
+		\begin{table}[H]
+			\centering
+			\caption{Objective Function Comparison for 50mm Deflection Design}
+			\csvautobooktabular{Res/50mm_res.csv}
+			\label{tab:50mm_res}
+		\end{table}
+	
+		Table \ref{tab:50mm_constraint_vio} shows the constraint violation values. If the constraint violation values are greater than zero, the constraint is being violated. Displacement is the only active constraint. This design is significantly improved from the initial guess. 
 		
+		\begin{table}[H]
+			\centering
+			\caption{Constraint Violation for 50mm Deflection Design}
+			\csvautobooktabular{Res/50mm_constraint_vio.csv}
+			\label{tab:50mm_constraint_vio}
+		\end{table}
 		
-	\chapter{Summary} \label{ch:summary}
+		The constraint on deflection was determined to be too lenient. The arm, struts, and hub are very thin. The transient analysis done for the damage calculation yielded a maximum deflection of 90.0mm across the duration of the mission and a maximum stress of 130MPa. The 90mm of deflection along the UAV arm is 7.98\% deflection per span, which is too high. 
+	
+	\section{10mm Deflection Design} \label{se:10mm}
+	
+		The beam model representation of the result with the 10mm deflection constraint is shown in Figure \ref{fig:10beammodel}. Due to the frequency and damage constraints being inactive constraints, the SLSQP optimization algorithm was used. The algorithm iterated 43 times. Only the displacement constraint was evaluated at each iteration. The time it took the optimization algorithm to run was 135 seconds. 
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\linewidth]{Res/10beammodel.png}
+			\caption{Visualization of 10mm Deflection Design}
+			\label{fig:10beammodel}
+		\end{figure}
+		
+		Table \ref{tab:10mm_res_dvs} shows the resulting design variables for the 10 mm deflection design. The optimal value for the arm diameter is at the upper bound. The optimal values for hub flange thickness and strut diameter are at the lower bound. The arm thickness, strut diameter, strut distance, hub radius, and hub web thickness are all not affected by the bounds on the design variables.
+		
+		\begin{table}[H]
+			\centering
+			\caption{Resulting Design Variables for 10mm Deflection Design}
+			\csvautobooktabular{Res/10mm_res_dvs.csv}
+			\label{tab:10mm_res_dvs}
+		\end{table}
+	
+		Table \ref{tab:10mm_obj} shows the objective function comparison between the initial guess and the result. Both the mass and the mass moment of inertia were decreased. 
+		
+		\begin{table}[H]
+			\centering
+			\caption{Objective Function Values for 10mm Deflection Design}
+			\csvautobooktabular{Res/10mm_obj.csv}
+			\label{tab:10mm_obj}
+		\end{table}
+	
+		Table \ref{tab:10mm_constraint_vio} shows the constraint violations for the 10mm design. Only the deflection constraint is active. 
+		
+		\begin{table}[H]
+			\centering
+			\caption{Constraint Violation for 10mm Deflection Design}
+			\csvautobooktabular{Res/10mm_constraint_vio.csv}
+			\label{tab:10mm_constraint_vio}
+		\end{table}
+	
+	\subsection{Displacement and Stress}
+
+	A plot of the deflection across the vehicle for the static analysis is shown in Figure \ref{fig:deformation}. The maximum deflection is 10mm as the deflection constraint is active.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/deformation.png}
+		\caption{Deflection for 10mm Deflection Design}
+		\label{fig:deformation}
+	\end{figure}
+	
+	The stresses at each node within the model for the static analysis are provided in Table \ref{tab:10mm_stress_table}. The corresponding node references are shown in Figure \ref{fig:stickmodel}. This shows that the point of maximum stress is at hub node 0, which is at the center of UAV model. This is partly due to the stress in the I-beam being overestimated due to using the radius of the circumscribed cross-section for the distance from the neutral axis, where the bending stress is measured ($h$). Another reason for this overestimation is that the hub is modeled with beam elements. If the hub were modeled with shell elements, this would allow for a symmetric constraint along the edge of the hub section. This would reduce stress in the hub due to decreased rotation. In a more refined model, the point of maximum stress concentration would likely be where the arm meets the hub (hub node 5). 
+
+	\begin{table}[H]
+		\centering
+		\caption{Stress Table for 10mm Deflection Design}
+		\csvreader[
+		tabular=|l|l|c|l|c|,
+		table head=\hline
+		\shortstack{Element Name} &
+		\shortstack{Start Node} &
+		\shortstack{Start Node\\Stress (MPa)} &
+		\shortstack{End Node} &
+		\shortstack{End Node\\Stress (MPa)} \\
+		\hline,
+		late after line=\\\hline
+		]{Res/10mm_stress_table.csv}{}%
+		{\csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv}
+		\normalsize
+		\label{tab:10mm_stress_table}
+	\end{table}
+	
+	A plot of the stress distribution is shown in Figure \ref{fig:stress}. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/stress.png}
+		\caption{Stress Distribution for 10mm Deflection Design}
+		\label{fig:stress}
+	\end{figure}
+	
+	\subsection{Frequency}
+	
+ 	The first five natural frequencies are shown in Table \ref{tab:10mm_nf10}. The frequency response from a lateral harmonic force is shown in Figure \ref{fig:frf}. The first, second, and third lateral modes are the peaks in the frequency response function plot. 
+	
+	\begin{table}[H]
+		\centering
+		\caption{First Five Natural Frequencies for 10mm Deflection Design}
+		\csvautobooktabular{Res/10mm_nf10.csv}
+		\label{tab:10mm_nf10}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Images/FRF.png}
+		\caption{Structural Admittance Response}
+		\label{fig:frf}
+	\end{figure}
+	
+	The propulsion frequency operating range is between 81.1Hz and 90.2Hz. The frequency constraint has the potential of having a resonance peak in between samples within the frequency range. Figure \ref{fig:admittence} shows the admittance over operating frequencies of the vehicle. There is no frequency peak in between samples.  
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/admittence.png}
+		\caption{Structural Admittance Response in Operational Frequency Range}
+		\label{fig:admittence}
+	\end{figure}
+	
+	\subsection{Energy}
+	
+	Results related to energy for the 10mm configuration are shown in Table \ref{tab:10mm_energy}. The maximum rotational speed required of the propeller to achieve the mission profile does not exceed the manufacturer's max motor rotational speed of 3068rpm. 
+	
+	\begin{table}[H]
+		\centering
+		\caption{Energy Results for 10mm Deflection Design}
+		\csvautobooktabular{Res/10mm_Energy.csv}
+		\label{tab:10mm_energy}
+	\end{table}
+	
+	The energy capacity over time plot is shown in Figure \ref{fig:energycap}. The total energy starts at ($E{\text{capacity}}$) 1.82kw then descends to 0.48kWh. This descent appears linear due to gravity being the primary force that the thrust force needs to overcome. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/energycap.png}
+		\caption{Energy Capacity over time}
+		\label{fig:energycap}
+	\end{figure}
+	
+	The power over time plot is shown in \ref{fig:w_power}. The period of increased power usage at around 50 seconds is primarily caused by the drag force pushing the UAV downward. This occurs during the period where the UAV is rapidly ascending. The period of decreased power at around 570 seconds of usage is primarily caused by the drag force pushing the UAV upward. This occurs during the period where the UAV is rapidly descending. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/w_power.png}
+		\caption{Power Over Time}
+		\label{fig:w_power}
+	\end{figure}
+	
+	Rotor speed and thrust response are shown in Figures \ref{fig:rpm} and \ref{fig:thrust_full}. The periods of increased and decreased RPM and Thrust occur because of the drag force. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/rpm.png}
+		\caption{Rotor Speed During Operation}
+		\label{fig:rpm}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/thrust_full.png}
+		\caption{Thrust Profile}
+		\label{fig:thrust_full}
+	\end{figure}
+	
+	\subsection{Damage}
+		
+		During the transient analysis for the case of 10 mm of deflection for the UAV, no damage was accumulated. This is due to the structural forces not being high enough to cause fatigue and the fatigue data for aluminum being stronger than carbon fiber. The maximum deflection during the transient analysis 14.4mm or 1.27\% deflection per span. The maximum stress during the transient analysis is 37.1 MPa.
+	
+	\subsection{Design Space} \label{ss:globmin}
+	
+	The SLSQP solver does not ensure convergence to a global minimum. To evaluate local behavior, the design space was examined. The interaction between the arm radius and arm thickness design variables is shown in Figures \ref{fig:dv12} and \ref{fig:dv12z}. The white dot in Figure \ref{fig:dv12} and \ref{fig:dv12z} is the location of the optimal result. The design space plots are sections around the set of optimal design variables with respect to the indicated variables. The contour plots represent the constraints. A value of zero or less on the contour plot means the constraint is being met. More design space plots are in Appendix \ref{app:appendix_one}. The blue contour plot shows many discontinuities within the frequency constraint.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/dv12.png}
+		\caption{Design Space Between Arm Radius and Arm Thickness}
+		\label{fig:dv12}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Res/dv12z.png}
+		\caption{Zoomed Design Space Between Arm Radius and Arm Thickness}
+		\label{fig:dv12z}
+	\end{figure}
+	
+	\subsection{Sensitivity Analysis} \label{ss:sens}
+	
+	Table \ref{tab:sens} shows the sensitivity analysis for the 10mm deflection result. All combinations of design variables that do not have active bounds were varied by 0.1\% in both the positive and the negative direction directions. The strut radius design variable was not considered. 
+	
+	The red cells are values where a constraint is violated or the objective function is worse than the optimum. This shows that the result is valid, as changing the solution in any direction makes the solution invalid or less optimal. 
+	
+	\begin{table}[H]
+		\centering
+		\includegraphics[width=1\linewidth]{Tables/sens.png}
+		\caption{Sensitivity Analysis}
+		\label{tab:sens}
+	\end{table}
+		
+	\chapter{Conclusions, Summary, and Recommendations} \label{ch:fin}
+		
+		\section{Summary} \label{se:summary}
+		
+		A multidisciplinary design optimization tool was developed for the conceptual design of a wildfire management octocopter. The objective was to minimize frame mass and mass moment of inertia while maintaining structural integrity and ensuring a desired mission profile is feasible.
+	
+		A mission profile model was developed based on kinematic equations for linear acceleration. This mission profile was used to calculate power, energy, thrust, and propeller frequency, and motor perturbation force during the mission. 
+		
+		The structural response was evaluated using a finite element model based on Timoshenko beam theory. This model had three types of forces: static forces, harmonic forces, and transient forces. The structural response was used to enforce constraints on maximum stress, allowable deflection, frequency response, and fatigue life.
+		
+		The optimization tool uses the mission profile data and finite element model. The optimization problem minimized mass and mass moment of inertia subject to deflection, stress, frequency, energy, and fatigue constraints.
+		
+		The tool is designed to allow the user to rapidly test various design configurations. Designs with a constraint on deflection of 50mm and 10mm of deflection were created. Only the displacement constraint was active for both designs. The 50mm deflection constraint design resulted in a solution with overly thin walls, so the design of the 10mm constraint was created. Both designs resulted in the struts being very thin and of low diameter. 
+		
+		This project successfully integrates mission modeling, structural analysis, energy estimation, and optimization into a computational framework. This framework allows potential UAV designs to be rapidly tested. 
+	
+		  
+		
+		\section{Conclusions}
+		
+		This research was successful in developing a structural optimization framework for a wildfire management octocopter. The optimization tool developed during this study can be used in order to rapidly test potential UAV configurations. 
+		
+		A tool to model the mission profile was created. This mission profile tool was used to model the power usage and energy stored over the duration of the mission profile. The mission profile was also used to find the thrust required to lift the vehicle. 
+		
+		The finite element analysis tool was developed in order to allow an optimization algorithm to quickly solve structural analysis problems. The finite element tool finds the stress and displacement given a set of static forces. The FEA tool can also find stress and displacement solutions given harmonic and transient forces.  
+		
+		An optimization tool was developed to minimize the UAV mass and mass moment subject to constraints on displacement, stress, frequency response, fatigue, and energy. The constraints were developed from the mission profile and finite element analysis tools.
+		
+		A design was created with a constraint on deflection of 50mm. This constraint was determined to be too lenient due to the thin walls of the design, so a design with a deflection constraint of 10mm was created. This demonstrates the ability of the developed framework to rapidly evaluate UAV concepts. Figure \ref{fig:10beammodel} shows the resulting frame. Tables \ref{tab:10mm_res_dvs} and \ref{tab:10mm_obj} show the resulting design variables and objective function.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\linewidth]{Res/10beammodel.png}
+			\caption{Visualization of 10mm Deflection Design (repeated)}
+		\end{figure}
+		
+		\begin{table}[H]
+			\centering
+			\caption*{Resulting Design Variables for 10mm Deflection Design (repeated)}
+			\csvautobooktabular{Res/10mm_res_dvs.csv}
+		\end{table}
+		
+		\begin{table}[H]
+			\centering
+			\caption*{Objective Function Values for 10mm Deflection Design (repeated)}
+			\csvautobooktabular{Res/10mm_obj.csv}
+		\end{table}
+	
+	\section{Recommendations} \label{se:recommend}
+	
+	 Work can be done to further improve the model presented in this thesis. This section presents recommendations to proceed with this work, refining the finite element model, mission profile, frequency constraint, and objective function. 
+	
+	\subsection{Finite Element Model Refinement}
+	
+ 	The UAV finite element mesh may be further refined to improve the accuracy of the constraints. In particular, improved representation of the joints between structural members. This would allow for a more accurate representation of the frequency response. Additionally, the hub should be remodeled in order to account for the storage of electrical components and the battery. Shell elements can be included so that the hub surface can be modeled as continuous. Different configurations of the design can also be tested.
+	
+	\subsection{Mission Profile Refinement}
+	
+	The current mission profile does not account for vehicle tilt or wind. The mission profile could also use real mission data in order to design a more accurate profile. This would allow for a more accurate energy constraint as well as a more accurate perturbation and thrust forcing functions. The increased accuracy of the perturbation and thrust forcing functions would increase the accuracy of the damage constraint.
+	
+	\subsection{Frequency Constraint}
+	
+	The optimization results indicate that the struts do not play a major role in the optimal design, as both strut thickness and diameter are driven to their lower bounds. This suggests that the present loading model does not sufficiently represent the structural contribution of the struts. Horizontal loading in the dynamic harmonic model to represent motor torque could be included in the analysis. The frequency constraint is also limited in scope. Currently, only selected vibration modes are considered. Asymmetric modes as well as full-vehicle modes should be incorporated into the frequency constraint to ensure dynamic stability under realistic operating conditions.
+	
+ \subsection{Material and Fatigue Modeling}
+
+	More accurate Woehler curve data is needed to improve fatigue life predictions. The aluminum7075 material model used is overly stiff compared to the carbon fiber composite. The aluminum used has an elastic modulus of 71.7GPa where the carbon fiber composite has an elastic modulus of 19GPa. The stiffness-to-weight ratio of aluminum is $2.55 \times 10^{7}\ \frac{m^2}{s^2}$. The stiffness-to-weight ratio for the carbon fiber composite is $1.56 \times 10^{7}\ \frac{m^2}{s^2}$. Carbon fiber composite material property data may be obtained so that the structure may be modeled as orthotropic. Incorporating fully orthotropic material behavior would improve the stress and fatigue constraints.
+	
+\subsection{Preventing High Surface Area Solutions}
+	
+	The optimization algorithm produced a solution with a high projected surface area for the 10mm displacement constraint case. The hub radius increased significantly compared to the initial design. If the energy constraint were active, aerodynamic drag would likely have a greater influence on the optimal configuration. A more accurate drag coefficient estimation based on experimental data for the UAV configuration could improve the energy constraint. Incorporating power consumption or drag directly into the objective function would help prevent the optimization from converging to high projected surface area solutions.
+	
 	
 	% This is the standard bibtex file. Do not include the .bib extension in <bib_file_name>.
 	% Uncomment the following lines to include your bibliography: 
@@ -1163,218 +1710,78 @@
 	
 	% Add your appendices here. You must leave the appendices enclosed in the appendices environment in order for the table of contents to be correct.
 	\begin{appendices}
-		\chapter{First Appendix} \label{app:appendix_one}
-		\section{Section one} \label{ase:app_one_sect_1}
-		\section{Section two} \label{ase:app_one_sect_2}
-		\chapter{Second Appendix} \label{app:appendix_two}
+		\chapter{Design Space Plots} \label{app:appendix_one}
+			Additional variable interactions are shown in Figures \ref{fig:dv34}, \ref{fig:d34z}, \ref{fig:d56}, \ref{fig:d56z}, \ref{fig:d78}, and \ref{fig:d78z}. The white dot is the result. They are all sections of the design space of the 10mm result. 
+		
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/dv34.png}
+				\caption{Strut Thickness vs Strut Diameter Design Space for the 10mm results}
+				\label{fig:dv34}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/d34z.png}
+				\caption{Strut Thickness vs Strut Diameter Design Space Zoomed}
+				\label{fig:d34z}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/d56.png}
+				\caption{Hub Radius vs Strut Distance Design Space for the 10mm results}
+				\label{fig:d56}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/d56z.png}
+				\caption{Hub Radius vs Strut Distance Design Space for the 10mm results}
+				\label{fig:d56z}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/d56.png}
+				\caption{Hub Flange Thickness vs Hub Web Thickness Design Space for the 10mm results}
+				\label{fig:d78}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\linewidth]{Res/d56z.png}
+				\caption{Hub Flange Thickness vs Hub Web Thickness Design Space for the 10mm results}
+				\label{fig:d78z}
+			\end{figure}
+			
+		\chapter{Code Architecture} \label{app:appendix_two}
+		
+			This appendix discusses the architecture of the code created for this project. All source code developed for this research is available in the UAV\_Optimization GitHub repository \cite{uav_optimization_repo}. Plots and results are generated with the UAV\_Optimize Jupyter notebook. Modules are included within the Scripts folder. The contents are listed below.
+			
+			\begin{itemize}
+				\item The beam\_mass module calculates the moment of inertia for a given beam\_system object.
+				
+				\item The drone\_mass module calculates the mass of the UAV given a drone\_geometry object.
+				
+				\item The mission\_profile module generates the mission profile.
+				
+				\item The drone\_power module contains all calculations related to the UAV's energy consumption during the mission.
+				
+				\item The optimization module implements the optimization framework.
+				
+				\item The drone\_geometry module calculates geometric properties of the UAV.
+			\end{itemize}
+			
+			Within the Finite\_Elements folder, there are several modules listed below. 
+			
+			\begin{itemize}
+				\item The  cross\_section\_properties module calculates cross-section properties for a given cross-section. 
+				\item The  material\_properties module contains dictionaries with the necessary material properties. 
+				\item The drone\_fea module initializes the FEA model for a given drone\_geometry object.
+				\item The beam\_system module contains the FEA framework. 
+			\end{itemize}
+			
 	\end{appendices}
 	
 \end{document}
-
-\begin{comment}
-	
-	
-	1. Introduction
-	a. Overview
-	b. Goals and objectives
-	c. Scope
-	d. thesis outline
-	2. Literature Review
-	3. Methodology
-	a. UAV design
-	i. UAV geometry 
-	a) octocopter, batteries, payload
-	i. free body diagram
-	b) wingspan calculation
-	c) describe drone_geometry module
-	ii. mission profile design
-	`	a) define mission profile segments 
-	b) demonstrate kinematic constraints used
-	c) results
-	
-	iii. battery and propeller selection
-	
-	c. finite element model
-	i. description of the UAV segment model
-	a. describe the boundary conditions, materials ect. 
-	ii. beam element formulation
-	a) timeshenko beams
-	b) boundary conditions
-	c) mass matrices
-	iii. solvers
-	a) static 
-	i. outputs stress strain
-	a) stress and stain plots of th UAV given the payload
-	b) dynamic 
-	i. inputs 
-	a) description of the loads
-	ii. outputs amplitude of the response given a force strain, displacement, reactions, ect.
-	c) transient
-	i. input 
-	a) description of the loads
-	ii. outputs reactions and displacements over time. Assumes no damping.
-	iv. Results 
-	
-	d. optimization 
-	a. objective function: mass calculation
-	
-	b. design variables
-	i. figure showing design variable measurements
-	ii. upper and lower bounds 
-	
-	c. constraints
-	i. displacement
-	a) describe force
-	b) static solver
-	ii. stress (treating like black aluminum)
-	a) describe force
-	b) static solver
-	iii. frequency
-	a) constraint formula 	
-	b) describe forcing function 
-	c) dynamic solver
-	iv. damage
-	a) constraint formula 	
-	b) describe forcing function 
-	c) transient solver
-	v. energy
-	a) constraint formula 
-	b) show energy consumption calculation
-	
-	d. results 
-	ImagesImages
-	a) plots of the design space
-	b) show optimized value and compare it to initial
-	5. Summary				
-	6. Conclusions
-	
-	
-\end{comment}
-
-
-
-
-
-%****************************************************************************
-% Below are some general suggestions for writing your dissertation:
-%
-% 1. Label everything with a meaningful prefix so that you
-%    can refer back to sections, tables, figures, equations, etc.
-%    Usage \label{<prefix>:<label_name>} where some suggested
-%    prefixes are:
-%			ch: Chapter
-%     		se: Section
-%     		ss: Subsection
-%     		sss: Sub-subsection
-%			app: Appendix
-%     		ase: Appendix section
-%     		tab: Tables
-%     		fig: Figures
-%     		sfig: Sub-figures
-%     		eq: Equations
-%
-% 2. The VTthesis class provides for natbib citations. You should upload
-%	 one or more *.bib bibtex files. Suppose you have two bib files: some_refs.bib and 
-%    other_refs.bib.  Then your bibliography line to include them
-%    will be:
-%      \bibliography{some_refs, other_refs}
-%    where multiple files are separated by commas. In the body of 
-%    your work, you can cite your references using natbib citations.
-%    Examples:
-%      Citation                     Output
-%      -------------------------------------------------------
-%      \cite{doe_title_2016}        [18]
-%      \citet{doe_title_2016}       Doe et al. [18]
-%      \citet*{doe_title_2016}      Doe, Jones, and Smith [18]
-%
-%    For a complete list of options, see
-%      https://www.ctan.org/pkg/natbib?lang=en
-%
-% 3. Here is a sample table. Notice that the caption is centered at the top. Also
-%    notice that we use booktabs formatting. You should not use vertical lines
-%    in your tables.
-% 
-%				\begin{table}[htb]
-	%					\centering
-	%					\caption{Approximate computation times in hh:mm:ss for full order 						versus reduced order models.}
-	%					\begin{tabular}{ccc}
-		%						\toprule
-		%						& \multicolumn{2}{c}{Computation Time}\\
-		%						\cmidrule(r){2-3}
-		%						$\overline{U}_{in}$ m/s & Full Model & ROM \\
-		%						\midrule
-		%						0.90 & 2:00:00 & 2:08:00\\
-		%						0.88 & 2:00:00 & 0:00:03\\
-		%						0.92 & 2:00:00 & 0:00:03\\
-		%						\midrule
-		%						Total & 6:00:00 & 2:08:06\\
-		%						\bottomrule
-		%					\end{tabular}
-	%					\label{tab:time_rom}
-	%				\end{table}
-% 
-% 4. Below are some sample figures. Notice the caption is centered below the
-%    figure.
-%    a. Single centered figure:
-%					\begin{figure}[htb]
-	%						\centering
-	%						\includegraphics[scale=0.5]{my_figure.eps}
-	%						\caption{Average outlet velocity magnitude given an average  
-		%				        input velocity magnitude of 0.88 m/s.} 
-	%						\label{fig:output_rom}
-	%					\end{figure}
-%    b. Two by two grid of figures with subcaptions
-%					\begin{figure}[htb]
-	%						\centering
-	%						\begin{subfigure}[h]{0.45\textwidth}
-		%							\centering
-		%							\includegraphics[scale=0.4]{figure_1_1.eps}
-		%							\caption{Subcaption number one}
-		%							\label{sfig:first_subfig}
-		%						\end{subfigure}
-	%						\begin{subfigure}[h]{0.45\textwidth}
-		%							\centering
-		%							\includegraphics[scale=0.4]{figure_1_2.png}
-		%							\caption{Subcaption number two}
-		%							\label{sfig:second_subfig}
-		%						\end{subfigure}
-	%
-	%						\begin{subfigure}[h]{0.45\textwidth}
-		%							\centering
-		%							\includegraphics[scale=0.4]{figure_2_1.pdf}
-		%							\caption{Subcaption number three}
-		%							\label{sfig:third_subfig}
-		%						\end{subfigure}
-	%						\begin{subfigure}[h]{0.45\textwidth}
-		%							\centering
-		%							\includegraphics[scale=0.4]{figure_2_2.eps}
-		%							\caption{Subcaption number four}
-		%							\label{sfig:fourth_subfig}
-		%						\end{subfigure}
-	%						\caption{Here is my main caption describing the relationship between the 4 subimages}
-	%						\label{fig:main_figure}
-	%					\end{figure}
-%
-%----------------------------------------------------------------------------
-%
-% The following is a list of definitions and packages provided by VTthesis:
-%
-% A. The following packages are provided by the VTthesis class:
-%      amsmath, amsthm, amssymb, enumerate, natbib, hyperref, graphicx, 
-%      tikz (with es and arrows libraries), caption, subcaption,
-%      listings, verbatim
-%
-% B. The following theorem environments are defined by VTthesis:
-%      theorem, proposition, lemma, corollary, conjecture
-% 
-% C. The following definition environments are defined by VTthesis:
-%      definition, example, remark, algorithm
-%
-%----------------------------------------------------------------------------
-%
-%  I hope this template file and the VTthesis class will keep you from having 
-%  to worry about the formatting and allow you to focus on the actual writing.
-%  Good luck, and happy writing.
-%    Alan Lattimer, VT, 2016
-%
-%****************************************************************************

@@ -1,0 +1,152 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Dra()]{DragonPlate}
+Dragonplate carbon fiber composites.
+\newblock \url{https://dragonplate.com/}.
+
+\bibitem[Gen()]{GensTattu}
+Tattu 40000mah 6s uav lipo battery.
+\newblock
+  \url{https://genstattu.com/tattu-40000mah-6s-10c-22-8v-high-voltage-uav-lipo-battery-pack-with-as150-as150-plug/}.
+
+\bibitem[Map()]{MapViewer}
+Arcgis map viewer.
+\newblock
+  \url{https://www.arcgis.com/apps/mapviewer/index.html?layers=ba0631e5417f4c5f8c02a834d121bd81}.
+
+\bibitem[Mat()]{MatWeb}
+Matweb aluminum 7075-t6 and 7075-t651.
+\newblock
+  \url{https://matweb.com/search/datasheet.aspx?matguid=4f19a42be94546b686bbf43f79c51b7d}.
+
+\bibitem[pyL()]{pyLife}
+pylife.
+\newblock \url{https://pylife.readthedocs.io/en/latest/README.html}.
+
+\bibitem[Akhloufi et~al.(2021)Akhloufi, Couturier, and Castro]{drones5010015}
+Moulay~A. Akhloufi, Andy Couturier, and Nicolás~A. Castro.
+\newblock Unmanned aerial vehicles for wildland fires: Sensing, perception,
+  cooperation and assistance.
+\newblock \emph{Drones}, 5\penalty0 (1), 2021.
+\newblock ISSN 2504-446X.
+\newblock \doi{10.3390/drones5010015}.
+\newblock URL \url{https://www.mdpi.com/2504-446X/5/1/15}.
+
+\bibitem[Baker and Davis(2025)]{nyt_fire}
+Camille Baker and William~B. Davis.
+\newblock Maps: Tracking southern california wildfires.
+\newblock \emph{The New York Times}, July 2025.
+\newblock URL
+  \url{https://www.nytimes.com/interactive/2025/01/08/weather/los-angeles-fire-maps-california.html}.
+
+\bibitem[Cook et~al.(2002)Cook, Malkus, Plesha, and Witt]{feabook}
+Robert~D. Cook, David~S. Malkus, Michael~E. Plesha, and Robert~J. Witt.
+\newblock \emph{Concepts and Applications of Finite Element Analysis, Fourth
+  Edition}.
+\newblock 2002.
+
+\bibitem[Gray et~al.(2019)Gray, Hwang, Martins, Moore, and Naylor]{Gray2019a}
+Justin~S. Gray, John~T. Hwang, Joaquim R. R.~A. Martins, Kenneth~T. Moore, and
+  Bret~A. Naylor.
+\newblock {OpenMDAO}: An open-source framework for multidisciplinary design,
+  analysis, and optimization.
+\newblock \emph{Structural and Multidisciplinary Optimization}, 59\penalty0
+  (4):\penalty0 1075--1104, April 2019.
+\newblock \doi{10.1007/s00158-019-02211-z}.
+
+\bibitem[Hargan(2026)]{uav_optimization_repo}
+Nathaniel Hargan.
+\newblock Uav\_optimization.
+\newblock \url{https://github.com/NathanielHargan/UAV_Optimization}, 2026.
+\newblock Accessed: 2026-02-19.
+
+\bibitem[Hattenberger et~al.(2023)Hattenberger, Bronz, and
+  Condomines]{Hattenberger_Bronz_Condomines_2023}
+Gautier Hattenberger, Murat Bronz, and Jean-Philippe Condomines.
+\newblock Evaluation of drag coefficient for a quadrotor model.
+\newblock \emph{International Journal of Micro Air Vehicles}, 15, Jan 2023.
+\newblock \doi{10.1177/17568293221148378}.
+
+\bibitem[Jasa et~al.(2018)Jasa, Hwang, and Martins]{Jasa_Hwang_Martins_2018}
+John~P. Jasa, John~T. Hwang, and Joaquim~R. Martins.
+\newblock Open-source coupled aerostructural optimization using python.
+\newblock \emph{Structural and Multidisciplinary Optimization}, 57\penalty0
+  (4):\penalty0 1815–1827, Feb 2018.
+\newblock \doi{10.1007/s00158-018-1912-8}.
+
+\bibitem[Newton(2023)]{nick}
+Nicholas~James Newton.
+\newblock Development of tools for conceptual design of a wildland firefighting
+  uav.
+\newblock Master's thesis, Virginia Polytechnic Institute and State University,
+  Falls Church, Virginia, 2023.
+
+\bibitem[Parker(2024)]{Education}
+Laura Parker, 2024.
+\newblock URL
+  \url{https://education.nationalgeographic.org/resource/drones-shoot-fireballs-help-control-wildfires/}.
+
+\bibitem[Pollet(2024)]{pollet_design_2024}
+F{\'e}lix Pollet.
+\newblock \emph{Design optimization of unmanned aerial vehicles: a
+  multidisciplinary approach with uncertainty, fault-tolerance, and
+  environmental impact assessments}.
+\newblock {PhD} {Thesis}, Institut Supérieur de l'Aéronautique et de
+  l'Espace, Mar 2024.
+\newblock URL \url{http://www.theses.fr/2024ESAE0013/document}.
+
+\bibitem[Schnulo et~al.(2018)Schnulo, Chin, Falck, Gray, Papathakis, Clarke,
+  Reid, and Borer]{schnulo}
+Sydney~L. Schnulo, Jeff Chin, Robert~D. Falck, Justin~S. Gray, Kurt~V.
+  Papathakis, Sean~C. Clarke, Nickelle Reid, and Nicholas~K. Borer.
+\newblock Development of a multi-segment mission planning tool for sceptor
+  x-57.
+\newblock \emph{2018 Multidisciplinary Analysis and Optimization Conference},
+  Jun 2018.
+\newblock \doi{10.2514/6.2018-3738}.
+
+\bibitem[Shames and Dym(1985)]{transshear}
+Irving~H. Shames and Clive~L. Dym.
+\newblock \emph{Energy and Finite Element Methods in Structural Mechanics}.
+\newblock 1985.
+
+\bibitem[StructX({\natexlab{a}})]{StructXannulus}
+StructX.
+\newblock Hollow circle (annulus) - geometric properties.
+\newblock \url{https://structx.com/Shape_Formulas_014.html}, {\natexlab{a}}.
+
+\bibitem[StructX({\natexlab{b}})]{StructXibeam}
+StructX.
+\newblock Square i-beam - geometric properties.
+\newblock \url{https://structx.com/Shape_Formulas_013.html}, {\natexlab{b}}.
+
+\bibitem[T-Motor({\natexlab{a}})]{Motor}
+T-Motor.
+\newblock U8 lite l efficiency multirotor uav motor kv95.
+\newblock
+  \url{https://store.tmotor.com/product/u8lite-l-kv95-u-efficiency.html},
+  {\natexlab{a}}.
+
+\bibitem[T-Motor({\natexlab{b}})]{Propeller}
+T-Motor.
+\newblock G32*11 prop-2pcs/pair.
+\newblock
+  \url{https://store.tmotor.com/product/g32x11prop-2pcs-1pair-glossy-carbon-fiber.html},
+  {\natexlab{b}}.
+
+\bibitem[Taylor(2024)]{dragonplate:private}
+B.~J. Taylor.
+\newblock Dragonplate enquiry, 2024.
+\newblock Private communication, bjtaylor@allredcorp.com.
+
+\bibitem[West(2017)]{MassMoment}
+Matthew West.
+\newblock Moments of inertia.
+\newblock \url{https://dynref.engr.illinois.edu/rem.html}, 2017.
+
+\end{thebibliography}
