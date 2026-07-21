@@ -2,6 +2,8 @@
 
 <h2>Repository Structure</h2>
 
+<h3><code>Scripts/</code></h3>
+
 <table>
   <tr><th>Module</th><th>Description</th></tr>
   <tr><td><code>drone_geometry</code></td><td>Calculates geometric properties of the UAV.</td></tr>
